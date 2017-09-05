@@ -12,8 +12,8 @@
 
 @property (nonatomic,assign)Byte treatState;
 @property (nonatomic,assign)Byte treatWay;
-@property (nonatomic,strong)NSMutableArray *aPort;
-@property (nonatomic,strong)NSMutableArray *bPort;
+@property (nonatomic,strong)NSMutableString *aPort;
+@property (nonatomic,strong)NSMutableString *bPort;
 @property (nonatomic,assign)Byte abFirst;
 @property (nonatomic,assign)Byte pressLevel;
 @property (nonatomic,assign)Byte treatMode;

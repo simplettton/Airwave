@@ -5,12 +5,12 @@
 //  Created by Macmini on 2017/8/19.
 //  Copyright © 2017年 Shenzhen Lifotronic Technology Co.,Ltd. All rights reserved.
 //
-
-#import "TreatViewController.h"
 #import <GCDAsyncSocket.h>
 #import <GCDAsyncUdpSocket.h>
+#import "TreatViewController.h"
 #import "Pack.h"
 #import "UINavigationController+statusBarStyle.h"
+#import "TreatInformation.h"
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 
 
@@ -37,6 +37,7 @@
 {
     BOOL isPlayButton;
     BOOL isPauseButton;
+    TreatInformation *treatInfomation;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -49,6 +50,7 @@
     isPlayButton = YES;
     isPauseButton = NO;
     [self configurePlayButton];
+    treatInfomation = [[TreatInformation alloc]init];
     
     // 开放哪一个端口
     NSError *error = nil;
@@ -122,6 +124,10 @@
 }
 - (void)start
 {
+    if (self.clientSockets == nil)
+    {
+        return;
+    }
     Pack *pack = [[Pack alloc]init];
     
     Byte addrBytes[2] ={0,0};
@@ -161,7 +167,7 @@
     NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
     
     [self.clientSockets enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [obj writeData:sendData withTimeout:-1 tag:0];
+        [obj writeData:sendData withTimeout:-1 tag:1];
     }];
 }
 -(void)continue
@@ -176,10 +182,23 @@
     
     NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
     [self.clientSockets enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [obj writeData:sendData withTimeout:-1 tag:0];
+        [obj writeData:sendData withTimeout:-1 tag:2];
     }];
 
+}
+-(void)askForTreatInfomation
+{
+    Pack *pack = [[Pack alloc]init];
+    Byte addrBytes[2] ={0,0};
+    NSData *addrData = [NSData dataWithBytes:addrBytes length:2];
     
+    Byte dataBytes[2] = {1,0x62};
+    NSData *data = [NSData dataWithBytes:dataBytes length:2];
+    
+    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
+    [self.clientSockets enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj writeData:sendData withTimeout:-1 tag:3];
+    }];
 }
 
 #pragma mark - 服务器socketDelegate
@@ -191,6 +210,7 @@
     [self addTimer];
     NSLog(@"连接成功");
     NSLog(@"客户端的地址%@ 端口%d",newSocket.connectedHost,newSocket.connectedPort);
+    [self askForTreatInfomation];
     [newSocket readDataWithTimeout:-1 tag:0];
 }
 
@@ -205,14 +225,20 @@
 {
     NSString *text;
     Byte *bytes = (Byte *)[data bytes];
-    for(int i=0;i<[data length];i++)
+//    for(int i=0;i<[data length];i++)
+//    {
+//        text =[NSString stringWithFormat:@"%d",bytes[2]];
+//        if (bytes[2]!=147)
+//        {
+//            NSLog(@"bytes[%d]= %d",i,bytes[i]);
+//            NSLog(@"receive string %@",text);
+//        }
+//    }
+    text = [NSString stringWithFormat:@"%d",bytes[2]];
+    if (bytes[2]==144)
     {
-        text =[NSString stringWithFormat:@"%d",bytes[2]];
-        if (bytes[2]!=147)
-        {
-            NSLog(@"bytes[%d]= %d",i,bytes[i]);
-            NSLog(@"receive string %@",text);
-        }
+        [treatInfomation analyzeWithData:data];
+        NSLog(@"----treatInfomation%@",treatInfomation);
     }
 //    NSStringEncoding myEncoding = CFStringConvertEncodingToNSStringEncoding (kCFStringEncodingGB_18030_2000);
 //    
@@ -238,7 +264,7 @@
 
 -(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err{
     [self.clientSockets removeObject:sock];
-    NSLog(@"断开连接");
+    NSLog(@"断开连接 error:%@",err);
 }
 -(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag{
     NSLog(@"写入成功");
