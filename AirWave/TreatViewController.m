@@ -11,22 +11,46 @@
 #import "Pack.h"
 #import "UINavigationController+statusBarStyle.h"
 #import "TreatInformation.h"
+
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 
+#define LEGA003 0
+#define ARMA003 1
+#define LEGA004 2
+#define ARMB004 3
+#define ABDA004 4
+#define HANA008 5
+#define HNDA001 6
+#define FOTA001 7
+#define NONA000 8
+
+#define LEGB003 9
+#define ARMB003 10
+#define LEGB004 11
+//#define ARMB004 12
+#define ABDB004 13
+#define HANB008 14
+#define HNDB001 15
+#define FOTB001 16
+#define NONB000 17
+
+
+#define LEGA006 18
+#define LEGA008 19
+NSString *const ARMB00 = @"ARMB004";
 
 @interface TreatViewController ()<GCDAsyncSocketDelegate,GCDAsyncUdpSocketDelegate>
 // 服务器socket(开放端口,监听客户端socket的连接)
 @property(nonatomic,strong)GCDAsyncSocket *serverSocket;
-// 保存客户端socket
 @property (nonatomic,copy)NSMutableArray *clientSockets;
-// 检测心跳计时器
 @property (nonatomic, strong) NSTimer *checkTimer;
 // 客户端标识和心跳接收时间的字典
 @property (nonatomic, copy) NSMutableDictionary *clientPhoneTimeDicts;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *barBtItem;
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
 @property (weak, nonatomic) IBOutlet UIButton *pauseButton;
-
+@property (weak, nonatomic) IBOutlet UIView *backgroundView;
+@property (weak, nonatomic) IBOutlet UIView *bodyView;
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
 - (IBAction)tapPlayButton:(id)sender;
 - (IBAction)tapPauseButton:(id)sender;
@@ -79,7 +103,23 @@
 //    [btn addTarget:self action:@selector(rightBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 //    UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithCustomView:btn];
 //    self.navigationItem.rightBarButtonItem = barButton;
+    
 }
+-(void)configureBodyView
+{
+    int *part = [self judgePartsReturn];
+
+    UIImage *image = (UIImage*)[self.backgroundView viewWithTag:11];
+    switch (part[0]) {
+        case ARMA003:
+            image = [UIImage imageNamed:@"ARM"];
+            break;
+            
+        default:
+            break;
+    }
+}
+
 -(void)configurePlayButton
 {
     if (isPlayButton == YES) {
@@ -200,10 +240,39 @@
         [obj writeData:sendData withTimeout:-1 tag:3];
     }];
 }
+-(int*)judgePartsReturn
+
+{
+    int partsPositon[]= { -1, -1};
+    if ([treatInfomation.aPort isEqualToString:@"ARMB004"]) { partsPositon[0] = ARMB004;}
+    else if ([treatInfomation.aPort isEqualToString:@"ARMA003"]) { partsPositon[0] = ARMA003;}
+    else if ([treatInfomation.aPort isEqualToString:@"HNDA001"]) { partsPositon[0] = HNDA001;}
+    else if ([treatInfomation.aPort isEqualToString:@"FOTA001"]) { partsPositon[0] = FOTA001;}
+    else if ([treatInfomation.aPort isEqualToString:@"LEGA003"]) { partsPositon[0] = LEGA003;}
+    else if ([treatInfomation.aPort isEqualToString:@"LEGA004"]) { partsPositon[0] = LEGA004;}
+    else if ([treatInfomation.aPort isEqualToString:@"ABDA004"]) { partsPositon[0] = ABDA004;}
+    else if ([treatInfomation.aPort isEqualToString:@"HANA008"]) { partsPositon[0] = HANA008;}
+    else if ([treatInfomation.aPort isEqualToString:@"NONA000"]) { partsPositon[0] = NONA000;}
+    
+    if ([treatInfomation.aPort isEqualToString:@"ARMB004"]) { partsPositon[1] = ARMB004;}
+    else if ([treatInfomation.aPort isEqualToString:@"ARMB003"]) { partsPositon[1] = ARMB003;}
+    else if ([treatInfomation.aPort isEqualToString:@"HNDB001"]) { partsPositon[1] = HNDB001;}
+    else if ([treatInfomation.aPort isEqualToString:@"FOTB001"]) { partsPositon[1] = FOTB001;}
+    else if ([treatInfomation.aPort isEqualToString:@"LEGB003"]) { partsPositon[1] = LEGB003;}
+    else if ([treatInfomation.aPort isEqualToString:@"LEGB004"]) { partsPositon[1] = LEGB004;}
+    else if ([treatInfomation.aPort isEqualToString:@"ABDB004"]) { partsPositon[1] = ABDB004;}
+    else if ([treatInfomation.aPort isEqualToString:@"HANB008"]) { partsPositon[1] = HANB008;}
+    else if ([treatInfomation.aPort isEqualToString:@"NONB000"]) { partsPositon[1] = NONB000;}
+    
+    else if ([treatInfomation.aPort isEqualToString:@"LEGA006"]) { partsPositon[0] = LEGA006;}
+    else if ([treatInfomation.aPort isEqualToString:@"LEGA008"]) { partsPositon[0] = LEGA008;}
+    
+    return partsPositon;
+    
+}
 
 #pragma mark - 服务器socketDelegate
 -(void)socket:(GCDAsyncSocket *)sock didAcceptNewSocket:(GCDAsyncSocket *)newSocket{
-    
     
     [self.clientSockets addObject:newSocket];
     
@@ -212,6 +281,7 @@
     NSLog(@"客户端的地址%@ 端口%d",newSocket.connectedHost,newSocket.connectedPort);
     [self askForTreatInfomation];
     [newSocket readDataWithTimeout:-1 tag:0];
+    
 }
 
 /**
@@ -238,6 +308,7 @@
     if (bytes[2]==144)
     {
         [treatInfomation analyzeWithData:data];
+        [self judgePartsReturn];
         NSLog(@"----treatInfomation%@",treatInfomation);
     }
 //    NSStringEncoding myEncoding = CFStringConvertEncodingToNSStringEncoding (kCFStringEncodingGB_18030_2000);
@@ -272,7 +343,8 @@
 #pragma mark - Lazy Load
 - (NSMutableArray *)clientSockets
 {
-    if (_clientSockets == nil) {
+    if (_clientSockets == nil)
+    {
         _clientSockets = [NSMutableArray array];
     }
     return _clientSockets;

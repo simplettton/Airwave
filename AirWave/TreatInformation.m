@@ -20,9 +20,9 @@
     self.chargeSpeed = bytes[4];
     Byte treatIntervalByte[] = {bytes[13],bytes[14]};
     self.treatInterval = [self lBytesToInt:treatIntervalByte withLength:2];
-    Byte keepTimeByte[] ={bytes[15],bytes[16]};
+    Byte keepTimeByte[] ={ bytes[15],bytes[16] };
     self.keepTime = [self lBytesToInt:keepTimeByte withLength:2];
-    Byte treatTimeByte [] = {   bytes[39],bytes[40],bytes[41],bytes[42] };
+    Byte treatTimeByte [] = { bytes[39],bytes[40],bytes[41],bytes[42] };
     self.treatTime= [self lBytesToInt:treatTimeByte withLength:4];
     
     self.aPort = [[NSMutableString alloc]initWithCapacity:20];
