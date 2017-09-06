@@ -56,28 +56,28 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Button" image="circle_grey"/>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rightup3_yellow" translatesAutoresizingMaskIntoConstraints="NO" id="idb-0d-4wD">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rightup3_grey" translatesAutoresizingMaskIntoConstraints="NO" id="idb-0d-4wD">
                                         <rect key="frame" x="252" y="225" width="31" height="38"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rightup2_yellow" translatesAutoresizingMaskIntoConstraints="NO" id="crN-nf-w33">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rightup2_grey" translatesAutoresizingMaskIntoConstraints="NO" id="crN-nf-w33">
                                         <rect key="frame" x="232" y="200" width="35" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rightup1_yellow" translatesAutoresizingMaskIntoConstraints="NO" id="zCy-Uq-bhp">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rightup1_grey" translatesAutoresizingMaskIntoConstraints="NO" id="zCy-Uq-bhp">
                                         <rect key="frame" x="217" y="161" width="31" height="54"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="tintColor" red="0.99922662973403931" green="0.8006560206413269" blue="0.39880388975143433" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" tag="16" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="leftup3_yellow" translatesAutoresizingMaskIntoConstraints="NO" id="RjB-Q2-VYv">
+                                    <imageView userInteractionEnabled="NO" tag="15" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="leftup3_grey" translatesAutoresizingMaskIntoConstraints="NO" id="RjB-Q2-VYv">
                                         <rect key="frame" x="48" y="222" width="29" height="46"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" tag="17" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="leftup2_yellow" translatesAutoresizingMaskIntoConstraints="NO" id="gSg-6x-eqI">
+                                    <imageView userInteractionEnabled="NO" tag="16" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="leftup2_grey" translatesAutoresizingMaskIntoConstraints="NO" id="gSg-6x-eqI">
                                         <rect key="frame" x="64" y="200" width="35" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" tag="18" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="leftup1_yellow" translatesAutoresizingMaskIntoConstraints="NO" id="JBA-yY-JKz">
+                                    <imageView userInteractionEnabled="NO" tag="17" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="leftup1_green" translatesAutoresizingMaskIntoConstraints="NO" id="JBA-yY-JKz">
                                         <rect key="frame" x="78" y="162" width="42" height="53"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -86,7 +86,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Button" image="circle_yellow"/>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rightcircle_yellow" translatesAutoresizingMaskIntoConstraints="NO" id="QAX-Ub-TZL">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="circle_grey" translatesAutoresizingMaskIntoConstraints="NO" id="QAX-Ub-TZL">
                                         <rect key="frame" x="287" y="266" width="12" height="12"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -116,7 +116,7 @@
                                         <state key="normal" title="Button" image="belly_grey"/>
                                     </button>
                                     <imageView userInteractionEnabled="NO" tag="14" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="leftdown1_grey" translatesAutoresizingMaskIntoConstraints="NO" id="aoo-RP-MHe">
-                                        <rect key="frame" x="113" y="319" width="40" height="81"/>
+                                        <rect key="frame" x="113" y="318" width="40" height="81"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rightdown1_grey" translatesAutoresizingMaskIntoConstraints="NO" id="HJZ-yw-VGa">
@@ -1411,9 +1411,9 @@
         <image name="leftdown1_grey" width="151" height="193"/>
         <image name="leftdown2_grey" width="144" height="147"/>
         <image name="leftdown3_grey" width="108" height="182"/>
-        <image name="leftup1_yellow" width="107" height="196"/>
-        <image name="leftup2_yellow" width="128" height="127"/>
-        <image name="leftup3_yellow" width="107" height="100"/>
+        <image name="leftup1_green" width="107" height="196"/>
+        <image name="leftup2_grey" width="128" height="127"/>
+        <image name="leftup3_grey" width="107" height="100"/>
         <image name="leg3" width="900" height="200"/>
         <image name="leg3_pressed" width="900" height="200"/>
         <image name="leg4" width="900" height="200"/>
@@ -1421,13 +1421,12 @@
         <image name="leg8" width="900" height="200"/>
         <image name="pause_write" width="85" height="85"/>
         <image name="play" width="85" height="85"/>
-        <image name="rightcircle_yellow" width="61" height="61"/>
         <image name="rightdown1_grey" width="151" height="193"/>
         <image name="rightdown2_grey" width="144" height="147"/>
         <image name="rightdown3_grey" width="108" height="182"/>
-        <image name="rightup1_yellow" width="107" height="196"/>
-        <image name="rightup2_yellow" width="128" height="127"/>
-        <image name="rightup3_yellow" width="107" height="100"/>
+        <image name="rightup1_grey" width="107" height="196"/>
+        <image name="rightup2_grey" width="128" height="127"/>
+        <image name="rightup3_grey" width="107" height="100"/>
         <image name="set_normal-1" width="580" height="200"/>
         <image name="set_press-1" width="580" height="200"/>
         <image name="speed" width="85" height="85"/>

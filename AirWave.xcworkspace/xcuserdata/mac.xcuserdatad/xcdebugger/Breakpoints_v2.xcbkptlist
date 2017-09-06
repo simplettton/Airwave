@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirWave/TreatViewController.m"
-            timestampString = "526371577.152468"
+            timestampString = "526383265.12135"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "294"
-            endingLineNumber = "294"
-            landmarkName = "-socket:didReadData:withTag:"
+            startingLineNumber = "369"
+            endingLineNumber = "369"
+            landmarkName = "-socketDidDisconnect:withError:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

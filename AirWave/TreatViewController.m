@@ -19,9 +19,9 @@
 #define LEGA004 2
 #define ARMB004 3
 #define ABDA004 4
-#define HANA008 5
+#define FOTA001 5
 #define HNDA001 6
-#define FOTA001 7
+#define HANA008 7
 #define NONA000 8
 
 #define LEGB003 9
@@ -29,9 +29,9 @@
 #define LEGB004 11
 //#define ARMB004 12
 #define ABDB004 13
-#define HANB008 14
+#define FOTB001 14
 #define HNDB001 15
-#define FOTB001 16
+#define HANB008 16
 #define NONB000 17
 
 
@@ -109,15 +109,50 @@ NSString *const ARMB00 = @"ARMB004";
 {
     int *part = [self judgePartsReturn];
 
-    UIImage *image = (UIImage*)[self.backgroundView viewWithTag:11];
+    UIButton *bodyPart15 = [[UIButton alloc]init];
+    bodyPart15.frame = [self.backgroundView viewWithTag:15].frame;
+    [[bodyPart15 imageView]setContentMode:UIViewContentModeScaleAspectFit];
+    [bodyPart15 addTarget:self action:@selector(changeColorWith:) forControlEvents:UIControlEventTouchUpInside];
+
     switch (part[0]) {
-        case ARMA003:
-            image = [UIImage imageNamed:@"ARM"];
+        case LEGA003:
+            if ([treatInfomation.enabled[1]  isEqual: @"1"]) {
+                [bodyPart15 setImage:[UIImage imageNamed:@"leftup3_yellow"] forState:UIControlStateNormal];
+                [self.backgroundView addSubview:bodyPart15];
+            }
+            if ([treatInfomation.enabled[2] isEqualToString:@"1"]) {
+                
+            }
             break;
             
         default:
             break;
     }
+    
+}
+-(void)changeColorWith:(UIButton *)button
+{
+    if ([button.currentImage isEqual:[UIImage imageNamed:@"leftup3_yellow"]])
+    {
+        [button setImage:[UIImage imageNamed:@"leftup3_grey"] forState:UIControlStateNormal];
+    }else {
+        [button setImage:[UIImage imageNamed:@"leftup3_yellow"] forState:UIControlStateNormal];
+    }
+    Pack *pack = [[Pack alloc]init];
+    
+    Byte dataBytes[2] = {0,0x16};
+    NSData *data = [NSData dataWithBytes:dataBytes length:2];
+    
+    Byte addrBytes[2] ={0,0};
+    NSData *addrData = [NSData dataWithBytes:addrBytes length:2];
+    
+    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
+    
+    [self.clientSockets enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj writeData:sendData withTimeout:-1 tag:0];
+    }];
+    
+    
 }
 
 -(void)configurePlayButton
@@ -184,12 +219,6 @@ NSString *const ARMB00 = @"ARMB004";
     // withTimeout -1 : 无穷大,一直等
     // tag : 消息标记
 //    Byte *bytes = malloc(sizeof(*bytes)*[sendData length]);
-    Byte *bytes = (Byte *)[sendData bytes];
-    for(int i=0;i<[sendData length];i++)
-    {
-        NSLog(@"bytes[%d]= %d",i,bytes[i]);
-        
-    }
     [self.clientSockets enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [obj writeData:sendData withTimeout:-1 tag:0];
     }];
@@ -305,10 +334,12 @@ NSString *const ARMB00 = @"ARMB004";
 //        }
 //    }
     text = [NSString stringWithFormat:@"%d",bytes[2]];
-    if (bytes[2]==144)
+    if (bytes[2]==0x90)
     {
         [treatInfomation analyzeWithData:data];
-        [self judgePartsReturn];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self configureBodyView];
+        });
         NSLog(@"----treatInfomation%@",treatInfomation);
     }
 //    NSStringEncoding myEncoding = CFStringConvertEncodingToNSStringEncoding (kCFStringEncodingGB_18030_2000);
