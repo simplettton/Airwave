@@ -24,7 +24,6 @@
 		046BA7911F480DF2004D7E74 /* AirWaveUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BA7901F480DF2004D7E74 /* AirWaveUITests.m */; };
 		046BA7A21F4817C8004D7E74 /* TreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BA7A11F4817C8004D7E74 /* TreatViewController.m */; };
 		048A3B141F53C54900929C37 /* UIColor+UIcolor_RGB.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A3B131F53C54900929C37 /* UIColor+UIcolor_RGB.m */; };
-		048A3B171F53F90000929C37 /* UINavigationController+statusBarStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A3B161F53F90000929C37 /* UINavigationController+statusBarStyle.m */; };
 		048A3B1A1F540DC500929C37 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A3B191F540DC500929C37 /* SettingViewController.m */; };
 		048A3B1D1F5411D700929C37 /* OtherSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A3B1C1F5411D700929C37 /* OtherSettingViewController.m */; };
 		04B68F491F4EDAE200FD31E5 /* ParameterTreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B68F481F4EDAE200FD31E5 /* ParameterTreatViewController.m */; };
@@ -83,8 +82,6 @@
 		046BA7A11F4817C8004D7E74 /* TreatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreatViewController.m; sourceTree = "<group>"; };
 		048A3B121F53C54900929C37 /* UIColor+UIcolor_RGB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+UIcolor_RGB.h"; sourceTree = "<group>"; };
 		048A3B131F53C54900929C37 /* UIColor+UIcolor_RGB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+UIcolor_RGB.m"; sourceTree = "<group>"; };
-		048A3B151F53F90000929C37 /* UINavigationController+statusBarStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+statusBarStyle.h"; sourceTree = "<group>"; };
-		048A3B161F53F90000929C37 /* UINavigationController+statusBarStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+statusBarStyle.m"; sourceTree = "<group>"; };
 		048A3B181F540DC500929C37 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		048A3B191F540DC500929C37 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		048A3B1B1F5411D700929C37 /* OtherSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherSettingViewController.h; sourceTree = "<group>"; };
@@ -171,8 +168,6 @@
 				04B68F481F4EDAE200FD31E5 /* ParameterTreatViewController.m */,
 				041FD7E31F58FDEA00522D64 /* SolutionTreatViewController.h */,
 				041FD7E41F58FDEA00522D64 /* SolutionTreatViewController.m */,
-				0462C80D1F5D3FA900AEC2D6 /* Infoclass.h */,
-				0462C80E1F5D3FA900AEC2D6 /* Infoclass.m */,
 				048A3B121F53C54900929C37 /* UIColor+UIcolor_RGB.h */,
 				048A3B131F53C54900929C37 /* UIColor+UIcolor_RGB.m */,
 				048A3B181F540DC500929C37 /* SettingViewController.h */,
@@ -185,8 +180,6 @@
 				046BA77C1F480DF2004D7E74 /* Info.plist */,
 				0462C8101F5D414700AEC2D6 /* dataAnalyze */,
 				046BA76B1F480DF2004D7E74 /* Supporting Files */,
-				048A3B151F53F90000929C37 /* UINavigationController+statusBarStyle.h */,
-				048A3B161F53F90000929C37 /* UINavigationController+statusBarStyle.m */,
 			);
 			path = AirWave;
 			sourceTree = "<group>";
@@ -194,6 +187,8 @@
 		046BA76B1F480DF2004D7E74 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0462C80D1F5D3FA900AEC2D6 /* Infoclass.h */,
+				0462C80E1F5D3FA900AEC2D6 /* Infoclass.m */,
 				044D54B21F4D0D4A002C1E35 /* 图标 */,
 				046BA76C1F480DF2004D7E74 /* main.m */,
 			);
@@ -432,7 +427,6 @@
 				048A3B141F53C54900929C37 /* UIColor+UIcolor_RGB.m in Sources */,
 				044D54BE1F4D1A4C002C1E35 /* GradientTreatViewController.m in Sources */,
 				046BA7701F480DF2004D7E74 /* AppDelegate.m in Sources */,
-				048A3B171F53F90000929C37 /* UINavigationController+statusBarStyle.m in Sources */,
 				0462C8131F5D42CE00AEC2D6 /* TreatInformation.m in Sources */,
 				044D54BB1F4D15F7002C1E35 /* Pack.m in Sources */,
 				0462C80F1F5D3FA900AEC2D6 /* Infoclass.m in Sources */,

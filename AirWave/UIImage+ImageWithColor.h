@@ -1,13 +1,13 @@
 //
-//  UINavigationController+statusBarStyle.h
+//  UIImage+ImageWithColor.h
 //  AirWave
 //
-//  Created by Macmini on 2017/8/28.
+//  Created by Macmini on 2017/9/7.
 //  Copyright © 2017年 Shenzhen Lifotronic Technology Co.,Ltd. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface UINavigationController(statusBarStyle)
+@interface UIImage_ImageWithColor : UIView
 
 @end
