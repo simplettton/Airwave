@@ -40,29 +40,13 @@
 #define LEGA006 18              
 #define LEGA008 19
 
-#define leftup1   170
-#define leftup2   160
-#define leftup3   150
-#define lefthand  140
-#define leftdown1 130
-#define leftdown2 120
-#define leftdown3 110
-#define leftfoot  100
 
-#define rightup1   270
-#define rightup2   260
-#define rightup3   250
-#define righthand  240
-#define rightdown1 230
-#define rightdown2 220
-#define rightdown3 210
-#define rightfoot  200
 
-#define middle1     330
-#define middle2     320
-#define middle3     310
-#define middle4     300
-
+typedef NS_ENUM(NSUInteger,BodyTags) {
+    leftup1   =17,leftup2   =16,leftup3   =15,lefthand  =14,leftdown1 =13,leftdown2 =12,leftdown3 =11,
+    leftfoot  =10,rightup1  =27,rightup2  =26,rightup3  =25,righthand =24,rightdown1=23,rightdown2=22,
+    rightdown3=21,rightfoot =20,middle1   =33,middle2   =32,middle3  =31,middle4    =30
+};
 
 NSString *const ARMB00 = @"ARMB004";
 
@@ -97,26 +81,20 @@ NSString *const ARMB00 = @"ARMB004";
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self configureView];
-    [self configurePlayButton];
-    
-    self.serverSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-    
-    bodyNames= [NSArray arrayWithObjects:@"leftup1",@"leftup2",@"leftup3",@"lefthand",@"leftdown1",@"leftdown2",@"leftdown3",@"leftfoot",@"rightup1",@"rightup2",@"rightup3",@"righthand"@"rightdown1",@"rightdown2",@"rightdown3",@"rightfoot"@"middle1",@"middle2",@"middle3",@"middle4",nil];
-    bodyButtons = [[NSMutableArray alloc]initWithCapacity:20];
     isPlayButton = YES;
     isPauseButton = NO;
-
-    treatInfomation = [[TreatInformation alloc]init];
-    
-    // 开放哪一个端口
+    self.serverSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
     NSError *error = nil;
     BOOL result = [self.serverSocket acceptOnPort:8080  error:&error];
     if (result && error == nil)
     {   NSLog(@"开放成功"); }
     else
     {   NSLog(@"已经开放"); }
-    
+    bodyNames= [NSArray arrayWithObjects:@"leftup1",@"leftup2",@"leftup3",@"lefthand",@"leftdown1",@"leftdown2",@"leftdown3",@"leftfoot",@"rightup1",@"rightup2",@"rightup3",@"righthand",@"rightdown1",@"rightdown2",@"rightdown3",@"rightfoot",@"middle1",@"middle2",@"middle3",@"middle4",nil];
+    bodyButtons = [[NSMutableArray alloc]initWithCapacity:20];
+    treatInfomation = [[TreatInformation alloc]init];
+    [self askForTreatInfomation];
+    [self configureView];
     
 }
 -(void)configureView
@@ -130,7 +108,7 @@ NSString *const ARMB00 = @"ARMB004";
     topBorder.frame = CGRectMake(0.0f, 0.0f, self.buttonView.frame.size.width, 0.5f);
     topBorder.backgroundColor = UIColorFromHex(0xE4E4E4).CGColor;
     [self.buttonView.layer addSublayer:topBorder];
-    [self configureBodyView];
+    [self configurePlayButton];
 
 //    设置右边的barButtonItem
 //    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 32 , 32)];
@@ -142,25 +120,29 @@ NSString *const ARMB00 = @"ARMB004";
 }
 -(void)configureBodyView
 {
-    int *part = [self judgePartsReturn];
-    
+
     int bodyPartTags[] = {leftup1,leftup2,leftup3,lefthand,leftdown1,leftdown2,leftdown3,leftfoot,rightup1,rightup2,rightup3,righthand,rightdown1,rightdown2,rightdown3,rightfoot,middle1,middle2,middle3,middle4};
     
     //加载身体部位按钮
     for (int i=0; i<[bodyNames count]; i++)
     {
         int tag = bodyPartTags[i];
-        UIButton *button = [self bodyButtonReturnWithTag:tag];
+        BodyButton *button = [self bodyButtonReturnWithTag:tag];
         [button setImage:[UIImage imageNamed:bodyNames[i] withColor:@"grey"] forState:UIControlStateNormal];
         [bodyButtons addObject:button];
         [self.backgroundView addSubview:button];
         button.enabled = NO;
     }
-    NSArray *lightUpCommitDics = @[@{@"position":@"leftup1",@"commit":@"0x18"},
-                                   @{@"position":@"leftup2",@"commit":@"0x17"},
-                                   @{@"position":@"leftup3",@"commit":@"0x16"}];
-    
-    if (part[0]==LEGA003)
+    NSArray *lightUpCommitDics = @[@{@"position":@"leftup1",  @"commit":[NSNumber numberWithUnsignedInteger:0x18]},
+                                   @{@"position":@"leftup2",  @"commit":[NSNumber numberWithUnsignedInteger:0x17]},
+                                   @{@"position":@"leftup3",  @"commit":[NSNumber numberWithUnsignedInteger:0x16]},
+                                   @{@"position":@"lefthand", @"commit":[NSNumber numberWithUnsignedInteger:0x15]},
+                                   @{@"position":@"leftdown1",@"commit":[NSNumber numberWithUnsignedInteger:0x1e]},
+                                   @{@"position":@"leftdown2",@"commit":[NSNumber numberWithUnsignedInteger:0x1f]},
+                                   @{@"position":@"leftdown3",@"commit":[NSNumber numberWithUnsignedInteger:0x20]},
+                                   @{@"position":@"leftfoot", @"commit":[NSNumber numberWithUnsignedInteger:0x21]}];
+    NSString *aport = treatInfomation.aPort;
+    if ([aport isEqualToString:@"ARMA003"])
     {
 //        NSArray *targetPart =[NSArray arrayWithObjects:@"leftup1",@"leftup2",@"leftup3",nil];
 //        for (int i=0; i<[targetPart count]; i++)
@@ -172,57 +154,44 @@ NSString *const ARMB00 = @"ARMB004";
         NSInteger index3 = [bodyNames indexOfObject:@"leftup3"];
         NSInteger index2 = [bodyNames indexOfObject:@"leftup2"];
         NSInteger index1 = [bodyNames indexOfObject:@"leftup1"];
-        UIButton *button1 = bodyButtons[index1];
-        UIButton *button2 = bodyButtons[index2];
-        UIButton *button3 = bodyButtons[index3];
-        button1.enabled  =YES;
-        button2.enabled = YES;
-        button3.enabled = YES;
-        
+        BodyButton *button1 = bodyButtons[index1];
+        BodyButton *button2 = bodyButtons[index2];
+        BodyButton *button3 = bodyButtons[index3];
+        button1.multiParamDic = [NSMutableDictionary dictionaryWithDictionary:lightUpCommitDics[index1]];
+        button2.multiParamDic = [NSMutableDictionary dictionaryWithDictionary:lightUpCommitDics[index2]];
+        button3.multiParamDic = [NSMutableDictionary dictionaryWithDictionary:lightUpCommitDics[index3]];
+        NSArray *buttonArray = [NSArray arrayWithObjects:button1,button2,button3,nil];
+        for (UIButton *button in buttonArray){
+            button.enabled = YES;
+            [button addTarget:self action:@selector(changeColorWithButton:) forControlEvents:UIControlEventTouchUpInside];
+        }
         if ([treatInfomation.enabled[1] isEqualToString:@"1"]) {
             [button3 setImage:[UIImage imageNamed:@"leftup3" withColor:@"yellow"] forState:UIControlStateNormal];
-            button3.multiParamDic = lightUpCommitDics[index3];
-            [button3 addTarget:self action:@selector(changeColorWithButton:) forControlEvents:UIControlEventTouchUpInside];
         }
+        if ([treatInfomation.enabled[2] isEqualToString:@"1"]) {
+            [button2 setImage:[UIImage imageNamed:@"leftup2" withColor:@"yellow"] forState:UIControlStateNormal];
+        }
+        if ([treatInfomation.enabled[3] isEqualToString:@"1"]) {
+            [button1 setImage:[UIImage imageNamed:@"leftup1" withColor:@"yellow"] forState:UIControlStateNormal];
+        }
+        
+
     }
-//    switch (part[0]) {
-//        case LEGA003:
-//
-//            if ([treatInfomation.enabled[1]  isEqual: @"1"])
-//            {
-//                NSInteger index = [bodyNames indexOfObject:@"leftup3"];
-//                UIButton *button = bodyButtons[index];
-//                button.enabled = YES;
-//                
-//                [button setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
-//                [button addTarget:self action:@selector(changeColorWith:) forControlEvents:UIControlEventTouchUpInside];
-//            }else if ([treatInfomation.enabled[1] isEqualToString:@"0"])
-//            {
-//                NSInteger index = [bodyNames indexOfObject:@"leftup3"];
-//                UIButton *button = bodyButtons[index];
-//                button.enabled = YES;
-//            }
-//            if ([treatInfomation.enabled[2] isEqualToString:@"1"])
-//            {
-//                
-//            }
-//            break;
-//            
-//        default:
-//            break;
-//    }
-    
 }
--(UIButton *)bodyButtonReturnWithTag:(NSInteger)tag
+-(BodyButton *)bodyButtonReturnWithTag:(NSInteger)tag
 {
-    UIButton *button = [[UIButton alloc]init];
+    BodyButton *button = [[BodyButton alloc]init];
     button.frame = [self.backgroundView viewWithTag:tag].frame;
     [[button imageView]setContentMode:UIViewContentModeScaleAspectFit];
     return button;
 }
--(void)changeColorWithButton:(UIButton *)button
+
+-(void)changeColorWithButton:(BodyButton *)button
 {
+    
     NSString *imageName = [button.multiParamDic objectForKey:@"position"];
+    NSNumber *commitNumber = [button.multiParamDic objectForKey:@"commit"];
+    
     if ([button.currentImage isEqual:[UIImage imageNamed:imageName withColor:@"yellow"]])
     {
         [button setImage:[UIImage imageNamed:imageName withColor:@"grey"] forState:UIControlStateNormal];
@@ -233,7 +202,7 @@ NSString *const ARMB00 = @"ARMB004";
     Pack *pack = [[Pack alloc]init];
     
     
-    Byte dataBytes[2] = {0,0x16};
+    Byte dataBytes[2] = {0,[commitNumber unsignedIntegerValue]};
     NSData *data = [NSData dataWithBytes:dataBytes length:2];
     
     Byte addrBytes[2] ={0,0};
@@ -293,10 +262,6 @@ NSString *const ARMB00 = @"ARMB004";
 #pragma mark - commit
 - (void)start
 {
-    if (self.clientSockets == nil)
-    {
-        return;
-    }
     Pack *pack = [[Pack alloc]init];
     
     Byte addrBytes[2] ={0,0};
@@ -363,36 +328,7 @@ NSString *const ARMB00 = @"ARMB004";
         [obj writeData:sendData withTimeout:-1 tag:3];
     }];
 }
--(int*)judgePartsReturn
 
-{
-    int partsPositon[]= { -1, -1};
-    if ([treatInfomation.aPort isEqualToString:@"ARMB004"]) { partsPositon[0] = ARMB004;}
-    else if ([treatInfomation.aPort isEqualToString:@"ARMA003"]) { partsPositon[0] = ARMA003;}
-    else if ([treatInfomation.aPort isEqualToString:@"HNDA001"]) { partsPositon[0] = HNDA001;}
-    else if ([treatInfomation.aPort isEqualToString:@"FOTA001"]) { partsPositon[0] = FOTA001;}
-    else if ([treatInfomation.aPort isEqualToString:@"LEGA003"]) { partsPositon[0] = LEGA003;}
-    else if ([treatInfomation.aPort isEqualToString:@"LEGA004"]) { partsPositon[0] = LEGA004;}
-    else if ([treatInfomation.aPort isEqualToString:@"ABDA004"]) { partsPositon[0] = ABDA004;}
-    else if ([treatInfomation.aPort isEqualToString:@"HANA008"]) { partsPositon[0] = HANA008;}
-    else if ([treatInfomation.aPort isEqualToString:@"NONA000"]) { partsPositon[0] = NONA000;}
-    
-    if ([treatInfomation.aPort isEqualToString:@"ARMB004"]) { partsPositon[1] = ARMB004;}
-    else if ([treatInfomation.aPort isEqualToString:@"ARMB003"]) { partsPositon[1] = ARMB003;}
-    else if ([treatInfomation.aPort isEqualToString:@"HNDB001"]) { partsPositon[1] = HNDB001;}
-    else if ([treatInfomation.aPort isEqualToString:@"FOTB001"]) { partsPositon[1] = FOTB001;}
-    else if ([treatInfomation.aPort isEqualToString:@"LEGB003"]) { partsPositon[1] = LEGB003;}
-    else if ([treatInfomation.aPort isEqualToString:@"LEGB004"]) { partsPositon[1] = LEGB004;}
-    else if ([treatInfomation.aPort isEqualToString:@"ABDB004"]) { partsPositon[1] = ABDB004;}
-    else if ([treatInfomation.aPort isEqualToString:@"HANB008"]) { partsPositon[1] = HANB008;}
-    else if ([treatInfomation.aPort isEqualToString:@"NONB000"]) { partsPositon[1] = NONB000;}
-    
-    else if ([treatInfomation.aPort isEqualToString:@"LEGA006"]) { partsPositon[0] = LEGA006;}
-    else if ([treatInfomation.aPort isEqualToString:@"LEGA008"]) { partsPositon[0] = LEGA008;}
-    
-    return partsPositon;
-    
-}
 
 #pragma mark - 服务器socketDelegate
 -(void)socket:(GCDAsyncSocket *)sock didAcceptNewSocket:(GCDAsyncSocket *)newSocket{
@@ -434,7 +370,6 @@ NSString *const ARMB00 = @"ARMB004";
         dispatch_async(dispatch_get_main_queue(), ^{
             [self configureBodyView];
         });
-        NSLog(@"----treatInfomation%@",treatInfomation);
     }
 //    NSStringEncoding myEncoding = CFStringConvertEncodingToNSStringEncoding (kCFStringEncodingGB_18030_2000);
 //    

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIButton()
+@interface BodyButton:UIButton
+
 @property (nonatomic,strong)NSMutableDictionary *multiParamDic;
 @end

@@ -8,7 +8,7 @@
 
 #import "BodyButton.h"
 
-@implementation BodyButton
+@implementation BodyButton:UIButton
 
 /*
 // Only override drawRect: if you perform custom drawing.
