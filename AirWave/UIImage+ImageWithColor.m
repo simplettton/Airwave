@@ -8,7 +8,7 @@
 
 #import "UIImage+ImageWithColor.h"
 
-@implementation UIImage_ImageWithColor
+@implementation UIImage(ImageWithColor)
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -17,5 +17,17 @@
     // Drawing code
 }
 */
-
++(UIImage *)imageNamed:(NSString *)name withColor:(NSString *)color{
+    UIImage *image = [[UIImage alloc]init];
+    NSMutableString *imageName = [[NSMutableString alloc]initWithCapacity:20];
+    if (color!=nil)
+    {
+        [imageName appendFormat:@"%@_%@",name,color];
+    }else{
+        [imageName appendFormat:@"%@",name];
+    }
+    image = [UIImage imageNamed:imageName];
+    
+    return  image;
+}
 @end

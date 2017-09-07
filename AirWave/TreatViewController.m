@@ -7,10 +7,12 @@
 //
 #import <GCDAsyncSocket.h>
 #import <GCDAsyncUdpSocket.h>
-#import "TreatViewController.h"
+
 #import "Pack.h"
-#import "UINavigationController+statusBarStyle.h"
+#import "BodyButton.h"
+#import "TreatViewController.h"
 #import "TreatInformation.h"
+#import "UIImage+ImageWithColor.h"
 
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 
@@ -22,7 +24,8 @@
 #define FOTA001 5
 #define HNDA001 6
 #define HANA008 7
-#define NONA000 8
+#define NONA000 8  
+
 
 #define LEGB003 9
 #define ARMB003 10
@@ -30,13 +33,37 @@
 //#define ARMB004 12
 #define ABDB004 13
 #define FOTB001 14
-#define HNDB001 15
+ #define HNDB001 15
 #define HANB008 16
 #define NONB000 17
 
-
-#define LEGA006 18
+#define LEGA006 18              
 #define LEGA008 19
+
+#define leftup1   170
+#define leftup2   160
+#define leftup3   150
+#define lefthand  140
+#define leftdown1 130
+#define leftdown2 120
+#define leftdown3 110
+#define leftfoot  100
+
+#define rightup1   270
+#define rightup2   260
+#define rightup3   250
+#define righthand  240
+#define rightdown1 230
+#define rightdown2 220
+#define rightdown3 210
+#define rightfoot  200
+
+#define middle1     330
+#define middle2     320
+#define middle3     310
+#define middle4     300
+
+
 NSString *const ARMB00 = @"ARMB004";
 
 @interface TreatViewController ()<GCDAsyncSocketDelegate,GCDAsyncUdpSocketDelegate>
@@ -62,6 +89,8 @@ NSString *const ARMB00 = @"ARMB004";
     BOOL isPlayButton;
     BOOL isPauseButton;
     TreatInformation *treatInfomation;
+    NSArray *bodyNames;
+    NSMutableArray *bodyButtons;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -69,11 +98,15 @@ NSString *const ARMB00 = @"ARMB004";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureView];
+    [self configurePlayButton];
+    
     self.serverSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
     
+    bodyNames= [NSArray arrayWithObjects:@"leftup1",@"leftup2",@"leftup3",@"lefthand",@"leftdown1",@"leftdown2",@"leftdown3",@"leftfoot",@"rightup1",@"rightup2",@"rightup3",@"righthand"@"rightdown1",@"rightdown2",@"rightdown3",@"rightfoot"@"middle1",@"middle2",@"middle3",@"middle4",nil];
+    bodyButtons = [[NSMutableArray alloc]initWithCapacity:20];
     isPlayButton = YES;
     isPauseButton = NO;
-    [self configurePlayButton];
+
     treatInfomation = [[TreatInformation alloc]init];
     
     // 开放哪一个端口
@@ -83,6 +116,7 @@ NSString *const ARMB00 = @"ARMB004";
     {   NSLog(@"开放成功"); }
     else
     {   NSLog(@"已经开放"); }
+    
     
 }
 -(void)configureView
@@ -96,6 +130,7 @@ NSString *const ARMB00 = @"ARMB004";
     topBorder.frame = CGRectMake(0.0f, 0.0f, self.buttonView.frame.size.width, 0.5f);
     topBorder.backgroundColor = UIColorFromHex(0xE4E4E4).CGColor;
     [self.buttonView.layer addSublayer:topBorder];
+    [self configureBodyView];
 
 //    设置右边的barButtonItem
 //    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 32 , 32)];
@@ -108,37 +143,95 @@ NSString *const ARMB00 = @"ARMB004";
 -(void)configureBodyView
 {
     int *part = [self judgePartsReturn];
-
-    UIButton *bodyPart15 = [[UIButton alloc]init];
-    bodyPart15.frame = [self.backgroundView viewWithTag:15].frame;
-    [[bodyPart15 imageView]setContentMode:UIViewContentModeScaleAspectFit];
-    [bodyPart15 addTarget:self action:@selector(changeColorWith:) forControlEvents:UIControlEventTouchUpInside];
-
-    switch (part[0]) {
-        case LEGA003:
-            if ([treatInfomation.enabled[1]  isEqual: @"1"]) {
-                [bodyPart15 setImage:[UIImage imageNamed:@"leftup3_yellow"] forState:UIControlStateNormal];
-                [self.backgroundView addSubview:bodyPart15];
-            }
-            if ([treatInfomation.enabled[2] isEqualToString:@"1"]) {
-                
-            }
-            break;
-            
-        default:
-            break;
+    
+    int bodyPartTags[] = {leftup1,leftup2,leftup3,lefthand,leftdown1,leftdown2,leftdown3,leftfoot,rightup1,rightup2,rightup3,righthand,rightdown1,rightdown2,rightdown3,rightfoot,middle1,middle2,middle3,middle4};
+    
+    //加载身体部位按钮
+    for (int i=0; i<[bodyNames count]; i++)
+    {
+        int tag = bodyPartTags[i];
+        UIButton *button = [self bodyButtonReturnWithTag:tag];
+        [button setImage:[UIImage imageNamed:bodyNames[i] withColor:@"grey"] forState:UIControlStateNormal];
+        [bodyButtons addObject:button];
+        [self.backgroundView addSubview:button];
+        button.enabled = NO;
     }
+    NSArray *lightUpCommitDics = @[@{@"position":@"leftup1",@"commit":@"0x18"},
+                                   @{@"position":@"leftup2",@"commit":@"0x17"},
+                                   @{@"position":@"leftup3",@"commit":@"0x16"}];
+    
+    if (part[0]==LEGA003)
+    {
+//        NSArray *targetPart =[NSArray arrayWithObjects:@"leftup1",@"leftup2",@"leftup3",nil];
+//        for (int i=0; i<[targetPart count]; i++)
+//        {
+//            NSInteger index = [bodyNames indexOfObject:targetPart[i]];
+//            UIButton *button = bodyButtons[index];
+//            button.enabled = YES;
+//        }
+        NSInteger index3 = [bodyNames indexOfObject:@"leftup3"];
+        NSInteger index2 = [bodyNames indexOfObject:@"leftup2"];
+        NSInteger index1 = [bodyNames indexOfObject:@"leftup1"];
+        UIButton *button1 = bodyButtons[index1];
+        UIButton *button2 = bodyButtons[index2];
+        UIButton *button3 = bodyButtons[index3];
+        button1.enabled  =YES;
+        button2.enabled = YES;
+        button3.enabled = YES;
+        
+        if ([treatInfomation.enabled[1] isEqualToString:@"1"]) {
+            [button3 setImage:[UIImage imageNamed:@"leftup3" withColor:@"yellow"] forState:UIControlStateNormal];
+            button3.multiParamDic = lightUpCommitDics[index3];
+            [button3 addTarget:self action:@selector(changeColorWithButton:) forControlEvents:UIControlEventTouchUpInside];
+        }
+    }
+//    switch (part[0]) {
+//        case LEGA003:
+//
+//            if ([treatInfomation.enabled[1]  isEqual: @"1"])
+//            {
+//                NSInteger index = [bodyNames indexOfObject:@"leftup3"];
+//                UIButton *button = bodyButtons[index];
+//                button.enabled = YES;
+//                
+//                [button setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
+//                [button addTarget:self action:@selector(changeColorWith:) forControlEvents:UIControlEventTouchUpInside];
+//            }else if ([treatInfomation.enabled[1] isEqualToString:@"0"])
+//            {
+//                NSInteger index = [bodyNames indexOfObject:@"leftup3"];
+//                UIButton *button = bodyButtons[index];
+//                button.enabled = YES;
+//            }
+//            if ([treatInfomation.enabled[2] isEqualToString:@"1"])
+//            {
+//                
+//            }
+//            break;
+//            
+//        default:
+//            break;
+//    }
     
 }
--(void)changeColorWith:(UIButton *)button
+-(UIButton *)bodyButtonReturnWithTag:(NSInteger)tag
 {
-    if ([button.currentImage isEqual:[UIImage imageNamed:@"leftup3_yellow"]])
+    UIButton *button = [[UIButton alloc]init];
+    button.frame = [self.backgroundView viewWithTag:tag].frame;
+    [[button imageView]setContentMode:UIViewContentModeScaleAspectFit];
+    return button;
+}
+-(void)changeColorWithButton:(UIButton *)button
+{
+    NSString *imageName = [button.multiParamDic objectForKey:@"position"];
+    if ([button.currentImage isEqual:[UIImage imageNamed:imageName withColor:@"yellow"]])
     {
-        [button setImage:[UIImage imageNamed:@"leftup3_grey"] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:imageName withColor:@"grey"] forState:UIControlStateNormal];
     }else {
-        [button setImage:[UIImage imageNamed:@"leftup3_yellow"] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:imageName withColor:@"yellow"] forState:UIControlStateNormal];
     }
+    
     Pack *pack = [[Pack alloc]init];
+    
     
     Byte dataBytes[2] = {0,0x16};
     NSData *data = [NSData dataWithBytes:dataBytes length:2];

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIImage_ImageWithColor : UIView
-
+@interface UIImage(ImageWithColor)
++(UIImage *)imageNamed:(NSString *)name withColor:(NSString *)color;
 @end

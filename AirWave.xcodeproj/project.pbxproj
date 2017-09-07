@@ -12,6 +12,8 @@
 		044D54B81F4D159D002C1E35 /* StandardTreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D54B71F4D159D002C1E35 /* StandardTreatViewController.m */; };
 		044D54BB1F4D15F7002C1E35 /* Pack.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D54BA1F4D15F7002C1E35 /* Pack.m */; };
 		044D54BE1F4D1A4C002C1E35 /* GradientTreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D54BD1F4D1A4C002C1E35 /* GradientTreatViewController.m */; };
+		044E4F521F60D63B009DD7E7 /* UIImage+ImageWithColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 044E4F511F60D63B009DD7E7 /* UIImage+ImageWithColor.m */; };
+		044E4F551F611C83009DD7E7 /* BodyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 044E4F541F611C83009DD7E7 /* BodyButton.m */; };
 		0457C63E1F5563EE0050C604 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0457C63C1F5563EE0050C604 /* Main.storyboard */; };
 		0462C80F1F5D3FA900AEC2D6 /* Infoclass.m in Sources */ = {isa = PBXBuildFile; fileRef = 0462C80E1F5D3FA900AEC2D6 /* Infoclass.m */; };
 		0462C8131F5D42CE00AEC2D6 /* TreatInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0462C8121F5D42CE00AEC2D6 /* TreatInformation.m */; };
@@ -58,6 +60,10 @@
 		044D54BA1F4D15F7002C1E35 /* Pack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pack.m; sourceTree = "<group>"; };
 		044D54BC1F4D1A4C002C1E35 /* GradientTreatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientTreatViewController.h; sourceTree = "<group>"; };
 		044D54BD1F4D1A4C002C1E35 /* GradientTreatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientTreatViewController.m; sourceTree = "<group>"; };
+		044E4F501F60D63B009DD7E7 /* UIImage+ImageWithColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageWithColor.h"; sourceTree = "<group>"; };
+		044E4F511F60D63B009DD7E7 /* UIImage+ImageWithColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageWithColor.m"; sourceTree = "<group>"; };
+		044E4F531F611C83009DD7E7 /* BodyButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BodyButton.h; sourceTree = "<group>"; };
+		044E4F541F611C83009DD7E7 /* BodyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BodyButton.m; sourceTree = "<group>"; };
 		0457C63D1F5563EE0050C604 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0462C80D1F5D3FA900AEC2D6 /* Infoclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Infoclass.h; sourceTree = "<group>"; };
 		0462C80E1F5D3FA900AEC2D6 /* Infoclass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Infoclass.m; sourceTree = "<group>"; };
@@ -168,8 +174,6 @@
 				04B68F481F4EDAE200FD31E5 /* ParameterTreatViewController.m */,
 				041FD7E31F58FDEA00522D64 /* SolutionTreatViewController.h */,
 				041FD7E41F58FDEA00522D64 /* SolutionTreatViewController.m */,
-				048A3B121F53C54900929C37 /* UIColor+UIcolor_RGB.h */,
-				048A3B131F53C54900929C37 /* UIColor+UIcolor_RGB.m */,
 				048A3B181F540DC500929C37 /* SettingViewController.h */,
 				048A3B191F540DC500929C37 /* SettingViewController.m */,
 				048A3B1B1F5411D700929C37 /* OtherSettingViewController.h */,
@@ -187,6 +191,12 @@
 		046BA76B1F480DF2004D7E74 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				048A3B121F53C54900929C37 /* UIColor+UIcolor_RGB.h */,
+				048A3B131F53C54900929C37 /* UIColor+UIcolor_RGB.m */,
+				044E4F501F60D63B009DD7E7 /* UIImage+ImageWithColor.h */,
+				044E4F511F60D63B009DD7E7 /* UIImage+ImageWithColor.m */,
+				044E4F531F611C83009DD7E7 /* BodyButton.h */,
+				044E4F541F611C83009DD7E7 /* BodyButton.m */,
 				0462C80D1F5D3FA900AEC2D6 /* Infoclass.h */,
 				0462C80E1F5D3FA900AEC2D6 /* Infoclass.m */,
 				044D54B21F4D0D4A002C1E35 /* 图标 */,
@@ -422,6 +432,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				046BA7731F480DF2004D7E74 /* ViewController.m in Sources */,
+				044E4F551F611C83009DD7E7 /* BodyButton.m in Sources */,
 				04B68F491F4EDAE200FD31E5 /* ParameterTreatViewController.m in Sources */,
 				048A3B1D1F5411D700929C37 /* OtherSettingViewController.m in Sources */,
 				048A3B141F53C54900929C37 /* UIColor+UIcolor_RGB.m in Sources */,
@@ -431,6 +442,7 @@
 				044D54BB1F4D15F7002C1E35 /* Pack.m in Sources */,
 				0462C80F1F5D3FA900AEC2D6 /* Infoclass.m in Sources */,
 				046BA76D1F480DF2004D7E74 /* main.m in Sources */,
+				044E4F521F60D63B009DD7E7 /* UIImage+ImageWithColor.m in Sources */,
 				044D54B81F4D159D002C1E35 /* StandardTreatViewController.m in Sources */,
 				048A3B1A1F540DC500929C37 /* SettingViewController.m in Sources */,
 				041FD7E51F58FDEA00522D64 /* SolutionTreatViewController.m in Sources */,
