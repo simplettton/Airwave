@@ -41,12 +41,16 @@
 #define LEGA008 19
 
 
-
-typedef NS_ENUM(NSUInteger,BodyTags) {
-    leftup1   =17,leftup2   =16,leftup3   =15,lefthand  =14,leftdown1 =13,leftdown2 =12,leftdown3 =11,
-    leftfoot  =10,rightup1  =27,rightup2  =26,rightup3  =25,righthand =24,rightdown1=23,rightdown2=22,
-    rightdown3=21,rightfoot =20,middle1   =33,middle2   =32,middle3  =31,middle4    =30
+typedef NS_ENUM(NSUInteger,BodyButtonIndexs) {
+    leftup1index,leftup2index,leftup3index,lefthandindex,leftdown1index,leftdown2index,leftdown3index,leftfootindex,rightup1index,rightup2index,rightup3index,righthandindex,rightdown1index,rightdown2index,rightdown3index,rightfootindex,middle1index,middle2index,middle3index,middle4index
+    
 };
+typedef NS_ENUM(NSUInteger,BodyTags) {
+    leftup1tag   =17,leftup2tag   =16,leftup3tag   =15,lefthandtag  =14,leftdown1tag =13,leftdown2tag =12,leftdown3tag =11,
+    leftfoottag  =10,rightup1tag  =27,rightup2tag  =26,rightup3tag  =25,righthandtag =24,rightdown1tag=23,rightdown2tag=22,
+    rightdown3tag=21,rightfoottag =20,middle1tag   =33,middle2tag   =32,middle3tag   =31,middle4tag   =30
+};
+static int bodyPartTags[] = {leftup1tag,leftup2tag,leftup3tag,lefthandtag,leftdown1tag,leftdown2tag,leftdown3tag,leftfoottag,rightup1tag,rightup2tag,rightup3tag,righthandtag,rightdown1tag,rightdown2tag,rightdown3tag,rightfoottag,middle1tag,middle2tag,middle3tag,middle4tag};
 
 NSString *const ARMB00 = @"ARMB004";
 
@@ -109,19 +113,6 @@ NSString *const ARMB00 = @"ARMB004";
     topBorder.backgroundColor = UIColorFromHex(0xE4E4E4).CGColor;
     [self.buttonView.layer addSublayer:topBorder];
     [self configurePlayButton];
-
-//    设置右边的barButtonItem
-//    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 32 , 32)];
-//    [btn setBackgroundImage:[UIImage imageNamed:@"1200916"] forState:UIControlStateNormal];
-//    [btn addTarget:self action:@selector(rightBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithCustomView:btn];
-//    self.navigationItem.rightBarButtonItem = barButton;
-    
-}
--(void)configureBodyView
-{
-
-    int bodyPartTags[] = {leftup1,leftup2,leftup3,lefthand,leftdown1,leftdown2,leftdown3,leftfoot,rightup1,rightup2,rightup3,righthand,rightdown1,rightdown2,rightdown3,rightfoot,middle1,middle2,middle3,middle4};
     
     //加载身体部位按钮
     for (int i=0; i<[bodyNames count]; i++)
@@ -133,57 +124,122 @@ NSString *const ARMB00 = @"ARMB004";
         [self.backgroundView addSubview:button];
         button.enabled = NO;
     }
-    NSArray *lightUpCommitDics = @[@{@"position":@"leftup1",  @"commit":[NSNumber numberWithUnsignedInteger:0x18]},
-                                   @{@"position":@"leftup2",  @"commit":[NSNumber numberWithUnsignedInteger:0x17]},
-                                   @{@"position":@"leftup3",  @"commit":[NSNumber numberWithUnsignedInteger:0x16]},
-                                   @{@"position":@"lefthand", @"commit":[NSNumber numberWithUnsignedInteger:0x15]},
-                                   @{@"position":@"leftdown1",@"commit":[NSNumber numberWithUnsignedInteger:0x1e]},
-                                   @{@"position":@"leftdown2",@"commit":[NSNumber numberWithUnsignedInteger:0x1f]},
-                                   @{@"position":@"leftdown3",@"commit":[NSNumber numberWithUnsignedInteger:0x20]},
-                                   @{@"position":@"leftfoot", @"commit":[NSNumber numberWithUnsignedInteger:0x21]}];
+
+//    设置右边的barButtonItem
+//    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 32 , 32)];
+//    [btn setBackgroundImage:[UIImage imageNamed:@"1200916"] forState:UIControlStateNormal];
+//    [btn addTarget:self action:@selector(rightBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithCustomView:btn];
+//    self.navigationItem.rightBarButtonItem = barButton;
+    
+}
+-(void)configureBodyView{
+    
+    NSArray *lightUpCommitDics = @[@{@"position":@"leftup1",   @"commit":[NSNumber numberWithUnsignedInteger:0x18]},
+                                   @{@"position":@"leftup2",   @"commit":[NSNumber numberWithUnsignedInteger:0x17]},
+                                   @{@"position":@"leftup3",   @"commit":[NSNumber numberWithUnsignedInteger:0x16]},
+                                   @{@"position":@"lefthand",  @"commit":[NSNumber numberWithUnsignedInteger:0x15]},
+                                   @{@"position":@"leftdown1", @"commit":[NSNumber numberWithUnsignedInteger:0x1e]},
+                                   @{@"position":@"leftdown2", @"commit":[NSNumber numberWithUnsignedInteger:0x1f]},
+                                   @{@"position":@"leftdown3", @"commit":[NSNumber numberWithUnsignedInteger:0x20]},
+                                   @{@"position":@"leftfoot",  @"commit":[NSNumber numberWithUnsignedInteger:0x21]},
+                                   @{@"position":@"rightup1",  @"commit":[NSNumber numberWithUnsignedInteger:0x19]},
+                                   @{@"position":@"rightup2",  @"commit":[NSNumber numberWithUnsignedInteger:0x1a]},
+                                   @{@"position":@"rightup3",  @"commit":[NSNumber numberWithUnsignedInteger:0x1b]},
+                                   @{@"position":@"righthand", @"commit":[NSNumber numberWithUnsignedInteger:0x1c]},
+                                   @{@"position":@"rightdown1",@"commit":[NSNumber numberWithUnsignedInteger:0x22]},
+                                   @{@"position":@"rightdown2",@"commit":[NSNumber numberWithUnsignedInteger:0x23]},
+                                   @{@"position":@"rightdown3",@"commit":[NSNumber numberWithUnsignedInteger:0x24]},
+                                   @{@"position":@"rightfoot", @"commit":[NSNumber numberWithUnsignedInteger:0x25]},
+                                   @{@"position":@"middle1",   @"commit":[NSNumber numberWithUnsignedInteger:0x28]},
+                                   @{@"position":@"middle2",   @"commit":[NSNumber numberWithUnsignedInteger:0x27]},
+                                   @{@"position":@"middle3",   @"commit":[NSNumber numberWithUnsignedInteger:0x26]},
+                                   @{@"position":@"middle1",   @"commit":[NSNumber numberWithUnsignedInteger:0x1d]}];
+    //bodypart associate with lightupcommit
+    for (int i=0; i<[bodyNames count]; i++) {
+        BodyButton *button = bodyButtons[i];
+        button.multiParamDic = [NSMutableDictionary dictionaryWithDictionary:lightUpCommitDics[i]];
+    }
     NSString *aport = treatInfomation.aPort;
     if ([aport isEqualToString:@"ARMA003"])
     {
-//        NSArray *targetPart =[NSArray arrayWithObjects:@"leftup1",@"leftup2",@"leftup3",nil];
-//        for (int i=0; i<[targetPart count]; i++)
-//        {
-//            NSInteger index = [bodyNames indexOfObject:targetPart[i]];
-//            UIButton *button = bodyButtons[index];
-//            button.enabled = YES;
-//        }
-        NSInteger index3 = [bodyNames indexOfObject:@"leftup3"];
-        NSInteger index2 = [bodyNames indexOfObject:@"leftup2"];
-        NSInteger index1 = [bodyNames indexOfObject:@"leftup1"];
-        BodyButton *button1 = bodyButtons[index1];
-        BodyButton *button2 = bodyButtons[index2];
-        BodyButton *button3 = bodyButtons[index3];
-        button1.multiParamDic = [NSMutableDictionary dictionaryWithDictionary:lightUpCommitDics[index1]];
-        button2.multiParamDic = [NSMutableDictionary dictionaryWithDictionary:lightUpCommitDics[index2]];
-        button3.multiParamDic = [NSMutableDictionary dictionaryWithDictionary:lightUpCommitDics[index3]];
-        NSArray *buttonArray = [NSArray arrayWithObjects:button1,button2,button3,nil];
-        for (UIButton *button in buttonArray){
-            button.enabled = YES;
-            [button addTarget:self action:@selector(changeColorWithButton:) forControlEvents:UIControlEventTouchUpInside];
+        [self configureLeft3WithType:@"ARMA003"];
+    }
+    if ([aport isEqualToString:@"ARMB004"]) {
+        BodyButton *button = bodyButtons[3];
+        if ([treatInfomation.enabled[0] isEqualToString:@"1"]) {
+            [button setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
         }
-        if ([treatInfomation.enabled[1] isEqualToString:@"1"]) {
-            [button3 setImage:[UIImage imageNamed:@"leftup3" withColor:@"yellow"] forState:UIControlStateNormal];
-        }
-        if ([treatInfomation.enabled[2] isEqualToString:@"1"]) {
-            [button2 setImage:[UIImage imageNamed:@"leftup2" withColor:@"yellow"] forState:UIControlStateNormal];
-        }
-        if ([treatInfomation.enabled[3] isEqualToString:@"1"]) {
-            [button1 setImage:[UIImage imageNamed:@"leftup1" withColor:@"yellow"] forState:UIControlStateNormal];
-        }
-        
-
+        [self enableButton:button];
+        [self configureLeft3WithType:@"ARMA003"];
+    }
+    if ([aport isEqualToString:@"LEGA003"]) {
+        [self configureLeft3WithType:@"LEGA003"];
     }
 }
+//-(void)configureLEGA003{
+//    for (int i = leftdown1index; i<leftdown1index+3; i++) {
+//        [self enableButton:bodyButtons[i]];
+//    }
+//    for (int i = 1; i<=3; i++) {
+//        if ([treatInfomation.enabled[i] isEqualToString:@"1" ])
+//        {
+//            int indexArray [] = {leftdown1index,leftdown2index,leftdown3index};
+//            for (int j = 0; j<3; j++) {
+//                int index = indexArray[i];
+//                [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
+//            }
+//            
+//        }
+//    }
+//}
+-(void)configureLeft3WithType:(NSString *)type{
+    int *indexArray = NULL;
+    if ([type isEqualToString:@"ARMA003"]) {
+        indexArray[0]= leftup3index;indexArray[1]=leftup2index;indexArray[2]=leftup1index;
+    }
+    if ([type isEqualToString:@"LEGA003"]) {
+        indexArray[0]= leftdown3index;indexArray[1]=leftdown2index;indexArray[2]=leftdown1index;
+    }
+    int startIndex = indexArray[0];
+    for (int i = startIndex; i<startIndex+3; i++) {
+        [self enableButton:bodyButtons[i]];
+    }
+    for (int i = 1; i<=3; i++) {
+        if ([treatInfomation.enabled[i] isEqualToString:@"1" ])
+        {
+            int index = indexArray[i];
+            [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
+            
+        }
+    }
+}
+//-(void)configureARMA003{
+//
+//    for (int i = leftup1index; i<leftup1index+3; i++) {
+//        [self enableButton:bodyButtons[i]];
+//    }
+//    if ([treatInfomation.enabled[1] isEqualToString:@"1"]) {
+//        [bodyButtons[leftup3index]setImage:[UIImage imageNamed:@"leftup3" withColor:@"yellow"] forState:UIControlStateNormal];
+//    }
+//    if ([treatInfomation.enabled[2] isEqualToString:@"1"]) {
+//        [bodyButtons[leftup2index] setImage:[UIImage imageNamed:@"leftup2" withColor:@"yellow"] forState:UIControlStateNormal];
+//    }
+//    if ([treatInfomation.enabled[3] isEqualToString:@"1"]) {
+//        [bodyButtons[leftup1index] setImage:[UIImage imageNamed:@"leftup1" withColor:@"yellow"] forState:UIControlStateNormal];
+//    }
+//}
 -(BodyButton *)bodyButtonReturnWithTag:(NSInteger)tag
 {
     BodyButton *button = [[BodyButton alloc]init];
     button.frame = [self.backgroundView viewWithTag:tag].frame;
     [[button imageView]setContentMode:UIViewContentModeScaleAspectFit];
     return button;
+}
+
+-(void)enableButton:(UIButton *)button{
+    button.enabled = YES;
+    [button addTarget:self action:@selector(changeColorWithButton:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 -(void)changeColorWithButton:(BodyButton *)button
@@ -338,6 +394,7 @@ NSString *const ARMB00 = @"ARMB004";
     [self addTimer];
     NSLog(@"连接成功");
     NSLog(@"客户端的地址%@ 端口%d",newSocket.connectedHost,newSocket.connectedPort);
+    
     [self askForTreatInfomation];
     [newSocket readDataWithTimeout:-1 tag:0];
     
