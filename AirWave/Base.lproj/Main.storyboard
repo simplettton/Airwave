@@ -69,7 +69,7 @@
                                         <rect key="frame" x="64" y="200" width="35" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" tag="17" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="leftup1_green" translatesAutoresizingMaskIntoConstraints="NO" id="JBA-yY-JKz">
+                                    <imageView userInteractionEnabled="NO" tag="17" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="leftup1_grey" translatesAutoresizingMaskIntoConstraints="NO" id="JBA-yY-JKz">
                                         <rect key="frame" x="78" y="162" width="42" height="53"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -1394,7 +1394,7 @@
         <image name="leftdown2_grey" width="144" height="147"/>
         <image name="leftdown3_grey" width="108" height="182"/>
         <image name="lefthand_grey" width="61" height="61"/>
-        <image name="leftup1_green" width="107" height="196"/>
+        <image name="leftup1_grey" width="107" height="196"/>
         <image name="leftup2_grey" width="128" height="127"/>
         <image name="leftup3_grey" width="107" height="100"/>
         <image name="leg3" width="900" height="200"/>

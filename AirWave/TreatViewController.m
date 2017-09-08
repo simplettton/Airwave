@@ -82,6 +82,7 @@ NSString *const ARMB00 = @"ARMB004";
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    [self askForTreatInfomation];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -158,22 +159,33 @@ NSString *const ARMB00 = @"ARMB004";
     //bodypart associate with lightupcommit
     for (int i=0; i<[bodyNames count]; i++) {
         BodyButton *button = bodyButtons[i];
+        button.enabled = NO;
+        [button setImage:[UIImage imageNamed:bodyNames[i] withColor:@"grey"] forState:UIControlStateNormal];
         button.multiParamDic = [NSMutableDictionary dictionaryWithDictionary:lightUpCommitDics[i]];
     }
+    
     NSString *aport = treatInfomation.aPort;
     if ([aport isEqualToString:@"ARMA003"])
     {
         [self configureLeft3WithType:@"ARMA003"];
     }
+    if ([aport isEqualToString:@"LEGA003"]) {
+        [self configureLeft3WithType:@"LEGA003"];
+    }
     if ([aport isEqualToString:@"ARMB004"]) {
-        BodyButton *button = bodyButtons[3];
+        BodyButton *button = bodyButtons[lefthandindex];
         if ([treatInfomation.enabled[0] isEqualToString:@"1"]) {
             [button setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
         }
         [self enableButton:button];
         [self configureLeft3WithType:@"ARMA003"];
     }
-    if ([aport isEqualToString:@"LEGA003"]) {
+    if ([aport isEqualToString:@"LEGA004"]) {
+        BodyButton *button = bodyButtons[leftfootindex];
+        if ([treatInfomation.enabled[0] isEqualToString:@"1"]) {
+            [button setImage:[UIImage imageNamed:bodyNames[leftfootindex] withColor:@"yellow"] forState:UIControlStateNormal];
+        }
+        [self enableButton:button];
         [self configureLeft3WithType:@"LEGA003"];
     }
 }
@@ -194,23 +206,22 @@ NSString *const ARMB00 = @"ARMB004";
 //    }
 //}
 -(void)configureLeft3WithType:(NSString *)type{
-    int *indexArray = NULL;
+    int indexArray[3];
     if ([type isEqualToString:@"ARMA003"]) {
         indexArray[0]= leftup3index;indexArray[1]=leftup2index;indexArray[2]=leftup1index;
     }
     if ([type isEqualToString:@"LEGA003"]) {
         indexArray[0]= leftdown3index;indexArray[1]=leftdown2index;indexArray[2]=leftdown1index;
     }
-    int startIndex = indexArray[0];
+    int startIndex = indexArray[2];
     for (int i = startIndex; i<startIndex+3; i++) {
         [self enableButton:bodyButtons[i]];
     }
     for (int i = 1; i<=3; i++) {
         if ([treatInfomation.enabled[i] isEqualToString:@"1" ])
         {
-            int index = indexArray[i];
+            int index = indexArray[i-1];
             [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
-            
         }
     }
 }
