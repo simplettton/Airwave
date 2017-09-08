@@ -12,6 +12,7 @@
 #import "BodyButton.h"
 #import "TreatViewController.h"
 #import "TreatInformation.h"
+#import "RunningInfomation.h"
 #import "UIImage+ImageWithColor.h"
 
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
@@ -77,6 +78,7 @@ NSString *const ARMB00 = @"ARMB004";
     BOOL isPlayButton;
     BOOL isPauseButton;
     TreatInformation *treatInfomation;
+    RunningInfomation *runningInfomation;
     NSArray *bodyNames;
     NSMutableArray *bodyButtons;
 }
@@ -98,6 +100,7 @@ NSString *const ARMB00 = @"ARMB004";
     bodyNames= [NSArray arrayWithObjects:@"leftup1",@"leftup2",@"leftup3",@"lefthand",@"leftdown1",@"leftdown2",@"leftdown3",@"leftfoot",@"rightup1",@"rightup2",@"rightup3",@"righthand",@"rightdown1",@"rightdown2",@"rightdown3",@"rightfoot",@"middle1",@"middle2",@"middle3",@"middle4",nil];
     bodyButtons = [[NSMutableArray alloc]initWithCapacity:20];
     treatInfomation = [[TreatInformation alloc]init];
+    runningInfomation = [[RunningInfomation alloc]init];
     [self askForTreatInfomation];
     [self configureView];
     
@@ -532,6 +535,9 @@ NSString *const ARMB00 = @"ARMB004";
         });
     }
     if (bytes[2]==0x91) {
+        [runningInfomation analyzeWithData:data];
+        dispatch_async(dispatch_get_main_queue(), ^{
+        });
         
     }
     // 第一次读取到的数据直接添加
