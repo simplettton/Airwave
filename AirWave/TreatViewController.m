@@ -156,95 +156,195 @@ NSString *const ARMB00 = @"ARMB004";
                                    @{@"position":@"middle2",   @"commit":[NSNumber numberWithUnsignedInteger:0x27]},
                                    @{@"position":@"middle3",   @"commit":[NSNumber numberWithUnsignedInteger:0x26]},
                                    @{@"position":@"middle1",   @"commit":[NSNumber numberWithUnsignedInteger:0x1d]}];
-    //bodypart associate with lightupcommit
-    for (int i=0; i<[bodyNames count]; i++) {
+    //button附带点亮模块的命令参数
+    for (int i=0; i<[bodyNames count]; i++)
+    {
         BodyButton *button = bodyButtons[i];
         button.enabled = NO;
         [button setImage:[UIImage imageNamed:bodyNames[i] withColor:@"grey"] forState:UIControlStateNormal];
         button.multiParamDic = [NSMutableDictionary dictionaryWithDictionary:lightUpCommitDics[i]];
     }
     
+    //A端
     NSString *aport = treatInfomation.aPort;
-    if ([aport isEqualToString:@"ARMA003"])
+    if ([aport isEqualToString:@"ARMA003"]) {   [self configureLeftWithType:@"ARMA003"];   }
+    if ([aport isEqualToString:@"LEGA003"]) {   [self configureLeftWithType:@"LEGA003"];   }
+    if ([aport isEqualToString:@"ARMB004"])
     {
-        [self configureLeft3WithType:@"ARMA003"];
+        [self configureLeftWithType:@"LEFTHAND"];
+        [self configureLeftWithType:@"ARMA003"];
     }
-    if ([aport isEqualToString:@"LEGA003"]) {
-        [self configureLeft3WithType:@"LEGA003"];
+    if ([aport isEqualToString:@"LEGA004"])
+    {
+        [self configureLeftWithType:@"LEFTFOOT"];
+        [self configureLeftWithType:@"LEGA003"];
     }
-    if ([aport isEqualToString:@"ARMB004"]) {
-        BodyButton *button = bodyButtons[lefthandindex];
-        if ([treatInfomation.enabled[0] isEqualToString:@"1"]) {
-            [button setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
-        }
-        [self enableButton:button];
-        [self configureLeft3WithType:@"ARMA003"];
+    if ([aport isEqualToString:@"HNDA001"]||[aport isEqualToString:@"HANA008"])
+    {
+        [self configureLeftWithType:@"LEFTHAND"];
     }
-    if ([aport isEqualToString:@"LEGA004"]) {
-        BodyButton *button = bodyButtons[leftfootindex];
-        if ([treatInfomation.enabled[0] isEqualToString:@"1"]) {
-            [button setImage:[UIImage imageNamed:bodyNames[leftfootindex] withColor:@"yellow"] forState:UIControlStateNormal];
-        }
-        [self enableButton:button];
-        [self configureLeft3WithType:@"LEGA003"];
+    if ([aport isEqualToString:@"FOTA001"]) {   [self configureLeftWithType:@"LEFTFOOT"];   }
+    if ([aport isEqualToString:@"ABDA004"]) {   [self configureLeftWithType:@"ABDA004"];    }
+    
+    //B端
+    NSString *bport = treatInfomation.bPort;
+    if ([bport isEqualToString:@"ARMB003"]) {   [self configureRightWithType:@"ARMB003"];   }
+    if ([bport isEqualToString:@"LEGB003"]) {   [self configureRightWithType:@"LEGB003"];   }
+    if ([bport isEqualToString:@"ARMB004"])
+    {
+        [self configureRightWithType:@"RIGHTHAND"];
+        [self configureRightWithType:@"ARMB003"];
     }
+    if ([bport isEqualToString:@"LEGB004"])
+    {
+        [self configureRightWithType:@"RIGHTFOOT"];
+        [self configureRightWithType:@"LEGB003"];
+    }
+    if ([bport isEqualToString:@"HNDB001"]||[bport isEqualToString:@"HANB008"])
+    {
+        [self configureRightWithType:@"RIGHTHAND"];
+    }
+    if ([bport isEqualToString:@"FOTB001"]) {   [self configureRightWithType:@"RIGHTFOOT"];   }
+    if ([bport isEqualToString:@"ABDB004"]) {   [self configureRightWithType:@"ABDB004"];    }
+    
+    
 }
-//-(void)configureLEGA003{
-//    for (int i = leftdown1index; i<leftdown1index+3; i++) {
-//        [self enableButton:bodyButtons[i]];
-//    }
-//    for (int i = 1; i<=3; i++) {
-//        if ([treatInfomation.enabled[i] isEqualToString:@"1" ])
-//        {
-//            int indexArray [] = {leftdown1index,leftdown2index,leftdown3index};
-//            for (int j = 0; j<3; j++) {
-//                int index = indexArray[i];
-//                [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
-//            }
-//            
-//        }
-//    }
-//}
--(void)configureLeft3WithType:(NSString *)type{
-    int indexArray[3];
-    if ([type isEqualToString:@"ARMA003"]) {
-        indexArray[0]= leftup3index;indexArray[1]=leftup2index;indexArray[2]=leftup1index;
-    }
-    if ([type isEqualToString:@"LEGA003"]) {
-        indexArray[0]= leftdown3index;indexArray[1]=leftdown2index;indexArray[2]=leftdown1index;
-    }
-    int startIndex = indexArray[2];
-    for (int i = startIndex; i<startIndex+3; i++) {
-        [self enableButton:bodyButtons[i]];
-    }
-    for (int i = 1; i<=3; i++) {
-        if ([treatInfomation.enabled[i] isEqualToString:@"1" ])
+-(void)configureLeftWithType:(NSString *)type
+{
+    //手臂三腔 腿部梯度
+    if ([type isEqualToString:@"ARMA003"]||[type isEqualToString:@"LEGA003"])
+    {   int indexArray[3];
+        if ([type isEqualToString:@"ARMA003"]){     indexArray[0]= leftup3index;  indexArray[1]=leftup2index;  indexArray[2]=leftup1index;      }else
+        if ([type isEqualToString:@"LEGA003"]){     indexArray[0]= leftdown3index;indexArray[1]=leftdown2index;indexArray[2]=leftdown1index;    }
+        int startIndex = indexArray[2];
+        for (int i = startIndex; i<startIndex+3; i++)
         {
-            int index = indexArray[i-1];
-            [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
+            [self enableButton:bodyButtons[i]];
+        }
+        for (int i = 0; i<3; i++)
+        {
+            if ([treatInfomation.enabled[i+1] isEqualToString:@"1" ])
+            {
+                int index = indexArray[i];
+                [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
+            }
+        }
+
+    }
+    //手部一腔
+    else if ([type isEqualToString:@"LEFTHAND"])
+    {
+        if ([treatInfomation.enabled[0] isEqualToString:@"1"])
+        {
+            [bodyButtons[lefthandindex ] setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
+        }
+        [self enableButton:bodyButtons[lefthandindex]];
+    }
+    //足部一腔
+    else if ([type isEqualToString:@"LEFTFOOT"])
+    {
+        if ([treatInfomation.enabled[0] isEqualToString:@"1"])
+        {
+            [bodyButtons[leftfootindex] setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
+        }
+        [self enableButton:bodyButtons[leftfootindex]];
+
+    }
+    //腹部
+    else
+    {
+        int indexArray[]={middle4index,middle3index,middle2index,middle1index};
+        
+        for (int i = middle1index; i<middle1index+4; i++)
+        {
+            [self enableButton:bodyButtons[i]];
+        }
+        for (int i = 0; i<4; i++)
+        {
+            if ([treatInfomation.enabled[i] isEqualToString:@"1" ])
+            {
+                int index = indexArray[i];
+                [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
+            }
         }
     }
 }
-//-(void)configureARMA003{
-//
-//    for (int i = leftup1index; i<leftup1index+3; i++) {
-//        [self enableButton:bodyButtons[i]];
-//    }
-//    if ([treatInfomation.enabled[1] isEqualToString:@"1"]) {
-//        [bodyButtons[leftup3index]setImage:[UIImage imageNamed:@"leftup3" withColor:@"yellow"] forState:UIControlStateNormal];
-//    }
-//    if ([treatInfomation.enabled[2] isEqualToString:@"1"]) {
-//        [bodyButtons[leftup2index] setImage:[UIImage imageNamed:@"leftup2" withColor:@"yellow"] forState:UIControlStateNormal];
-//    }
-//    if ([treatInfomation.enabled[3] isEqualToString:@"1"]) {
-//        [bodyButtons[leftup1index] setImage:[UIImage imageNamed:@"leftup1" withColor:@"yellow"] forState:UIControlStateNormal];
-//    }
-//}
+
+-(void)configureRightWithType:(NSString *)type
+{
+    //手臂三腔 腿部梯度
+    if ([type isEqualToString:@"ARMB003"]||[type isEqualToString:@"LEGB003"])
+    {   int indexArray[3];
+        if ([type isEqualToString:@"ARMB003"]){     indexArray[0]= rightup3index;  indexArray[1]=rightup2index;  indexArray[2]=rightup1index;      }
+                                          else{     indexArray[0]= rightdown3index;indexArray[1]=rightdown2index;indexArray[2]=rightdown1index;    }
+        int startIndex = indexArray[2];
+        for (int i = startIndex; i<startIndex+3; i++){     [self enableButton:bodyButtons[i]];     }
+        for (int i = 0; i<3; i++)
+        {
+            if ([treatInfomation.enabled[i+5] isEqualToString:@"1" ])
+            {
+                int index = indexArray[i];
+                [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
+            }
+        }
+        
+    }
+    //手部一腔
+    else if ([type isEqualToString:@"RIGHTHAND"])
+    {
+        if ([treatInfomation.enabled[4] isEqualToString:@"1"])
+        {
+            [bodyButtons[righthandindex] setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
+        }
+        [self enableButton:bodyButtons[righthandindex]];
+    }
+    //足部一腔
+    else if ([type isEqualToString:@"RIGHTFOOT"])
+    {
+        if ([treatInfomation.enabled[4] isEqualToString:@"1"])
+        {
+            [bodyButtons[rightfootindex] setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
+        }
+        [self enableButton:bodyButtons[rightfootindex]];
+        
+    }
+    //腹部
+    else
+    {
+        int indexArray[]={middle4index,middle3index,middle2index,middle1index};
+        for (int i = middle1index; i<middle1index+4; i++)
+        {
+            [self enableButton:bodyButtons[i]];
+        }
+        for (int i = 0; i<4; i++)
+        {
+            if ([treatInfomation.enabled[i+4] isEqualToString:@"1" ])
+            {
+                int index = indexArray[i];
+                [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
+            }
+        }
+    }
+
+}
+
+
+
 -(BodyButton *)bodyButtonReturnWithTag:(NSInteger)tag
 {
     BodyButton *button = [[BodyButton alloc]init];
     button.frame = [self.backgroundView viewWithTag:tag].frame;
-    [[button imageView]setContentMode:UIViewContentModeScaleAspectFit];
+    switch (tag) {
+        case middle1tag:
+        case middle2tag:
+        case middle3tag:
+        case middle4tag: [[button imageView]setContentMode:UIViewContentModeScaleToFill];
+            break;
+            
+        default:[[button imageView]setContentMode:UIViewContentModeScaleAspectFit];
+            break;
+    }
+
     return button;
 }
 
@@ -422,15 +522,7 @@ NSString *const ARMB00 = @"ARMB004";
 {
     NSString *text;
     Byte *bytes = (Byte *)[data bytes];
-//    for(int i=0;i<[data length];i++)
-//    {
-//        text =[NSString stringWithFormat:@"%d",bytes[2]];
-//        if (bytes[2]!=147)
-//        {
-//            NSLog(@"bytes[%d]= %d",i,bytes[i]);
-//            NSLog(@"receive string %@",text);
-//        }
-//    }
+
     text = [NSString stringWithFormat:@"%d",bytes[2]];
     if (bytes[2]==0x90)
     {
@@ -439,11 +531,9 @@ NSString *const ARMB00 = @"ARMB004";
             [self configureBodyView];
         });
     }
-//    NSStringEncoding myEncoding = CFStringConvertEncodingToNSStringEncoding (kCFStringEncodingGB_18030_2000);
-//    
-//    NSString *text = [[NSString alloc]initWithData:data encoding:myEncoding];
-    
-//    NSString *text = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    if (bytes[2]==0x91) {
+        
+    }
     // 第一次读取到的数据直接添加
     if (self.clientPhoneTimeDicts.count == 0)
     {

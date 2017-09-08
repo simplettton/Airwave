@@ -15,6 +15,7 @@
 		044E4F521F60D63B009DD7E7 /* UIImage+ImageWithColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 044E4F511F60D63B009DD7E7 /* UIImage+ImageWithColor.m */; };
 		044E4F571F6140D8009DD7E7 /* BodyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 044E4F561F6140D8009DD7E7 /* BodyButton.m */; };
 		0457C63E1F5563EE0050C604 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0457C63C1F5563EE0050C604 /* Main.storyboard */; };
+		045D81B31F6295B400D4D998 /* RunningInfomation.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D81B21F6295B400D4D998 /* RunningInfomation.m */; };
 		0462C80F1F5D3FA900AEC2D6 /* Infoclass.m in Sources */ = {isa = PBXBuildFile; fileRef = 0462C80E1F5D3FA900AEC2D6 /* Infoclass.m */; };
 		0462C8131F5D42CE00AEC2D6 /* TreatInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0462C8121F5D42CE00AEC2D6 /* TreatInformation.m */; };
 		046BA76D1F480DF2004D7E74 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BA76C1F480DF2004D7E74 /* main.m */; };
@@ -65,6 +66,8 @@
 		044E4F531F611C83009DD7E7 /* BodyButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BodyButton.h; sourceTree = "<group>"; };
 		044E4F561F6140D8009DD7E7 /* BodyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BodyButton.m; sourceTree = "<group>"; };
 		0457C63D1F5563EE0050C604 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		045D81B11F6295B400D4D998 /* RunningInfomation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunningInfomation.h; sourceTree = "<group>"; };
+		045D81B21F6295B400D4D998 /* RunningInfomation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunningInfomation.m; sourceTree = "<group>"; };
 		0462C80D1F5D3FA900AEC2D6 /* Infoclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Infoclass.h; sourceTree = "<group>"; };
 		0462C80E1F5D3FA900AEC2D6 /* Infoclass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Infoclass.m; sourceTree = "<group>"; };
 		0462C8111F5D42CE00AEC2D6 /* TreatInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreatInformation.h; sourceTree = "<group>"; };
@@ -131,6 +134,8 @@
 				044D54BA1F4D15F7002C1E35 /* Pack.m */,
 				0462C8111F5D42CE00AEC2D6 /* TreatInformation.h */,
 				0462C8121F5D42CE00AEC2D6 /* TreatInformation.m */,
+				045D81B11F6295B400D4D998 /* RunningInfomation.h */,
+				045D81B21F6295B400D4D998 /* RunningInfomation.m */,
 			);
 			name = dataAnalyze;
 			sourceTree = "<group>";
@@ -432,6 +437,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				046BA7731F480DF2004D7E74 /* ViewController.m in Sources */,
+				045D81B31F6295B400D4D998 /* RunningInfomation.m in Sources */,
 				044E4F571F6140D8009DD7E7 /* BodyButton.m in Sources */,
 				04B68F491F4EDAE200FD31E5 /* ParameterTreatViewController.m in Sources */,
 				048A3B1D1F5411D700929C37 /* OtherSettingViewController.m in Sources */,

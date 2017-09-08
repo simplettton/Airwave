@@ -10,6 +10,8 @@
 
 @interface TreatInformation : NSObject
 
+/*treat infomation command:0x90*/
+
 @property (nonatomic,assign)Byte treatState;
 @property (nonatomic,assign)Byte treatWay;
 @property (nonatomic,strong)NSMutableString *aPort;
