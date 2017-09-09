@@ -25,17 +25,14 @@
         
         NSString *cellStateString = [NSString stringWithFormat:@"%d",bytes[19+i]];
         self.cellState[i] = cellStateString;
+        
+//        NSLog(@"cellState[%d]= %@",i,cellStateString);
     }
     Byte treatProcessTimeBytes[]={bytes[27],bytes[28],bytes[29],bytes[30]};
     self.treatProcessTime = [self lBytesToInt:treatProcessTimeBytes withLength:4];
     self.curFocuse = bytes[31];
     return self;
 }
-
-
-
-
-
 
 
 

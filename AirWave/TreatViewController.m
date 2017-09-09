@@ -42,11 +42,20 @@
 #define LEGA008 19
 
 
-typedef NS_ENUM(NSUInteger,BodyButtonIndexs) {
+
+typedef NS_ENUM(NSUInteger,BodyButtonIndexs)
+{
     leftup1index,leftup2index,leftup3index,lefthandindex,leftdown1index,leftdown2index,leftdown3index,leftfootindex,rightup1index,rightup2index,rightup3index,righthandindex,rightdown1index,rightdown2index,rightdown3index,rightfootindex,middle1index,middle2index,middle3index,middle4index
     
 };
-typedef NS_ENUM(NSUInteger,BodyTags) {
+typedef NS_ENUM(NSUInteger,TreatState)
+{   Running,Stop,Pause,Unconnecte   };
+typedef NS_ENUM(NSUInteger,CellState)
+{
+    UnWorking,Working,KeepingAir
+};
+typedef NS_ENUM(NSUInteger,BodyTags)
+{
     leftup1tag   =17,leftup2tag   =16,leftup3tag   =15,lefthandtag  =14,leftdown1tag =13,leftdown2tag =12,leftdown3tag =11,
     leftfoottag  =10,rightup1tag  =27,rightup2tag  =26,rightup3tag  =25,righthandtag =24,rightdown1tag=23,rightdown2tag=22,
     rightdown3tag=21,rightfoottag =20,middle1tag   =33,middle2tag   =32,middle3tag   =31,middle4tag   =30
@@ -85,6 +94,7 @@ NSString *const ARMB00 = @"ARMB004";
 -(void)viewWillAppear:(BOOL)animated
 {
     [self askForTreatInfomation];
+    [self configureBodyView];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -101,10 +111,48 @@ NSString *const ARMB00 = @"ARMB004";
     bodyButtons = [[NSMutableArray alloc]initWithCapacity:20];
     treatInfomation = [[TreatInformation alloc]init];
     runningInfomation = [[RunningInfomation alloc]init];
-    [self askForTreatInfomation];
     [self configureView];
+    [self configureBodyView];
+    
+    if (self.clientSockets != nil ) {
+        [self.clientSockets enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [obj readDataWithTimeout:-1 tag:0];
+        }];
+    }
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    for (int i=0; i<[bodyNames count]; i++)
+    {
+        [bodyButtons[i] removeFromSuperview];
+    }
     
 }
+//添加计时器
+-(void)addTimer
+{
+    //长连接定时器
+    self.checkTimer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(checkLongConnect) userInfo:nil repeats:YES];
+    //将定时器添加到当前运行循环，并且调为通用模式
+    [[NSRunLoop currentRunLoop] addTimer:self.checkTimer forMode:NSRunLoopCommonModes];
+}
+//检测心跳
+-(void)checkLongConnect
+{
+    [self.clientPhoneTimeDicts enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        NSString *currentTimeStr = [self getCurrentTime];
+        //延迟超多10s判断断开
+        if (([currentTimeStr doubleValue] - [obj doubleValue] ) > 10.0)
+        {
+            NSLog(@"%@已断开连接，连接时差%f",key,([currentTimeStr doubleValue]-[obj doubleValue]));
+        }
+        else
+        {
+            NSLog(@"%@处于连接状态，连接时差%f",key,([currentTimeStr doubleValue]-[obj doubleValue]));
+        }
+        
+    }];
+}
+#pragma mark -configureViews
 -(void)configureView
 {
     self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
@@ -129,16 +177,6 @@ NSString *const ARMB00 = @"ARMB004";
         button.enabled = NO;
     }
 
-//    设置右边的barButtonItem
-//    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 32 , 32)];
-//    [btn setBackgroundImage:[UIImage imageNamed:@"1200916"] forState:UIControlStateNormal];
-//    [btn addTarget:self action:@selector(rightBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithCustomView:btn];
-//    self.navigationItem.rightBarButtonItem = barButton;
-    
-}
--(void)configureBodyView{
-    
     NSArray *lightUpCommitDics = @[@{@"position":@"leftup1",   @"commit":[NSNumber numberWithUnsignedInteger:0x18]},
                                    @{@"position":@"leftup2",   @"commit":[NSNumber numberWithUnsignedInteger:0x17]},
                                    @{@"position":@"leftup3",   @"commit":[NSNumber numberWithUnsignedInteger:0x16]},
@@ -168,50 +206,63 @@ NSString *const ARMB00 = @"ARMB004";
         button.multiParamDic = [NSMutableDictionary dictionaryWithDictionary:lightUpCommitDics[i]];
     }
     
+//    设置右边的barButtonItem
+//    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 32 , 32)];
+//    [btn setBackgroundImage:[UIImage imageNamed:@"1200916"] forState:UIControlStateNormal];
+//    [btn addTarget:self action:@selector(rightBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithCustomView:btn];
+//    self.navigationItem.rightBarButtonItem = barButton;
+    
+}
+-(void)configureBodyView{
+    
+    
     //A端
     NSString *aport = treatInfomation.aPort;
+
     if ([aport isEqualToString:@"ARMA003"]) {   [self configureLeftWithType:@"ARMA003"];   }
-    if ([aport isEqualToString:@"LEGA003"]) {   [self configureLeftWithType:@"LEGA003"];   }
-    if ([aport isEqualToString:@"ARMB004"])
+    else if ([aport isEqualToString:@"LEGA003"]) {   [self configureLeftWithType:@"LEGA003"];   }
+    else if ([aport isEqualToString:@"ARMB004"])
     {
         [self configureLeftWithType:@"LEFTHAND"];
         [self configureLeftWithType:@"ARMA003"];
     }
-    if ([aport isEqualToString:@"LEGA004"])
+    else if ([aport isEqualToString:@"LEGA004"])
     {
         [self configureLeftWithType:@"LEFTFOOT"];
         [self configureLeftWithType:@"LEGA003"];
     }
-    if ([aport isEqualToString:@"HNDA001"]||[aport isEqualToString:@"HANA008"])
+    else if ([aport isEqualToString:@"HNDA001"]||[aport isEqualToString:@"HANA008"])
     {
         [self configureLeftWithType:@"LEFTHAND"];
     }
-    if ([aport isEqualToString:@"FOTA001"]) {   [self configureLeftWithType:@"LEFTFOOT"];   }
-    if ([aport isEqualToString:@"ABDA004"]) {   [self configureLeftWithType:@"ABDA004"];    }
+    else if ([aport isEqualToString:@"FOTA001"]) {   [self configureLeftWithType:@"LEFTFOOT"];   }
+    else if ([aport isEqualToString:@"ABDA004"]) {   [self configureLeftWithType:@"ABDA004"];    }
     
     //B端
     NSString *bport = treatInfomation.bPort;
     if ([bport isEqualToString:@"ARMB003"]) {   [self configureRightWithType:@"ARMB003"];   }
-    if ([bport isEqualToString:@"LEGB003"]) {   [self configureRightWithType:@"LEGB003"];   }
-    if ([bport isEqualToString:@"ARMB004"])
+    else if ([bport isEqualToString:@"LEGB003"]) {   [self configureRightWithType:@"LEGB003"];   }
+    else if ([bport isEqualToString:@"ARMB004"])
     {
         [self configureRightWithType:@"RIGHTHAND"];
         [self configureRightWithType:@"ARMB003"];
     }
-    if ([bport isEqualToString:@"LEGB004"])
+    else if ([bport isEqualToString:@"LEGB004"])
     {
         [self configureRightWithType:@"RIGHTFOOT"];
         [self configureRightWithType:@"LEGB003"];
     }
-    if ([bport isEqualToString:@"HNDB001"]||[bport isEqualToString:@"HANB008"])
+    else if ([bport isEqualToString:@"HNDB001"]||[bport isEqualToString:@"HANB008"])
     {
         [self configureRightWithType:@"RIGHTHAND"];
     }
-    if ([bport isEqualToString:@"FOTB001"]) {   [self configureRightWithType:@"RIGHTFOOT"];   }
-    if ([bport isEqualToString:@"ABDB004"]) {   [self configureRightWithType:@"ABDB004"];    }
+    else if ([bport isEqualToString:@"FOTB001"]) {   [self configureRightWithType:@"RIGHTFOOT"];   }
+    else if ([bport isEqualToString:@"ABDB004"]) {   [self configureRightWithType:@"ABDB004"];    }
     
     
 }
+
 -(void)configureLeftWithType:(NSString *)type
 {
     //手臂三腔 腿部梯度
@@ -229,19 +280,62 @@ NSString *const ARMB00 = @"ARMB004";
             if ([treatInfomation.enabled[i+1] isEqualToString:@"1" ])
             {
                 int index = indexArray[i];
-                [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
+//                NSLog(@"treat state =%d",treatInfomation.treatState);
+                if (treatInfomation.treatState == Running)
+                {
+                    
+                    NSInteger cellState = [runningInfomation.cellState[i+1] integerValue];
+                    switch (cellState)
+                    {
+                        case UnWorking:
+                            [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
+                            break;
+                        case Working:
+                            [self startTimerToChangeColorOfButton:bodyButtons[index]];
+                            break;
+                        case KeepingAir:
+                            [bodyButtons[index]setImage:[UIImage imageNamed:bodyNames[index] withColor:@"green"]forState:UIControlStateNormal];
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                     [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
+                }
             }
         }
-
     }
     //手部一腔
     else if ([type isEqualToString:@"LEFTHAND"])
     {
         if ([treatInfomation.enabled[0] isEqualToString:@"1"])
         {
+            if (treatInfomation.treatState == Running)
+            {
+                
+                NSInteger cellState = [runningInfomation.cellState[0] integerValue];
+                switch (cellState)
+                {
+                    case UnWorking:
+                        [bodyButtons[lefthandindex] setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
+                        break;
+                    case Working:
+                        
+                        break;
+                    case KeepingAir:
+                        [bodyButtons[lefthandindex]setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"green"]forState:UIControlStateNormal];
+                        break;
+                    default:
+                        break;
+                }
+            }
             [bodyButtons[lefthandindex ] setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
+        }else
+        {
+            [self enableButton:bodyButtons[lefthandindex]];
         }
-        [self enableButton:bodyButtons[lefthandindex]];
     }
     //足部一腔
     else if ([type isEqualToString:@"LEFTFOOT"])
@@ -272,6 +366,11 @@ NSString *const ARMB00 = @"ARMB004";
         }
     }
 }
+- (void)startTimerToChangeColorOfButton:(BodyButton*)button{
+    NSTimer *timer = [NSTimer timerWithTimeInterval:0.5 target:button selector:@selector(changeColorWithButton:) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+}
+
 
 -(void)configureRightWithType:(NSString *)type
 {
@@ -287,7 +386,30 @@ NSString *const ARMB00 = @"ARMB004";
             if ([treatInfomation.enabled[i+5] isEqualToString:@"1" ])
             {
                 int index = indexArray[i];
+                //                NSLog(@"treat state =%d",treatInfomation.treatState);
+                if (treatInfomation.treatState == Running)
+                {
+                    
+                    NSInteger cellState = [runningInfomation.cellState[i+5] integerValue];
+                    switch (cellState)
+                    {
+                        case UnWorking:
+                            [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
+                            break;
+                        case Working:
+                            
+                            break;
+                        case KeepingAir:
+                            [bodyButtons[index]setImage:[UIImage imageNamed:bodyNames[index] withColor:@"green"]forState:UIControlStateNormal];
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
                 [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
+                }
             }
         }
         
@@ -328,9 +450,7 @@ NSString *const ARMB00 = @"ARMB004";
             }
         }
     }
-
 }
-
 
 
 -(BodyButton *)bodyButtonReturnWithTag:(NSInteger)tag
@@ -360,7 +480,7 @@ NSString *const ARMB00 = @"ARMB004";
 {
     
     NSString *imageName = [button.multiParamDic objectForKey:@"position"];
-    NSNumber *commitNumber = [button.multiParamDic objectForKey:@"commit"];
+ 
     
     if ([button.currentImage isEqual:[UIImage imageNamed:imageName withColor:@"yellow"]])
     {
@@ -369,8 +489,12 @@ NSString *const ARMB00 = @"ARMB004";
         [button setImage:[UIImage imageNamed:imageName withColor:@"yellow"] forState:UIControlStateNormal];
     }
     
+    [self lightupBodyButton:button];
+}
+-(void)lightupBodyButton:(BodyButton *)button
+{
+    NSNumber *commitNumber = [button.multiParamDic objectForKey:@"commit"];
     Pack *pack = [[Pack alloc]init];
-    
     
     Byte dataBytes[2] = {0,[commitNumber unsignedIntegerValue]};
     NSData *data = [NSData dataWithBytes:dataBytes length:2];
@@ -383,7 +507,6 @@ NSString *const ARMB00 = @"ARMB004";
     [self.clientSockets enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [obj writeData:sendData withTimeout:-1 tag:0];
     }];
-    
     
 }
 
@@ -404,31 +527,7 @@ NSString *const ARMB00 = @"ARMB004";
         self.pauseButton.enabled = NO;
     }
 }
-//添加计时器
--(void)addTimer
-{
-    //长连接定时器
-    self.checkTimer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(checkLongConnect) userInfo:nil repeats:YES];
-    //将定时器添加到当前运行循环，并且调为通用模式
-    [[NSRunLoop currentRunLoop] addTimer:self.checkTimer forMode:NSRunLoopCommonModes];
-}
-//检测心跳
--(void)checkLongConnect
-{
-    [self.clientPhoneTimeDicts enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        NSString *currentTimeStr = [self getCurrentTime];
-        //延迟超多10s判断断开
-        if (([currentTimeStr doubleValue] - [obj doubleValue] ) > 10.0)
-        {
-            NSLog(@"%@已断开连接，连接时差%f",key,([currentTimeStr doubleValue]-[obj doubleValue]));
-        }
-        else
-        {
-            NSLog(@"%@处于连接状态，连接时差%f",key,([currentTimeStr doubleValue]-[obj doubleValue]));
-        }
-        
-    }];
-}
+
 #pragma mark - commit
 - (void)start
 {
@@ -536,20 +635,20 @@ NSString *const ARMB00 = @"ARMB004";
     }
     if (bytes[2]==0x91) {
         [runningInfomation analyzeWithData:data];
+        [self askForTreatInfomation];
         dispatch_async(dispatch_get_main_queue(), ^{
+            [self configureBodyView];
         });
-        
     }
     // 第一次读取到的数据直接添加
     if (self.clientPhoneTimeDicts.count == 0)
     {
-        
         [self.clientPhoneTimeDicts setObject:[self getCurrentTime] forKey:text];
     }
     else
     {
         [self.clientPhoneTimeDicts enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-            [self.clientPhoneTimeDicts setObject:[self getCurrentTime] forKey:text];
+        [self.clientPhoneTimeDicts setObject:[self getCurrentTime] forKey:text];
         }];
     }
 
