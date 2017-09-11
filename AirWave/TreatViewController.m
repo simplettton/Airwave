@@ -315,10 +315,9 @@ NSString *const POST = @"8080";
         for (int i = 0; i<3; i++)
         {
             //判断单腔是否使能
-            
+            int index = indexArray[i];
             if ([treatInfomation.enabled[i+1] isEqualToString:@"1" ])
             {
-                int index = indexArray[i];
                 BodyButton *button = bodyButtons[index];
                 if (treatInfomation.treatState == Running)
                 {
