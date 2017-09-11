@@ -32,6 +32,7 @@
     for (int i = 0; i < 8; i++)
     {
         NSString *aPortString = [NSString stringWithFormat:@"%c",bytes[53+i]];
+        NSLog(@"bytes[%d]=%@",i+53,aPortString);
         [self.aPort appendString:aPortString];
         
         NSString *bPortString = [NSString stringWithFormat:@"%c",bytes[61+i]];

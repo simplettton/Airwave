@@ -6,7 +6,6 @@
 //  Copyright © 2017年 Shenzhen Lifotronic Technology Co.,Ltd. All rights reserved.
 //
 #import <GCDAsyncSocket.h>
-#import <GCDAsyncUdpSocket.h>
 
 #import "Pack.h"
 #import "BodyButton.h"
@@ -63,14 +62,19 @@ typedef NS_ENUM(NSUInteger,BodyTags)
 static int bodyPartTags[] = {leftup1tag,leftup2tag,leftup3tag,lefthandtag,leftdown1tag,leftdown2tag,leftdown3tag,leftfoottag,rightup1tag,rightup2tag,rightup3tag,righthandtag,rightdown1tag,rightdown2tag,rightdown3tag,rightfoottag,middle1tag,middle2tag,middle3tag,middle4tag};
 
 NSString *const ARMB00 = @"ARMB004";
+NSString *const HOST = @"10.10.100.254";
+NSString *const POST = @"8088";
 
-@interface TreatViewController ()<GCDAsyncSocketDelegate,GCDAsyncUdpSocketDelegate>
-// 服务器socket(开放端口,监听客户端socket的连接)
-@property(nonatomic,strong)GCDAsyncSocket *serverSocket;
+@interface TreatViewController ()<GCDAsyncSocketDelegate>
+//客户端socket
+@property (strong,nonatomic)GCDAsyncSocket *clientSocket;
 @property (nonatomic,copy)NSMutableArray *clientSockets;
-@property (nonatomic, strong) NSTimer *checkTimer;
+//计时器
+@property (nonatomic, strong) NSTimer *connectTimer;
 // 客户端标识和心跳接收时间的字典
 @property (nonatomic, copy) NSMutableDictionary *clientPhoneTimeDicts;
+@property (nonatomic, assign) BOOL connected;
+@property (nonatomic,strong) NSTimer *changeColorTimer;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *barBtItem;
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
 @property (weak, nonatomic) IBOutlet UIButton *pauseButton;
@@ -98,28 +102,41 @@ NSString *const ARMB00 = @"ARMB004";
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //连接服务器
+    if (!self.connected)
+    {
+        self.clientSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+        NSLog(@"开始连接%@",self.clientSocket);
+        
+        NSError *error = nil;
+        self.connected = [self.clientSocket connectToHost:HOST onPort:[POST integerValue] viaInterface:nil withTimeout:-1 error:&error];
+        if (self.connected)
+        {
+            NSLog(@"客户端尝试连接");
+        }
+        else
+        {
+            self.connected = NO;
+            NSLog(@"客户端未创建连接");
+        }
+    }
+    else
+    {
+        NSLog(@"与服务器连接已建立");
+    }
+    
+    
+    
     isPlayButton = YES;
     isPauseButton = NO;
-    self.serverSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-    NSError *error = nil;
-    BOOL result = [self.serverSocket acceptOnPort:8080  error:&error];
-    if (result && error == nil)
-    {   NSLog(@"开放成功"); }
-    else
-    {   NSLog(@"已经开放"); }
     bodyNames= [NSArray arrayWithObjects:@"leftup1",@"leftup2",@"leftup3",@"lefthand",@"leftdown1",@"leftdown2",@"leftdown3",@"leftfoot",@"rightup1",@"rightup2",@"rightup3",@"righthand",@"rightdown1",@"rightdown2",@"rightdown3",@"rightfoot",@"middle1",@"middle2",@"middle3",@"middle4",nil];
     bodyButtons = [[NSMutableArray alloc]initWithCapacity:20];
     treatInfomation = [[TreatInformation alloc]init];
     runningInfomation = [[RunningInfomation alloc]init];
     [self configureView];
     [self configureBodyView];
-    
-    if (self.clientSockets != nil ) {
-        [self.clientSockets enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [obj readDataWithTimeout:-1 tag:0];
-        }];
-    }
 }
+
 -(void)viewWillDisappear:(BOOL)animated{
     for (int i=0; i<[bodyNames count]; i++)
     {
@@ -131,27 +148,40 @@ NSString *const ARMB00 = @"ARMB004";
 -(void)addTimer
 {
     //长连接定时器
-    self.checkTimer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(checkLongConnect) userInfo:nil repeats:YES];
+    self.connectTimer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(longConnectToSocket) userInfo:nil repeats:YES];
     //将定时器添加到当前运行循环，并且调为通用模式
-    [[NSRunLoop currentRunLoop] addTimer:self.checkTimer forMode:NSRunLoopCommonModes];
+    [[NSRunLoop currentRunLoop] addTimer:self.connectTimer forMode:NSRunLoopCommonModes];
 }
 //检测心跳
--(void)checkLongConnect
+//-(void)checkLongConnect
+//{
+//    [self.clientPhoneTimeDicts enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+//        NSString *currentTimeStr = [self getCurrentTime];
+//        //延迟超多10s判断断开
+//        if (([currentTimeStr doubleValue] - [obj doubleValue] ) > 10.0)
+//        {
+//            NSLog(@"%@已断开连接，连接时差%f",key,([currentTimeStr doubleValue]-[obj doubleValue]));
+//        }
+//        else
+//        {
+//            NSLog(@"%@处于连接状态，连接时差%f",key,([currentTimeStr doubleValue]-[obj doubleValue]));
+//        }
+//        
+//    }];
+//}
+
+// 心跳连接
+- (void)longConnectToSocket
 {
-    [self.clientPhoneTimeDicts enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        NSString *currentTimeStr = [self getCurrentTime];
-        //延迟超多10s判断断开
-        if (([currentTimeStr doubleValue] - [obj doubleValue] ) > 10.0)
-        {
-            NSLog(@"%@已断开连接，连接时差%f",key,([currentTimeStr doubleValue]-[obj doubleValue]));
-        }
-        else
-        {
-            NSLog(@"%@处于连接状态，连接时差%f",key,([currentTimeStr doubleValue]-[obj doubleValue]));
-        }
-        
-    }];
+    // 发送固定格式的数据,指令@"longConnect"
+    float version = [[UIDevice currentDevice] systemVersion].floatValue;
+    NSString *longConnect = [NSString stringWithFormat:@"123%f",version];
+    
+    NSData  *data = [longConnect dataUsingEncoding:NSUTF8StringEncoding];
+    
+    [self.clientSocket writeData:data withTimeout:- 1 tag:0];
 }
+
 #pragma mark -configureViews
 -(void)configureView
 {
@@ -277,10 +307,13 @@ NSString *const ARMB00 = @"ARMB004";
         }
         for (int i = 0; i<3; i++)
         {
+            
+            //判断单腔是否使能
+            
             if ([treatInfomation.enabled[i+1] isEqualToString:@"1" ])
             {
                 int index = indexArray[i];
-//                NSLog(@"treat state =%d",treatInfomation.treatState);
+                NSLog(@"treat state =%d",treatInfomation.treatState);
                 if (treatInfomation.treatState == Running)
                 {
                     
@@ -291,9 +324,10 @@ NSString *const ARMB00 = @"ARMB004";
                             [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
                             break;
                         case Working:
-                            [self startTimerToChangeColorOfButton:bodyButtons[index]];
+                            [self startTimerToChangeColorOfButton:bodyNames[index]];
                             break;
                         case KeepingAir:
+                            [self deallocTimer];
                             [bodyButtons[index]setImage:[UIImage imageNamed:bodyNames[index] withColor:@"green"]forState:UIControlStateNormal];
                             break;
                         default:
@@ -366,11 +400,17 @@ NSString *const ARMB00 = @"ARMB004";
         }
     }
 }
-- (void)startTimerToChangeColorOfButton:(BodyButton*)button{
-    NSTimer *timer = [NSTimer timerWithTimeInterval:0.5 target:button selector:@selector(changeColorWithButton:) userInfo:nil repeats:YES];
-    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
-}
 
+-(void)startTimerToChangeColorOfButton:(BodyButton*)button
+{
+    self.changeColorTimer = [NSTimer timerWithTimeInterval:0.5 target:button selector:@selector(changeGreenColor) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:self.changeColorTimer forMode:NSDefaultRunLoopMode];
+}
+-(void)deallocTimer
+{
+    [self.changeColorTimer invalidate];
+    self.changeColorTimer = nil;
+}
 
 -(void)configureRightWithType:(NSString *)type
 {
@@ -471,28 +511,28 @@ NSString *const ARMB00 = @"ARMB004";
     return button;
 }
 
--(void)enableButton:(UIButton *)button{
+-(void)enableButton:(BodyButton *)button{
     button.enabled = YES;
-    [button addTarget:self action:@selector(changeColorWithButton:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(lightupBodyButton:) forControlEvents:UIControlEventTouchUpInside];
 }
 
--(void)changeColorWithButton:(BodyButton *)button
-{
-    
-    NSString *imageName = [button.multiParamDic objectForKey:@"position"];
- 
-    
-    if ([button.currentImage isEqual:[UIImage imageNamed:imageName withColor:@"yellow"]])
-    {
-        [button setImage:[UIImage imageNamed:imageName withColor:@"grey"] forState:UIControlStateNormal];
-    }else {
-        [button setImage:[UIImage imageNamed:imageName withColor:@"yellow"] forState:UIControlStateNormal];
-    }
-    
-    [self lightupBodyButton:button];
-}
+//-(void)changeColorWithButton:(BodyButton *)button
+//{
+//    
+//    NSString *imageName = [button.multiParamDic objectForKey:@"position"];
+// 
+//    
+//    if ([button.currentImage isEqual:[UIImage imageNamed:imageName withColor:@"yellow"]])
+//    {
+//        [button setImage:[UIImage imageNamed:imageName withColor:@"grey"] forState:UIControlStateNormal];
+//    }else {
+//        [button setImage:[UIImage imageNamed:imageName withColor:@"yellow"] forState:UIControlStateNormal];
+//    }
+//    
+//}
 -(void)lightupBodyButton:(BodyButton *)button
 {
+    [button changeGreyColor];
     NSNumber *commitNumber = [button.multiParamDic objectForKey:@"commit"];
     Pack *pack = [[Pack alloc]init];
     
@@ -504,9 +544,7 @@ NSString *const ARMB00 = @"ARMB004";
     
     NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
     
-    [self.clientSockets enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [obj writeData:sendData withTimeout:-1 tag:0];
-    }];
+    [self.clientSocket writeData:sendData withTimeout:-1 tag:0];
     
 }
 
@@ -547,9 +585,7 @@ NSString *const ARMB00 = @"ARMB004";
     // withTimeout -1 : 无穷大,一直等
     // tag : 消息标记
 //    Byte *bytes = malloc(sizeof(*bytes)*[sendData length]);
-    [self.clientSockets enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [obj writeData:sendData withTimeout:-1 tag:0];
-    }];
+    [self.clientSocket writeData:sendData withTimeout:-1 tag:1];
 }
 -(void)pause
 {
@@ -562,10 +598,11 @@ NSString *const ARMB00 = @"ARMB004";
     NSData *data = [NSData dataWithBytes:dataBytes length:2];
     
     NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
+    [self.clientSocket writeData:sendData withTimeout:-1 tag:2];
+//    [self.clientSockets enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//        [obj writeData:sendData withTimeout:-1 tag:1];
+//    }];
     
-    [self.clientSockets enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [obj writeData:sendData withTimeout:-1 tag:1];
-    }];
 }
 -(void)continue
 {
@@ -578,10 +615,7 @@ NSString *const ARMB00 = @"ARMB004";
     NSData *data = [NSData dataWithBytes:dataBytes length:2];
     
     NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
-    [self.clientSockets enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [obj writeData:sendData withTimeout:-1 tag:2];
-    }];
-
+    [self.clientSocket writeData:sendData withTimeout:-1 tag:3];
 }
 -(void)askForTreatInfomation
 {
@@ -593,31 +627,40 @@ NSString *const ARMB00 = @"ARMB004";
     NSData *data = [NSData dataWithBytes:dataBytes length:2];
     
     NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
-    [self.clientSockets enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [obj writeData:sendData withTimeout:-1 tag:3];
-    }];
-}
+    [self.clientSocket writeData:sendData withTimeout:-1 tag:4];}
 
 
-#pragma mark - 服务器socketDelegate
--(void)socket:(GCDAsyncSocket *)sock didAcceptNewSocket:(GCDAsyncSocket *)newSocket{
-    
-    [self.clientSockets addObject:newSocket];
-    
-    [self addTimer];
-    NSLog(@"连接成功");
-    NSLog(@"客户端的地址%@ 端口%d",newSocket.connectedHost,newSocket.connectedPort);
-    
-    [self askForTreatInfomation];
-    [newSocket readDataWithTimeout:-1 tag:0];
-    
-}
+#pragma mark - GCDAsyncSocketDelegate
 
 /**
- 读取客户端的数据
+ 连接主机对应端口号
+ 
+ @param sock 客户端socket
+ @param host 主机
+ @param port 端口号
+ */
+- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
+//    NSLog(@"连接主机对应端口%@", sock);
+    NSLog(@"连接成功");
+    NSLog(@"服务器IP: %@-------端口: %d",host,port);
+    
+    // 连上马上发一条信息给服务器
+    //    float version = [[UIDevice currentDevice] systemVersion].floatValue;
+    //    NSString *firstMes = [NSString stringWithFormat:@"123%f",version];
+    //    NSData  *data = [firstMes dataUsingEncoding:NSUTF8StringEncoding];
+    //    [self.clientSocket writeData:data withTimeout:- 1 tag:0];
+    
+    // 连接成功开启定时器
+    [self addTimer];
+    // 连接后,可读取服务器端的数据
+    [self.clientSocket readDataWithTimeout:- 1 tag:0];
+    self.connected = YES;
+}
+/**
+ 读取数据
  
  @param sock 客户端的Socket
- @param data 客户端发送的数据
+ @param data 读取到的数据
  @param tag 当前读取的标记
  */
 -(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
@@ -656,22 +699,27 @@ NSString *const ARMB00 = @"ARMB004";
 }
 
 
--(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err{
-    [self.clientSockets removeObject:sock];
+-(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
+{
     NSLog(@"断开连接 error:%@",err);
+    self.clientSocket.delegate = nil;
+    self.clientSocket = nil;
+    self.connected = NO;
+    [self.connectTimer invalidate];
 }
+
 -(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag{
     NSLog(@"写入成功");
 }
 #pragma mark - Lazy Load
-- (NSMutableArray *)clientSockets
-{
-    if (_clientSockets == nil)
-    {
-        _clientSockets = [NSMutableArray array];
-    }
-    return _clientSockets;
-}
+//- (NSMutableArray *)clientSockets
+//{
+//    if (_clientSockets == nil)
+//    {
+//        _clientSockets = [NSMutableArray array];
+//    }
+//    return _clientSockets;
+//}
 
 - (NSMutableDictionary *)clientPhoneTimeDicts
 {
@@ -694,46 +742,6 @@ NSString *const ARMB00 = @"ARMB004";
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
-}
-
--(UIColor *)colorFromHexRGB:(NSString *)rgb
-{
-    UInt32 hex = [rgb intValue];
-    int r = (hex >>16) &0xFF;
-    
-    int g = (hex >>8) &0xFF;
-    
-    int b = (hex) &0xFF;
-    
-    return[UIColor colorWithRed:r /255.0f
-           
-                          green:g /255.0f
-           
-                           blue:b /255.0f
-           
-                          alpha:1.0f];
-}
-//-(NSData *)newDataWithbyte:(Byte)byte1 andByte:(Byte)byte2{
-//    
-//}
-
--(CATransition *)createTransitionAnimation
-{
-    //切换之前添加动画效果
-    //后面知识: Core Animation 核心动画
-    //不要写成: CATransaction
-    //创建CATransition动画对象
-    CATransition *animation = [CATransition animation];
-    //设置动画的类型:
-    animation.type = @"rippleEffect";
-    //设置动画的方向
-    animation.subtype = kCATransitionFromBottom;
-    //设置动画的持续时间
-    animation.duration = 1.5;
-    //设置动画速率(可变的)
-    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    //动画添加到切换的过程中
-    return animation;
 }
 
 - (IBAction)tapPlayButton:(id)sender

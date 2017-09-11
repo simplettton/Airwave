@@ -11,4 +11,6 @@
 @interface BodyButton:UIButton
 
 @property (nonatomic,strong)NSMutableDictionary *multiParamDic;
+-(void)changeGreyColor;
+-(void)changeGreenColor;
 @end
