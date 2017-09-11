@@ -32,9 +32,8 @@
     for (int i = 0; i < 8; i++)
     {
         NSString *aPortString = [NSString stringWithFormat:@"%c",bytes[53+i]];
-        NSLog(@"bytes[%d]=%@",i+53,aPortString);
         [self.aPort appendString:aPortString];
-        
+//        NSLog(@"bytes[%d] = %@",53+i,aPortString);
         NSString *bPortString = [NSString stringWithFormat:@"%c",bytes[61+i]];
         [self.bPort appendString:bPortString];
         
@@ -46,7 +45,7 @@
         NSString *pressString = [NSString stringWithFormat:@"%hd",pressInt];
         self.press[i] = pressString;
     }
-    NSLog(@"aport=%@",self.aPort);
+//    NSLog(@"aport=%@",self.aPort);
     
     return self;
 }

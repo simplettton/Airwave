@@ -63,7 +63,7 @@ static int bodyPartTags[] = {leftup1tag,leftup2tag,leftup3tag,lefthandtag,leftdo
 
 NSString *const ARMB00 = @"ARMB004";
 NSString *const HOST = @"10.10.100.254";
-NSString *const POST = @"8088";
+NSString *const POST = @"8080";
 
 @interface TreatViewController ()<GCDAsyncSocketDelegate>
 //客户端socket
@@ -98,6 +98,11 @@ NSString *const POST = @"8088";
 -(void)viewWillAppear:(BOOL)animated
 {
     [self askForTreatInfomation];
+    if (treatInfomation.treatState == Stop) {
+        isPlayButton = YES;
+        isPauseButton = NO;
+        [self configureBodyView];
+    }
     [self configureBodyView];
 }
 - (void)viewDidLoad {
@@ -126,7 +131,7 @@ NSString *const POST = @"8088";
     }
     
     
-    
+//    self.connectTimer = nil;
     isPlayButton = YES;
     isPauseButton = NO;
     bodyNames= [NSArray arrayWithObjects:@"leftup1",@"leftup2",@"leftup3",@"lefthand",@"leftdown1",@"leftdown2",@"leftdown3",@"leftfoot",@"rightup1",@"rightup2",@"rightup3",@"righthand",@"rightdown1",@"rightdown2",@"rightdown3",@"rightfoot",@"middle1",@"middle2",@"middle3",@"middle4",nil];
@@ -246,7 +251,6 @@ NSString *const POST = @"8088";
 }
 -(void)configureBodyView{
     
-    
     //A端
     NSString *aport = treatInfomation.aPort;
 
@@ -307,13 +311,13 @@ NSString *const POST = @"8088";
         }
         for (int i = 0; i<3; i++)
         {
-            
             //判断单腔是否使能
             
             if ([treatInfomation.enabled[i+1] isEqualToString:@"1" ])
             {
                 int index = indexArray[i];
-                NSLog(@"treat state =%d",treatInfomation.treatState);
+                BodyButton *button = bodyButtons[index];
+//                NSLog(@"treat state =%d",treatInfomation.treatState);
                 if (treatInfomation.treatState == Running)
                 {
                     
@@ -324,10 +328,17 @@ NSString *const POST = @"8088";
                             [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
                             break;
                         case Working:
-                            [self startTimerToChangeColorOfButton:bodyNames[index]];
+                            if (button.changeColorTimer == nil)
+                            {
+                                [self startTimerToChangeColorOfButton:bodyButtons[index]];
+                            }
+//                            [NSTimer scheduledTimerWithTimeInterval:0.5 target:bodyButtons[index] selector:@selector(changeGreenColor) userInfo:nil repeats:YES];
                             break;
                         case KeepingAir:
-                            [self deallocTimer];
+                            if(button.changeColorTimer != nil)
+                            {
+                                [self deallocTimerWithButton:button];
+                            }
                             [bodyButtons[index]setImage:[UIImage imageNamed:bodyNames[index] withColor:@"green"]forState:UIControlStateNormal];
                             break;
                         default:
@@ -336,6 +347,7 @@ NSString *const POST = @"8088";
                 }
                 else
                 {
+                    [self deallocTimerWithButton:button];
                      [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
                 }
             }
@@ -346,9 +358,9 @@ NSString *const POST = @"8088";
     {
         if ([treatInfomation.enabled[0] isEqualToString:@"1"])
         {
+            BodyButton *button = bodyButtons[lefthandindex];
             if (treatInfomation.treatState == Running)
             {
-                
                 NSInteger cellState = [runningInfomation.cellState[0] integerValue];
                 switch (cellState)
                 {
@@ -356,18 +368,24 @@ NSString *const POST = @"8088";
                         [bodyButtons[lefthandindex] setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
                         break;
                     case Working:
-                        
+                        if (button.changeColorTimer == nil) {
+                            [self startTimerToChangeColorOfButton:bodyButtons[lefthandindex]];
+                        }
                         break;
                     case KeepingAir:
+                        if (button.changeColorTimer != nil) {
+                            [self deallocTimerWithButton:bodyButtons[lefthandindex]];
+                        }
                         [bodyButtons[lefthandindex]setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"green"]forState:UIControlStateNormal];
                         break;
                     default:
                         break;
                 }
             }
+            else
+            {
             [bodyButtons[lefthandindex ] setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
-        }else
-        {
+            }
             [self enableButton:bodyButtons[lefthandindex]];
         }
     }
@@ -403,13 +421,15 @@ NSString *const POST = @"8088";
 
 -(void)startTimerToChangeColorOfButton:(BodyButton*)button
 {
-    self.changeColorTimer = [NSTimer timerWithTimeInterval:0.5 target:button selector:@selector(changeGreenColor) userInfo:nil repeats:YES];
-    [[NSRunLoop mainRunLoop] addTimer:self.changeColorTimer forMode:NSDefaultRunLoopMode];
+    button.changeColorTimer =[NSTimer timerWithTimeInterval:0.5 target:button selector:@selector(changeGreenColor) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:button.changeColorTimer forMode:NSDefaultRunLoopMode];
+//    self.changeColorTimer = [NSTimer timerWithTimeInterval:0.5 target:button selector:@selector(changeGreenColor) userInfo:nil repeats:YES];
+//    [[NSRunLoop mainRunLoop] addTimer:self.changeColorTimer forMode:NSDefaultRunLoopMode];
 }
--(void)deallocTimer
+-(void)deallocTimerWithButton:(BodyButton *)button
 {
-    [self.changeColorTimer invalidate];
-    self.changeColorTimer = nil;
+    [button.changeColorTimer invalidate];
+    button.changeColorTimer = nil;
 }
 
 -(void)configureRightWithType:(NSString *)type
@@ -585,7 +605,7 @@ NSString *const POST = @"8088";
     // withTimeout -1 : 无穷大,一直等
     // tag : 消息标记
 //    Byte *bytes = malloc(sizeof(*bytes)*[sendData length]);
-    [self.clientSocket writeData:sendData withTimeout:-1 tag:1];
+    [self.clientSocket writeData:sendData withTimeout:-1 tag:0];
 }
 -(void)pause
 {
@@ -598,7 +618,7 @@ NSString *const POST = @"8088";
     NSData *data = [NSData dataWithBytes:dataBytes length:2];
     
     NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
-    [self.clientSocket writeData:sendData withTimeout:-1 tag:2];
+    [self.clientSocket writeData:sendData withTimeout:-1 tag:0];
 //    [self.clientSockets enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
 //        [obj writeData:sendData withTimeout:-1 tag:1];
 //    }];
@@ -615,7 +635,7 @@ NSString *const POST = @"8088";
     NSData *data = [NSData dataWithBytes:dataBytes length:2];
     
     NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
-    [self.clientSocket writeData:sendData withTimeout:-1 tag:3];
+    [self.clientSocket writeData:sendData withTimeout:-1 tag:0];
 }
 -(void)askForTreatInfomation
 {
@@ -627,7 +647,7 @@ NSString *const POST = @"8088";
     NSData *data = [NSData dataWithBytes:dataBytes length:2];
     
     NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
-    [self.clientSocket writeData:sendData withTimeout:-1 tag:4];}
+    [self.clientSocket writeData:sendData withTimeout:-1 tag:0];}
 
 
 #pragma mark - GCDAsyncSocketDelegate
@@ -676,7 +696,8 @@ NSString *const POST = @"8088";
             [self configureBodyView];
         });
     }
-    if (bytes[2]==0x91) {
+    if (bytes[2]==0x91)
+    {
         [runningInfomation analyzeWithData:data];
         [self askForTreatInfomation];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -709,7 +730,7 @@ NSString *const POST = @"8088";
 }
 
 -(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag{
-    NSLog(@"写入成功");
+//    NSLog(@"写入成功");
 }
 #pragma mark - Lazy Load
 //- (NSMutableArray *)clientSockets
@@ -730,6 +751,7 @@ NSString *const POST = @"8088";
     }
     return _clientPhoneTimeDicts;
 }
+
 #pragma mark - Private Method
 - (NSString *)getCurrentTime
 {

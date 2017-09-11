@@ -11,6 +11,7 @@
 @interface BodyButton:UIButton
 
 @property (nonatomic,strong)NSMutableDictionary *multiParamDic;
+@property (nonatomic,strong)NSTimer *changeColorTimer;
 -(void)changeGreyColor;
 -(void)changeGreenColor;
 @end

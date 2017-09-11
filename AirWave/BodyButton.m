@@ -22,7 +22,6 @@
 {
     NSString *imageName = [self.multiParamDic objectForKey:@"position"];
     
-    
     if ([self.currentImage isEqual:[UIImage imageNamed:imageName withColor:@"yellow"]])
     {
         [self setImage:[UIImage imageNamed:imageName withColor:@"grey"] forState:UIControlStateNormal];

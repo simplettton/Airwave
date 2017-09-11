@@ -79,7 +79,7 @@
     ls[lengthOfLs] = 0x55;
     lengthOfLs++;
     
-    NSLog(@" pack length :%d",lengthOfLs);
+//    NSLog(@" pack length :%d",lengthOfLs);
     NSData * packData = [NSData dataWithBytes:ls length:lengthOfLs];
 
     return packData;
