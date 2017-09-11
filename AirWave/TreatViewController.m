@@ -81,6 +81,7 @@ NSString *const POST = @"8080";
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UIView *bodyView;
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
+@property (weak, nonatomic) IBOutlet UILabel *pressLabel;
 - (IBAction)tapPlayButton:(id)sender;
 - (IBAction)tapPauseButton:(id)sender;
 
@@ -98,11 +99,6 @@ NSString *const POST = @"8080";
 -(void)viewWillAppear:(BOOL)animated
 {
     [self askForTreatInfomation];
-    if (treatInfomation.treatState == Stop) {
-        isPlayButton = YES;
-        isPauseButton = NO;
-        [self configureBodyView];
-    }
     [self configureBodyView];
 }
 - (void)viewDidLoad {
@@ -250,6 +246,13 @@ NSString *const POST = @"8080";
     
 }
 -(void)configureBodyView{
+//    self.pressLabel.text = [NSString stringWithFormat:@"%d",runningInfomation.curFocuse];
+    if (treatInfomation.treatTime -1 == runningInfomation.treatProcessTime) {
+        isPlayButton = YES;
+        isPauseButton =NO;
+        [self configurePlayButton];
+        self.pressLabel.text = [NSString stringWithFormat:@"0"];
+    }
     
     //A端
     NSString *aport = treatInfomation.aPort;
@@ -317,7 +320,6 @@ NSString *const POST = @"8080";
             {
                 int index = indexArray[i];
                 BodyButton *button = bodyButtons[index];
-//                NSLog(@"treat state =%d",treatInfomation.treatState);
                 if (treatInfomation.treatState == Running)
                 {
                     
@@ -332,7 +334,6 @@ NSString *const POST = @"8080";
                             {
                                 [self startTimerToChangeColorOfButton:bodyButtons[index]];
                             }
-//                            [NSTimer scheduledTimerWithTimeInterval:0.5 target:bodyButtons[index] selector:@selector(changeGreenColor) userInfo:nil repeats:YES];
                             break;
                         case KeepingAir:
                             if(button.changeColorTimer != nil)
@@ -347,7 +348,7 @@ NSString *const POST = @"8080";
                 }
                 else
                 {
-                    [self deallocTimerWithButton:button];
+                     [self deallocTimerWithButton:button];
                      [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
                 }
             }
@@ -374,7 +375,7 @@ NSString *const POST = @"8080";
                         break;
                     case KeepingAir:
                         if (button.changeColorTimer != nil) {
-                            [self deallocTimerWithButton:bodyButtons[lefthandindex]];
+                            [self deallocTimerWithButton:button];
                         }
                         [bodyButtons[lefthandindex]setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"green"]forState:UIControlStateNormal];
                         break;
@@ -384,6 +385,7 @@ NSString *const POST = @"8080";
             }
             else
             {
+                [self deallocTimerWithButton:button];
             [bodyButtons[lefthandindex ] setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
             }
             [self enableButton:bodyButtons[lefthandindex]];
@@ -443,6 +445,8 @@ NSString *const POST = @"8080";
         for (int i = startIndex; i<startIndex+3; i++){     [self enableButton:bodyButtons[i]];     }
         for (int i = 0; i<3; i++)
         {
+            int index = indexArray[i];
+            BodyButton *button = bodyButtons[index];
             if ([treatInfomation.enabled[i+5] isEqualToString:@"1" ])
             {
                 int index = indexArray[i];
@@ -457,9 +461,17 @@ NSString *const POST = @"8080";
                             [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
                             break;
                         case Working:
+                            if (button.changeColorTimer == nil)
+                            {
+                                [self startTimerToChangeColorOfButton:bodyButtons[index]];
+                            }
                             
                             break;
                         case KeepingAir:
+                            if(button.changeColorTimer != nil)
+                            {
+                                [self deallocTimerWithButton:button];
+                            }
                             [bodyButtons[index]setImage:[UIImage imageNamed:bodyNames[index] withColor:@"green"]forState:UIControlStateNormal];
                             break;
                         default:
@@ -468,7 +480,8 @@ NSString *const POST = @"8080";
                 }
                 else
                 {
-                [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
+                    [self deallocTimerWithButton:button];
+                    [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
                 }
             }
         }
@@ -479,9 +492,38 @@ NSString *const POST = @"8080";
     {
         if ([treatInfomation.enabled[4] isEqualToString:@"1"])
         {
-            [bodyButtons[righthandindex] setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
+            BodyButton *button = bodyButtons[righthandindex];
+            if (treatInfomation.treatState == Running)
+            {
+                NSInteger cellState = [runningInfomation.cellState[4] integerValue];
+                switch (cellState)
+                {
+                    case UnWorking:
+                        [bodyButtons[righthandindex] setImage:[UIImage imageNamed:bodyNames[righthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
+                        break;
+                    case Working:
+                        if (button.changeColorTimer == nil) {
+                            [self startTimerToChangeColorOfButton:bodyButtons[righthandindex]];
+                        }
+                        break;
+                    case KeepingAir:
+                        if (button.changeColorTimer != nil) {
+                            [self deallocTimerWithButton:button];
+                        }
+                        [bodyButtons[righthandindex]setImage:[UIImage imageNamed:bodyNames[righthandindex] withColor:@"green"]forState:UIControlStateNormal];
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                [self deallocTimerWithButton:button];
+                [bodyButtons[righthandindex ] setImage:[UIImage imageNamed:bodyNames[righthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
+            }
+            [self enableButton:bodyButtons[righthandindex]];
         }
-        [self enableButton:bodyButtons[righthandindex]];
+        
     }
     //足部一腔
     else if ([type isEqualToString:@"RIGHTFOOT"])
@@ -730,7 +772,7 @@ NSString *const POST = @"8080";
 }
 
 -(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag{
-//    NSLog(@"写入成功");
+    NSLog(@"写入成功");
 }
 #pragma mark - Lazy Load
 //- (NSMutableArray *)clientSockets

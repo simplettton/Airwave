@@ -134,6 +134,20 @@
                                         <rect key="frame" x="249" y="497" width="15" height="15"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="mmHg" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lqb-cK-L4y">
+                                        <rect key="frame" x="291" y="41" width="51" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.44812256097793579" green="0.49131524562835693" blue="0.61758631467819214" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MSC-Lt-fwX">
+                                        <rect key="frame" x="252" y="41" width="31" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.44812256099999997" green="0.49131524560000001" blue="0.61758631470000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
@@ -169,6 +183,7 @@
                         <outlet property="buttonView" destination="17Z-tY-EuQ" id="rLQ-kg-X0X"/>
                         <outlet property="pauseButton" destination="jT5-Gn-W6K" id="sdg-3H-2lN"/>
                         <outlet property="playButton" destination="ZuS-uD-XdE" id="eRt-Cy-lqH"/>
+                        <outlet property="pressLabel" destination="MSC-Lt-fwX" id="5VR-lP-PUz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5yB-9V-2Dd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1424,10 +1439,10 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="bnI-Yd-YTo"/>
-        <segue reference="hW4-xW-9f9"/>
-        <segue reference="PI6-5o-Re0"/>
+        <segue reference="aEa-fh-ynZ"/>
         <segue reference="aE5-AF-n9Q"/>
-        <segue reference="If6-KY-uoD"/>
+        <segue reference="PI6-5o-Re0"/>
         <segue reference="JJo-le-KZc"/>
+        <segue reference="If6-KY-uoD"/>
     </inferredMetricsTieBreakers>
 </document>
