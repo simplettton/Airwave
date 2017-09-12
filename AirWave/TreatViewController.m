@@ -84,6 +84,8 @@ NSString *const POST = @"8080";
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
 @property (weak, nonatomic) IBOutlet UILabel *pressLabel;
 @property (weak, nonatomic) IBOutlet ProgressView *progressView;
+
+
 - (IBAction)tapPlayButton:(id)sender;
 - (IBAction)tapPauseButton:(id)sender;
 
@@ -130,13 +132,14 @@ NSString *const POST = @"8080";
     }
     
     
-    self.progressView.progress = 1.0f;
+
     isPlayButton = YES;
     isPauseButton = NO;
     bodyNames= [NSArray arrayWithObjects:@"leftup1",@"leftup2",@"leftup3",@"lefthand",@"leftdown1",@"leftdown2",@"leftdown3",@"leftfoot",@"rightup1",@"rightup2",@"rightup3",@"righthand",@"rightdown1",@"rightdown2",@"rightdown3",@"rightfoot",@"middle1",@"middle2",@"middle3",@"middle4",nil];
     bodyButtons = [[NSMutableArray alloc]initWithCapacity:20];
     treatInfomation = [[TreatInformation alloc]init];
     runningInfomation = [[RunningInfomation alloc]init];
+    
     [self configureView];
     [self configureBodyView];
 }
@@ -226,6 +229,9 @@ NSString *const POST = @"8080";
         [button setImage:[UIImage imageNamed:bodyNames[i] withColor:@"grey"] forState:UIControlStateNormal];
         button.multiParamDic = [NSMutableDictionary dictionaryWithDictionary:lightUpCommitDics[i]];
     }
+    [self.progressView drawProgress:1];
+    self.progressView.label.text = [NSString stringWithFormat:@"100%%"];
+    
     
 //    设置右边的barButtonItem
 //    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 32 , 32)];
@@ -236,7 +242,22 @@ NSString *const POST = @"8080";
     
 }
 -(void)configureBodyView{
-//    self.pressLabel.text = [NSString stringWithFormat:@"%d",runningInfomation.curFocuse];
+
+    if (runningInfomation !=nil) {
+        CGFloat currentProgress =(CGFloat)(runningInfomation.treatProcessTime)/(CGFloat)treatInfomation.treatTime;
+        NSString *string = [NSString stringWithFormat:@"%f",(float)(runningInfomation.treatProcessTime/treatInfomation.treatTime)];
+        
+        int progressOfInt = [string intValue];
+        self.progressView.label.text = [NSString stringWithFormat:@"%d%%",progressOfInt];
+        [self.progressView drawProgress:currentProgress];
+        
+    }
+    
+    
+    self.pressLabel.text = [NSString stringWithFormat:@"%d",runningInfomation.curFocuse];
+    
+    
+    
     if (treatInfomation.treatTime -1 == runningInfomation.treatProcessTime) {
         isPlayButton = YES;
         isPauseButton =NO;

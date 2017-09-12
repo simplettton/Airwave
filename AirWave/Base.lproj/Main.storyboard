@@ -189,7 +189,7 @@
                         <outlet property="pauseButton" destination="jT5-Gn-W6K" id="sdg-3H-2lN"/>
                         <outlet property="playButton" destination="ZuS-uD-XdE" id="eRt-Cy-lqH"/>
                         <outlet property="pressLabel" destination="MSC-Lt-fwX" id="5VR-lP-PUz"/>
-                        <outlet property="progressView" destination="0s8-Eq-8Tt" id="oVN-h9-UzG"/>
+                        <outlet property="progressView" destination="0s8-Eq-8Tt" id="CYb-AP-DHm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5yB-9V-2Dd" userLabel="First Responder" sceneMemberID="firstResponder"/>

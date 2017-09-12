@@ -10,4 +10,6 @@
 
 @interface ProgressView : UIView
 @property (nonatomic,assign)CGFloat progress;
+@property (nonatomic,strong)UILabel *label;
+- (void)drawProgress:(CGFloat )progress;
 @end
