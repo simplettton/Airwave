@@ -13,6 +13,7 @@
 #import "TreatInformation.h"
 #import "RunningInfomation.h"
 #import "UIImage+ImageWithColor.h"
+#import "ProgressView.h"
 
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 
@@ -82,6 +83,7 @@ NSString *const POST = @"8080";
 @property (weak, nonatomic) IBOutlet UIView *bodyView;
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
 @property (weak, nonatomic) IBOutlet UILabel *pressLabel;
+@property (weak, nonatomic) IBOutlet ProgressView *progressView;
 - (IBAction)tapPlayButton:(id)sender;
 - (IBAction)tapPauseButton:(id)sender;
 
@@ -103,6 +105,7 @@ NSString *const POST = @"8080";
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     //连接服务器
     if (!self.connected)
     {
@@ -127,7 +130,7 @@ NSString *const POST = @"8080";
     }
     
     
-//    self.connectTimer = nil;
+    self.progressView.progress = 1.0f;
     isPlayButton = YES;
     isPauseButton = NO;
     bodyNames= [NSArray arrayWithObjects:@"leftup1",@"leftup2",@"leftup3",@"lefthand",@"leftdown1",@"leftdown2",@"leftdown3",@"leftfoot",@"rightup1",@"rightup2",@"rightup3",@"righthand",@"rightdown1",@"rightdown2",@"rightdown3",@"rightfoot",@"middle1",@"middle2",@"middle3",@"middle4",nil];
@@ -149,27 +152,14 @@ NSString *const POST = @"8080";
 -(void)addTimer
 {
     //长连接定时器
-    self.connectTimer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(longConnectToSocket) userInfo:nil repeats:YES];
+    self.connectTimer = [NSTimer scheduledTimerWithTimeInterval:10.0
+                                                         target:self
+                                                       selector:@selector(longConnectToSocket)
+                                                       userInfo:nil
+                                                        repeats:YES];
     //将定时器添加到当前运行循环，并且调为通用模式
     [[NSRunLoop currentRunLoop] addTimer:self.connectTimer forMode:NSRunLoopCommonModes];
 }
-//检测心跳
-//-(void)checkLongConnect
-//{
-//    [self.clientPhoneTimeDicts enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-//        NSString *currentTimeStr = [self getCurrentTime];
-//        //延迟超多10s判断断开
-//        if (([currentTimeStr doubleValue] - [obj doubleValue] ) > 10.0)
-//        {
-//            NSLog(@"%@已断开连接，连接时差%f",key,([currentTimeStr doubleValue]-[obj doubleValue]));
-//        }
-//        else
-//        {
-//            NSLog(@"%@处于连接状态，连接时差%f",key,([currentTimeStr doubleValue]-[obj doubleValue]));
-//        }
-//        
-//    }];
-//}
 
 // 心跳连接
 - (void)longConnectToSocket
@@ -419,13 +409,14 @@ NSString *const POST = @"8080";
         }
     }
 }
-
 -(void)startTimerToChangeColorOfButton:(BodyButton*)button
 {
-    button.changeColorTimer =[NSTimer timerWithTimeInterval:0.5 target:button selector:@selector(changeGreenColor) userInfo:nil repeats:YES];
+    button.changeColorTimer =[NSTimer timerWithTimeInterval:0.5
+                                                     target:button
+                                                   selector:@selector(changeGreenColor)
+                                                   userInfo:nil
+                                                    repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:button.changeColorTimer forMode:NSDefaultRunLoopMode];
-//    self.changeColorTimer = [NSTimer timerWithTimeInterval:0.5 target:button selector:@selector(changeGreenColor) userInfo:nil repeats:YES];
-//    [[NSRunLoop mainRunLoop] addTimer:self.changeColorTimer forMode:NSDefaultRunLoopMode];
 }
 -(void)deallocTimerWithButton:(BodyButton *)button
 {
