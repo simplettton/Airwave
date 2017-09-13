@@ -261,7 +261,7 @@ NSString *const POST = @"8080";
                                    @{@"position":@"middle1",   @"commit":[NSNumber numberWithUnsignedInteger:0x28]},
                                    @{@"position":@"middle2",   @"commit":[NSNumber numberWithUnsignedInteger:0x27]},
                                    @{@"position":@"middle3",   @"commit":[NSNumber numberWithUnsignedInteger:0x26]},
-                                   @{@"position":@"middle1",   @"commit":[NSNumber numberWithUnsignedInteger:0x1d]}];
+                                   @{@"position":@"middle4",   @"commit":[NSNumber numberWithUnsignedInteger:0x1d]}];
     //button附带点亮模块的命令参数
     for (int i=0; i<[bodyNames count]; i++)
     {
@@ -272,56 +272,32 @@ NSString *const POST = @"8080";
     }
     [self.progressView drawProgress:1];
     self.progressView.label.text = [NSString stringWithFormat:@"100%%"];
-    
-//    //加载压力圈
-//    CAShapeLayer *pressCircleLayer = [CAShapeLayer layer];
-//    pressCircleLayer.frame = CGRectMake(277, 28, 75, 75);
-//
-////    pressCircleLayer.strokeColor = UIColorFromHex(0x85abe4).CGColor;
-//    pressCircleLayer.strokeColor = UIColorFromHex(0x6899D3).CGColor;
-//    pressCircleLayer.fillColor = [UIColor clearColor].CGColor;
-//    pressCircleLayer.lineWidth = 8;
-//    CGFloat radius = pressCircleLayer.frame.size.width *0.5;
-//    CGPoint center = CGPointMake(radius, radius);
-//    CGFloat startAngle = -M_PI_2;
-//    CGFloat endAngle = -M_PI_2 + 2 *M_PI + M_PI_2;
-//    
-//    UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:center radius:radius - 5 startAngle:startAngle endAngle:endAngle clockwise:YES];
-//    pressCircleLayer.path = path.CGPath;
-//    [self.backgroundView.layer addSublayer:pressCircleLayer];
-    
-//    设置右边的barButtonItem
-//    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 32 , 32)];
-//    [btn setBackgroundImage:[UIImage imageNamed:@"1200916"] forState:UIControlStateNormal];
-//    [btn addTarget:self action:@selector(rightBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithCustomView:btn];
-//    self.navigationItem.rightBarButtonItem = barButton;
+
     
 }
 -(void)configureBodyView
 {
-//    if ((treatInfomation.treatState == Stop )&&(treatInfomation.aPort !=nil )&& (treatInfomation.bPort !=nil))
-//    {
-//        //停止状态播放按钮的状态
-//        isPlayButton = YES;
-//        isPauseButton = NO;
-//        [self configurePlayButton];
-//    }
-//    }else if ((treatInfomation.treatState == Running) &&(treatInfomation.aPort !=nil )&&(treatInfomation.bPort !=nil))
-//    {
-//        isPlayButton = NO;
-//        isPauseButton = YES;
-//        [self configurePlayButton];
-//    }
-//    treatInfomation.treatTime -1 == runningInfomation.treatProcessTime ||
-    if (treatInfomation.treatTime -1 == runningInfomation.treatProcessTime) {
+    if (treatInfomation.treatState == Stop)
+    {
+        for (int i=0; i<[bodyNames count]; i++)
+        {
+            BodyButton *button = bodyButtons[i];
+            [button setImage:[UIImage imageNamed:bodyNames[i] withColor:@"grey"] forState:UIControlStateNormal];
+            button.enabled = NO;
+        }
+    }
+
+    //停止通知更新播放键UI
+    if (treatInfomation.treatTime -1 == runningInfomation.treatProcessTime)
+    {
         isPlayButton = YES;
         isPauseButton = NO;
         [self configurePlayButton];
     }
+    //停止更新压力和进度圈UI
     if (treatInfomation.treatTime -1 == runningInfomation.treatProcessTime || runningInfomation.cellState == nil || treatInfomation.treatState == Stop)
     {
-        self.pressLabel.text = [NSString stringWithFormat:@"000"];
+        self.pressLabel.text = [NSString stringWithFormat:@"0"];
         [self.progressView drawProgress:1];
         self.progressView.label.text = [NSString stringWithFormat:@"100%%"];
     }
@@ -399,12 +375,11 @@ NSString *const POST = @"8080";
         {
             //判断单腔是否使能
             int index = indexArray[i];
+            BodyButton *button = bodyButtons[index];
             if ([treatInfomation.enabled[i+1] isEqualToString:@"1" ])
             {
-                BodyButton *button = bodyButtons[index];
                 if (treatInfomation.treatState == Running)
                 {
-                    
                     NSInteger cellState = [runningInfomation.cellState[i+1] integerValue];
                     switch (cellState)
                     {
@@ -434,14 +409,18 @@ NSString *const POST = @"8080";
                      [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
                 }
             }
+            else
+            {
+                [button setImage:[UIImage imageNamed:bodyNames[index] withColor:@"grey"] forState:UIControlStateNormal];
+            }
         }
     }
     //手部一腔
     else if ([type isEqualToString:@"LEFTHAND"])
     {
+        BodyButton *button = bodyButtons[lefthandindex];
         if ([treatInfomation.enabled[0] isEqualToString:@"1"])
         {
-            BodyButton *button = bodyButtons[lefthandindex];
             if (treatInfomation.treatState == Running)
             {
                 NSInteger cellState = [runningInfomation.cellState[0] integerValue];
@@ -472,16 +451,55 @@ NSString *const POST = @"8080";
             }
             [self enableButton:bodyButtons[lefthandindex]];
         }
+        else
+        {
+            [button setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"grey"] forState:UIControlStateNormal];
+        }
+
     }
     //足部一腔
     else if ([type isEqualToString:@"LEFTFOOT"])
     {
+        BodyButton *button = bodyButtons[leftfootindex];
         if ([treatInfomation.enabled[0] isEqualToString:@"1"])
         {
-            [bodyButtons[leftfootindex] setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
+ 
+            if (treatInfomation.treatState == Running)
+            {
+                NSInteger cellState = [runningInfomation.cellState[4] integerValue];
+                switch (cellState)
+                {
+                    case UnWorking:
+                        [button setImage:[UIImage imageNamed:bodyNames[leftfootindex] withColor:@"yellow"] forState:UIControlStateNormal];
+                        break;
+                    case Working:
+                        if (button.changeColorTimer == nil)
+                        {
+                            [self startTimerToChangeColorOfButton:bodyButtons[leftfootindex]];
+                        }
+                        break;
+                    case KeepingAir:
+                        if (button.changeColorTimer != nil) {
+                            [self deallocTimerWithButton:button];
+                        }
+                        [button setImage:[UIImage imageNamed:bodyNames[leftfootindex] withColor:@"green"]forState:UIControlStateNormal];
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                [self deallocTimerWithButton:button];
+                [bodyButtons[leftfootindex] setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
+            }
+            [self enableButton:bodyButtons[leftfootindex]];
         }
-        [self enableButton:bodyButtons[leftfootindex]];
-
+        else
+        {
+            [button setImage:[UIImage imageNamed:bodyNames[leftfootindex] withColor:@"grey"] forState:UIControlStateNormal];
+        }
+        
     }
     //腹部
     else
@@ -494,10 +512,45 @@ NSString *const POST = @"8080";
         }
         for (int i = 0; i<4; i++)
         {
+            int index = indexArray[i];
+            BodyButton *button = bodyButtons[index];
+
             if ([treatInfomation.enabled[i] isEqualToString:@"1" ])
             {
-                int index = indexArray[i];
-                [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
+                if (treatInfomation.treatState == Running)
+                {
+                    NSInteger cellState = [runningInfomation.cellState[i]integerValue];
+                    switch (cellState)
+                    {
+                        case UnWorking:
+                            [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
+                            break;
+                        case Working:
+                            if (button.changeColorTimer == nil) {
+                                [self startTimerToChangeColorOfButton:button];
+                            }
+                            break;
+                        case KeepingAir:
+                            if (button.changeColorTimer !=nil) {
+                                [self deallocTimerWithButton:button];
+                            }
+                            [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"green"] forState:UIControlStateNormal];
+                            break;
+                        default:
+                            break;
+
+                    }
+                }
+                else
+                {
+                    [self deallocTimerWithButton:button];
+                    [button setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
+                }
+
+            }
+            else
+            {
+                [button setImage:[UIImage imageNamed:bodyNames[index] withColor:@"grey"] forState:UIControlStateNormal];
             }
         }
     }
@@ -567,15 +620,19 @@ NSString *const POST = @"8080";
                     [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
                 }
             }
+            else
+            {
+                [button setImage:[UIImage imageNamed:bodyNames[index] withColor:@"grey"] forState:UIControlStateNormal];
+            }
         }
-        
     }
     //手部一腔
     else if ([type isEqualToString:@"RIGHTHAND"])
     {
+        BodyButton *button = bodyButtons[righthandindex];
         if ([treatInfomation.enabled[4] isEqualToString:@"1"])
         {
-            BodyButton *button = bodyButtons[righthandindex];
+        
             if (treatInfomation.treatState == Running)
             {
                 NSInteger cellState = [runningInfomation.cellState[4] integerValue];
@@ -606,17 +663,54 @@ NSString *const POST = @"8080";
             }
             [self enableButton:bodyButtons[righthandindex]];
         }
+        else
+        {
+            [button setImage:[UIImage imageNamed:bodyNames[righthandindex] withColor:@"grey"] forState:UIControlStateNormal];
+        }
         
     }
     //足部一腔
     else if ([type isEqualToString:@"RIGHTFOOT"])
     {
+        BodyButton *button = bodyButtons[rightfootindex];
         if ([treatInfomation.enabled[4] isEqualToString:@"1"])
         {
-            [bodyButtons[rightfootindex] setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
+            
+            if (treatInfomation.treatState == Running)
+            {
+                NSInteger cellState = [runningInfomation.cellState[4] integerValue];
+                switch (cellState)
+                {
+                    case UnWorking:
+                        [button setImage:[UIImage imageNamed:bodyNames[rightfootindex] withColor:@"yellow"] forState:UIControlStateNormal];
+                        break;
+                    case Working:
+                        if (button.changeColorTimer == nil) {
+                            [self startTimerToChangeColorOfButton:bodyButtons[rightfootindex]];
+                        }
+                        break;
+                    case KeepingAir:
+                        if (button.changeColorTimer != nil) {
+                            [self deallocTimerWithButton:button];
+                        }
+                        [button setImage:[UIImage imageNamed:bodyNames[rightfootindex] withColor:@"green"]forState:UIControlStateNormal];
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            else
+            {
+                [self deallocTimerWithButton:button];
+                [button setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
+            }
+            [self enableButton:bodyButtons[rightfootindex]];
         }
-        [self enableButton:bodyButtons[rightfootindex]];
-        
+        else
+        {
+            [button setImage:[UIImage imageNamed:bodyNames[leftfootindex] withColor:@"grey"] forState:UIControlStateNormal];
+        }
     }
     //腹部
     else
@@ -628,15 +722,53 @@ NSString *const POST = @"8080";
         }
         for (int i = 0; i<4; i++)
         {
+            int index = indexArray[i];
+            BodyButton *button = bodyButtons[index];
             if ([treatInfomation.enabled[i+4] isEqualToString:@"1" ])
             {
-                int index = indexArray[i];
-                [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
+                if (treatInfomation.treatState == Running)
+                {
+                    NSInteger cellState = [runningInfomation.cellState[i+4]integerValue];
+                    switch (cellState)
+                    {
+                        case UnWorking:
+                            [button setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
+                            break;
+                        case Working:
+                            if (button.changeColorTimer == nil) {
+                                [self startTimerToChangeColorOfButton:button];}
+                                break;
+                        case KeepingAir:
+                            if (button.changeColorTimer !=nil) {
+                                [self deallocTimerWithButton:button];
+                                }
+                            [button setImage:[UIImage imageNamed:bodyNames[index] withColor:@"green"] forState:UIControlStateNormal];
+                                
+                                break;
+                        default:
+                            break;
+                    }
+                }
+                //不是运行状态
+                else
+                {
+                    [self deallocTimerWithButton:button];
+                    [bodyButtons[index] setImage:[UIImage imageNamed:bodyNames[index] withColor:@"yellow"] forState:UIControlStateNormal];
+                }
+
+            }
+            else
+            {
+                [button setImage:[UIImage imageNamed:bodyNames[index] withColor:@"grey"] forState:UIControlStateNormal];
             }
         }
     }
 }
-
+-(void)updateBodyButton
+{
+    [self askForTreatInfomation];
+    [self configureBodyView];
+}
 
 -(BodyButton *)bodyButtonReturnWithTag:(NSInteger)tag
 {
@@ -768,8 +900,15 @@ NSString *const POST = @"8080";
                                                        selector:@selector(longConnectToSocket)
                                                        userInfo:nil
                                                         repeats:YES];
+    
+    NSTimer *updateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
+                                                            target:self
+                                                          selector:@selector(updateBodyButton)
+                                                          userInfo:nil
+                                                           repeats:YES];
     //将定时器添加到当前运行循环，并且调为通用模式
     [[NSRunLoop currentRunLoop] addTimer:self.connectTimer forMode:NSRunLoopCommonModes];
+    [[NSRunLoop currentRunLoop]addTimer:updateTimer forMode:NSRunLoopCommonModes];
 }
 
 // 心跳连接
