@@ -72,8 +72,6 @@ NSString *const POST = @"8080";
 @property (nonatomic,copy)NSMutableArray *clientSockets;
 //计时器
 @property (nonatomic, strong) NSTimer *connectTimer;
-// 客户端标识和心跳接收时间的字典
-@property (nonatomic, copy) NSMutableDictionary *clientPhoneTimeDicts;
 @property (nonatomic, assign) BOOL connected;
 @property (nonatomic,strong) NSTimer *changeColorTimer;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *barBtItem;
@@ -151,34 +149,76 @@ NSString *const POST = @"8080";
     }
     
 }
-//添加计时器
--(void)addTimer
+
+
+#pragma mark - GCDAsyncSocketDelegate
+
+/**
+ 连接主机对应端口号
+ 
+ @param sock 客户端socket
+ @param host 主机
+ @param port 端口号
+ 
+ */
+- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
+    NSLog(@"连接成功");
+    [self addTimer];
+    // 连接后,可读取服务器端的数据
+    [self.clientSocket readDataWithTimeout:- 1 tag:0];
+    self.connected = YES;
+}
+/**
+ 读取数据
+ 
+ @param sock 客户端的Socket
+ @param data 读取到的数据
+ @param tag 当前读取的标记
+ */
+-(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
-    //长连接定时器
-    self.connectTimer = [NSTimer scheduledTimerWithTimeInterval:10.0
-                                                         target:self
-                                                       selector:@selector(longConnectToSocket)
-                                                       userInfo:nil
-                                                        repeats:YES];
-    //将定时器添加到当前运行循环，并且调为通用模式
-    [[NSRunLoop currentRunLoop] addTimer:self.connectTimer forMode:NSRunLoopCommonModes];
+    NSString *text;
+    Byte *bytes = (Byte *)[data bytes];
+    
+    text = [NSString stringWithFormat:@"%d",bytes[2]];
+    if (bytes[2]==0x90)
+    {
+        [treatInfomation analyzeWithData:data];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self configureBodyView];
+        });
+    }
+    if (bytes[2]==0x91)
+    {
+        [runningInfomation analyzeWithData:data];
+        [self askForTreatInfomation];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self configureBodyView];
+        });
+    }
+
+    [sock readDataWithTimeout:- 1 tag:0];
+}
+-(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
+{
+    NSLog(@"断开连接 error:%@",err);
+    self.clientSocket.delegate = nil;
+    self.clientSocket = nil;
+    self.connected = NO;
+    [self.connectTimer invalidate];
 }
 
-// 心跳连接
-- (void)longConnectToSocket
-{
-    // 发送固定格式的数据,指令@"longConnect"
-    float version = [[UIDevice currentDevice] systemVersion].floatValue;
-    NSString *longConnect = [NSString stringWithFormat:@"123%f",version];
-    
-    NSData  *data = [longConnect dataUsingEncoding:NSUTF8StringEncoding];
-    
-    [self.clientSocket writeData:data withTimeout:- 1 tag:0];
+-(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag{
+//    if (tag == 1) {
+//        NSLog(@"askForTreatMentInfoMATION写入成功");
+//    }else if(tag == 2){
+//        NSLog(@"-----------------------------------longconnectCheck写入成功");
+//    }
 }
-
-#pragma mark -configureViews
+#pragma mark - configureViews
 -(void)configureView
 {
+    //导航栏
     self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     
@@ -188,6 +228,8 @@ NSString *const POST = @"8080";
     topBorder.frame = CGRectMake(0.0f, 0.0f, self.buttonView.frame.size.width, 0.5f);
     topBorder.backgroundColor = UIColorFromHex(0xE4E4E4).CGColor;
     [self.buttonView.layer addSublayer:topBorder];
+    
+    //配置播放按钮
     [self configurePlayButton];
     
     //加载身体部位按钮
@@ -200,7 +242,6 @@ NSString *const POST = @"8080";
         [self.backgroundView addSubview:button];
         button.enabled = NO;
     }
-
     NSArray *lightUpCommitDics = @[@{@"position":@"leftup1",   @"commit":[NSNumber numberWithUnsignedInteger:0x18]},
                                    @{@"position":@"leftup2",   @"commit":[NSNumber numberWithUnsignedInteger:0x17]},
                                    @{@"position":@"leftup3",   @"commit":[NSNumber numberWithUnsignedInteger:0x16]},
@@ -232,6 +273,22 @@ NSString *const POST = @"8080";
     [self.progressView drawProgress:1];
     self.progressView.label.text = [NSString stringWithFormat:@"100%%"];
     
+//    //加载压力圈
+//    CAShapeLayer *pressCircleLayer = [CAShapeLayer layer];
+//    pressCircleLayer.frame = CGRectMake(277, 28, 75, 75);
+//
+////    pressCircleLayer.strokeColor = UIColorFromHex(0x85abe4).CGColor;
+//    pressCircleLayer.strokeColor = UIColorFromHex(0x6899D3).CGColor;
+//    pressCircleLayer.fillColor = [UIColor clearColor].CGColor;
+//    pressCircleLayer.lineWidth = 8;
+//    CGFloat radius = pressCircleLayer.frame.size.width *0.5;
+//    CGPoint center = CGPointMake(radius, radius);
+//    CGFloat startAngle = -M_PI_2;
+//    CGFloat endAngle = -M_PI_2 + 2 *M_PI + M_PI_2;
+//    
+//    UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:center radius:radius - 5 startAngle:startAngle endAngle:endAngle clockwise:YES];
+//    pressCircleLayer.path = path.CGPath;
+//    [self.backgroundView.layer addSublayer:pressCircleLayer];
     
 //    设置右边的barButtonItem
 //    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 32 , 32)];
@@ -241,29 +298,44 @@ NSString *const POST = @"8080";
 //    self.navigationItem.rightBarButtonItem = barButton;
     
 }
--(void)configureBodyView{
-
-    if (runningInfomation !=nil) {
-        CGFloat currentProgress =(CGFloat)(runningInfomation.treatProcessTime)/(CGFloat)treatInfomation.treatTime;
-        NSString *string = [NSString stringWithFormat:@"%f",(float)(runningInfomation.treatProcessTime/treatInfomation.treatTime)];
-        
-        int progressOfInt = [string intValue];
-        self.progressView.label.text = [NSString stringWithFormat:@"%d%%",progressOfInt];
-        [self.progressView drawProgress:currentProgress];
-        
-    }
-    
-    
-    self.pressLabel.text = [NSString stringWithFormat:@"%d",runningInfomation.curFocuse];
-    
-    
-    
+-(void)configureBodyView
+{
+//    if ((treatInfomation.treatState == Stop )&&(treatInfomation.aPort !=nil )&& (treatInfomation.bPort !=nil))
+//    {
+//        //停止状态播放按钮的状态
+//        isPlayButton = YES;
+//        isPauseButton = NO;
+//        [self configurePlayButton];
+//    }
+//    }else if ((treatInfomation.treatState == Running) &&(treatInfomation.aPort !=nil )&&(treatInfomation.bPort !=nil))
+//    {
+//        isPlayButton = NO;
+//        isPauseButton = YES;
+//        [self configurePlayButton];
+//    }
+//    treatInfomation.treatTime -1 == runningInfomation.treatProcessTime ||
     if (treatInfomation.treatTime -1 == runningInfomation.treatProcessTime) {
         isPlayButton = YES;
-        isPauseButton =NO;
+        isPauseButton = NO;
         [self configurePlayButton];
-        self.pressLabel.text = [NSString stringWithFormat:@"0"];
     }
+    if (treatInfomation.treatTime -1 == runningInfomation.treatProcessTime || runningInfomation.cellState == nil || treatInfomation.treatState == Stop)
+    {
+        self.pressLabel.text = [NSString stringWithFormat:@"000"];
+        [self.progressView drawProgress:1];
+        self.progressView.label.text = [NSString stringWithFormat:@"100%%"];
+    }
+    else if(treatInfomation.treatState == Running||treatInfomation.treatState == Pause)
+    {
+        CGFloat currentProgress =(CGFloat)(runningInfomation.treatProcessTime)/(CGFloat)treatInfomation.treatTime;
+        
+        int progress = runningInfomation.treatProcessTime *100 / treatInfomation.treatTime;
+        
+        self.progressView.label.text = [NSString stringWithFormat:@"%d%%",(int)progress];
+        [self.progressView drawProgress:currentProgress];
+        self.pressLabel.text = [NSString stringWithFormat:@"%d",runningInfomation.curFocuse];
+    }
+    
     
     //A端
     NSString *aport = treatInfomation.aPort;
@@ -589,38 +661,6 @@ NSString *const POST = @"8080";
     [button addTarget:self action:@selector(lightupBodyButton:) forControlEvents:UIControlEventTouchUpInside];
 }
 
-//-(void)changeColorWithButton:(BodyButton *)button
-//{
-//    
-//    NSString *imageName = [button.multiParamDic objectForKey:@"position"];
-// 
-//    
-//    if ([button.currentImage isEqual:[UIImage imageNamed:imageName withColor:@"yellow"]])
-//    {
-//        [button setImage:[UIImage imageNamed:imageName withColor:@"grey"] forState:UIControlStateNormal];
-//    }else {
-//        [button setImage:[UIImage imageNamed:imageName withColor:@"yellow"] forState:UIControlStateNormal];
-//    }
-//    
-//}
--(void)lightupBodyButton:(BodyButton *)button
-{
-    [button changeGreyColor];
-    NSNumber *commitNumber = [button.multiParamDic objectForKey:@"commit"];
-    Pack *pack = [[Pack alloc]init];
-    
-    Byte dataBytes[2] = {0,[commitNumber unsignedIntegerValue]};
-    NSData *data = [NSData dataWithBytes:dataBytes length:2];
-    
-    Byte addrBytes[2] ={0,0};
-    NSData *addrData = [NSData dataWithBytes:addrBytes length:2];
-    
-    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
-    
-    [self.clientSocket writeData:sendData withTimeout:-1 tag:0];
-    
-}
-
 -(void)configurePlayButton
 {
     if (isPlayButton == YES) {
@@ -700,91 +740,46 @@ NSString *const POST = @"8080";
     NSData *data = [NSData dataWithBytes:dataBytes length:2];
     
     NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
-    [self.clientSocket writeData:sendData withTimeout:-1 tag:0];}
-
-
-#pragma mark - GCDAsyncSocketDelegate
-
-/**
- 连接主机对应端口号
- 
- @param sock 客户端socket
- @param host 主机
- @param port 端口号
- */
-- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
-//    NSLog(@"连接主机对应端口%@", sock);
-    NSLog(@"连接成功");
-    NSLog(@"服务器IP: %@-------端口: %d",host,port);
-    
-    // 连上马上发一条信息给服务器
-    //    float version = [[UIDevice currentDevice] systemVersion].floatValue;
-    //    NSString *firstMes = [NSString stringWithFormat:@"123%f",version];
-    //    NSData  *data = [firstMes dataUsingEncoding:NSUTF8StringEncoding];
-    //    [self.clientSocket writeData:data withTimeout:- 1 tag:0];
-    
-    // 连接成功开启定时器
-    [self addTimer];
-    // 连接后,可读取服务器端的数据
-    [self.clientSocket readDataWithTimeout:- 1 tag:0];
-    self.connected = YES;
+    [self.clientSocket writeData:sendData withTimeout:-1 tag:1];
 }
-/**
- 读取数据
- 
- @param sock 客户端的Socket
- @param data 读取到的数据
- @param tag 当前读取的标记
- */
--(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
+-(void)lightupBodyButton:(BodyButton *)button
 {
-    NSString *text;
-    Byte *bytes = (Byte *)[data bytes];
-
-    text = [NSString stringWithFormat:@"%d",bytes[2]];
-    if (bytes[2]==0x90)
-    {
-        [treatInfomation analyzeWithData:data];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self configureBodyView];
-        });
-    }
-    if (bytes[2]==0x91)
-    {
-        [runningInfomation analyzeWithData:data];
-        [self askForTreatInfomation];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self configureBodyView];
-        });
-    }
-    // 第一次读取到的数据直接添加
-    if (self.clientPhoneTimeDicts.count == 0)
-    {
-        [self.clientPhoneTimeDicts setObject:[self getCurrentTime] forKey:text];
-    }
-    else
-    {
-        [self.clientPhoneTimeDicts enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        [self.clientPhoneTimeDicts setObject:[self getCurrentTime] forKey:text];
-        }];
-    }
-
-    [sock readDataWithTimeout:- 1 tag:0];
+    [button changeGreyColor];
+    NSNumber *commitNumber = [button.multiParamDic objectForKey:@"commit"];
+    Pack *pack = [[Pack alloc]init];
+    
+    Byte dataBytes[2] = {0,[commitNumber unsignedIntegerValue]};
+    NSData *data = [NSData dataWithBytes:dataBytes length:2];
+    
+    Byte addrBytes[2] ={0,0};
+    NSData *addrData = [NSData dataWithBytes:addrBytes length:2];
+    
+    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
+    
+    [self.clientSocket writeData:sendData withTimeout:-1 tag:0];
+    
 }
-
-
--(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
+//添加计时器
+-(void)addTimer
 {
-    NSLog(@"断开连接 error:%@",err);
-    self.clientSocket.delegate = nil;
-    self.clientSocket = nil;
-    self.connected = NO;
-    [self.connectTimer invalidate];
+    //长连接定时器
+    self.connectTimer = [NSTimer scheduledTimerWithTimeInterval:8.0
+                                                         target:self
+                                                       selector:@selector(longConnectToSocket)
+                                                       userInfo:nil
+                                                        repeats:YES];
+    //将定时器添加到当前运行循环，并且调为通用模式
+    [[NSRunLoop currentRunLoop] addTimer:self.connectTimer forMode:NSRunLoopCommonModes];
 }
 
--(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag{
-    NSLog(@"写入成功");
+// 心跳连接
+- (void)longConnectToSocket
+{
+    Pack *pack =[[Pack alloc]init];
+    NSData *sendData = [pack packetWithCmdid:0x93 addressEnabled:NO addr:nil dataEnabled:NO data:nil];
+    [self.clientSocket writeData:sendData withTimeout:- 1 tag:2];
 }
+
 #pragma mark - Lazy Load
 //- (NSMutableArray *)clientSockets
 //{
@@ -795,15 +790,15 @@ NSString *const POST = @"8080";
 //    return _clientSockets;
 //}
 
-- (NSMutableDictionary *)clientPhoneTimeDicts
-{
-    if (_clientPhoneTimeDicts == nil)
-    {
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        _clientPhoneTimeDicts = dict;
-    }
-    return _clientPhoneTimeDicts;
-}
+//- (NSMutableDictionary *)clientPhoneTimeDicts
+//{
+//    if (_clientPhoneTimeDicts == nil)
+//    {
+//        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//        _clientPhoneTimeDicts = dict;
+//    }
+//    return _clientPhoneTimeDicts;
+//}
 
 #pragma mark - Private Method
 - (NSString *)getCurrentTime
@@ -821,11 +816,11 @@ NSString *const POST = @"8080";
 
 - (IBAction)tapPlayButton:(id)sender
 {
-    [self.playButton setImage:[UIImage imageNamed:@"stop"] forState:UIControlStateNormal];
     isPlayButton  = !isPlayButton;
     isPauseButton = !isPauseButton;
     [self configurePlayButton];
     [self start];
+//    [self.playButton setImage:[UIImage imageNamed:@"stop"] forState:UIControlStateNormal];
     
 }
 
@@ -836,4 +831,5 @@ NSString *const POST = @"8080";
     [self pause];
     [self configurePlayButton];
 }
+
 @end

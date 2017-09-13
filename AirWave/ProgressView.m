@@ -25,7 +25,8 @@
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
         label.textAlignment = NSTextAlignmentCenter;
         label.center = CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2);
-        label.textColor = UIColorFromHex(0X65BBA9);
+        //0x65BBA9
+        label.textColor = UIColorFromHex(0x65BBA9);
         [self addSubview:label];
         _label = label;
     }
@@ -41,7 +42,7 @@
     
     UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:center radius:radius - 5 startAngle:startAngle endAngle:endAngle clockwise:YES];
     path.lineWidth = 8;
-    UIColor *lineColor = UIColorFromHex(0X65BBA9);
+    UIColor *lineColor = UIColorFromHex(0x65BBA9);
     [lineColor setStroke];
 
     

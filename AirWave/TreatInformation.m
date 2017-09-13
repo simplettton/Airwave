@@ -13,6 +13,9 @@
 {
     Byte *bytes = (Byte *)[data bytes];
     self.treatState = bytes[51];
+    
+    NSLog(@"treatState=%d",self.treatState);
+    
     self.treatWay = bytes[52];
     self.abFirst = bytes[69];
     self.pressLevel = bytes[70];

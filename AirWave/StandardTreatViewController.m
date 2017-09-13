@@ -76,7 +76,7 @@
 //        self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
 //        self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:54.0/255.0 green:100.0/255.0 blue:114.0/255.0 alpha:1];
 //    
-    
+    //按钮边框
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.saveButton.bounds byRoundingCorners:UIRectCornerTopRight|UIRectCornerBottomRight cornerRadii:CGSizeMake(10.0, 10.0)];
     CAShapeLayer *maskLayer = [CAShapeLayer layer];
     maskLayer.frame = self.saveButton.bounds;

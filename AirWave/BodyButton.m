@@ -25,7 +25,9 @@
     if ([self.currentImage isEqual:[UIImage imageNamed:imageName withColor:@"yellow"]])
     {
         [self setImage:[UIImage imageNamed:imageName withColor:@"grey"] forState:UIControlStateNormal];
-    }else {
+    }
+    else
+    {
         [self setImage:[UIImage imageNamed:imageName withColor:@"yellow"] forState:UIControlStateNormal];
     }
 
@@ -36,7 +38,9 @@
     
     if ([self.currentImage isEqual:[UIImage imageNamed:imageName withColor:@"yellow"]]) {
         [self setImage:[UIImage imageNamed:imageName withColor:@"green"] forState:UIControlStateNormal];
-    }else{
+    }
+    else
+    {
         [self setImage:[UIImage imageNamed:imageName withColor:@"yellow"] forState:UIControlStateNormal];
     }
 }
