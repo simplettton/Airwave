@@ -14,6 +14,7 @@
 #import "RunningInfomation.h"
 #import "UIImage+ImageWithColor.h"
 #import "ProgressView.h"
+#import "WarnMessage.h"
 
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 
@@ -72,6 +73,7 @@ NSString *const POST = @"8080";
 @property (nonatomic,copy)NSMutableArray *clientSockets;
 //计时器
 @property (nonatomic, strong) NSTimer *connectTimer;
+@property (nonatomic, strong) NSTimer *updateTimer;
 @property (nonatomic, assign) BOOL connected;
 @property (nonatomic,strong) NSTimer *changeColorTimer;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *barBtItem;
@@ -82,6 +84,8 @@ NSString *const POST = @"8080";
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
 @property (weak, nonatomic) IBOutlet UILabel *pressLabel;
 @property (weak, nonatomic) IBOutlet ProgressView *progressView;
+@property (weak, nonatomic) IBOutlet UILabel *warnningLabel;
+
 
 
 - (IBAction)tapPlayButton:(id)sender;
@@ -103,7 +107,8 @@ NSString *const POST = @"8080";
     [self askForTreatInfomation];
     [self configureBodyView];
 }
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
 
     //连接服务器
@@ -128,16 +133,12 @@ NSString *const POST = @"8080";
     {
         NSLog(@"与服务器连接已建立");
     }
-    
-    
-
     isPlayButton = YES;
     isPauseButton = NO;
     bodyNames= [NSArray arrayWithObjects:@"leftup1",@"leftup2",@"leftup3",@"lefthand",@"leftdown1",@"leftdown2",@"leftdown3",@"leftfoot",@"rightup1",@"rightup2",@"rightup3",@"righthand",@"rightdown1",@"rightdown2",@"rightdown3",@"rightfoot",@"middle1",@"middle2",@"middle3",@"middle4",nil];
     bodyButtons = [[NSMutableArray alloc]initWithCapacity:20];
     treatInfomation = [[TreatInformation alloc]init];
     runningInfomation = [[RunningInfomation alloc]init];
-    
     [self configureView];
     [self configureBodyView];
 }
@@ -147,6 +148,9 @@ NSString *const POST = @"8080";
     {
         [bodyButtons[i] removeFromSuperview];
     }
+    //timer invalidate
+    [self.updateTimer invalidate];
+    self.updateTimer = nil;
     
 }
 
@@ -181,6 +185,7 @@ NSString *const POST = @"8080";
     Byte *bytes = (Byte *)[data bytes];
     
     text = [NSString stringWithFormat:@"%d",bytes[2]];
+    //治疗信息
     if (bytes[2]==0x90)
     {
         [treatInfomation analyzeWithData:data];
@@ -188,6 +193,7 @@ NSString *const POST = @"8080";
             [self configureBodyView];
         });
     }
+    //实时信息
     if (bytes[2]==0x91)
     {
         [runningInfomation analyzeWithData:data];
@@ -195,6 +201,13 @@ NSString *const POST = @"8080";
         dispatch_async(dispatch_get_main_queue(), ^{
             [self configureBodyView];
         });
+    }
+    //警告信息
+    if (bytes[2]==0x95)
+    {
+        WarnMessage *warnMessage = [[WarnMessage alloc]init];
+        NSString *message = [warnMessage analyzeWithData:data];
+        self.warnningLabel.text = message;
     }
 
     [sock readDataWithTimeout:- 1 tag:0];
@@ -277,6 +290,7 @@ NSString *const POST = @"8080";
 }
 -(void)configureBodyView
 {
+    //改变前先让所以按钮变成灰色/取消定时器
     if (treatInfomation.treatState == Stop)
     {
         for (int i=0; i<[bodyNames count]; i++)
@@ -284,6 +298,10 @@ NSString *const POST = @"8080";
             BodyButton *button = bodyButtons[i];
             [button setImage:[UIImage imageNamed:bodyNames[i] withColor:@"grey"] forState:UIControlStateNormal];
             button.enabled = NO;
+            if (button.changeColorTimer != nil)
+            {
+                [self deallocTimerWithButton:button];
+            }
         }
     }
 
@@ -294,6 +312,12 @@ NSString *const POST = @"8080";
         isPauseButton = NO;
         [self configurePlayButton];
     }
+//    //下位机按了播放按钮更新playUI
+//    if ((treatInfomation.treatTime = Running) && (runningInfomation.treatProcessTime !=0)) {
+//        isPlayButton = NO;
+//        isPauseButton = YES;
+//        [self configurePlayButton];
+//    }
     //停止更新压力和进度圈UI
     if (treatInfomation.treatTime -1 == runningInfomation.treatProcessTime || runningInfomation.cellState == nil || treatInfomation.treatState == Stop)
     {
@@ -303,13 +327,26 @@ NSString *const POST = @"8080";
     }
     else if(treatInfomation.treatState == Running||treatInfomation.treatState == Pause)
     {
+        if (treatInfomation.treatState == Running)
+        {
+            isPlayButton = NO;
+            isPauseButton = YES;
+            [self configurePlayButton];
+        }
+        else if(treatInfomation.treatState == Pause)
+        {
+            isPlayButton = YES;
+            isPauseButton = NO;
+            [self configurePlayButton];
+        }
         CGFloat currentProgress =(CGFloat)(runningInfomation.treatProcessTime)/(CGFloat)treatInfomation.treatTime;
         
         int progress = runningInfomation.treatProcessTime *100 / treatInfomation.treatTime;
         
         self.progressView.label.text = [NSString stringWithFormat:@"%d%%",(int)progress];
         [self.progressView drawProgress:currentProgress];
-        self.pressLabel.text = [NSString stringWithFormat:@"%d",runningInfomation.curFocuse];
+        NSString *press = runningInfomation.press[runningInfomation.curFocuse];
+        self.pressLabel.text = [NSString stringWithFormat:@"%@",press];
     }
     
     
@@ -466,7 +503,7 @@ NSString *const POST = @"8080";
  
             if (treatInfomation.treatState == Running)
             {
-                NSInteger cellState = [runningInfomation.cellState[4] integerValue];
+                NSInteger cellState = [runningInfomation.cellState[0] integerValue];
                 switch (cellState)
                 {
                     case UnWorking:
@@ -766,6 +803,7 @@ NSString *const POST = @"8080";
 }
 -(void)updateBodyButton
 {
+
     [self askForTreatInfomation];
     [self configureBodyView];
 }
@@ -798,7 +836,7 @@ NSString *const POST = @"8080";
     if (isPlayButton == YES) {
         [self.playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
     }else{
-        [self.playButton setImage:[UIImage imageNamed:@"stop"] forState:UIControlStateNormal];
+        [self.playButton setImage:[UIImage imageNamed:@"stop_green"] forState:UIControlStateNormal];
     }
     
     if (isPauseButton) {
@@ -901,14 +939,14 @@ NSString *const POST = @"8080";
                                                        userInfo:nil
                                                         repeats:YES];
     
-    NSTimer *updateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
+    self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
                                                             target:self
                                                           selector:@selector(updateBodyButton)
                                                           userInfo:nil
                                                            repeats:YES];
     //将定时器添加到当前运行循环，并且调为通用模式
     [[NSRunLoop currentRunLoop] addTimer:self.connectTimer forMode:NSRunLoopCommonModes];
-    [[NSRunLoop currentRunLoop]addTimer:updateTimer forMode:NSRunLoopCommonModes];
+    [[NSRunLoop currentRunLoop] addTimer:self.updateTimer forMode:NSRunLoopCommonModes];
 }
 
 // 心跳连接

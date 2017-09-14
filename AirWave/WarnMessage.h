@@ -11,5 +11,5 @@
 @interface WarnMessage : NSObject
 
 @property (nonatomic,assign)NSInteger index;
--(WarnMessage *)analyzeWithData:(NSData*)data;
+-(NSString *)analyzeWithData:(NSData*)data;
 @end

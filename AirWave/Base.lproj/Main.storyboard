@@ -139,6 +139,13 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4SW-Ss-zX8">
+                                        <rect key="frame" x="48" y="523" width="264" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.44812256099999997" green="0.49131524560000001" blue="0.61758631470000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DKL-dN-ag0" userLabel="Press View">
                                         <rect key="frame" x="267" y="8" width="75" height="75"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -197,11 +204,12 @@
                         <outlet property="playButton" destination="ZuS-uD-XdE" id="eRt-Cy-lqH"/>
                         <outlet property="pressLabel" destination="MSC-Lt-fwX" id="5VR-lP-PUz"/>
                         <outlet property="progressView" destination="0s8-Eq-8Tt" id="CYb-AP-DHm"/>
+                        <outlet property="warnningLabel" destination="4SW-Ss-zX8" id="Q2s-Y1-qPD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5yB-9V-2Dd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2981.5999999999999" y="71.514242878560722"/>
+            <point key="canvasLocation" x="2801" y="72"/>
         </scene>
         <!--Setting View Controller-->
         <scene sceneID="o9c-6L-GLy">
