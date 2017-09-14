@@ -8,21 +8,21 @@
 
 #import "StandardTreatViewController.h"
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
+const NSString *ARMA003 = @"ARMA003";
 @interface StandardTreatViewController ()
-
 {
     NSMutableArray *pressArray;
     NSArray *modeArray;
     NSMutableArray *hourArray;
     NSMutableArray *minuteArray;
-
 }
+@property (strong,nonatomic)NSString *aPort;
+@property (strong,nonatomic)NSString *bPort;
 @property (weak, nonatomic) IBOutlet UIPickerView *modePicker;
 @property (weak, nonatomic) IBOutlet UIPickerView *hourPicker;
 @property (weak, nonatomic) IBOutlet UIPickerView *minutePicker;
 @property (weak, nonatomic) IBOutlet UIPickerView *pressPicker;
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
-
 @end
 
 @implementation StandardTreatViewController
@@ -31,11 +31,15 @@
 {
     [self configureView];
     
+    
+    
 
 }
 - (void)viewDidLoad {
+
     [super viewDidLoad];
-    
+    self.aPort = self.treatInfomation.aPort;
+    self.bPort = self.treatInfomation.bPort;
     self.modePicker.delegate = self;
     self.hourPicker.delegate = self;
     self.minutePicker.delegate = self;
@@ -64,6 +68,11 @@
     modeArray = @[@"1",@"2",@"3",@"4",@"5",@"6"];
     [self.pressPicker selectRow:50 inComponent:0 animated:NO];
     [self.minutePicker selectRow:20 inComponent:0 animated:NO];
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+    [self judgeCellType];
 }
 -(void)configureView
 {
@@ -103,6 +112,13 @@
     [self.buttonView.layer addSublayer:topBorder];
     
 }
+-(void)judgeCellType
+{
+    if ([self.aPort isEqualToString:@"ARMA003"] || [self.aPort isEqualToString:@"LEGA003"] || [self.bPort isEqualToString:@"ARMB003"] || [self.bPort isEqualToString:@"LEGB003"])
+    {
+        [self performSegueWithIdentifier:@"StandartToGradient" sender:nil];
+    }
+}
 #pragma mark -pickerViewDelegate
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
@@ -135,6 +151,8 @@
     
     return label;
 }
+#pragma mark - segue
+
 
 
 @end

@@ -183,7 +183,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button" image="set_normal-1"/>
                                 <connections>
-                                    <segue destination="jtX-Ho-uJp" kind="presentation" animates="NO" id="PI6-5o-Re0"/>
+                                    <segue destination="jtX-Ho-uJp" kind="presentation" identifier="MainToStandard" animates="NO" id="PI6-5o-Re0"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -793,7 +793,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="T0J-Xi-qbF" kind="presentation" animates="NO" id="aE5-AF-n9Q"/>
+                                    <segue destination="T0J-Xi-qbF" kind="presentation" identifier="StandartToGradient" animates="NO" id="aE5-AF-n9Q"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XQ4-h4-xWc">
@@ -873,6 +873,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vku-IQ-QdP" userLabel="warningView">
+                                <rect key="frame" x="67" y="319" width="240" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QeN-Ed-ZGW" userLabel="BackgroundView">
                                 <rect key="frame" x="0.0" y="64" width="375" height="552"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -946,7 +951,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="jtX-Ho-uJp" kind="show" animates="NO" id="Yvg-p3-4SO"/>
+                                    <action selector="tapOtherTreatWays:" destination="wRB-BT-R2V" eventType="touchUpInside" id="L7y-9u-bBk"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qPo-ie-SPw">
@@ -967,7 +972,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="XeN-yS-C2f" kind="presentation" animates="NO" id="If6-KY-uoD"/>
+                                    <action selector="tapOtherTreatWays:" destination="wRB-BT-R2V" eventType="touchUpInside" id="SyM-Se-i2i"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aDM-pX-3Yy">
@@ -979,7 +984,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="WxD-3M-xOD" kind="show" identifier="GradientToSolution" animates="NO" id="JJo-le-KZc"/>
+                                    <action selector="tapOtherTreatWays:" destination="wRB-BT-R2V" eventType="touchUpInside" id="7q6-Rz-a88"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vDS-Dk-exU">
@@ -1029,7 +1034,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="stZ-Bt-V3T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3382" y="1039"/>
+            <point key="canvasLocation" x="3381.5999999999999" y="1038.5307346326838"/>
         </scene>
         <!--参数治疗-->
         <scene sceneID="vPh-ZE-2xJ">
@@ -1459,11 +1464,11 @@
         <image name="unconnected_pressed" width="900" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="aEa-fh-ynZ"/>
-        <segue reference="aE5-AF-n9Q"/>
+        <segue reference="7YN-Ol-oCb"/>
+        <segue reference="O3A-EY-N0n"/>
         <segue reference="PI6-5o-Re0"/>
+        <segue reference="aEa-fh-ynZ"/>
         <segue reference="bnI-Yd-YTo"/>
-        <segue reference="If6-KY-uoD"/>
-        <segue reference="JJo-le-KZc"/>
+        <segue reference="nwV-fw-Hh0"/>
     </inferredMetricsTieBreakers>
 </document>

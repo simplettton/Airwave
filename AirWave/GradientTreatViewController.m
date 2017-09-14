@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIPickerView *hourPicker;
 @property (weak, nonatomic) IBOutlet UIPickerView *minutePicker;
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
+- (IBAction)tapOtherTreatWays:(id)sender;
 
 @end
 
@@ -83,12 +84,7 @@
     self.cancelButton.layer.borderColor = color;
     self.cancelButton.layer.borderWidth = 1.0f;
     self.cancelButton.layer.masksToBounds = YES;
-    
-    
     self.cancelButton.layer.mask = maskLayer1;
-    
-    
-    
 }
 
 #pragma mark -pickerViewDelegate
@@ -97,11 +93,16 @@
     return 1;
 }
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-    if (pickerView.tag == 0) {
+    if (pickerView.tag == 0)
+    {
         return pressGradeArray.count;
-    }else if(pickerView.tag == 1){
+    }
+    else if(pickerView.tag == 1)
+    {
         return hourArray.count;
-    }else{
+    }
+    else
+    {
         return minuteArray.count;
     }
 }
@@ -126,4 +127,22 @@
     return label;
 }
 
+- (IBAction)tapOtherTreatWays:(id)sender
+{
+    UILabel *warningLabel = [[UILabel alloc]initWithFrame:CGRectMake(67, 319, 240, 29)];
+//    warningLabel.backgroundColor = 
+}
+-(CABasicAnimation *)warningMessageAnimation:(float)time
+{
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    animation.fromValue = [NSNumber numberWithFloat:1.0f];
+    animation.toValue = [NSNumber numberWithFloat:0.0f];
+    animation.autoreverses = YES;
+    animation.duration = time;
+    animation.repeatCount = 4.0f;
+    animation.removedOnCompletion = YES;
+    animation.fillMode = kCAFillModeForwards;
+    return animation;
+    
+}
 @end
