@@ -46,8 +46,9 @@
 
 typedef NS_ENUM(NSUInteger,BodyButtonIndexs)
 {
-    leftup1index,leftup2index,leftup3index,lefthandindex,leftdown1index,leftdown2index,leftdown3index,leftfootindex,rightup1index,rightup2index,rightup3index,righthandindex,rightdown1index,rightdown2index,rightdown3index,rightfootindex,middle1index,middle2index,middle3index,middle4index
-    
+    leftup1index,leftup2index,leftup3index,lefthandindex,leftdown1index,leftdown2index,leftdown3index,leftfootindex,
+    rightup1index,rightup2index,rightup3index,righthandindex,rightdown1index,rightdown2index,rightdown3index,rightfootindex,
+    middle1index,middle2index,middle3index,middle4index
 };
 typedef NS_ENUM(NSUInteger,TreatState)
 {   Running,Stop,Pause,Unconnecte   };
@@ -149,8 +150,8 @@ NSString *const POST = @"8080";
         [bodyButtons[i] removeFromSuperview];
     }
     //timer invalidate
-    [self.updateTimer invalidate];
-    self.updateTimer = nil;
+//    [self.updateTimer invalidate];
+//    self.updateTimer = nil;
     
 }
 
@@ -189,6 +190,8 @@ NSString *const POST = @"8080";
     if (bytes[2]==0x90)
     {
         [treatInfomation analyzeWithData:data];
+//        [treatInfomation addObserver:self forKeyPath:@"aPort" options:NSKeyValueObservingOptionNew context:nil];
+//        [treatInfomation addObserver:self forKeyPath:@"bPort" options:NSKeyValueObservingOptionNew context:nil];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self configureBodyView];
         });
@@ -304,30 +307,23 @@ NSString *const POST = @"8080";
             }
         }
     }
-
-    //停止通知更新播放键UI
-    if (treatInfomation.treatTime -1 == runningInfomation.treatProcessTime)
-    {
-        isPlayButton = YES;
-        isPauseButton = NO;
-        [self configurePlayButton];
-    }
-//    //下位机按了播放按钮更新playUI
-//    if ((treatInfomation.treatTime = Running) && (runningInfomation.treatProcessTime !=0)) {
-//        isPlayButton = NO;
-//        isPauseButton = YES;
-//        [self configurePlayButton];
-//    }
     //停止更新压力和进度圈UI
-    if (treatInfomation.treatTime -1 == runningInfomation.treatProcessTime || runningInfomation.cellState == nil || treatInfomation.treatState == Stop)
+    if (treatInfomation.treatTime -1 == runningInfomation.treatProcessTime || treatInfomation.treatState == Stop)
     {
+//        if (treatInfomation.treatTime -1 == runningInfomation.treatProcessTime)
+//        {
+            isPlayButton = YES;
+            isPauseButton = NO;
+            [self configurePlayButton];
+//        }
         self.pressLabel.text = [NSString stringWithFormat:@"0"];
         [self.progressView drawProgress:1];
         self.progressView.label.text = [NSString stringWithFormat:@"100%%"];
     }
     else if(treatInfomation.treatState == Running||treatInfomation.treatState == Pause)
     {
-        if (treatInfomation.treatState == Running)
+        //treatInfomation.aPort != nil 确保收到了下位机的treatInfomation
+        if (treatInfomation.treatState == Running && treatInfomation.aPort !=nil )
         {
             isPlayButton = NO;
             isPauseButton = YES;
@@ -339,6 +335,7 @@ NSString *const POST = @"8080";
             isPauseButton = NO;
             [self configurePlayButton];
         }
+        //显示压力圈
         CGFloat currentProgress =(CGFloat)(runningInfomation.treatProcessTime)/(CGFloat)treatInfomation.treatTime;
         
         int progress = runningInfomation.treatProcessTime *100 / treatInfomation.treatTime;
@@ -939,14 +936,14 @@ NSString *const POST = @"8080";
                                                        userInfo:nil
                                                         repeats:YES];
     
-    self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
-                                                            target:self
-                                                          selector:@selector(updateBodyButton)
-                                                          userInfo:nil
-                                                           repeats:YES];
+//    self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
+//                                                            target:self
+//                                                          selector:@selector(updateBodyButton)
+//                                                          userInfo:nil
+//                                                           repeats:YES];
     //将定时器添加到当前运行循环，并且调为通用模式
     [[NSRunLoop currentRunLoop] addTimer:self.connectTimer forMode:NSRunLoopCommonModes];
-    [[NSRunLoop currentRunLoop] addTimer:self.updateTimer forMode:NSRunLoopCommonModes];
+//    [[NSRunLoop currentRunLoop] addTimer:self.updateTimer forMode:NSRunLoopCommonModes];
 }
 
 // 心跳连接
@@ -993,20 +990,13 @@ NSString *const POST = @"8080";
 
 - (IBAction)tapPlayButton:(id)sender
 {
-    isPlayButton  = !isPlayButton;
-    isPauseButton = !isPauseButton;
-    [self configurePlayButton];
-    [self start];
-//    [self.playButton setImage:[UIImage imageNamed:@"stop"] forState:UIControlStateNormal];
-    
+      [self start];
 }
 
-- (IBAction)tapPauseButton:(id)sender {
-    [self continue];
-    isPlayButton  = !isPlayButton;
-    isPauseButton = !isPauseButton;
-    [self pause];
-    [self configurePlayButton];
+- (IBAction)tapPauseButton:(id)sender
+{
+
+      [self pause];
 }
 
 @end
