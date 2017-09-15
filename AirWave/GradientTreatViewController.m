@@ -47,12 +47,23 @@
     {
         [minuteArray addObject:[NSString stringWithFormat:@"%d",i]];
     }
-
-    [self.pressGradePicker selectRow:1 inComponent:0 animated:NO];
-    [self.minutePicker selectRow:20 inComponent:0 animated:NO];
+    NSInteger pressLevel = self.treatInfomation.pressLevel;
+    NSInteger minute = self.treatInfomation.treatTime/60;
+    NSInteger hour = self.treatInfomation.treatTime /60;
+    minute = minute % 60;
+    [self.pressGradePicker selectRow:pressLevel inComponent:0 animated:NO];
+    [self.minutePicker selectRow:minute inComponent:0 animated:NO];
+    [self.hourPicker selectRow:hour inComponent:0 animated:NO];
     
 }
-
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+    NSString *aport = self.treatInfomation.aPort;
+    NSLog(@"pressLevel = %d",self.treatInfomation.pressLevel);
+    NSLog(@"treat.aport == %@",aport);
+    NSLog(@"treatTime == %d",self.treatInfomation.treatTime);
+}
 -(void)configureView
 {
     //configure navigationcontroller

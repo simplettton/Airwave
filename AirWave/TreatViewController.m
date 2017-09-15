@@ -1084,7 +1084,7 @@ NSString *const POST = @"8080";
     {
         UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
         GradientTreatViewController *controller = (GradientTreatViewController *)navigationController.topViewController;
-        controller.treatInfomation = sender;
+        controller.treatInfomation = self.treatInfomation;
     }
 }
 @end
