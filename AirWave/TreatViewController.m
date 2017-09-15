@@ -10,12 +10,17 @@
 #import "Pack.h"
 #import "BodyButton.h"
 #import "TreatViewController.h"
-#import "StandardTreatViewController.h"
+
 #import "TreatInformation.h"
 #import "RunningInfomation.h"
 #import "UIImage+ImageWithColor.h"
 #import "ProgressView.h"
 #import "WarnMessage.h"
+
+#import "StandardTreatViewController.h"
+#import "GradientTreatViewController.h"
+#import "ParameterTreatViewController.h"
+#import "SolutionTreatViewController.h"
 
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 
@@ -57,6 +62,10 @@ typedef NS_ENUM(NSUInteger,CellState)
 {
     UnWorking,Working,KeepingAir
 };
+typedef NS_ENUM(NSUInteger,TreatWay)
+{
+    Standart = 1,Gradient,Parameter,Solution
+};
 typedef NS_ENUM(NSUInteger,BodyTags)
 {
     leftup1tag   =17,leftup2tag   =16,leftup3tag   =15,lefthandtag  =14,leftdown1tag =13,leftdown2tag =12,leftdown3tag =11,
@@ -94,6 +103,8 @@ NSString *const POST = @"8080";
 
 - (IBAction)tapPlayButton:(id)sender;
 - (IBAction)tapPauseButton:(id)sender;
+- (IBAction)tapSettingButton:(id)sender;
+
 
 @end
 
@@ -212,9 +223,8 @@ NSString *const POST = @"8080";
     {
         WarnMessage *warnMessage = [[WarnMessage alloc]init];
         NSString *message = [warnMessage analyzeWithData:data];
-        self.warnningLabel.text = message;
+        [self showWarningMessage:message];
     }
-
     [sock readDataWithTimeout:- 1 tag:0];
 }
 -(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
@@ -832,22 +842,50 @@ NSString *const POST = @"8080";
 
 -(void)configurePlayButton
 {
-    if (isPlayButton == YES) {
+    if (isPlayButton == YES)
+    {
         [self.playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
-    }else{
+    }
+    else
+    {
         [self.playButton setImage:[UIImage imageNamed:@"stop_green"] forState:UIControlStateNormal];
     }
     
-    if (isPauseButton) {
-        
+    if (isPauseButton)
+    {
         [self.pauseButton setImage:[UIImage imageNamed:@"pause_green"] forState:UIControlStateNormal];
         self.pauseButton.enabled = YES;
-    }else{
+    }
+    else
+    {
         [self.pauseButton setImage:[UIImage imageNamed:@"pause_write"] forState:UIControlStateNormal];
         self.pauseButton.enabled = NO;
     }
 }
-
+-(void)showWarningMessage:(NSString *)message
+{
+    UILabel *warningLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 520, 135, 35)];
+    warningLabel.textAlignment = NSTextAlignmentLeft;
+    warningLabel.text = message;
+    warningLabel.textColor = UIColorFromHex(0xFF8247);
+    UIImageView *warningImageView = [[UIImageView alloc]initWithFrame:CGRectMake(34, 520, 35, 35)];
+    warningImageView.image = [UIImage imageNamed:@"warning"];
+    [[self.view viewWithTag:1000] addSubview:warningImageView];
+    [[self.view viewWithTag:1000] addSubview:warningLabel];
+    [warningImageView.layer addAnimation:[self warningMessageAnimation:0.5] forKey:nil];
+    [warningLabel.layer addAnimation:[self warningMessageAnimation:0.5] forKey:nil];
+    // 延迟的时间
+    int64_t delayInSeconds = 4;
+    /*
+     *@parameter 1,时间参照，从此刻开始计时
+     *@parameter 2,延时多久，此处为秒级，还有纳秒等。10ull * NSEC_PER_MSEC
+     */
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [warningLabel removeFromSuperview];
+        [warningImageView removeFromSuperview];
+    });
+}
 #pragma mark - commit
 - (void)start
 {
@@ -860,8 +898,6 @@ NSString *const POST = @"8080";
     NSData *data = [NSData dataWithBytes:dataBytes length:2];
     
     NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
-    
-    
 //    NSString *messageString = @"aaaaaa";
 //    NSData *data = [messageString dataUsingEncoding:NSUTF8StringEncoding];
     // withTimeout -1 : 无穷大,一直等
@@ -992,13 +1028,48 @@ NSString *const POST = @"8080";
 
 - (IBAction)tapPlayButton:(id)sender
 {
-      [self start];
+    [self start];
 }
 
 - (IBAction)tapPauseButton:(id)sender
 {
 
-      [self pause];
+    [self pause];
+}
+
+- (IBAction)tapSettingButton:(id)sender
+{
+
+    NSInteger treatWay = self.treatInfomation.treatWay;
+    switch (treatWay) {
+        case Standart:
+            [self performSegueWithIdentifier:@"MainToStandard" sender:nil];
+            break;
+        case Gradient :
+            [self performSegueWithIdentifier:@"MainToGradient" sender:nil];
+            break;
+        case Parameter:
+            [self performSegueWithIdentifier:@"MainToParameter" sender:nil];
+            break;
+        case Solution:
+            [self performSegueWithIdentifier:@"MainToSolution" sender:nil];
+            break;
+        default:
+            break;
+    }
+}
+-(CABasicAnimation *)warningMessageAnimation:(float)time
+{
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    animation.fromValue = [NSNumber numberWithFloat:1.0f];
+    animation.toValue = [NSNumber numberWithFloat:0.0f];
+    animation.autoreverses = YES;
+    animation.duration = time;
+    animation.repeatCount = 8.0f;
+    animation.removedOnCompletion = YES;
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    animation.fillMode = kCAFillModeForwards;
+    return animation;
 }
 #pragma mark - segue
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -1008,6 +1079,12 @@ NSString *const POST = @"8080";
         UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
         StandardTreatViewController *controller = (StandardTreatViewController *)navigationController.topViewController;
         controller.treatInfomation = self.treatInfomation;
+    }
+    else if([segue.identifier isEqualToString:@"MainToGradient"])
+    {
+        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
+        GradientTreatViewController *controller = (GradientTreatViewController *)navigationController.topViewController;
+        controller.treatInfomation = sender;
     }
 }
 @end

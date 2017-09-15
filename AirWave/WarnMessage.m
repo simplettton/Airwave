@@ -17,7 +17,6 @@
                             @"治疗中不可切换", @"治疗过程不允许选择方案", @"无效气囊", @"连接气囊不允许调节AB顺序" ,@"测量错误" ,@"风扇异常",@"机器高温异常"];
     Byte *bytes = (Byte *)[data bytes];
     self.index = bytes[3];
-    NSLog(@"bytes[3]==%ld",(long)self.index);
     NSString *message = warningmsgs[self.index];
     return message;
 }

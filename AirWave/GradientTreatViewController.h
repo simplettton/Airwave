@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TreatInformation.h"
 
 @interface GradientTreatViewController : UIViewController<UIPickerViewDelegate,UIPickerViewDataSource>
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
+@property(weak,nonatomic) TreatInformation *treatInfomation;
 @end

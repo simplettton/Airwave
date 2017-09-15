@@ -72,7 +72,6 @@ const NSString *ARMA003 = @"ARMA003";
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
-    [self judgeCellType];
 }
 -(void)configureView
 {
@@ -112,13 +111,7 @@ const NSString *ARMA003 = @"ARMA003";
     [self.buttonView.layer addSublayer:topBorder];
     
 }
--(void)judgeCellType
-{
-    if ([self.aPort isEqualToString:@"ARMA003"] || [self.aPort isEqualToString:@"LEGA003"] || [self.bPort isEqualToString:@"ARMB003"] || [self.bPort isEqualToString:@"LEGB003"])
-    {
-        [self performSegueWithIdentifier:@"StandartToGradient" sender:nil];
-    }
-}
+
 #pragma mark -pickerViewDelegate
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {

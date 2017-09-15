@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		041FD7E51F58FDEA00522D64 /* SolutionTreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 041FD7E41F58FDEA00522D64 /* SolutionTreatViewController.m */; };
-		044D54B31F4D0D4A002C1E35 /* 图标 in Resources */ = {isa = PBXBuildFile; fileRef = 044D54B21F4D0D4A002C1E35 /* 图标 */; };
+		0424CF6A1F6794F1008D138E /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0424CF691F6794F1008D138E /* ProgressView.m */; };
 		044D54B81F4D159D002C1E35 /* StandardTreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D54B71F4D159D002C1E35 /* StandardTreatViewController.m */; };
 		044D54BB1F4D15F7002C1E35 /* Pack.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D54BA1F4D15F7002C1E35 /* Pack.m */; };
 		044D54BE1F4D1A4C002C1E35 /* GradientTreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D54BD1F4D1A4C002C1E35 /* GradientTreatViewController.m */; };
 		044E4F521F60D63B009DD7E7 /* UIImage+ImageWithColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 044E4F511F60D63B009DD7E7 /* UIImage+ImageWithColor.m */; };
 		044E4F571F6140D8009DD7E7 /* BodyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 044E4F561F6140D8009DD7E7 /* BodyButton.m */; };
+		0450307D1F6955DB008CFAB4 /* WarnMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0450307C1F6955DB008CFAB4 /* WarnMessage.m */; };
 		0457C63E1F5563EE0050C604 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0457C63C1F5563EE0050C604 /* Main.storyboard */; };
 		045D81B31F6295B400D4D998 /* RunningInfomation.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D81B21F6295B400D4D998 /* RunningInfomation.m */; };
 		0462C80F1F5D3FA900AEC2D6 /* Infoclass.m in Sources */ = {isa = PBXBuildFile; fileRef = 0462C80E1F5D3FA900AEC2D6 /* Infoclass.m */; };
@@ -54,7 +55,8 @@
 		00F29BDE28750DB8ECD90253 /* Pods-AirWave.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirWave.release.xcconfig"; path = "Pods/Target Support Files/Pods-AirWave/Pods-AirWave.release.xcconfig"; sourceTree = "<group>"; };
 		041FD7E31F58FDEA00522D64 /* SolutionTreatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SolutionTreatViewController.h; sourceTree = "<group>"; };
 		041FD7E41F58FDEA00522D64 /* SolutionTreatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SolutionTreatViewController.m; sourceTree = "<group>"; };
-		044D54B21F4D0D4A002C1E35 /* 图标 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "图标"; sourceTree = "<group>"; };
+		0424CF681F6794F1008D138E /* ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressView.h; sourceTree = "<group>"; };
+		0424CF691F6794F1008D138E /* ProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressView.m; sourceTree = "<group>"; };
 		044D54B61F4D159D002C1E35 /* StandardTreatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StandardTreatViewController.h; sourceTree = "<group>"; };
 		044D54B71F4D159D002C1E35 /* StandardTreatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StandardTreatViewController.m; sourceTree = "<group>"; };
 		044D54B91F4D15F7002C1E35 /* Pack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pack.h; sourceTree = "<group>"; };
@@ -65,6 +67,8 @@
 		044E4F511F60D63B009DD7E7 /* UIImage+ImageWithColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageWithColor.m"; sourceTree = "<group>"; };
 		044E4F531F611C83009DD7E7 /* BodyButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BodyButton.h; sourceTree = "<group>"; };
 		044E4F561F6140D8009DD7E7 /* BodyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BodyButton.m; sourceTree = "<group>"; };
+		0450307B1F6955DB008CFAB4 /* WarnMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WarnMessage.h; sourceTree = "<group>"; };
+		0450307C1F6955DB008CFAB4 /* WarnMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WarnMessage.m; sourceTree = "<group>"; };
 		0457C63D1F5563EE0050C604 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		045D81B11F6295B400D4D998 /* RunningInfomation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunningInfomation.h; sourceTree = "<group>"; };
 		045D81B21F6295B400D4D998 /* RunningInfomation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunningInfomation.m; sourceTree = "<group>"; };
@@ -136,6 +140,8 @@
 				0462C8121F5D42CE00AEC2D6 /* TreatInformation.m */,
 				045D81B11F6295B400D4D998 /* RunningInfomation.h */,
 				045D81B21F6295B400D4D998 /* RunningInfomation.m */,
+				0450307B1F6955DB008CFAB4 /* WarnMessage.h */,
+				0450307C1F6955DB008CFAB4 /* WarnMessage.m */,
 			);
 			name = dataAnalyze;
 			sourceTree = "<group>";
@@ -204,7 +210,8 @@
 				044E4F561F6140D8009DD7E7 /* BodyButton.m */,
 				0462C80D1F5D3FA900AEC2D6 /* Infoclass.h */,
 				0462C80E1F5D3FA900AEC2D6 /* Infoclass.m */,
-				044D54B21F4D0D4A002C1E35 /* 图标 */,
+				0424CF681F6794F1008D138E /* ProgressView.h */,
+				0424CF691F6794F1008D138E /* ProgressView.m */,
 				046BA76C1F480DF2004D7E74 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -357,7 +364,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				044D54B31F4D0D4A002C1E35 /* 图标 in Resources */,
 				046BA77B1F480DF2004D7E74 /* LaunchScreen.storyboard in Resources */,
 				046BA7781F480DF2004D7E74 /* Assets.xcassets in Resources */,
 				0457C63E1F5563EE0050C604 /* Main.storyboard in Resources */,
@@ -445,8 +451,10 @@
 				044D54BE1F4D1A4C002C1E35 /* GradientTreatViewController.m in Sources */,
 				046BA7701F480DF2004D7E74 /* AppDelegate.m in Sources */,
 				0462C8131F5D42CE00AEC2D6 /* TreatInformation.m in Sources */,
+				0450307D1F6955DB008CFAB4 /* WarnMessage.m in Sources */,
 				044D54BB1F4D15F7002C1E35 /* Pack.m in Sources */,
 				0462C80F1F5D3FA900AEC2D6 /* Infoclass.m in Sources */,
+				0424CF6A1F6794F1008D138E /* ProgressView.m in Sources */,
 				046BA76D1F480DF2004D7E74 /* main.m in Sources */,
 				044E4F521F60D63B009DD7E7 /* UIImage+ImageWithColor.m in Sources */,
 				044D54B81F4D159D002C1E35 /* StandardTreatViewController.m in Sources */,

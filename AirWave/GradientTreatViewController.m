@@ -55,7 +55,6 @@
 
 -(void)configureView
 {
-
     //configure navigationcontroller
     [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc]init]];
@@ -76,7 +75,6 @@
     maskLayer1.frame = self.cancelButton.bounds;
     maskLayer1.path = maskPath1.CGPath;
     
-    
     //设置边框颜色
 
     CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
@@ -89,7 +87,8 @@
 
 #pragma mark -pickerViewDelegate
 
--(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
     return 1;
 }
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
@@ -115,13 +114,16 @@
         label.textColor = UIColorFromHex(0x65bba9);
         [label setTextAlignment:NSTextAlignmentCenter];
     }
-    if (pickerView.tag == 0) {
+    if (pickerView.tag == 0)
+    {
         label.text = [pressGradeArray objectAtIndex:row];
     }
-    else if (pickerView.tag == 1){
+    else if (pickerView.tag == 1)
+    {
         label.text = [hourArray objectAtIndex:row];
     }
-    else{
+    else
+    {
         label.text = [minuteArray objectAtIndex:row];
     }
     return label;
@@ -129,8 +131,29 @@
 
 - (IBAction)tapOtherTreatWays:(id)sender
 {
-    UILabel *warningLabel = [[UILabel alloc]initWithFrame:CGRectMake(67, 319, 240, 29)];
-//    warningLabel.backgroundColor = 
+    UILabel *warningLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 509, 135, 35)];
+//    warningLabel.backgroundColor = UIColorFromHex(0xF7F8F8);
+    warningLabel.textAlignment = NSTextAlignmentLeft;
+    warningLabel.text = @"气囊类型不合适";
+    warningLabel.textColor = UIColorFromHex(0xFF8247);
+    
+    UIImageView *warningImageView = [[UIImageView alloc]initWithFrame:CGRectMake(34, 509, 35, 35)];
+    warningImageView.image = [UIImage imageNamed:@"warning"];
+    [[self.view viewWithTag:1000] addSubview:warningImageView];
+    [[self.view viewWithTag:1000] addSubview:warningLabel];
+    [warningImageView.layer addAnimation:[self warningMessageAnimation:0.5] forKey:nil];
+    [warningLabel.layer addAnimation:[self warningMessageAnimation:0.5] forKey:nil];
+// 延迟的时间
+    int64_t delayInSeconds = 2;
+    /*
+     *@parameter 1,时间参照，从此刻开始计时
+     *@parameter 2,延时多久，此处为秒级，还有纳秒等。10ull * NSEC_PER_MSEC
+     */
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [warningLabel removeFromSuperview];
+        [warningImageView removeFromSuperview];
+    });
 }
 -(CABasicAnimation *)warningMessageAnimation:(float)time
 {
@@ -141,8 +164,9 @@
     animation.duration = time;
     animation.repeatCount = 4.0f;
     animation.removedOnCompletion = YES;
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     animation.fillMode = kCAFillModeForwards;
     return animation;
-    
 }
+
 @end

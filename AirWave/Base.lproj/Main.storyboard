@@ -26,7 +26,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KsC-Us-dCx" userLabel="BackgroundView">
+                            <view tag="1000" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KsC-Us-dCx" userLabel="BackgroundView">
                                 <rect key="frame" x="0.0" y="64" width="375" height="552"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -139,8 +139,8 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4SW-Ss-zX8">
-                                        <rect key="frame" x="48" y="523" width="264" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4SW-Ss-zX8">
+                                        <rect key="frame" x="48" y="520" width="264" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.44812256099999997" green="0.49131524560000001" blue="0.61758631470000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -183,7 +183,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button" image="set_normal-1"/>
                                 <connections>
-                                    <segue destination="jtX-Ho-uJp" kind="presentation" identifier="MainToStandard" animates="NO" id="PI6-5o-Re0"/>
+                                    <action selector="tapSettingButton:" destination="49W-s7-z4E" eventType="touchUpInside" id="LUg-41-JLc"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -205,11 +205,15 @@
                         <outlet property="pressLabel" destination="MSC-Lt-fwX" id="5VR-lP-PUz"/>
                         <outlet property="progressView" destination="0s8-Eq-8Tt" id="CYb-AP-DHm"/>
                         <outlet property="warnningLabel" destination="4SW-Ss-zX8" id="Q2s-Y1-qPD"/>
+                        <segue destination="T0J-Xi-qbF" kind="showDetail" identifier="MainToGradient" animates="NO" id="Dgw-1N-eN9"/>
+                        <segue destination="jtX-Ho-uJp" kind="showDetail" identifier="MainToStandard" animates="NO" id="gIv-VQ-fEb"/>
+                        <segue destination="XeN-yS-C2f" kind="showDetail" identifier="MainToParameter" animates="NO" id="YZz-rL-WdO"/>
+                        <segue destination="WxD-3M-xOD" kind="showDetail" identifier="MainToSolution" animates="NO" id="4g4-bt-O77"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5yB-9V-2Dd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2801" y="72"/>
+            <point key="canvasLocation" x="2800.8000000000002" y="52.623688155922046"/>
         </scene>
         <!--Setting View Controller-->
         <scene sceneID="o9c-6L-GLy">
@@ -410,7 +414,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A8B-E2-Zwi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3765.5999999999999" y="71.514242878560722"/>
+            <point key="canvasLocation" x="3766" y="72"/>
         </scene>
         <!--Other Setting View Controller-->
         <scene sceneID="KVb-lR-xCA">
@@ -792,9 +796,6 @@
                                 <state key="normal" title="梯度治疗">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="T0J-Xi-qbF" kind="presentation" identifier="StandartToGradient" animates="NO" id="aE5-AF-n9Q"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XQ4-h4-xWc">
                                 <rect key="frame" x="188" y="70" width="85" height="66"/>
@@ -854,7 +855,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ff-oZ-VTZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1532" y="1026.8365817091455"/>
+            <point key="canvasLocation" x="2801" y="1021"/>
         </scene>
         <!--梯度治疗-->
         <scene sceneID="vHg-Ca-iTk">
@@ -873,12 +874,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vku-IQ-QdP" userLabel="warningView">
-                                <rect key="frame" x="67" y="319" width="240" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QeN-Ed-ZGW" userLabel="BackgroundView">
+                            <view tag="1000" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QeN-Ed-ZGW" userLabel="BackgroundView">
                                 <rect key="frame" x="0.0" y="64" width="375" height="552"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -936,7 +932,14 @@
                                         <rect key="frame" x="285" y="164" width="52" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" red="0.38303539156913757" green="0.38334912061691284" blue="0.38308393955230713" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uhO-8W-ghm">
+                                        <rect key="frame" x="70" y="509" width="135" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.3830353916" green="0.38334912059999998" blue="0.38308393959999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -1034,7 +1037,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="stZ-Bt-V3T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3381.5999999999999" y="1038.5307346326838"/>
+            <point key="canvasLocation" x="2905" y="-797"/>
         </scene>
         <!--参数治疗-->
         <scene sceneID="vPh-ZE-2xJ">
@@ -1136,9 +1139,6 @@
                                 <state key="normal" title="梯度治疗">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="T0J-Xi-qbF" kind="presentation" animates="NO" id="7YN-Ol-oCb"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bw8-Lb-09k">
                                 <rect key="frame" x="188" y="70" width="85" height="66"/>
@@ -1208,7 +1208,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V2P-Z9-e5o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5110" y="1039"/>
+            <point key="canvasLocation" x="4532" y="1039"/>
         </scene>
         <!--模式选择-->
         <scene sceneID="nCm-Qy-vWh">
@@ -1247,9 +1247,6 @@
                                 <state key="normal" title="梯度治疗">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="T0J-Xi-qbF" kind="show" identifier="SolutionToGradient" animates="NO" id="ONi-wJ-Z1U"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AR8-6r-17n">
                                 <rect key="frame" x="188" y="70" width="85" height="66"/>
@@ -1348,7 +1345,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RAN-k8-iR6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6656.8000000000002" y="1038.5307346326838"/>
+            <point key="canvasLocation" x="6382" y="1039"/>
         </scene>
         <!--标准navi-->
         <scene sceneID="4PP-6l-3Dy">
@@ -1367,7 +1364,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ms3-cd-zHE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="580" y="1027"/>
+            <point key="canvasLocation" x="1993" y="1021"/>
         </scene>
         <!--梯度navi-->
         <scene sceneID="DcF-zH-mVZ">
@@ -1385,7 +1382,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8vF-wq-6s3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2508" y="1040"/>
+            <point key="canvasLocation" x="1993" y="-797"/>
         </scene>
         <!--参数navi-->
         <scene sceneID="tfq-fK-Ajw">
@@ -1403,7 +1400,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UvT-1D-DHm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4350" y="1039"/>
+            <point key="canvasLocation" x="3766" y="1039"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ttl-8W-KEO">
@@ -1421,7 +1418,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yZb-G7-lPM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5934" y="1039"/>
+            <point key="canvasLocation" x="5546" y="1039"/>
         </scene>
     </scenes>
     <resources>
@@ -1464,11 +1461,10 @@
         <image name="unconnected_pressed" width="900" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="7YN-Ol-oCb"/>
-        <segue reference="O3A-EY-N0n"/>
-        <segue reference="PI6-5o-Re0"/>
-        <segue reference="aEa-fh-ynZ"/>
         <segue reference="bnI-Yd-YTo"/>
-        <segue reference="nwV-fw-Hh0"/>
+        <segue reference="kTA-kc-yd1"/>
+        <segue reference="gIv-VQ-fEb"/>
+        <segue reference="YZz-rL-WdO"/>
+        <segue reference="4g4-bt-O77"/>
     </inferredMetricsTieBreakers>
 </document>
