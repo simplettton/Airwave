@@ -18,8 +18,10 @@
 @property (weak, nonatomic) IBOutlet UIPickerView *hourPicker;
 @property (weak, nonatomic) IBOutlet UIPickerView *minutePicker;
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
+@property (weak, nonatomic) IBOutlet UIView *backgroundView;
 - (IBAction)tapOtherTreatWays:(id)sender;
-
+- (IBAction)chooseContinueTime:(id)sender;
+- (IBAction)chooseCustomTime:(id)sender;
 @end
 
 @implementation GradientTreatViewController
@@ -48,21 +50,24 @@
         [minuteArray addObject:[NSString stringWithFormat:@"%d",i]];
     }
     NSInteger pressLevel = self.treatInfomation.pressLevel;
-    NSInteger minute = self.treatInfomation.treatTime/60;
-    NSInteger hour = self.treatInfomation.treatTime /60;
+    NSInteger hour = self.treatInfomation.treatTime / 3600;
+    NSInteger minute = self.treatInfomation.treatTime / 60;
     minute = minute % 60;
     [self.pressGradePicker selectRow:pressLevel inComponent:0 animated:NO];
     [self.minutePicker selectRow:minute inComponent:0 animated:NO];
     [self.hourPicker selectRow:hour inComponent:0 animated:NO];
     
+    //10小时取消minute的选择
+    if (hour == 10)
+    {
+        [self pickerView:self.hourPicker didSelectRow:hour inComponent:0];
+    }
+    
 }
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
-    NSString *aport = self.treatInfomation.aPort;
-    NSLog(@"pressLevel = %d",self.treatInfomation.pressLevel);
-    NSLog(@"treat.aport == %@",aport);
-    NSLog(@"treatTime == %d",self.treatInfomation.treatTime);
+
 }
 -(void)configureView
 {
@@ -95,19 +100,51 @@
     self.cancelButton.layer.masksToBounds = YES;
     self.cancelButton.layer.mask = maskLayer1;
 }
+- (IBAction)tapOtherTreatWays:(id)sender
+{
+    UILabel *warningLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 509, 135, 35)];
+    // warningLabel.backgroundColor = UIColorFromHex(0xF7F8F8);
+    warningLabel.textAlignment = NSTextAlignmentLeft;
+    warningLabel.text = @"气囊类型不合适";
+    warningLabel.textColor = UIColorFromHex(0xFF8247);
+    
+    UIImageView *warningImageView = [[UIImageView alloc]initWithFrame:CGRectMake(34, 509, 35, 35)];
+    warningImageView.image = [UIImage imageNamed:@"warning"];
+    [[self.view viewWithTag:1000] addSubview:warningImageView];
+    [[self.view viewWithTag:1000] addSubview:warningLabel];
+    [warningImageView.layer addAnimation:[self warningMessageAnimation:0.5] forKey:nil];
+    [warningLabel.layer addAnimation:[self warningMessageAnimation:0.5] forKey:nil];
+    // 延迟后警告消失
+    int64_t delayInSeconds = 2;
+    /*
+     *@parameter 1,时间参照，从此刻开始计时
+     *@parameter 2,延时多久，此处为秒级，还有纳秒等。10ull * NSEC_PER_MSEC
+     */
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [warningLabel removeFromSuperview];
+        [warningImageView removeFromSuperview];
+    });
+}
 
-#pragma mark -pickerViewDelegate
+- (IBAction)chooseContinueTime:(id)sender {
+}
+
+- (IBAction)chooseCustomTime:(id)sender {
+}
+#pragma mark - pickerViewDelegate
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     return 1;
 }
--(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-    if (pickerView.tag == 0)
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    if (pickerView.tag == 1000)
     {
         return pressGradeArray.count;
     }
-    else if(pickerView.tag == 1)
+    else if(pickerView.tag == 1001)
     {
         return hourArray.count;
     }
@@ -122,14 +159,14 @@
     {
         label = [[UILabel alloc]init];
         label.font= [UIFont systemFontOfSize:20];
-        label.textColor = UIColorFromHex(0x65bba9);
+        label.textColor = UIColorFromHex(0x2b5694);
         [label setTextAlignment:NSTextAlignmentCenter];
     }
-    if (pickerView.tag == 0)
+    if (pickerView.tag == 1000)
     {
         label.text = [pressGradeArray objectAtIndex:row];
     }
-    else if (pickerView.tag == 1)
+    else if (pickerView.tag == 1001)
     {
         label.text = [hourArray objectAtIndex:row];
     }
@@ -139,33 +176,28 @@
     }
     return label;
 }
-
-- (IBAction)tapOtherTreatWays:(id)sender
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    UILabel *warningLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 509, 135, 35)];
-//    warningLabel.backgroundColor = UIColorFromHex(0xF7F8F8);
-    warningLabel.textAlignment = NSTextAlignmentLeft;
-    warningLabel.text = @"气囊类型不合适";
-    warningLabel.textColor = UIColorFromHex(0xFF8247);
-    
-    UIImageView *warningImageView = [[UIImageView alloc]initWithFrame:CGRectMake(34, 509, 35, 35)];
-    warningImageView.image = [UIImage imageNamed:@"warning"];
-    [[self.view viewWithTag:1000] addSubview:warningImageView];
-    [[self.view viewWithTag:1000] addSubview:warningLabel];
-    [warningImageView.layer addAnimation:[self warningMessageAnimation:0.5] forKey:nil];
-    [warningLabel.layer addAnimation:[self warningMessageAnimation:0.5] forKey:nil];
-// 延迟的时间
-    int64_t delayInSeconds = 2;
-    /*
-     *@parameter 1,时间参照，从此刻开始计时
-     *@parameter 2,延时多久，此处为秒级，还有纳秒等。10ull * NSEC_PER_MSEC
-     */
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [warningLabel removeFromSuperview];
-        [warningImageView removeFromSuperview];
-    });
+    if (pickerView.tag == 1001)
+    {
+        if (row == (hourArray.count -1))
+        {
+            //十小时则不显示分
+            minuteArray = [NSMutableArray arrayWithObject:@"0"];
+            [self.minutePicker reloadAllComponents];
+        }
+        else
+        {
+            minuteArray = [[NSMutableArray alloc]initWithCapacity:20];
+            for (int i=0; i<60; i++)
+            {
+                [minuteArray addObject:[NSString stringWithFormat:@"%d",i]];
+            }
+            [self.minutePicker reloadAllComponents];
+        }
+    }
 }
+#pragma mark - private method
 -(CABasicAnimation *)warningMessageAnimation:(float)time
 {
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];

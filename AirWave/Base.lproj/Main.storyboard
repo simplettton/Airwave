@@ -892,12 +892,12 @@
                                         <color key="textColor" red="0.20060706140000001" green="0.20079019670000001" blue="0.20063543319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Jo-NJ-20M">
+                                    <pickerView tag="1000" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Jo-NJ-20M">
                                         <rect key="frame" x="47" y="180" width="117" height="216"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         <color key="tintColor" red="0.3830353916" green="0.38334912059999998" blue="0.38308393959999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </pickerView>
-                                    <pickerView tag="1" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="baV-f8-mL7">
+                                    <pickerView tag="1001" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="baV-f8-mL7">
                                         <rect key="frame" x="210" y="180" width="40" height="216"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         <color key="tintColor" red="0.3830353916" green="0.38334912059999998" blue="0.38308393959999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -909,7 +909,7 @@
                                         <color key="textColor" red="0.3830353916" green="0.38334912059999998" blue="0.38308393959999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <pickerView tag="2" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UHf-e6-ryb">
+                                    <pickerView tag="1002" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UHf-e6-ryb">
                                         <rect key="frame" x="278" y="180" width="40" height="216"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         <color key="tintColor" red="0.3830353916" green="0.38334912059999998" blue="0.38308393959999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -922,16 +922,16 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="持续" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fm9-ci-I4g">
-                                        <rect key="frame" x="215" y="164" width="35" height="21"/>
+                                        <rect key="frame" x="212" y="158" width="45" height="26"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.3830353916" green="0.38334912059999998" blue="0.38308393959999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="自定义" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vmd-Tu-bZY">
-                                        <rect key="frame" x="285" y="164" width="52" height="21"/>
+                                        <rect key="frame" x="296" y="158" width="52" height="26"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.38303539156913757" green="0.38334912061691284" blue="0.38308393955230713" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -942,6 +942,26 @@
                                         <color key="textColor" red="0.3830353916" green="0.38334912059999998" blue="0.38308393959999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="unselected" translatesAutoresizingMaskIntoConstraints="NO" id="fZO-Ew-peB">
+                                        <rect key="frame" x="179" y="158" width="26" height="26"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vj5-sv-y0g" userLabel="selected">
+                                        <rect key="frame" x="264" y="158" width="26" height="26"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button" image="selected"/>
+                                        <connections>
+                                            <action selector="chooseCustomTime:" destination="wRB-BT-R2V" eventType="touchUpInside" id="21g-V0-C7z"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qkj-Ng-dcY" userLabel="unselected">
+                                        <rect key="frame" x="179" y="158" width="26" height="26"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button" image="unselected"/>
+                                        <connections>
+                                            <action selector="chooseContinueTime:" destination="wRB-BT-R2V" eventType="touchUpInside" id="6lv-oX-mD2"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -1027,6 +1047,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="模式选择" id="lzB-nX-oOw"/>
                     <connections>
+                        <outlet property="backgroundView" destination="QeN-Ed-ZGW" id="pSS-NH-h1j"/>
                         <outlet property="buttonView" destination="JHd-Nd-rvN" id="KtA-7N-5bV"/>
                         <outlet property="cancelButton" destination="vDS-Dk-exU" id="17c-r8-cL5"/>
                         <outlet property="hourPicker" destination="baV-f8-mL7" id="Gi2-7y-EA3"/>
@@ -1037,7 +1058,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="stZ-Bt-V3T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2905" y="-797"/>
+            <point key="canvasLocation" x="2904.8000000000002" y="-797.45127436281871"/>
         </scene>
         <!--参数治疗-->
         <scene sceneID="vPh-ZE-2xJ">
@@ -1451,6 +1472,7 @@
         <image name="rightup1_grey" width="107" height="196"/>
         <image name="rightup2_grey" width="128" height="127"/>
         <image name="rightup3_grey" width="107" height="100"/>
+        <image name="selected" width="85" height="85"/>
         <image name="set_normal-1" width="580" height="200"/>
         <image name="set_press-1" width="580" height="200"/>
         <image name="speed" width="85" height="85"/>
@@ -1459,12 +1481,13 @@
         <image name="treat_press-1" width="580" height="200"/>
         <image name="unconnected" width="900" height="200"/>
         <image name="unconnected_pressed" width="900" height="200"/>
+        <image name="unselected" width="86" height="86"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="bnI-Yd-YTo"/>
-        <segue reference="kTA-kc-yd1"/>
+        <segue reference="hW4-xW-9f9"/>
+        <segue reference="4g4-bt-O77"/>
         <segue reference="gIv-VQ-fEb"/>
         <segue reference="YZz-rL-WdO"/>
-        <segue reference="4g4-bt-O77"/>
     </inferredMetricsTieBreakers>
 </document>
