@@ -1010,6 +1010,7 @@ NSString *const POST = @"8080";
             [self performSegueWithIdentifier:@"MainToSolution" sender:nil];
             break;
         default:
+            [self performSegueWithIdentifier:@"MainToStandard" sender:nil];
             break;
     }
 }

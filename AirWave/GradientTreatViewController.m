@@ -16,6 +16,7 @@
     NSArray *pressGradeArray;
     NSMutableArray *hourArray;
     NSMutableArray *minuteArray;
+    BOOL customTimeSelected;
 }
 @property (weak, nonatomic) IBOutlet UIPickerView *pressGradePicker;
 @property (weak, nonatomic) IBOutlet UIPickerView *hourPicker;
@@ -37,7 +38,7 @@
 - (void)viewDidLoad
 {
     
-
+    
     [super viewDidLoad];
     [self configureView];
     
@@ -48,6 +49,9 @@
     self.pressGradePicker.dataSource =self;
     self.hourPicker.dataSource = self;
     self.minutePicker.dataSource = self;
+    
+    
+
     
     pressGradeArray = @[@"自定义",@"一级",@"二级",@"三级"];
     hourArray = [[NSMutableArray alloc]initWithCapacity:20];
@@ -60,18 +64,28 @@
     {
         [minuteArray addObject:[NSString stringWithFormat:@"%d",i]];
     }
-    NSInteger pressLevel = self.treatInfomation.pressLevel;
-    NSInteger hour = self.treatInfomation.treatTime / 3600;
-    NSInteger minute = self.treatInfomation.treatTime / 60;
-    minute = minute % 60;
-    [self.pressGradePicker selectRow:pressLevel inComponent:0 animated:NO];
-    [self.minutePicker selectRow:minute inComponent:0 animated:NO];
-    [self.hourPicker selectRow:hour inComponent:0 animated:NO];
-    
-    //10小时取消minute的选择
-    if (hour == 10)
+    if (self.treatInfomation.treatTime == 36060)
     {
-        [self pickerView:self.hourPicker didSelectRow:hour inComponent:0];
+        customTimeSelected = NO;
+    }
+    else
+    {
+        NSInteger pressLevel = self.treatInfomation.pressLevel;
+        NSInteger hour = self.treatInfomation.treatTime / 3600;
+        NSInteger minute = self.treatInfomation.treatTime / 60;
+        minute = minute % 60;
+        [self.pressGradePicker selectRow:pressLevel inComponent:0 animated:NO];
+        [self.minutePicker selectRow:minute inComponent:0 animated:NO];
+        [self.hourPicker selectRow:hour inComponent:0 animated:NO];
+            
+        
+        //10小时取消minute的选择
+        if (hour == 10)
+        {
+            [self pickerView:self.hourPicker didSelectRow:hour inComponent:0];
+        }
+        customTimeSelected = YES;
+        
     }
 }
 -(void)viewDidAppear:(BOOL)animated
@@ -143,54 +157,50 @@
 
 - (IBAction)chooseContinueTime:(id)sender
 {
+    customTimeSelected = NO;
     [self.continueTimeButton setImage:[UIImage imageNamed:@"selected"] forState:UIControlStateNormal];
     
     [self.customTimeButton setImage:[UIImage imageNamed:@"unselected"] forState:UIControlStateNormal];
     
     
-    
-    Pack *pack = [[Pack alloc]init];
-
-    NSData *data = [self shortToBytes:601];
-    Byte addrBytes1[2] = {80,4};
-    NSData *addrData1 = [NSData dataWithBytes:addrBytes1 length:2];
-    
-    NSData *sendData1 = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData1 dataEnabled:YES data:data];
-    [self.clientSocket writeData:sendData1 withTimeout:-1 tag:2];
+//    
+//    Pack *pack = [[Pack alloc]init];
+//
+//    NSData *data = [self shortToBytes:601];
+//    Byte addrBytes1[2] = {80,4};
+//    NSData *addrData1 = [NSData dataWithBytes:addrBytes1 length:2];
+//    
+//    NSData *sendData1 = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData1 dataEnabled:YES data:data];
+//    [self.clientSocket writeData:sendData1 withTimeout:-1 tag:2];
     
 }
 
 - (IBAction)chooseCustomTime:(id)sender
 {
+    customTimeSelected = YES;
     [self.customTimeButton setImage:[UIImage imageNamed:@"selected"] forState:UIControlStateNormal];
+    [self.continueTimeButton setImage:[UIImage imageNamed:@"unselected"] forState:UIControlStateNormal];
 }
 
 - (IBAction)save:(id)sender
 {
+    
     if (self.clientSocket != nil)
     {
+        NSInteger minutes;
+        //自定义时间
+        if (customTimeSelected== YES)
+        {
+            
+            NSString *hour = hourArray[[self.hourPicker selectedRowInComponent:0]];
+            NSString *minute = minuteArray[[self.minutePicker selectedRowInComponent:0]];
+            minutes = [hour integerValue]*60 + [minute integerValue];;
+        }else   //持续时间
+        {
+            minutes = 601;
+        }
+
         Pack *pack = [[Pack alloc]init];
-        
-        
-        NSString *hour = hourArray[[self.hourPicker selectedRowInComponent:0]];
-
-        NSString *minute = minuteArray[[self.minutePicker selectedRowInComponent:0]];
-        NSLog(@"hour = %ld",(long)[hour integerValue]);
-        NSLog(@"minute = %ld",(long)[minute integerValue]);
-        NSInteger minutes = [hour integerValue]*60 + [minute integerValue];;
-        NSLog(@"minutes = %ld",(long)minutes);
-        
-        //持续时间
-//        Byte dataBytes[2] = {0,minutes};
-//        NSData *data = [NSData dataWithBytes:dataBytes length:2];
-        NSData *data = [self shortToBytes:minutes];
-        Byte addrBytes1[2] = {80,4};
-        NSData *addrData1 = [NSData dataWithBytes:addrBytes1 length:2];
-
-        
-        NSData *sendData1 = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData1 dataEnabled:YES data:data];
-        [self.clientSocket writeData:sendData1 withTimeout:-1 tag:1];
-        
         
         //压力等级
         Byte addrBytes2[2] = {80,16};
@@ -201,6 +211,18 @@
         NSData *pressData = [NSData dataWithBytes:pressBytes length:2];
         NSData *sendData2 = [pack packetWithCmdid:0X90 addressEnabled:YES addr:addrData2 dataEnabled:YES data:pressData];
         [self.clientSocket writeData:sendData2 withTimeout:-1 tag:1];
+        
+        //持续时间
+        Byte addrBytes1[2] = {80,4};
+        NSData *addrData1 = [NSData dataWithBytes:addrBytes1 length:2];
+        
+        NSData *data = [self shortToBytes:minutes];
+        NSData *sendData1 = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData1 dataEnabled:YES data:data];
+        [self.clientSocket writeData:sendData1 withTimeout:-1 tag:1];
+    }
+    else
+    {
+        [self showAlertViewWithMessage:@"网络连接已断开"];
     }
 }
 
@@ -216,7 +238,7 @@
 }
 -(void)showAlertViewWithMessage:(NSString *)message
 {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"attention"
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Attention"
                                                                    message:@"保存成功"
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
@@ -232,16 +254,6 @@
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -346,8 +358,9 @@
     Byte src[2]={0,0};
 //    src[3] =  (Byte) ((value>>24) & 0xFF);
 //    src[2] =  (Byte) ((value>>16) & 0xFF);
-    src[1] =  (Byte) ((value>>8) & 0xFF);
-    src[0] =  (Byte) (value & 0xFF);
+    //高字节在前
+    src[0] =  (Byte) ((value>>8) & 0xFF);
+    src[1] =  (Byte) (value & 0xFF);
     NSData *data = [NSData dataWithBytes:src length:2];
     return data;
 }
