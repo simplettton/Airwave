@@ -24,31 +24,6 @@
 
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 
-#define LEGA003 0
-#define ARMA003 1
-#define LEGA004 2
-#define ARMB004 3
-#define ABDA004 4
-#define FOTA001 5
-#define HNDA001 6
-#define HANA008 7
-#define NONA000 8  
-
-
-#define LEGB003 9
-#define ARMB003 10
-#define LEGB004 11
-//#define ARMB004 12
-#define ABDB004 13
-#define FOTB001 14
- #define HNDB001 15
-#define HANB008 16
-#define NONB000 17
-
-#define LEGA006 18              
-#define LEGA008 19
-
-
 
 typedef NS_ENUM(NSUInteger,BodyButtonIndexs)
 {
@@ -74,7 +49,6 @@ typedef NS_ENUM(NSUInteger,BodyTags)
 };
 static int bodyPartTags[] = {leftup1tag,leftup2tag,leftup3tag,lefthandtag,leftdown1tag,leftdown2tag,leftdown3tag,leftfoottag,rightup1tag,rightup2tag,rightup3tag,righthandtag,rightdown1tag,rightdown2tag,rightdown3tag,rightfoottag,middle1tag,middle2tag,middle3tag,middle4tag};
 
-NSString *const ARMB00 = @"ARMB004";
 NSString *const HOST = @"10.10.100.254";
 NSString *const POST = @"8080";
 
@@ -993,25 +967,6 @@ NSString *const POST = @"8080";
 }
 
 #pragma mark - Lazy Load
-//- (NSMutableArray *)clientSockets
-//{
-//    if (_clientSockets == nil)
-//    {
-//        _clientSockets = [NSMutableArray array];
-//    }
-//    return _clientSockets;
-//}
-
-//- (NSMutableDictionary *)clientPhoneTimeDicts
-//{
-//    if (_clientPhoneTimeDicts == nil)
-//    {
-//        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//        _clientPhoneTimeDicts = dict;
-//    }
-//    return _clientPhoneTimeDicts;
-//}
-
 #pragma mark - Private Method
 - (NSString *)getCurrentTime
 {

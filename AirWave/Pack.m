@@ -116,5 +116,4 @@
     }
     return (Byte)(crc & 0xFF);
 }
-
 @end

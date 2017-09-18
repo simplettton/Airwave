@@ -634,7 +634,7 @@
         <!--Navigation Controller-->
         <scene sceneID="ywv-CE-7C4">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dGh-mk-HF3" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="main" automaticallyAdjustsScrollViewInsets="NO" id="dGh-mk-HF3" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="RqY-hF-NWJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -947,7 +947,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vj5-sv-y0g" userLabel="selected">
-                                        <rect key="frame" x="264" y="158" width="26" height="26"/>
+                                        <rect key="frame" x="265" y="158" width="25" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Button" image="selected"/>
                                         <connections>
@@ -955,7 +955,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qkj-Ng-dcY" userLabel="unselected">
-                                        <rect key="frame" x="179" y="158" width="26" height="26"/>
+                                        <rect key="frame" x="179" y="158" width="25" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Button" image="unselected"/>
                                         <connections>
@@ -1017,6 +1017,9 @@
                                 <state key="normal" title="取消">
                                     <color key="titleColor" red="0.52156862749999999" green="0.6705882353" blue="0.89411764709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="cancel:" destination="wRB-BT-R2V" eventType="touchUpInside" id="ddm-ug-hRg"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zK4-U4-c8P">
                                 <rect key="frame" x="188" y="507" width="130" height="44"/>
@@ -1025,6 +1028,9 @@
                                 <state key="normal" title="保存">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="save:" destination="wRB-BT-R2V" eventType="touchUpInside" id="uNP-j8-iwX"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w0i-BU-edf">
                                 <rect key="frame" x="52" y="629" width="83" height="28"/>
@@ -1050,6 +1056,8 @@
                         <outlet property="backgroundView" destination="QeN-Ed-ZGW" id="pSS-NH-h1j"/>
                         <outlet property="buttonView" destination="JHd-Nd-rvN" id="KtA-7N-5bV"/>
                         <outlet property="cancelButton" destination="vDS-Dk-exU" id="17c-r8-cL5"/>
+                        <outlet property="continueTimeButton" destination="qkj-Ng-dcY" id="jyw-bD-SMQ"/>
+                        <outlet property="customTimeButton" destination="vj5-sv-y0g" id="oa4-mB-mZY"/>
                         <outlet property="hourPicker" destination="baV-f8-mL7" id="Gi2-7y-EA3"/>
                         <outlet property="minutePicker" destination="UHf-e6-ryb" id="SqC-ge-Tdc"/>
                         <outlet property="pressGradePicker" destination="7Jo-NJ-20M" id="pXn-0d-uVR"/>
@@ -1484,10 +1492,10 @@
         <image name="unselected" width="86" height="86"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="YZz-rL-WdO"/>
+        <segue reference="aEa-fh-ynZ"/>
         <segue reference="bnI-Yd-YTo"/>
-        <segue reference="hW4-xW-9f9"/>
         <segue reference="4g4-bt-O77"/>
         <segue reference="gIv-VQ-fEb"/>
-        <segue reference="YZz-rL-WdO"/>
     </inferredMetricsTieBreakers>
 </document>

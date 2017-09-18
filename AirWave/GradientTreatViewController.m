@@ -7,8 +7,11 @@
 //
 
 #import "GradientTreatViewController.h"
+#import "AppDelegate.h"
+#import "Pack.h"
+#import <GCDAsyncSocket.h>
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
-@interface GradientTreatViewController ()
+@interface GradientTreatViewController ()<GCDAsyncSocketDelegate>
 {
     NSArray *pressGradeArray;
     NSMutableArray *hourArray;
@@ -19,14 +22,22 @@
 @property (weak, nonatomic) IBOutlet UIPickerView *minutePicker;
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
+
 - (IBAction)tapOtherTreatWays:(id)sender;
 - (IBAction)chooseContinueTime:(id)sender;
 - (IBAction)chooseCustomTime:(id)sender;
+- (IBAction)save:(id)sender;
+- (IBAction)cancel:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *continueTimeButton;
+@property (weak, nonatomic) IBOutlet UIButton *customTimeButton;
+@property (strong,nonatomic)GCDAsyncSocket *clientSocket;
 @end
 
 @implementation GradientTreatViewController
 - (void)viewDidLoad
 {
+    
+
     [super viewDidLoad];
     [self configureView];
     
@@ -62,11 +73,14 @@
     {
         [self pickerView:self.hourPicker didSelectRow:hour inComponent:0];
     }
-    
 }
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
+    AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
+    self.clientSocket = myDelegate.cclientSocket;
+    self.clientSocket.delegate = self;
+    
 
 }
 -(void)configureView
@@ -127,11 +141,126 @@
     });
 }
 
-- (IBAction)chooseContinueTime:(id)sender {
+- (IBAction)chooseContinueTime:(id)sender
+{
+    [self.continueTimeButton setImage:[UIImage imageNamed:@"selected"] forState:UIControlStateNormal];
+    
+    [self.customTimeButton setImage:[UIImage imageNamed:@"unselected"] forState:UIControlStateNormal];
+    
+    
+    
+    Pack *pack = [[Pack alloc]init];
+
+    NSData *data = [self shortToBytes:601];
+    Byte addrBytes1[2] = {80,4};
+    NSData *addrData1 = [NSData dataWithBytes:addrBytes1 length:2];
+    
+    NSData *sendData1 = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData1 dataEnabled:YES data:data];
+    [self.clientSocket writeData:sendData1 withTimeout:-1 tag:2];
+    
 }
 
-- (IBAction)chooseCustomTime:(id)sender {
+- (IBAction)chooseCustomTime:(id)sender
+{
+    [self.customTimeButton setImage:[UIImage imageNamed:@"selected"] forState:UIControlStateNormal];
 }
+
+- (IBAction)save:(id)sender
+{
+    if (self.clientSocket != nil)
+    {
+        Pack *pack = [[Pack alloc]init];
+        
+        
+        NSString *hour = hourArray[[self.hourPicker selectedRowInComponent:0]];
+
+        NSString *minute = minuteArray[[self.minutePicker selectedRowInComponent:0]];
+        NSLog(@"hour = %ld",(long)[hour integerValue]);
+        NSLog(@"minute = %ld",(long)[minute integerValue]);
+        NSInteger minutes = [hour integerValue]*60 + [minute integerValue];;
+        NSLog(@"minutes = %ld",(long)minutes);
+        
+        //持续时间
+//        Byte dataBytes[2] = {0,minutes};
+//        NSData *data = [NSData dataWithBytes:dataBytes length:2];
+        NSData *data = [self shortToBytes:minutes];
+        Byte addrBytes1[2] = {80,4};
+        NSData *addrData1 = [NSData dataWithBytes:addrBytes1 length:2];
+
+        
+        NSData *sendData1 = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData1 dataEnabled:YES data:data];
+        [self.clientSocket writeData:sendData1 withTimeout:-1 tag:1];
+        
+        
+        //压力等级
+        Byte addrBytes2[2] = {80,16};
+        NSData *addrData2 = [NSData dataWithBytes:addrBytes2 length:2];
+        
+        NSInteger pressValue = [self.pressGradePicker selectedRowInComponent:0];
+        Byte pressBytes [2] = {0,pressValue};
+        NSData *pressData = [NSData dataWithBytes:pressBytes length:2];
+        NSData *sendData2 = [pack packetWithCmdid:0X90 addressEnabled:YES addr:addrData2 dataEnabled:YES data:pressData];
+        [self.clientSocket writeData:sendData2 withTimeout:-1 tag:1];
+    }
+}
+
+
+-(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
+{
+    if (tag == 1)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self showAlertViewWithMessage:@"保存成功"];
+        });
+    }
+}
+-(void)showAlertViewWithMessage:(NSString *)message
+{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"attention"
+                                                                   message:@"保存成功"
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              
+//                                                              //返回主界面
+//                                                              UINavigationController *controller = [self.storyboard instantiateInitialViewController];
+//                                                              [self presentViewController:controller animated:YES completion:nil];
+                                                          
+                                                          }];
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- (IBAction)cancel:(id)sender
+{
+    Pack *pack = [[Pack alloc]init];
+    Byte dataBytes[2] = {0,0xba};
+    NSData *data = [NSData dataWithBytes:dataBytes length:2];
+    
+    Byte addrBytes[2] = {0,0};
+    NSData *addrData = [NSData dataWithBytes:addrBytes length:2];
+    
+    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
+    [self.clientSocket writeData:sendData withTimeout:-1 tag:2];
+
+}
+
 #pragma mark - pickerViewDelegate
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -210,6 +339,17 @@
     animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     animation.fillMode = kCAFillModeForwards;
     return animation;
+}
+-(NSData*) shortToBytes:(int)value
+{
+
+    Byte src[2]={0,0};
+//    src[3] =  (Byte) ((value>>24) & 0xFF);
+//    src[2] =  (Byte) ((value>>16) & 0xFF);
+    src[1] =  (Byte) ((value>>8) & 0xFF);
+    src[0] =  (Byte) (value & 0xFF);
+    NSData *data = [NSData dataWithBytes:src length:2];
+    return data;
 }
 
 @end
