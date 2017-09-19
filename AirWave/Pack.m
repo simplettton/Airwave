@@ -8,7 +8,12 @@
 
 #import "Pack.h"
 
+typedef void(^NewByteBlock)(NSInteger,NSInteger);
+
 @implementation Pack
+int(^myBlock)(int) = ^(int num){
+    return num * 7;
+};
 /// <summary>
 /// 通用打包函数
 /// </summary>
@@ -20,8 +25,26 @@
 /// <returns></returns>
 
 //
+
+//NewByteBlock newByteBlock = ^(NSInteger param1,NSInteger param2)
+//{
+//    Byte addrBytes [2] = {param1 , param1};
+//    NSData *data = [NSData dataWithBytes:addrBytes length:2];
+//    return data;
+//};
+
+
+
 -(NSData *)packetWithCmdid:(Byte)cmdid addressEnabled:(BOOL)addrEnabled addr:(NSData *)paddr dataEnabled:(BOOL)dataEnabled data:(NSData *)pdata
 {
+    
+//    paddr = ^(NSInteger param1,NSInteger param2)
+//    {
+//        Byte addrBytes [2] = {param1 , param1};
+//        NSData *data = [NSData dataWithBytes:addrBytes length:2];
+//        return data;
+//    };
+//    
     Byte *data = (Byte *)[pdata bytes];
     Byte *addr = (Byte *)[paddr bytes];
     

@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-
+typedef void(^NewByteBlock)(NSInteger,NSInteger);
 @interface Pack : NSObject
 
-
 -(NSData *)packetWithCmdid:(Byte)cmdid addressEnabled:(BOOL)addrEnabled addr:(NSData *)addr dataEnabled:(BOOL)dataEnabled data:(NSData *)data;
+
 
 @end

@@ -20,8 +20,6 @@ const NSString *ARMA003 = @"ARMA003";
     NSMutableArray *minuteArray;
     BOOL customTimeSelected;
 }
-@property (strong,nonatomic)NSString *aPort;
-@property (strong,nonatomic)NSString *bPort;
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UIPickerView *modePicker;
 @property (weak, nonatomic) IBOutlet UIPickerView *hourPicker;
@@ -30,10 +28,14 @@ const NSString *ARMA003 = @"ARMA003";
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
 @property (weak, nonatomic) IBOutlet UIButton *continueTimeButton;
 @property (weak, nonatomic) IBOutlet UIButton *customTimeButton;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UIButton *saveButton;
 - (IBAction)chooseContinueTime:(id)sender;
 - (IBAction)chooseCustomTime:(id)sender;
 - (IBAction)save:(id)sender;
 - (IBAction)cancel:(id)sender;
+
+
 @property (strong,nonatomic)GCDAsyncSocket *clientSocket;
 @end
 
@@ -68,10 +70,6 @@ const NSString *ARMA003 = @"ARMA003";
         [minuteArray addObject:[NSString stringWithFormat:@"%d",i]];
     }
     modeArray = @[@"1",@"2",@"3",@"4",@"5",@"6"];
-    [self.pressPicker selectRow:20 inComponent:0 animated:NO];
-    NSInteger mode = self.treatInfomation.treatMode;
-    [self.modePicker selectRow:mode inComponent:0 animated:NO];
-    [self.minutePicker selectRow:20 inComponent:0 animated:NO];
     [self configureView];
 }
 -(void)viewDidAppear:(BOOL)animated
@@ -141,8 +139,24 @@ const NSString *ARMA003 = @"ARMA003";
         }
         customTimeSelected = YES;
     }
-        [userDefaults setBool:customTimeSelected forKey:@"CustomTimeSelected"];
+    
+    //调到对应的模式
+    NSInteger mode = self.treatInfomation.treatMode;
+    [self.modePicker selectRow:(mode-1) inComponent:0 animated:YES];
+    
+
+    
+    //调到对应的压力
+    NSInteger press = [self.treatInfomation.press[0] integerValue];
+    [self.pressPicker selectRow:press inComponent:0 animated:YES];
+    
+    //保存模式和选择和压力
+    [userDefaults setInteger:mode forKey:@"Mode"];
+    [userDefaults setBool:customTimeSelected forKey:@"CustomTimeSelected"];
     [self configureTimeSelectButton];
+    [userDefaults setInteger:press forKey:@"Press"];
+
+    ;
     
 }
 -(void)configureTimeSelectButton
@@ -211,6 +225,32 @@ const NSString *ARMA003 = @"ARMA003";
     [self configureTimeSelectButton];
     
 }
+
+- (IBAction)cancel:(id)sender {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    //更改前的选择
+    customTimeSelected = [userDefaults boolForKey:@"CustomTimeSelected"];
+    
+    //更改前的时间和分钟
+    NSInteger hour = [userDefaults integerForKey:@"Hour"];
+    NSInteger minute = [userDefaults integerForKey:@"Minute"];
+    [self.hourPicker selectRow:hour inComponent:0 animated:YES];
+    [self.minutePicker selectRow:minute inComponent:0 animated:YES];
+    
+    [self configureTimeSelectButton];
+    
+    //更改前的模式
+    NSInteger mode = [userDefaults integerForKey:@"Mode"];
+    [self.modePicker selectRow:(mode-1) inComponent:0 animated:YES];
+    [self save:sender];
+    
+    //更改前的压力
+    NSInteger press = [userDefaults integerForKey:@"Press"];
+    [self.pressPicker selectRow:press inComponent:0 animated:YES];
+    [self showAlertViewWithMessage:@"取消更改成功"];
+}
+
 - (IBAction)save:(id)sender
 {
     if (self.clientSocket != nil)
@@ -229,40 +269,44 @@ const NSString *ARMA003 = @"ARMA003";
             minutes = 601;
         }
         
+        
+        //设置治疗时间
         Pack *pack = [[Pack alloc]init];
-        
-        
-        //持续时间
         Byte addrBytes[2] = {80,4};
         NSData *addrData = [NSData dataWithBytes:addrBytes length:2];
         
         NSData *data = [self shortToBytes:minutes];
         NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
         [self.clientSocket writeData:sendData withTimeout:-1 tag:1];
+        
+        //设置治疗方案
+        Byte addrBytes1[2] = {80,3};
+        NSData *addrData1 = [NSData dataWithBytes:addrBytes1 length:2];
+        NSInteger mode = [self.modePicker selectedRowInComponent:0];
+        NSData *modeData = [self shortToBytes:(mode+1)];
+        
+        NSData *sendData1 = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData1 dataEnabled:YES data:modeData];
+
+        [self.clientSocket writeData:sendData1 withTimeout:-1 tag:1];
+        
+        //设置治疗压力
+        Byte addrByte2[2] = {80,0};
+        NSData *addrData2 = [NSData dataWithBytes:addrByte2 length:2];
+        NSInteger *press= [self.pressPicker selectedRowInComponent:0];
+        NSData *pressData = [self shortToBytes:press];
+        NSData *sendData2 = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData2 dataEnabled:YES data:pressData];
+        
+        [self.clientSocket writeData:sendData2 withTimeout:-1 tag:1];
+        
+        
+        
     }
     else
     {
         [self showAlertViewWithMessage:@"网络连接已断开"];
     }
 }
-- (IBAction)cancel:(id)sender
 
-{
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-
-    //更改前的选择
-    customTimeSelected = [userDefaults boolForKey:@"CustomTimeSelected"];
-    
-    //更改前的时间和分钟
-    NSInteger hour = [userDefaults integerForKey:@"Hour"];
-    NSInteger minute = [userDefaults integerForKey:@"Minute"];
-    [self.hourPicker selectRow:hour inComponent:0 animated:YES];
-    [self.minutePicker selectRow:minute inComponent:0 animated:YES];
-    
-    [self configureTimeSelectButton];
-    [self save:sender];
-    [self showAlertViewWithMessage:@"取消更改成功"];
-}
 
 
 #pragma mark -pickerViewDelegate
@@ -297,7 +341,33 @@ const NSString *ARMA003 = @"ARMA003";
     
     return label;
 }
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    if (pickerView.tag == 1002)
+    {
+        if (row==(hourArray.count -1))
+        {
+            minuteArray = [NSMutableArray arrayWithObject:@"0"];
+            [self.minutePicker reloadAllComponents];
+        }
+        else
+        {
+            minuteArray = [[NSMutableArray alloc]initWithCapacity:20];
+            for (int i=0; i<60; i++)
+            {
+                [minuteArray addObject:[NSString stringWithFormat:@"%d",i]];
+            }
+            [self.minutePicker reloadAllComponents];
+        }
+    }
+}
 #pragma mark - segue
+-(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
+{
+    if (tag == 1) {
+        [self showAlertViewWithMessage:@"保存成功"];
+    }
+}
 
 #pragma mark - private method
 -(CABasicAnimation *)warningMessageAnimation:(float)time
