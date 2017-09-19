@@ -161,18 +161,17 @@
     [self.continueTimeButton setImage:[UIImage imageNamed:@"selected"] forState:UIControlStateNormal];
     
     [self.customTimeButton setImage:[UIImage imageNamed:@"unselected"] forState:UIControlStateNormal];
-    
-    
-//    
-//    Pack *pack = [[Pack alloc]init];
-//
-//    NSData *data = [self shortToBytes:601];
-//    Byte addrBytes1[2] = {80,4};
-//    NSData *addrData1 = [NSData dataWithBytes:addrBytes1 length:2];
-//    
-//    NSData *sendData1 = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData1 dataEnabled:YES data:data];
-//    [self.clientSocket writeData:sendData1 withTimeout:-1 tag:2];
-    
+//    [self.hourPicker removeFromSuperview];
+//    [self.minutePicker removeFromSuperview];
+
+    if ([self.backgroundView viewWithTag:888]==nil)
+    {
+        UIView *maskView = [[UIView alloc]initWithFrame:CGRectMake(172, 192, 195, 234)];
+        maskView.backgroundColor = [UIColor whiteColor];
+        maskView.alpha = 0.7;
+        maskView.tag = 888;
+        [self.backgroundView addSubview:maskView];
+    }
 }
 
 - (IBAction)chooseCustomTime:(id)sender
@@ -180,11 +179,15 @@
     customTimeSelected = YES;
     [self.customTimeButton setImage:[UIImage imageNamed:@"selected"] forState:UIControlStateNormal];
     [self.continueTimeButton setImage:[UIImage imageNamed:@"unselected"] forState:UIControlStateNormal];
+
+    if ([self.backgroundView viewWithTag:888]!=nil)
+    {
+        [[self.backgroundView viewWithTag:888]removeFromSuperview];
+    }
 }
 
 - (IBAction)save:(id)sender
 {
-    
     if (self.clientSocket != nil)
     {
         NSInteger minutes;
@@ -195,7 +198,8 @@
             NSString *hour = hourArray[[self.hourPicker selectedRowInComponent:0]];
             NSString *minute = minuteArray[[self.minutePicker selectedRowInComponent:0]];
             minutes = [hour integerValue]*60 + [minute integerValue];;
-        }else   //持续时间
+        }
+        else   //持续时间
         {
             minutes = 601;
         }
@@ -225,8 +229,21 @@
         [self showAlertViewWithMessage:@"网络连接已断开"];
     }
 }
+- (IBAction)cancel:(id)sender
+{
+    Pack *pack = [[Pack alloc]init];
+    Byte dataBytes[2] = {0,0xba};
+    NSData *data = [NSData dataWithBytes:dataBytes length:2];
+    
+    Byte addrBytes[2] = {0,0};
+    NSData *addrData = [NSData dataWithBytes:addrBytes length:2];
+    
+    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
+    [self.clientSocket writeData:sendData withTimeout:-1 tag:2];
+    
+}
 
-
+#pragma mark - socketDelegate
 -(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
 {
     if (tag == 1)
@@ -255,23 +272,6 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-
-
-
-
-- (IBAction)cancel:(id)sender
-{
-    Pack *pack = [[Pack alloc]init];
-    Byte dataBytes[2] = {0,0xba};
-    NSData *data = [NSData dataWithBytes:dataBytes length:2];
-    
-    Byte addrBytes[2] = {0,0};
-    NSData *addrData = [NSData dataWithBytes:addrBytes length:2];
-    
-    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
-    [self.clientSocket writeData:sendData withTimeout:-1 tag:2];
-
-}
 
 #pragma mark - pickerViewDelegate
 
@@ -319,13 +319,19 @@
 }
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
+    //hour选择器
     if (pickerView.tag == 1001)
     {
+        
         if (row == (hourArray.count -1))
         {
             //十小时则不显示分
             minuteArray = [NSMutableArray arrayWithObject:@"0"];
             [self.minutePicker reloadAllComponents];
+        }
+        else if (row == 0)
+        {
+            //零小时
         }
         else
         {
