@@ -1030,6 +1030,7 @@ NSString *const POST = @"8080";
 #pragma mark - segue
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    [self askForTreatInfomation];
     if ([segue.identifier isEqualToString:@"MainToStandard"])
     {
         UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;

@@ -23,24 +23,21 @@
 @property (weak, nonatomic) IBOutlet UIPickerView *minutePicker;
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
-
+@property (weak, nonatomic) IBOutlet UIButton *continueTimeButton;
+@property (weak, nonatomic) IBOutlet UIButton *customTimeButton;
 - (IBAction)tapOtherTreatWays:(id)sender;
 - (IBAction)chooseContinueTime:(id)sender;
 - (IBAction)chooseCustomTime:(id)sender;
 - (IBAction)save:(id)sender;
 - (IBAction)cancel:(id)sender;
-@property (weak, nonatomic) IBOutlet UIButton *continueTimeButton;
-@property (weak, nonatomic) IBOutlet UIButton *customTimeButton;
 @property (strong,nonatomic)GCDAsyncSocket *clientSocket;
 @end
 
 @implementation GradientTreatViewController
+
 - (void)viewDidLoad
 {
-    
-    
     [super viewDidLoad];
-    [self configureView];
     
     self.pressGradePicker.delegate = self;
     self.hourPicker.delegate = self;
@@ -49,9 +46,6 @@
     self.pressGradePicker.dataSource =self;
     self.hourPicker.dataSource = self;
     self.minutePicker.dataSource = self;
-    
-    
-
     
     pressGradeArray = @[@"自定义",@"一级",@"二级",@"三级"];
     hourArray = [[NSMutableArray alloc]initWithCapacity:20];
@@ -64,37 +58,17 @@
     {
         [minuteArray addObject:[NSString stringWithFormat:@"%d",i]];
     }
-    if (self.treatInfomation.treatTime == 36060)
-    {
-        customTimeSelected = NO;
-    }
-    else
-    {
-        NSInteger pressLevel = self.treatInfomation.pressLevel;
-        NSInteger hour = self.treatInfomation.treatTime / 3600;
-        NSInteger minute = self.treatInfomation.treatTime / 60;
-        minute = minute % 60;
-        [self.pressGradePicker selectRow:pressLevel inComponent:0 animated:NO];
-        [self.minutePicker selectRow:minute inComponent:0 animated:NO];
-        [self.hourPicker selectRow:hour inComponent:0 animated:NO];
-            
-        
-        //10小时取消minute的选择
-        if (hour == 10)
-        {
-            [self pickerView:self.hourPicker didSelectRow:hour inComponent:0];
-        }
-        customTimeSelected = YES;
-        
-    }
+    
+    [self configureView];
+
 }
 -(void)viewDidAppear:(BOOL)animated
 {
+    //取出全局变量clientsocket
     [super viewDidAppear:YES];
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     self.clientSocket = myDelegate.cclientSocket;
     self.clientSocket.delegate = self;
-    
 
 }
 -(void)configureView
@@ -107,26 +81,96 @@
     topBorder.frame = CGRectMake(0.0f, 0.0f, self.buttonView.frame.size.width, 0.5f);
     topBorder.backgroundColor = UIColorFromHex(0xE4E4E4).CGColor;
     [self.buttonView.layer addSublayer:topBorder];
+    
+    
     //设置单边圆角
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.saveButton.bounds byRoundingCorners:UIRectCornerTopRight|UIRectCornerBottomRight cornerRadii:CGSizeMake(10.0, 10.0)];
     CAShapeLayer *maskLayer = [CAShapeLayer layer];
     maskLayer.frame = self.saveButton.bounds;
     maskLayer.path = maskPath.CGPath;
-    self.saveButton.layer.mask = maskLayer;
+    maskLayer.lineWidth = 1.0;
+    maskLayer.strokeColor = UIColorFromHex(0x85ABE4).CGColor;
+    maskLayer.fillColor = UIColorFromHex(0x85ABE4).CGColor;
+    [self.saveButton.layer addSublayer:maskLayer];
+    
     
     UIBezierPath *maskPath1 = [UIBezierPath bezierPathWithRoundedRect:self.cancelButton.bounds byRoundingCorners:UIRectCornerTopLeft|UIRectCornerBottomLeft cornerRadii:CGSizeMake(10.0, 10.0)];
     CAShapeLayer *maskLayer1 = [CAShapeLayer layer];
     maskLayer1.frame = self.cancelButton.bounds;
     maskLayer1.path = maskPath1.CGPath;
+    maskLayer1.lineWidth = 1.0;
+    maskLayer1.strokeColor = UIColorFromHex(0x85ABE4).CGColor;
+    maskLayer1.fillColor = nil;
+    [self.cancelButton.layer addSublayer:maskLayer1];
     
-    //设置边框颜色
 
-    CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
-    CGColorRef color = CGColorCreate(colorSpaceRef, (CGFloat[]){133.0/255.0,171.0/255.0,228.0/255.0,1});
-    self.cancelButton.layer.borderColor = color;
-    self.cancelButton.layer.borderWidth = 1.0f;
-    self.cancelButton.layer.masksToBounds = YES;
-    self.cancelButton.layer.mask = maskLayer1;
+    
+    
+    //取得治疗信息
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    //持续时间
+    if (self.treatInfomation.treatTime == 36060)
+    {
+        customTimeSelected = NO;
+        
+    }
+    else        //自定义时间
+    {
+        
+        NSInteger hour = self.treatInfomation.treatTime / 3600;
+        NSInteger minute = self.treatInfomation.treatTime / 60;
+        minute = minute % 60;
+        
+        //保存设置前的时间和分钟
+        [userDefaults setInteger:hour forKey:@"Hour"];
+        [userDefaults setInteger:minute forKey:@"Minute"];
+        //调到对应的时间和分钟
+        [self.minutePicker selectRow:minute inComponent:0 animated:NO];
+        [self.hourPicker selectRow:hour inComponent:0 animated:NO];
+
+        //10小时取消minute的选择
+        if (hour == 10)
+        {
+            [self pickerView:self.hourPicker didSelectRow:hour inComponent:0];
+        }
+        customTimeSelected = YES;
+    }
+    //压力调到对应的压力等级
+    NSInteger pressLevel = self.treatInfomation.pressLevel;
+    [self.pressGradePicker selectRow:pressLevel inComponent:0 animated:NO];
+    
+    
+    
+    //保存压力和时间选择
+    [userDefaults setBool:customTimeSelected forKey:@"CustomTimeSelected"];
+    [userDefaults setInteger:pressLevel forKey:@"PressLevel"];
+    [self configureTimeSelectButton];
+
+}
+-(void)configureTimeSelectButton
+{
+    if (customTimeSelected)
+    {
+        [self.customTimeButton setImage:[UIImage imageNamed:@"selected"] forState:UIControlStateNormal];
+        [self.continueTimeButton setImage:[UIImage imageNamed:@"unselected"] forState:UIControlStateNormal];
+        if ([self.backgroundView viewWithTag:888]!=nil)
+        {
+            [[self.backgroundView viewWithTag:888]removeFromSuperview];
+        }
+    }
+    else
+    {
+        [self.continueTimeButton setImage:[UIImage imageNamed:@"selected"] forState:UIControlStateNormal];
+        [self.customTimeButton setImage:[UIImage imageNamed:@"unselected"] forState:UIControlStateNormal];
+        if ([self.backgroundView viewWithTag:888]==nil)
+        {
+            UIView *maskView = [[UIView alloc]initWithFrame:CGRectMake(172, 192, 195, 234)];
+            maskView.backgroundColor = [UIColor whiteColor];
+            maskView.alpha = 0.7;
+            maskView.tag = 888;
+            [self.backgroundView addSubview:maskView];
+        }
+    }
 }
 - (IBAction)tapOtherTreatWays:(id)sender
 {
@@ -138,8 +182,8 @@
     
     UIImageView *warningImageView = [[UIImageView alloc]initWithFrame:CGRectMake(34, 509, 35, 35)];
     warningImageView.image = [UIImage imageNamed:@"warning"];
-    [[self.view viewWithTag:1000] addSubview:warningImageView];
-    [[self.view viewWithTag:1000] addSubview:warningLabel];
+    [self.backgroundView addSubview:warningImageView];
+    [self.backgroundView addSubview:warningLabel];
     [warningImageView.layer addAnimation:[self warningMessageAnimation:0.5] forKey:nil];
     [warningLabel.layer addAnimation:[self warningMessageAnimation:0.5] forKey:nil];
     // 延迟后警告消失
@@ -158,32 +202,14 @@
 - (IBAction)chooseContinueTime:(id)sender
 {
     customTimeSelected = NO;
-    [self.continueTimeButton setImage:[UIImage imageNamed:@"selected"] forState:UIControlStateNormal];
-    
-    [self.customTimeButton setImage:[UIImage imageNamed:@"unselected"] forState:UIControlStateNormal];
-//    [self.hourPicker removeFromSuperview];
-//    [self.minutePicker removeFromSuperview];
-
-    if ([self.backgroundView viewWithTag:888]==nil)
-    {
-        UIView *maskView = [[UIView alloc]initWithFrame:CGRectMake(172, 192, 195, 234)];
-        maskView.backgroundColor = [UIColor whiteColor];
-        maskView.alpha = 0.7;
-        maskView.tag = 888;
-        [self.backgroundView addSubview:maskView];
-    }
+    [self configureTimeSelectButton];
 }
 
 - (IBAction)chooseCustomTime:(id)sender
 {
     customTimeSelected = YES;
-    [self.customTimeButton setImage:[UIImage imageNamed:@"selected"] forState:UIControlStateNormal];
-    [self.continueTimeButton setImage:[UIImage imageNamed:@"unselected"] forState:UIControlStateNormal];
+    [self configureTimeSelectButton];
 
-    if ([self.backgroundView viewWithTag:888]!=nil)
-    {
-        [[self.backgroundView viewWithTag:888]removeFromSuperview];
-    }
 }
 
 - (IBAction)save:(id)sender
@@ -230,17 +256,25 @@
     }
 }
 - (IBAction)cancel:(id)sender
+
 {
-    Pack *pack = [[Pack alloc]init];
-    Byte dataBytes[2] = {0,0xba};
-    NSData *data = [NSData dataWithBytes:dataBytes length:2];
+    //更改前的压力等级
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSInteger pressLevel = [userDefaults integerForKey:@"PressLevel"];
+    [self.pressGradePicker selectRow:pressLevel inComponent:0 animated:YES];
     
-    Byte addrBytes[2] = {0,0};
-    NSData *addrData = [NSData dataWithBytes:addrBytes length:2];
+    //更改前的选择
+    customTimeSelected = [userDefaults boolForKey:@"CustomTimeSelected"];
     
-    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
-    [self.clientSocket writeData:sendData withTimeout:-1 tag:2];
+    //更改前的时间和分钟
+    NSInteger hour = [userDefaults integerForKey:@"Hour"];
+    NSInteger minute = [userDefaults integerForKey:@"Minute"];
+    [self.hourPicker selectRow:hour inComponent:0 animated:YES];
+    [self.minutePicker selectRow:minute inComponent:0 animated:YES];
     
+    [self configureTimeSelectButton];
+    [self save:sender];
+    [self showAlertViewWithMessage:@"取消更改成功"];
 }
 
 #pragma mark - socketDelegate
@@ -252,24 +286,6 @@
             [self showAlertViewWithMessage:@"保存成功"];
         });
     }
-}
--(void)showAlertViewWithMessage:(NSString *)message
-{
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Attention"
-                                                                   message:@"保存成功"
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * action) {
-                                                              
-//                                                              //返回主界面
-//                                                              UINavigationController *controller = [self.storyboard instantiateInitialViewController];
-//                                                              [self presentViewController:controller animated:YES completion:nil];
-                                                          
-                                                          }];
-    
-    [alert addAction:defaultAction];
-    [self presentViewController:alert animated:YES completion:nil];
 }
 
 
@@ -300,7 +316,8 @@
     {
         label = [[UILabel alloc]init];
         label.font= [UIFont systemFontOfSize:20];
-        label.textColor = UIColorFromHex(0x2b5694);
+//        label.textColor = UIColorFromHex(0x2b5694);
+        label.textColor = UIColorFromHex(0x65bba9);
         [label setTextAlignment:NSTextAlignmentCenter];
     }
     if (pickerView.tag == 1000)
@@ -370,5 +387,24 @@
     NSData *data = [NSData dataWithBytes:src length:2];
     return data;
 }
+-(void)showAlertViewWithMessage:(NSString *)message
+{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Attention"
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              
+                                                              //                                                              //返回主界面
+                                                              //                                                              UINavigationController *controller = [self.storyboard instantiateInitialViewController];
+                                                              //                                                              [self presentViewController:controller animated:YES completion:nil];
+                                                              
+                                                          }];
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 
 @end

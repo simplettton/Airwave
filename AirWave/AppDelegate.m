@@ -66,7 +66,8 @@ NSString *const POST1 = @"8080";
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    
+    NSError *error = nil;
+    [self.cclientSocket connectToHost:HOST1 onPort:[POST1 integerValue] viaInterface:nil withTimeout:-1 error:&error];
 }
 
 

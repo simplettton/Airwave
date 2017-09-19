@@ -67,31 +67,57 @@
     topBorder.frame = CGRectMake(0.0f, 0.0f, self.buttonView.frame.size.width, 0.5f);
     topBorder.backgroundColor = UIColorFromHex(0xE4E4E4).CGColor;
     [self.buttonView.layer addSublayer:topBorder];
+    
+    
     //设置单边圆角
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.saveButton.bounds byRoundingCorners:UIRectCornerTopRight|UIRectCornerBottomRight cornerRadii:CGSizeMake(10.0, 10.0)];
     CAShapeLayer *maskLayer = [CAShapeLayer layer];
     maskLayer.frame = self.saveButton.bounds;
     maskLayer.path = maskPath.CGPath;
-    self.saveButton.layer.mask = maskLayer;
+    maskLayer.lineWidth = 1.0;
+    maskLayer.strokeColor = UIColorFromHex(0x85ABE4).CGColor;
+    maskLayer.fillColor = UIColorFromHex(0x85ABE4).CGColor;
+    [self.saveButton.layer addSublayer:maskLayer];
+    
     
     UIBezierPath *maskPath1 = [UIBezierPath bezierPathWithRoundedRect:self.cancelButton.bounds byRoundingCorners:UIRectCornerTopLeft|UIRectCornerBottomLeft cornerRadii:CGSizeMake(10.0, 10.0)];
     CAShapeLayer *maskLayer1 = [CAShapeLayer layer];
     maskLayer1.frame = self.cancelButton.bounds;
     maskLayer1.path = maskPath1.CGPath;
+    maskLayer1.lineWidth = 1.0;
+    maskLayer1.strokeColor = UIColorFromHex(0x85ABE4).CGColor;
+    maskLayer1.fillColor = nil;
+    [self.cancelButton.layer addSublayer:maskLayer1];
+}
+-(IBAction)tapGradientTreat:(id)sender
+{
+    UILabel *warningLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 509, 135, 35)];
+    // warningLabel.backgroundColor = UIColorFromHex(0xF7F8F8);
+    warningLabel.textAlignment = NSTextAlignmentLeft;
+    warningLabel.text = @"气囊类型不合适";
+    warningLabel.textColor = UIColorFromHex(0xFF8247);
     
-    
-    //设置边框颜色
-    
-    CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
-    CGColorRef color = CGColorCreate(colorSpaceRef, (CGFloat[]){133.0/255.0,171.0/255.0,228.0/255.0,1});
-    self.cancelButton.layer.borderColor = color;
-    self.cancelButton.layer.borderWidth = 1.0f;
-    self.cancelButton.layer.masksToBounds = YES;
-    
-    
-    self.cancelButton.layer.mask = maskLayer1;
+    UIImageView *warningImageView = [[UIImageView alloc]initWithFrame:CGRectMake(34, 509, 35, 35)];
+    warningImageView.image = [UIImage imageNamed:@"warning"];
+    [[self.view viewWithTag:1000] addSubview:warningImageView];
+    [[self.view viewWithTag:1000] addSubview:warningLabel];
+    [warningImageView.layer addAnimation:[self warningMessageAnimation:0.5] forKey:nil];
+    [warningLabel.layer addAnimation:[self warningMessageAnimation:0.5] forKey:nil];
+    // 延迟后警告消失
+    int64_t delayInSeconds = 2;
+    /*
+     *@parameter 1,时间参照，从此刻开始计时
+     *@parameter 2,延时多久，此处为秒级，还有纳秒等。10ull * NSEC_PER_MSEC
+     */
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [warningLabel removeFromSuperview];
+        [warningImageView removeFromSuperview];
+    });
     
 }
+
+
 #pragma mark - UIPickerViewDelegate
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
     return 1;
@@ -112,7 +138,8 @@
         label.textColor = UIColorFromHex(0x65bba9);
         [label setTextAlignment:NSTextAlignmentCenter];
     }
-    if (pickerView.tag == 0) {
+    if (pickerView.tag == 0)
+    {
         label.text = [modeArray objectAtIndex:row];
     }else if (pickerView.tag == 1){
         label.text = [hourArray objectAtIndex:row];
@@ -122,6 +149,20 @@
     return label;
 }
 
+#pragma mark - private method
+-(CABasicAnimation *)warningMessageAnimation:(float)time
+{
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    animation.fromValue = [NSNumber numberWithFloat:1.0f];
+    animation.toValue = [NSNumber numberWithFloat:0.0f];
+    animation.autoreverses = YES;
+    animation.duration = time;
+    animation.repeatCount = 4.0f;
+    animation.removedOnCompletion = YES;
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    animation.fillMode = kCAFillModeForwards;
+    return animation;
+}
 
 
 
