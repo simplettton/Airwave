@@ -833,7 +833,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="XeN-yS-C2f" kind="presentation" animates="NO" id="O3A-EY-N0n"/>
+                                    <segue destination="XeN-yS-C2f" kind="presentation" identifier="StandardToParameter" animates="NO" id="O3A-EY-N0n"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="REX-4z-lfH">
@@ -1126,11 +1126,11 @@
                                         <color key="textColor" red="0.20060706140000001" green="0.20079019670000001" blue="0.20063543319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WU4-0X-wL2">
+                                    <pickerView tag="1000" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WU4-0X-wL2">
                                         <rect key="frame" x="51" y="180" width="114" height="216"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     </pickerView>
-                                    <pickerView tag="1" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z9L-Dv-UPW">
+                                    <pickerView tag="1001" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z9L-Dv-UPW">
                                         <rect key="frame" x="210" y="180" width="40" height="216"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         <color key="tintColor" red="0.3830353916" green="0.38334912059999998" blue="0.38308393959999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1142,7 +1142,7 @@
                                         <color key="textColor" red="0.3830353916" green="0.38334912059999998" blue="0.38308393959999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <pickerView tag="2" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AQP-1t-nn7">
+                                    <pickerView tag="1002" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AQP-1t-nn7">
                                         <rect key="frame" x="278" y="180" width="40" height="216"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         <color key="tintColor" red="0.3830353916" green="0.38334912059999998" blue="0.38308393959999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1178,6 +1178,22 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RSi-W1-N1E" userLabel="selected">
+                                <rect key="frame" x="261" y="228" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="selected"/>
+                                <connections>
+                                    <action selector="chooseCustomTime:" destination="Cbs-zK-ZPY" eventType="touchUpInside" id="OhS-km-oQV"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ROA-96-odF" userLabel="selected">
+                                <rect key="frame" x="192" y="228" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="unselected"/>
+                                <connections>
+                                    <action selector="chooseContinueTime:" destination="Cbs-zK-ZPY" eventType="touchUpInside" id="DGR-vC-bB8"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YAA-ph-au2">
                                 <rect key="frame" x="16" y="70" width="85" height="66"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1187,7 +1203,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="jtX-Ho-uJp" kind="presentation" animates="NO" id="gEg-WG-Ynq"/>
+                                    <segue destination="jtX-Ho-uJp" kind="presentation" identifier="ParameterToStandard" animates="NO" id="gEg-WG-Ynq"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2xW-9S-2E1">
@@ -1220,7 +1236,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="WxD-3M-xOD" kind="show" animates="NO" id="qKM-P1-yvi"/>
+                                    <segue destination="WxD-3M-xOD" kind="show" identifier="ParameterToSolution" animates="NO" id="qKM-P1-yvi"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZHe-Gf-TYD">
@@ -1230,6 +1246,9 @@
                                 <state key="normal" title="取消">
                                     <color key="titleColor" red="0.52156862749999999" green="0.6705882353" blue="0.89411764709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="cancel:" destination="Cbs-zK-ZPY" eventType="touchUpInside" id="gKW-5E-50b"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yzJ-M3-aJ4">
                                 <rect key="frame" x="188" y="507" width="130" height="44"/>
@@ -1238,6 +1257,9 @@
                                 <state key="normal" title="保存">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="save:" destination="Cbs-zK-ZPY" eventType="touchUpInside" id="wcC-du-Ajv"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P7A-b8-HJa">
                                 <rect key="frame" x="52" y="629" width="83" height="28"/>
@@ -1260,8 +1282,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="模式选择" id="B18-Jb-vPj"/>
                     <connections>
+                        <outlet property="backgroundView" destination="0PQ-yu-Cdc" id="utE-W5-vsp"/>
                         <outlet property="buttonView" destination="h2S-z3-aL3" id="4ia-Lo-HlV"/>
                         <outlet property="cancelButton" destination="ZHe-Gf-TYD" id="4lP-Jp-M0h"/>
+                        <outlet property="continueTimeButton" destination="ROA-96-odF" id="Y08-WB-UTQ"/>
+                        <outlet property="customTimeButton" destination="RSi-W1-N1E" id="Y2z-cm-Ixg"/>
                         <outlet property="hourPicker" destination="Z9L-Dv-UPW" id="nCQ-8Y-8Wt"/>
                         <outlet property="minutePicker" destination="AQP-1t-nn7" id="i4U-1x-iXw"/>
                         <outlet property="modePicker" destination="WU4-0X-wL2" id="Qg2-Ys-wPF"/>
@@ -1392,6 +1417,9 @@
                                 <state key="normal" image="treat_normal-1">
                                     <color key="titleColor" red="0.21176470589999999" green="0.3921568627" blue="0.56477864580000003" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <segue destination="dGh-mk-HF3" kind="presentation" identifier="SolutionToMain" animates="NO" id="gP2-f7-lrR"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="全科" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CO7-7J-qKn">
                                 <rect key="frame" x="27" y="469" width="35" height="21"/>
@@ -1470,7 +1498,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UvT-1D-DHm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3766" y="1039"/>
+            <point key="canvasLocation" x="3766" y="1021"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ttl-8W-KEO">
@@ -1533,10 +1561,10 @@
         <image name="unselected" width="86" height="86"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="O3A-EY-N0n"/>
-        <segue reference="gEg-WG-Ynq"/>
-        <segue reference="kTA-kc-yd1"/>
-        <segue reference="nwV-fw-Hh0"/>
+        <segue reference="4g4-bt-O77"/>
+        <segue reference="gP2-f7-lrR"/>
         <segue reference="bnI-Yd-YTo"/>
+        <segue reference="Vh8-vL-iVQ"/>
+        <segue reference="32F-K8-RkS"/>
     </inferredMetricsTieBreakers>
 </document>

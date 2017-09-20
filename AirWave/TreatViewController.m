@@ -16,7 +16,7 @@
 #import "UIImage+ImageWithColor.h"
 #import "ProgressView.h"
 #import "WarnMessage.h"
-
+#import "AppDelegate.h"
 #import "StandardTreatViewController.h"
 #import "GradientTreatViewController.h"
 #import "ParameterTreatViewController.h"
@@ -110,6 +110,7 @@ NSString *const POST = @"8080";
         NSError *error = nil;
         self.connected = [self.clientSocket connectToHost:HOST onPort:[POST integerValue] viaInterface:nil withTimeout:-1 error:&error];
         if (self.connected)
+            
         {
             NSLog(@"客户端尝试连接");
         }
@@ -123,6 +124,8 @@ NSString *const POST = @"8080";
     {
         NSLog(@"与服务器连接已建立");
     }
+
+    
     isPlayButton = YES;
     isPauseButton = NO;
     bodyNames= [NSArray arrayWithObjects:@"leftup1",@"leftup2",@"leftup3",@"lefthand",@"leftdown1",@"leftdown2",@"leftdown3",@"leftfoot",@"rightup1",@"rightup2",@"rightup3",@"righthand",@"rightdown1",@"rightdown2",@"rightdown3",@"rightfoot",@"middle1",@"middle2",@"middle3",@"middle4",nil];
@@ -138,9 +141,6 @@ NSString *const POST = @"8080";
     {
         [bodyButtons[i] removeFromSuperview];
     }
-    //timer invalidate
-//    [self.updateTimer invalidate];
-//    self.updateTimer = nil;
     
 }
 
@@ -211,11 +211,9 @@ NSString *const POST = @"8080";
 }
 
 -(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag{
-//    if (tag == 1) {
-//        NSLog(@"askForTreatMentInfoMATION写入成功");
-//    }else if(tag == 2){
-//        NSLog(@"-----------------------------------longconnectCheck写入成功");
-//    }
+    if (tag == 1000) {
+        NSLog(@"askForTreatMentInfoMATION写入成功");
+    }
 }
 #pragma mark - configureViews
 -(void)configureView
@@ -865,75 +863,49 @@ NSString *const POST = @"8080";
 {
     Pack *pack = [[Pack alloc]init];
     
-    Byte addrBytes[2] ={0,0};
-    NSData *addrData = [NSData dataWithBytes:addrBytes length:2];
-    
+    Byte addrBytes[2] = {0,0};
     Byte dataBytes[2] = {0,0x10};
-    NSData *data = [NSData dataWithBytes:dataBytes length:2];
-    
-    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
-//    NSString *messageString = @"aaaaaa";
-//    NSData *data = [messageString dataUsingEncoding:NSUTF8StringEncoding];
-    // withTimeout -1 : 无穷大,一直等
-    // tag : 消息标记
-//    Byte *bytes = malloc(sizeof(*bytes)*[sendData length]);
+    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
+                                                     dataEnabled:YES data:[self dataWithBytes:dataBytes]];
     [self.clientSocket writeData:sendData withTimeout:-1 tag:0];
 }
 -(void)pause
 {
     Pack *pack = [[Pack alloc]init];
-    
     Byte addrBytes[2] = {0,0};
-    NSData *addrData = [NSData dataWithBytes:addrBytes length:2];
-    
     Byte dataBytes[2] = {0,0x11};
-    NSData *data = [NSData dataWithBytes:dataBytes length:2];
-    
-    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
+    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
+                                                     dataEnabled:YES data:[self dataWithBytes:dataBytes]];
     [self.clientSocket writeData:sendData withTimeout:-1 tag:0];
-//    [self.clientSockets enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//        [obj writeData:sendData withTimeout:-1 tag:1];
-//    }];
     
 }
 -(void)continue
 {
     Pack *pack = [[Pack alloc]init];
-    
-    Byte addrBytes[2] ={0,0};
-    NSData *addrData = [NSData dataWithBytes:addrBytes length:2];
-    
+    Byte addrBytes[2] = {0,0};
     Byte dataBytes[2] = {0,0x12};
-    NSData *data = [NSData dataWithBytes:dataBytes length:2];
-    
-    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
+    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
+                                                     dataEnabled:YES data:[self dataWithBytes:dataBytes]];
     [self.clientSocket writeData:sendData withTimeout:-1 tag:0];
 }
 -(void)askForTreatInfomation
 {
     Pack *pack = [[Pack alloc]init];
-    Byte addrBytes[2] ={0,0};
-    NSData *addrData = [NSData dataWithBytes:addrBytes length:2];
-    
+    Byte addrBytes[2] = {0,0};
     Byte dataBytes[2] = {1,0x62};
-    NSData *data = [NSData dataWithBytes:dataBytes length:2];
-    
-    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
-    [self.clientSocket writeData:sendData withTimeout:-1 tag:1];
+    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
+                                                     dataEnabled:YES data:[self dataWithBytes:dataBytes]];
+    [self.clientSocket writeData:sendData withTimeout:-1 tag:1000];
 }
 -(void)lightupBodyButton:(BodyButton *)button
 {
     [button changeGreyColor];
     NSNumber *commitNumber = [button.multiParamDic objectForKey:@"commit"];
     Pack *pack = [[Pack alloc]init];
-    
     Byte dataBytes[2] = {0,[commitNumber unsignedIntegerValue]};
-    NSData *data = [NSData dataWithBytes:dataBytes length:2];
-    
-    Byte addrBytes[2] ={0,0};
-    NSData *addrData = [NSData dataWithBytes:addrBytes length:2];
-    
-    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
+    Byte addrBytes[2] = {0,0};
+    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
+                                                     dataEnabled:YES data:[self dataWithBytes:dataBytes]];
     
     [self.clientSocket writeData:sendData withTimeout:-1 tag:0];
     
@@ -948,11 +920,6 @@ NSString *const POST = @"8080";
                                                        userInfo:nil
                                                         repeats:YES];
     
-//    self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
-//                                                            target:self
-//                                                          selector:@selector(updateBodyButton)
-//                                                          userInfo:nil
-//                                                           repeats:YES];
     //将定时器添加到当前运行循环，并且调为通用模式
     [[NSRunLoop currentRunLoop] addTimer:self.connectTimer forMode:NSRunLoopCommonModes];
 //    [[NSRunLoop currentRunLoop] addTimer:self.updateTimer forMode:NSRunLoopCommonModes];
@@ -966,7 +933,6 @@ NSString *const POST = @"8080";
     [self.clientSocket writeData:sendData withTimeout:- 1 tag:2];
 }
 
-#pragma mark - Lazy Load
 #pragma mark - Private Method
 - (NSString *)getCurrentTime
 {
@@ -1027,6 +993,22 @@ NSString *const POST = @"8080";
     animation.fillMode = kCAFillModeForwards;
     return animation;
 }
+-(NSData*) dataWithValue:(NSInteger)value
+{
+    
+    Byte src[2]={0,0};
+    src[0] =  (Byte) ((value>>8) & 0xFF);
+    src[1] =  (Byte) (value & 0xFF);
+    NSData *data = [NSData dataWithBytes:src length:2];
+    return data;
+}
+
+-(NSData*) dataWithBytes:(Byte[])bytes
+{
+    
+    NSData *data = [NSData dataWithBytes:bytes length:2];
+    return data;
+}
 #pragma mark - segue
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -1041,6 +1023,12 @@ NSString *const POST = @"8080";
     {
         UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
         GradientTreatViewController *controller = (GradientTreatViewController *)navigationController.topViewController;
+        controller.treatInfomation = self.treatInfomation;
+    }
+    else if([segue.identifier isEqualToString:@"MainToParameter"])
+    {
+        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
+        ParameterTreatViewController  *controller = (ParameterTreatViewController *)navigationController.topViewController;
         controller.treatInfomation = self.treatInfomation;
     }
 }

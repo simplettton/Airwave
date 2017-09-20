@@ -20,6 +20,8 @@ const NSString *ARMA003 = @"ARMA003";
     NSMutableArray *minuteArray;
     BOOL customTimeSelected;
 }
+@property (strong,nonatomic)GCDAsyncSocket *clientSocket;
+
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UIPickerView *modePicker;
 @property (weak, nonatomic) IBOutlet UIPickerView *hourPicker;
@@ -36,7 +38,7 @@ const NSString *ARMA003 = @"ARMA003";
 - (IBAction)cancel:(id)sender;
 
 
-@property (strong,nonatomic)GCDAsyncSocket *clientSocket;
+
 @end
 
 @implementation StandardTreatViewController
@@ -78,12 +80,12 @@ const NSString *ARMA003 = @"ARMA003";
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     self.clientSocket = myDelegate.cclientSocket;
     self.clientSocket.delegate = self;
+    [self askForTreatInfomation];
+
     
 }
 -(void)configureView
 {
-//    configure navigationbar
-    
     [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc]init]];
     [[self.navigationController navigationBar]setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColorFromHex(0X626d91)}];
@@ -107,16 +109,12 @@ const NSString *ARMA003 = @"ARMA003";
     maskLayer1.strokeColor = UIColorFromHex(0x85ABE4).CGColor;
     maskLayer1.fillColor = nil;
     [self.cancelButton.layer addSublayer:maskLayer1];
-    
-    
-    
     //取得治疗信息
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     //持续时间
     if (self.treatInfomation.treatTime == 36060)
     {
         customTimeSelected = NO;
-        
     }
     else        //自定义时间
     {
@@ -144,8 +142,6 @@ const NSString *ARMA003 = @"ARMA003";
     NSInteger mode = self.treatInfomation.treatMode;
     [self.modePicker selectRow:(mode-1) inComponent:0 animated:YES];
     
-
-    
     //调到对应的压力
     NSInteger press = [self.treatInfomation.press[0] integerValue];
     [self.pressPicker selectRow:press inComponent:0 animated:YES];
@@ -155,8 +151,6 @@ const NSString *ARMA003 = @"ARMA003";
     [userDefaults setBool:customTimeSelected forKey:@"CustomTimeSelected"];
     [self configureTimeSelectButton];
     [userDefaults setInteger:press forKey:@"Press"];
-
-    ;
     
 }
 -(void)configureTimeSelectButton
@@ -225,12 +219,14 @@ const NSString *ARMA003 = @"ARMA003";
     [self configureTimeSelectButton];
     
 }
+#pragma mark - cmd
 
 - (IBAction)cancel:(id)sender {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     //更改前的选择
     customTimeSelected = [userDefaults boolForKey:@"CustomTimeSelected"];
+    [self configureTimeSelectButton];
     
     //更改前的时间和分钟
     NSInteger hour = [userDefaults integerForKey:@"Hour"];
@@ -238,16 +234,17 @@ const NSString *ARMA003 = @"ARMA003";
     [self.hourPicker selectRow:hour inComponent:0 animated:YES];
     [self.minutePicker selectRow:minute inComponent:0 animated:YES];
     
-    [self configureTimeSelectButton];
+
     
     //更改前的模式
     NSInteger mode = [userDefaults integerForKey:@"Mode"];
     [self.modePicker selectRow:(mode-1) inComponent:0 animated:YES];
-    [self save:sender];
     
     //更改前的压力
     NSInteger press = [userDefaults integerForKey:@"Press"];
     [self.pressPicker selectRow:press inComponent:0 animated:YES];
+    
+    [self save:sender];
     [self showAlertViewWithMessage:@"取消更改成功"];
 }
 
@@ -273,32 +270,23 @@ const NSString *ARMA003 = @"ARMA003";
         //设置治疗时间
         Pack *pack = [[Pack alloc]init];
         Byte addrBytes[2] = {80,4};
-        NSData *addrData = [NSData dataWithBytes:addrBytes length:2];
-        
-        NSData *data = [self shortToBytes:minutes];
-        NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData dataEnabled:YES data:data];
+        NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes] dataEnabled:YES data:[self dataWithValue:minutes]];
         [self.clientSocket writeData:sendData withTimeout:-1 tag:1];
         
         //设置治疗方案
         Byte addrBytes1[2] = {80,3};
-        NSData *addrData1 = [NSData dataWithBytes:addrBytes1 length:2];
         NSInteger mode = [self.modePicker selectedRowInComponent:0];
-        NSData *modeData = [self shortToBytes:(mode+1)];
-        
-        NSData *sendData1 = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData1 dataEnabled:YES data:modeData];
+        NSData *sendData1 = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes1] dataEnabled:YES data:[self dataWithValue:(mode+1)]];
 
         [self.clientSocket writeData:sendData1 withTimeout:-1 tag:1];
         
         //设置治疗压力
         Byte addrByte2[2] = {80,0};
-        NSData *addrData2 = [NSData dataWithBytes:addrByte2 length:2];
-        NSInteger *press= [self.pressPicker selectedRowInComponent:0];
-        NSData *pressData = [self shortToBytes:press];
-        NSData *sendData2 = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData2 dataEnabled:YES data:pressData];
+        NSInteger press= [self.pressPicker selectedRowInComponent:0];
+        NSData *sendData2 = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrByte2]
+                                                          dataEnabled:YES data:[self dataWithValue:press]];
         
         [self.clientSocket writeData:sendData2 withTimeout:-1 tag:1];
-        
-        
         
     }
     else
@@ -306,7 +294,15 @@ const NSString *ARMA003 = @"ARMA003";
         [self showAlertViewWithMessage:@"网络连接已断开"];
     }
 }
-
+-(void)askForTreatInfomation
+{
+    Pack *pack = [[Pack alloc]init];
+    Byte addrBytes[2] = {0,0};
+    Byte dataBytes[2] = {1,0x62};
+    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
+                                                     dataEnabled:YES data:[self dataWithBytes:dataBytes]];
+    [self.clientSocket writeData:sendData withTimeout:-1 tag:1000];
+}
 
 
 #pragma mark -pickerViewDelegate
@@ -362,13 +358,57 @@ const NSString *ARMA003 = @"ARMA003";
     }
 }
 #pragma mark - segue
--(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if (tag == 1) {
-        [self showAlertViewWithMessage:@"保存成功"];
+    if (segue.identifier !=nil)
+    {
+        Pack *pack = [[Pack alloc]init];
+        NSData *switchModeData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0x0f]];
+        [self.clientSocket writeData:switchModeData withTimeout:-1 tag:0];
+        NSData *sendata;
+        if ([segue.identifier isEqualToString: @"StandardToParameter"])
+        {
+            sendata = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                                                    dataEnabled:YES data:[self dataWithValue:0x82]];
+            
+        }
+        else if ([segue.identifier isEqualToString:@"StandardToSolution"])
+        {
+            sendata = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                                dataEnabled:YES data:[self dataWithValue:0X81]];
+        }
+        [self.clientSocket writeData:sendata withTimeout:-1 tag:0];
     }
 }
+#pragma mark - socketDelegate
+-(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
+{
+    NSString *text;
+    Byte *bytes = (Byte *)[data bytes];
+    
+    text = [NSString stringWithFormat:@"%d",bytes[2]];
+    //治疗信息
+    if (bytes[2]==0x90)
+    {
+        [self.treatInfomation analyzeWithData:data];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self configureView];
+        });
+    }
 
+}
+-(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
+{
+    if (tag == 1)
+    {
+        [self showAlertViewWithMessage:@"保存成功"];
+    }
+//    if (tag == 1000)
+//    {
+//        NSLog(@"askTreatInfo~");
+//    }
+}
 #pragma mark - private method
 -(CABasicAnimation *)warningMessageAnimation:(float)time
 {
@@ -383,18 +423,22 @@ const NSString *ARMA003 = @"ARMA003";
     animation.fillMode = kCAFillModeForwards;
     return animation;
 }
--(NSData*) shortToBytes:(int)value
+-(NSData*) dataWithValue:(NSInteger)value
 {
     
     Byte src[2]={0,0};
-    //    src[3] =  (Byte) ((value>>24) & 0xFF);
-    //    src[2] =  (Byte) ((value>>16) & 0xFF);
-    //高字节在前
     src[0] =  (Byte) ((value>>8) & 0xFF);
     src[1] =  (Byte) (value & 0xFF);
     NSData *data = [NSData dataWithBytes:src length:2];
     return data;
 }
+-(NSData*) dataWithBytes:(Byte[])bytes
+{
+    
+    NSData *data = [NSData dataWithBytes:bytes length:2];
+    return data;
+}
+
 -(void)showAlertViewWithMessage:(NSString *)message
 {
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Attention"
@@ -413,5 +457,4 @@ const NSString *ARMA003 = @"ARMA003";
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
-
 @end

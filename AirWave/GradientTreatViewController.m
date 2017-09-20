@@ -18,19 +18,22 @@
     NSMutableArray *minuteArray;
     BOOL customTimeSelected;
 }
+@property (strong,nonatomic)GCDAsyncSocket *clientSocket;
 @property (weak, nonatomic) IBOutlet UIPickerView *pressGradePicker;
 @property (weak, nonatomic) IBOutlet UIPickerView *hourPicker;
 @property (weak, nonatomic) IBOutlet UIPickerView *minutePicker;
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
+
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UIButton *continueTimeButton;
 @property (weak, nonatomic) IBOutlet UIButton *customTimeButton;
+
 - (IBAction)tapOtherTreatWays:(id)sender;
 - (IBAction)chooseContinueTime:(id)sender;
 - (IBAction)chooseCustomTime:(id)sender;
 - (IBAction)save:(id)sender;
 - (IBAction)cancel:(id)sender;
-@property (strong,nonatomic)GCDAsyncSocket *clientSocket;
+
 @end
 
 @implementation GradientTreatViewController
@@ -234,20 +237,13 @@
         
         //压力等级
         Byte addrBytes2[2] = {80,16};
-        NSData *addrData2 = [NSData dataWithBytes:addrBytes2 length:2];
-        
         NSInteger pressValue = [self.pressGradePicker selectedRowInComponent:0];
-        Byte pressBytes [2] = {0,pressValue};
-        NSData *pressData = [NSData dataWithBytes:pressBytes length:2];
-        NSData *sendData2 = [pack packetWithCmdid:0X90 addressEnabled:YES addr:addrData2 dataEnabled:YES data:pressData];
+        NSData *sendData2 = [pack packetWithCmdid:0X90 addressEnabled:YES addr:[self dataWithBytes:addrBytes2]dataEnabled:YES data:[self dataWithValue:pressValue]];
         [self.clientSocket writeData:sendData2 withTimeout:-1 tag:1];
         
         //持续时间
         Byte addrBytes1[2] = {80,4};
-        NSData *addrData1 = [NSData dataWithBytes:addrBytes1 length:2];
-        
-        NSData *data = [self shortToBytes:minutes];
-        NSData *sendData1 = [pack packetWithCmdid:0x90 addressEnabled:YES addr:addrData1 dataEnabled:YES data:data];
+        NSData *sendData1 = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes1] dataEnabled:YES data:[self dataWithValue:minutes]];
         [self.clientSocket writeData:sendData1 withTimeout:-1 tag:1];
     }
     else
@@ -346,10 +342,6 @@
             minuteArray = [NSMutableArray arrayWithObject:@"0"];
             [self.minutePicker reloadAllComponents];
         }
-        else if (row == 0)
-        {
-            //零小时
-        }
         else
         {
             minuteArray = [[NSMutableArray alloc]initWithCapacity:20];
@@ -375,16 +367,20 @@
     animation.fillMode = kCAFillModeForwards;
     return animation;
 }
--(NSData*) shortToBytes:(int)value
+-(NSData*) dataWithValue:(NSInteger)value
 {
-
+    
     Byte src[2]={0,0};
-//    src[3] =  (Byte) ((value>>24) & 0xFF);
-//    src[2] =  (Byte) ((value>>16) & 0xFF);
-    //高字节在前
     src[0] =  (Byte) ((value>>8) & 0xFF);
     src[1] =  (Byte) (value & 0xFF);
     NSData *data = [NSData dataWithBytes:src length:2];
+    return data;
+}
+
+-(NSData*) dataWithBytes:(Byte[])bytes
+{
+    
+    NSData *data = [NSData dataWithBytes:bytes length:2];
     return data;
 }
 -(void)showAlertViewWithMessage:(NSString *)message
