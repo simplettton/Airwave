@@ -80,7 +80,7 @@ const NSString *ARMA003 = @"ARMA003";
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     self.clientSocket = myDelegate.cclientSocket;
     self.clientSocket.delegate = self;
-    [self askForTreatInfomation];
+//    [self askForTreatInfomation];
 
     
 }
