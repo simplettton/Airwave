@@ -211,9 +211,9 @@ NSString *const POST = @"8080";
 }
 
 -(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag{
-    if (tag == 1000) {
-        NSLog(@"askForTreatMentInfoMATION写入成功");
-    }
+//    if (tag == 1000) {
+//        NSLog(@"askForTreatMentInfoMATION写入成功");
+//    }
 }
 #pragma mark - configureViews
 -(void)configureView
@@ -380,7 +380,7 @@ NSString *const POST = @"8080";
 -(void)configureLeftWithType:(NSString *)type
 {
     //手臂三腔 腿部梯度
-    if ([type isEqualToString:@"ARMA003"]||[type isEqualToString:@"LEGA003"])
+    if ([type isEqualToString:@"ARMA003"]||[type     isEqualToString:@"LEGA003"])
     {   int indexArray[3];
         if ([type isEqualToString:@"ARMA003"]){     indexArray[0]= leftup3index;  indexArray[1]=leftup2index;  indexArray[2]=leftup1index;      }else
         if ([type isEqualToString:@"LEGA003"]){     indexArray[0]= leftdown3index;indexArray[1]=leftdown2index;indexArray[2]=leftdown1index;    }
@@ -1029,6 +1029,11 @@ NSString *const POST = @"8080";
     {
         UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
         ParameterTreatViewController  *controller = (ParameterTreatViewController *)navigationController.topViewController;
+        controller.treatInfomation = self.treatInfomation;
+    }else if([segue.identifier isEqualToString:@"MainToSolution"])
+    {
+        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
+        SolutionTreatViewController *controller = (SolutionTreatViewController *)navigationController.topViewController;
         controller.treatInfomation = self.treatInfomation;
     }
 }

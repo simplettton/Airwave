@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "TreatInformation.h"
 @interface SolutionTreatViewController : UIViewController
-
+@property(weak,nonatomic) TreatInformation *treatInfomation;
 @end

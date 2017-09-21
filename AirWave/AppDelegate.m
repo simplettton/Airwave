@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 NSString *const HOST1 = @"10.10.100.254";
 NSString *const POST1 = @"8080";
@@ -18,11 +17,8 @@ NSString *const POST1 = @"8080";
 @end
 
 @implementation AppDelegate
-
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-
     [self connectToServer];
     return YES;;
 }
@@ -62,32 +58,24 @@ NSString *const POST1 = @"8080";
 {
     
 }
-
-
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     NSError *error = nil;
     [self.cclientSocket connectToHost:HOST1 onPort:[POST1 integerValue] viaInterface:nil withTimeout:-1 error:&error];
 }
-
-
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     
 }
 
-
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     NSError *error = nil;
     [self.cclientSocket connectToHost:HOST1 onPort:[POST1 integerValue] viaInterface:nil withTimeout:-1 error:&error];
-
 }
-
-
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-
+    
 }
 
 

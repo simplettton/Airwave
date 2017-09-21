@@ -37,8 +37,6 @@ const NSString *ARMA003 = @"ARMA003";
 - (IBAction)save:(id)sender;
 - (IBAction)cancel:(id)sender;
 
-
-
 @end
 
 @implementation StandardTreatViewController
@@ -204,7 +202,6 @@ const NSString *ARMA003 = @"ARMA003";
         [warningLabel removeFromSuperview];
         [warningImageView removeFromSuperview];
     });
-
 }
 
 - (IBAction)chooseContinueTime:(id)sender
@@ -330,9 +327,12 @@ const NSString *ARMA003 = @"ARMA003";
         label.textColor = UIColorFromHex(0x65bba9);
         [label setTextAlignment:NSTextAlignmentCenter];
     }
-    if (pickerView.tag == 1000){  label.text = [pressArray objectAtIndex:row];  }
-    else if (pickerView.tag == 1001){  label.text = [modeArray objectAtIndex:row];  }
-    else if (pickerView.tag == 1002){  label.text = [hourArray objectAtIndex:row ];  }
+    if (pickerView.tag == 1000)
+    {  label.text = [pressArray objectAtIndex:row];  }
+    else if (pickerView.tag == 1001)
+    {  label.text = [modeArray objectAtIndex:row];  }
+    else if (pickerView.tag == 1002)
+    {  label.text = [hourArray objectAtIndex:row ];  }
     else {  label.text = [minuteArray objectAtIndex:row];  }
     
     return label;
@@ -358,14 +358,11 @@ const NSString *ARMA003 = @"ARMA003";
     }
 }
 #pragma mark - segue
-
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if (segue.identifier !=nil)
     {
         Pack *pack = [[Pack alloc]init];
-        NSData *switchModeData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0x0f]];
-        [self.clientSocket writeData:switchModeData withTimeout:-1 tag:0];
         NSData *sendata;
         if ([segue.identifier isEqualToString: @"StandardToParameter"])
         {
@@ -375,6 +372,8 @@ const NSString *ARMA003 = @"ARMA003";
         }
         else if ([segue.identifier isEqualToString:@"StandardToSolution"])
         {
+            NSData *switchModeData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0x0f]];
+            [self.clientSocket writeData:switchModeData withTimeout:-1 tag:0];
             sendata = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                 dataEnabled:YES data:[self dataWithValue:0X81]];
         }
@@ -404,10 +403,6 @@ const NSString *ARMA003 = @"ARMA003";
     {
         [self showAlertViewWithMessage:@"保存成功"];
     }
-//    if (tag == 1000)
-//    {
-//        NSLog(@"askTreatInfo~");
-//    }
 }
 #pragma mark - private method
 -(CABasicAnimation *)warningMessageAnimation:(float)time
