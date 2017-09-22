@@ -10,4 +10,5 @@
 #import "TreatInformation.h"
 @interface SolutionTreatViewController : UIViewController
 @property(weak,nonatomic) TreatInformation *treatInfomation;
+@property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @end

@@ -20,7 +20,7 @@ const NSString *ARMA003 = @"ARMA003";
     NSMutableArray *minuteArray;
     BOOL customTimeSelected;
 }
-@property (strong,nonatomic)GCDAsyncSocket *clientSocket;
+//@property (strong,nonatomic)GCDAsyncSocket *clientSocket;
 
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UIPickerView *modePicker;
@@ -32,6 +32,7 @@ const NSString *ARMA003 = @"ARMA003";
 @property (weak, nonatomic) IBOutlet UIButton *customTimeButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
+
 - (IBAction)chooseContinueTime:(id)sender;
 - (IBAction)chooseCustomTime:(id)sender;
 - (IBAction)save:(id)sender;
@@ -78,7 +79,7 @@ const NSString *ARMA003 = @"ARMA003";
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     self.clientSocket = myDelegate.cclientSocket;
     self.clientSocket.delegate = self;
-//    [self askForTreatInfomation];
+    [self askForTreatInfomation];
 
     
 }
@@ -402,6 +403,9 @@ const NSString *ARMA003 = @"ARMA003";
     if (tag == 1)
     {
         [self showAlertViewWithMessage:@"保存成功"];
+    }
+    if (tag == 1000) {
+        NSLog(@"ask--------");
     }
 }
 #pragma mark - private method

@@ -12,13 +12,17 @@
 #import <GCDAsyncSocket.h>
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 
+                                      
+                                      
 @interface SolutionTreatViewController ()<GCDAsyncSocketDelegate>
-@property (strong,nonatomic)GCDAsyncSocket *clientSocket;
-@property (weak, nonatomic) IBOutlet UIView *buttonView;
-@property (weak, nonatomic) IBOutlet UIStepper *stepper;
-@property (weak, nonatomic) IBOutlet UIView *backgroudView;
-@property (weak, nonatomic) IBOutlet UITextField *pressTextField;
+@property (strong,nonatomic) GCDAsyncSocket *clientSocket;
+@property (weak,  nonatomic) IBOutlet UIView *buttonView;
+@property (weak,  nonatomic) IBOutlet UIStepper *stepper;
+@property (weak,  nonatomic) IBOutlet UIView *backgroudView;
+@property (weak,  nonatomic) IBOutlet UITextField *pressTextField;
+@property (assign,nonatomic) NSInteger selectedModeTag;
 - (IBAction)onClick:(id)sender;
+- (IBAction)save:(id)sender;
 @end
 
 @implementation SolutionTreatViewController
@@ -54,22 +58,58 @@
     [self.stepper addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
     self.pressTextField.text = [NSString stringWithFormat:@"%ld",(long)[self.treatInfomation.press[0] integerValue]];
     
-    //button
+    //save button
+    //设置单边圆角
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.saveButton.bounds byRoundingCorners:UIRectCornerTopRight|UIRectCornerBottomRight|UIRectCornerTopLeft|UIRectCornerBottomLeft cornerRadii:CGSizeMake(10.0, 10.0)];
+    CAShapeLayer *maskLayer = [CAShapeLayer layer];
+    maskLayer.frame = self.saveButton.bounds;
+    maskLayer.path = maskPath.CGPath;
+    maskLayer.lineWidth = 1.0;
+    maskLayer.strokeColor = UIColorFromHex(0x85ABE4).CGColor;
+    maskLayer.fillColor = UIColorFromHex(0x85ABE4).CGColor;
+    [self.saveButton.layer addSublayer:maskLayer];
+
     
-    
-//    [self.backgroudView viewWithTag:11].backgroundColor = UIColorFromHex(0x65BBA9);
-    for (int i = 1; i<17; i++) {
-        [self.backgroudView viewWithTag:i].layer.borderColor = UIColorFromHex(0x65BBA9).CGColor;
-        [self.backgroudView viewWithTag:i].layer.borderWidth = 2.0;
+    //select button
+    for (int i = 1; i<11; i++)
+    {
+        [self.backgroudView viewWithTag:i].layer.borderColor = UIColorFromHex(0X65BBA9).CGColor;
+        [self.backgroudView viewWithTag:i].layer.borderWidth = 1.5;
+        
+        //处理不可按的按钮
+        NSString *aport = self.treatInfomation.aPort;
+        NSString *bport = self.treatInfomation.bPort;
+        NSArray *unableBtnTag = @[@"4",@"5",@"6",@"9",@"10"];
+        if ([aport isEqualToString:@"NONA000"]||[bport isEqualToString:@"NONB000"])
+        {
+            UIButton *button;
+            for (NSString *tag in unableBtnTag )
+            {
+
+                button =(UIButton *)[self.backgroudView viewWithTag:[tag integerValue]];
+                button.layer.borderColor = UIColorFromHex(0xDDE4EE).CGColor;
+                button.layer.backgroundColor = UIColorFromHex(0xDDE4EE).CGColor;
+                button.layer.borderWidth = 1.5;
+                button.enabled = NO;
+            }
+            if([aport isEqualToString:@"ABDA004"]||[bport isEqualToString:@"ABDB004"])
+            {
+                for (int i =1; i<4; i++)
+                {
+                    button = (UIButton*)[self.backgroudView viewWithTag:i];
+                    button.layer.borderColor = UIColorFromHex(0xDDE4EE).CGColor;
+                    button.layer.backgroundColor = UIColorFromHex(0xDDE4EE).CGColor;
+                    button.layer.borderWidth = 1.5;
+                    button.enabled = NO;
+                }
+            }
+        }
     }
 }
 -(void)valueChanged:(id)sender
 {
     self.pressTextField.text = [NSString stringWithFormat:@"%d",(int)self.stepper.value];
 }
-
-
-
 
 
 
@@ -156,19 +196,80 @@
 
 - (IBAction)onClick:(id)sender
 {
-    for (int i = 1; i<17; i++)
+    self.selectedModeTag = [(UIButton *)sender tag];
+    for (int i = 1; i<11; i++)
     {
         UIButton *btn = (UIButton *)[self.backgroudView viewWithTag:i];
         if (btn.tag == [(UIButton *)sender tag])
         {
-            btn.backgroundColor = UIColorFromHex(0x65BBA9);
+            btn.backgroundColor = UIColorFromHex(0X65BBA9);
+            
         }
         else
         {
-            btn.backgroundColor = [UIColor whiteColor];
-            btn.layer.borderColor = UIColorFromHex(0x65BBA9).CGColor;
-            btn.layer.borderWidth = 2;
+            if(btn.enabled == YES)
+            {
+                btn.backgroundColor = [UIColor whiteColor];
+                btn.layer.borderColor = UIColorFromHex(0X65BBA9).CGColor;
+                btn.layer.borderWidth = 1.5;
+            }
         }
     }
 }
+
+- (IBAction)save:(id)sender
+{
+    NSArray *modeSettingDics = @[  @{@"tag":@"1",   @"commit":[NSNumber numberWithUnsignedInteger:0x89]},
+                                   @{@"tag":@"2",   @"commit":[NSNumber numberWithUnsignedInteger:0x8a]},
+                                   @{@"tag":@"3",   @"commit":[NSNumber numberWithUnsignedInteger:0x8b]},
+                                   @{@"tag":@"4",   @"commit":[NSNumber numberWithUnsignedInteger:0xbc]},
+                                   @{@"tag":@"5",   @"commit":[NSNumber numberWithUnsignedInteger:0xbd]},
+                                   @{@"tag":@"6",   @"commit":[NSNumber numberWithUnsignedInteger:0xbe]},
+                                   @{@"tag":@"7",   @"commit":[NSNumber numberWithUnsignedInteger:0xbf]},
+                                   @{@"tag":@"8",   @"commit":[NSNumber numberWithUnsignedInteger:0xc0]},
+                                   @{@"tag":@"9",   @"commit":[NSNumber numberWithUnsignedInteger:0xc1]},
+                                   @{@"tag":@"10",  @"commit":[NSNumber numberWithUnsignedInteger:0xc2]}];
+    Pack *pack = [[Pack alloc]init];
+    for(NSDictionary *dic in modeSettingDics)
+    {
+        if (self.selectedModeTag == [[dic objectForKey:@"tag"]integerValue])
+        {
+            NSInteger commit = [[dic objectForKey:@"commit"]unsignedIntegerValue];
+            NSData *dataToSend = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:commit]];
+            [self.clientSocket writeData:dataToSend withTimeout:-1 tag:1];
+        }
+        
+    }
+    
+    //设置治疗压力
+    Byte addrByte2[2] = {80,0};
+    NSInteger press= [self.pressTextField.text integerValue];
+    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrByte2]
+                                  dataEnabled:YES data:[self dataWithValue:press]];
+    
+    [self.clientSocket writeData:sendData withTimeout:-1 tag:1];
+}
+-(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
+{
+    if (tag == 1)
+    {
+        [self showAlertViewWithMessage:@"保存成功"];
+    }
+}
+-(void)showAlertViewWithMessage:(NSString *)message
+{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Attention"
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              
+                                                          }];
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+
 @end

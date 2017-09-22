@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <GCDAsyncSocket.h>
 #import "TreatInformation.h"
 
 @interface StandardTreatViewController : UIViewController<UIPickerViewDelegate,UIPickerViewDataSource>
-@property(weak,nonatomic) TreatInformation *treatInfomation;
+@property(strong,nonatomic) TreatInformation *treatInfomation;
+@property(strong,nonatomic) GCDAsyncSocket *clientSocket;
 @end

@@ -110,7 +110,6 @@ NSString *const POST = @"8080";
         NSError *error = nil;
         self.connected = [self.clientSocket connectToHost:HOST onPort:[POST integerValue] viaInterface:nil withTimeout:-1 error:&error];
         if (self.connected)
-            
         {
             NSLog(@"客户端尝试连接");
         }
@@ -204,10 +203,12 @@ NSString *const POST = @"8080";
 -(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
     NSLog(@"断开连接 error:%@",err);
-    self.clientSocket.delegate = nil;
-    self.clientSocket = nil;
+//    self.clientSocket.delegate = nil;
+//    self.clientSocket = nil;
     self.connected = NO;
-    [self.connectTimer invalidate];
+    NSError *error = nil;
+    self.connected = [self.clientSocket connectToHost:HOST onPort:[POST integerValue] viaInterface:nil withTimeout:-1 error:&error];
+//    [self.connectTimer invalidate];
 }
 
 -(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag{
