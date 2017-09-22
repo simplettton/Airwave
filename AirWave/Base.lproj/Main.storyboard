@@ -1512,19 +1512,8 @@
                                             <action selector="onClick:" destination="0kn-LS-pQG" eventType="touchUpInside" id="EDF-Od-aE4"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="9" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9cr-7o-gbO">
-                                        <rect key="frame" x="265" y="328" width="65" height="47"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <state key="normal" title="3">
-                                            <color key="titleColor" red="0.3830353916" green="0.38334912059999998" blue="0.38308393959999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="onClick:" destination="0kn-LS-pQG" eventType="touchUpInside" id="Vt5-pM-sb6"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" tag="10" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3eH-PK-g3z">
-                                        <rect key="frame" x="95" y="387" width="65" height="47"/>
+                                        <rect key="frame" x="180" y="384" width="65" height="47"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="4">
@@ -1558,6 +1547,17 @@
                                         <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" tag="9" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9cr-7o-gbO">
+                                        <rect key="frame" x="95" y="384" width="65" height="47"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <state key="normal" title="3">
+                                            <color key="titleColor" red="0.3830353916" green="0.38334912059999998" blue="0.38308393959999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onClick:" destination="0kn-LS-pQG" eventType="touchUpInside" id="Vt5-pM-sb6"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -1766,10 +1766,10 @@
         <image name="unselected" width="86" height="86"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kTA-kc-yd1"/>
-        <segue reference="Vh8-vL-iVQ"/>
-        <segue reference="nwV-fw-Hh0"/>
-        <segue reference="O3A-EY-N0n"/>
         <segue reference="bnI-Yd-YTo"/>
+        <segue reference="gP2-f7-lrR"/>
+        <segue reference="nwV-fw-Hh0"/>
+        <segue reference="Vh8-vL-iVQ"/>
+        <segue reference="32F-K8-RkS"/>
     </inferredMetricsTieBreakers>
 </document>

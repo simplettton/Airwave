@@ -12,10 +12,7 @@
 NSString *const HOST1 = @"10.10.100.254";
 NSString *const POST1 = @"8080";
 
-
 @interface AppDelegate ()<GCDAsyncSocketDelegate>
-@property (nonatomic, strong) NSTimer *connectTimer;
-@property (nonatomic, assign) BOOL cconnected;
 @end
 
 @implementation AppDelegate

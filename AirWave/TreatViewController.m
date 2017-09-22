@@ -60,7 +60,7 @@ NSString *const POST = @"8080";
 @property (nonatomic, strong) NSTimer *updateTimer;
 @property (nonatomic, assign) BOOL connected;
 @property (nonatomic,strong) NSTimer *changeColorTimer;
-@property (nonatomic,strong) TreatInformation *treatInfomation;
+@property (nonatomic,strong) TreatInformation *treatInformation;
 @property (nonatomic,strong) RunningInfomation *runningInfomation;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *barBtItem;
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
@@ -98,8 +98,19 @@ NSString *const POST = @"8080";
 {
     [super viewDidLoad];
 
+    
+    AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
+    
+    if (myDelegate.cclientSocket != nil)
+    {
+        self.clientSocket = myDelegate.cclientSocket;
+        self.clientSocket.delegate = self;
+        self.connected = myDelegate.cconnected;
+    }
+    
+    
     //连接服务器
-    if (!self.connected)
+    if (!self.connected )
     {
         self.clientSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
         NSLog(@"开始连接%@",self.clientSocket);
@@ -126,7 +137,7 @@ NSString *const POST = @"8080";
     isPauseButton = NO;
     bodyNames= [NSArray arrayWithObjects:@"leftup1",@"leftup2",@"leftup3",@"lefthand",@"leftdown1",@"leftdown2",@"leftdown3",@"leftfoot",@"rightup1",@"rightup2",@"rightup3",@"righthand",@"rightdown1",@"rightdown2",@"rightdown3",@"rightfoot",@"middle1",@"middle2",@"middle3",@"middle4",nil];
     bodyButtons = [[NSMutableArray alloc]initWithCapacity:20];
-    self.treatInfomation = [[TreatInformation alloc]init];
+    self.treatInformation = [[TreatInformation alloc]init];
     self.runningInfomation = [[RunningInfomation alloc]init];
     [self configureView];
     [self configureBodyView];
@@ -156,9 +167,13 @@ NSString *const POST = @"8080";
     [self addTimer];
     // 连接后,可读取服务器端的数据
     [self.clientSocket readDataWithTimeout:- 1 tag:0];
+    
+    //保存socket
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     myDelegate.cclientSocket=self.clientSocket;
+    myDelegate.cconnected = YES;
     self.connected = YES;
+    
 }
 /**
  读取数据
@@ -176,7 +191,7 @@ NSString *const POST = @"8080";
     //治疗信息
     if (bytes[2]==0x90)
     {
-        [self.treatInfomation analyzeWithData:data];
+        [self.treatInformation analyzeWithData:data];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self configureBodyView];
         });
@@ -202,12 +217,17 @@ NSString *const POST = @"8080";
 -(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
     NSLog(@"断开连接 error:%@",err);
-//    self.clientSocket.delegate = nil;
-//    self.clientSocket = nil;
+    self.clientSocket = nil;
+    
+    
     self.connected = NO;
+    AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
+    myDelegate.cconnected = NO;
+    
+    
     NSError *error = nil;
     self.connected = [self.clientSocket connectToHost:HOST onPort:[POST integerValue] viaInterface:nil withTimeout:-1 error:&error];
-//    [self.connectTimer invalidate];
+    [self.connectTimer invalidate];
 }
 
 -(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
@@ -277,7 +297,7 @@ NSString *const POST = @"8080";
 -(void)configureBodyView
 {
     //改变前先让所以按钮变成灰色/取消定时器
-    if (self.treatInfomation.treatState == Stop)
+    if (self.treatInformation.treatState == Stop)
     {
         for (int i=0; i<[bodyNames count]; i++)
         {
@@ -291,7 +311,7 @@ NSString *const POST = @"8080";
         }
     }
     //停止更新压力和进度圈UI
-    if (self.treatInfomation.treatTime -1 == self.runningInfomation.treatProcessTime || self.treatInfomation.treatState == Stop)
+    if (self.treatInformation.treatTime -1 == self.runningInfomation.treatProcessTime || self.treatInformation.treatState == Stop)
     {
 //        if (treatInfomation.treatTime -1 == runningInfomation.treatProcessTime)
 //        {
@@ -303,25 +323,25 @@ NSString *const POST = @"8080";
         [self.progressView drawProgress:1];
         self.progressView.label.text = [NSString stringWithFormat:@"100%%"];
     }
-    else if((self.treatInfomation.treatState == Running && self.treatInfomation.aPort != nil) ||self.treatInfomation.treatState == Pause)
+    else if((self.treatInformation.treatState == Running && self.treatInformation.aPort != nil) ||self.treatInformation.treatState == Pause)
     {
         //treatInfomation.aPort != nil 确保收到了下位机的treatInfomation
-        if (self.treatInfomation.treatState == Running && self.treatInfomation.aPort !=nil )
+        if (self.treatInformation.treatState == Running && self.treatInformation.aPort !=nil )
         {
             isPlayButton = NO;
             isPauseButton = YES;
             [self configurePlayButton];
         }
-        else if(self.treatInfomation.treatState == Pause)
+        else if(self.treatInformation.treatState == Pause)
         {
             isPlayButton = YES;
             isPauseButton = NO;
             [self configurePlayButton];
         }
         //显示压力圈
-        CGFloat currentProgress =(CGFloat)(self.runningInfomation.treatProcessTime)/(CGFloat)self.treatInfomation.treatTime;
+        CGFloat currentProgress =(CGFloat)(self.runningInfomation.treatProcessTime)/(CGFloat)self.treatInformation.treatTime;
         
-        int progress = self.runningInfomation.treatProcessTime *100 / self.treatInfomation.treatTime;
+        int progress = self.runningInfomation.treatProcessTime *100 / self.treatInformation.treatTime;
         
         self.progressView.label.text = [NSString stringWithFormat:@"%d%%",(int)progress];
         [self.progressView drawProgress:currentProgress];
@@ -331,7 +351,7 @@ NSString *const POST = @"8080";
     
     
     //A端
-    NSString *aport = self.treatInfomation.aPort;
+    NSString *aport = self.treatInformation.aPort;
 
     if ([aport isEqualToString:@"ARMA003"]) {   [self configureLeftWithType:@"ARMA003"];   }
     else if ([aport isEqualToString:@"LEGA003"]) {   [self configureLeftWithType:@"LEGA003"];   }
@@ -353,7 +373,7 @@ NSString *const POST = @"8080";
     else if ([aport isEqualToString:@"ABDA004"]) {   [self configureLeftWithType:@"ABDA004"];    }
     
     //B端
-    NSString *bport = self.treatInfomation.bPort;
+    NSString *bport = self.treatInformation.bPort;
     if ([bport isEqualToString:@"ARMB003"]) {   [self configureRightWithType:@"ARMB003"];   }
     else if ([bport isEqualToString:@"LEGB003"]) {   [self configureRightWithType:@"LEGB003"];   }
     else if ([bport isEqualToString:@"ARMB004"])
@@ -393,9 +413,9 @@ NSString *const POST = @"8080";
             //判断单腔是否使能
             int index = indexArray[i];
             BodyButton *button = bodyButtons[index];
-            if ([self.treatInfomation.enabled[i+1] isEqualToString:@"1" ])
+            if ([self.treatInformation.enabled[i+1] isEqualToString:@"1" ])
             {
-                if (self.treatInfomation.treatState == Running)
+                if (self.treatInformation.treatState == Running)
                 {
                     NSInteger cellState = [self.runningInfomation.cellState[i+1] integerValue];
                     switch (cellState)
@@ -436,9 +456,9 @@ NSString *const POST = @"8080";
     else if ([type isEqualToString:@"LEFTHAND"])
     {
         BodyButton *button = bodyButtons[lefthandindex];
-        if ([self.treatInfomation.enabled[0] isEqualToString:@"1"])
+        if ([self.treatInformation.enabled[0] isEqualToString:@"1"])
         {
-            if (self.treatInfomation.treatState == Running)
+            if (self.treatInformation.treatState == Running)
             {
                 NSInteger cellState = [self.runningInfomation.cellState[0] integerValue];
                 switch (cellState)
@@ -478,10 +498,10 @@ NSString *const POST = @"8080";
     else if ([type isEqualToString:@"LEFTFOOT"])
     {
         BodyButton *button = bodyButtons[leftfootindex];
-        if ([self.treatInfomation.enabled[0] isEqualToString:@"1"])
+        if ([self.treatInformation.enabled[0] isEqualToString:@"1"])
         {
  
-            if (self.treatInfomation.treatState == Running)
+            if (self.treatInformation.treatState == Running)
             {
                 NSInteger cellState = [self.runningInfomation.cellState[0] integerValue];
                 switch (cellState)
@@ -532,9 +552,9 @@ NSString *const POST = @"8080";
             int index = indexArray[i];
             BodyButton *button = bodyButtons[index];
 
-            if ([self.treatInfomation.enabled[i] isEqualToString:@"1" ])
+            if ([self.treatInformation.enabled[i] isEqualToString:@"1" ])
             {
-                if (self.treatInfomation.treatState == Running)
+                if (self.treatInformation.treatState == Running)
                 {
                     NSInteger cellState = [self.runningInfomation.cellState[i]integerValue];
                     switch (cellState)
@@ -600,11 +620,11 @@ NSString *const POST = @"8080";
         {
             int index = indexArray[i];
             BodyButton *button = bodyButtons[index];
-            if ([self.treatInfomation.enabled[i+5] isEqualToString:@"1" ])
+            if ([self.treatInformation.enabled[i+5] isEqualToString:@"1" ])
             {
                 int index = indexArray[i];
                 //                NSLog(@"treat state =%d",treatInfomation.treatState);
-                if (self.treatInfomation.treatState == Running)
+                if (self.treatInformation.treatState == Running)
                 {
                     
                     NSInteger cellState = [self.runningInfomation.cellState[i+5] integerValue];
@@ -647,10 +667,10 @@ NSString *const POST = @"8080";
     else if ([type isEqualToString:@"RIGHTHAND"])
     {
         BodyButton *button = bodyButtons[righthandindex];
-        if ([self.treatInfomation.enabled[4] isEqualToString:@"1"])
+        if ([self.treatInformation.enabled[4] isEqualToString:@"1"])
         {
         
-            if (self.treatInfomation.treatState == Running)
+            if (self.treatInformation.treatState == Running)
             {
                 NSInteger cellState = [self.runningInfomation.cellState[4] integerValue];
                 switch (cellState)
@@ -690,10 +710,10 @@ NSString *const POST = @"8080";
     else if ([type isEqualToString:@"RIGHTFOOT"])
     {
         BodyButton *button = bodyButtons[rightfootindex];
-        if ([self.treatInfomation.enabled[4] isEqualToString:@"1"])
+        if ([self.treatInformation.enabled[4] isEqualToString:@"1"])
         {
             
-            if (self.treatInfomation.treatState == Running)
+            if (self.treatInformation.treatState == Running)
             {
                 NSInteger cellState = [self.runningInfomation.cellState[4] integerValue];
                 switch (cellState)
@@ -741,9 +761,9 @@ NSString *const POST = @"8080";
         {
             int index = indexArray[i];
             BodyButton *button = bodyButtons[index];
-            if ([self.treatInfomation.enabled[i+4] isEqualToString:@"1" ])
+            if ([self.treatInformation.enabled[i+4] isEqualToString:@"1" ])
             {
-                if (self.treatInfomation.treatState == Running)
+                if (self.treatInformation.treatState == Running)
                 {
                     NSInteger cellState = [self.runningInfomation.cellState[i+4]integerValue];
                     switch (cellState)
@@ -960,7 +980,7 @@ NSString *const POST = @"8080";
 - (IBAction)tapSettingButton:(id)sender
 {
 
-    NSInteger treatWay = self.treatInfomation.treatWay;
+    NSInteger treatWay = self.treatInformation.treatWay;
     switch (treatWay) {
         case Standart:
             [self performSegueWithIdentifier:@"MainToStandard" sender:nil];
@@ -1016,24 +1036,24 @@ NSString *const POST = @"8080";
     {
         UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
         StandardTreatViewController *controller = (StandardTreatViewController *)navigationController.topViewController;
-        controller.treatInfomation = self.treatInfomation;
+        controller.treatInfomation = self.treatInformation;
     }
     else if([segue.identifier isEqualToString:@"MainToGradient"])
     {
         UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
         GradientTreatViewController *controller = (GradientTreatViewController *)navigationController.topViewController;
-        controller.treatInfomation = self.treatInfomation;
+        controller.treatInfomation = self.treatInformation;
     }
     else if([segue.identifier isEqualToString:@"MainToParameter"])
     {
         UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
         ParameterTreatViewController  *controller = (ParameterTreatViewController *)navigationController.topViewController;
-        controller.treatInfomation = self.treatInfomation;
+        controller.treatInfomation = self.treatInformation;
     }else if([segue.identifier isEqualToString:@"MainToSolution"])
     {
         UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
         SolutionTreatViewController *controller = (SolutionTreatViewController *)navigationController.topViewController;
-        controller.treatInfomation = self.treatInfomation;
+        controller.treatInfomation = self.treatInformation;
     }
 }
 @end

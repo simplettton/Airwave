@@ -105,10 +105,13 @@
     maskLayer1.strokeColor = UIColorFromHex(0x85ABE4).CGColor;
     maskLayer1.fillColor = nil;
     [self.cancelButton.layer addSublayer:maskLayer1];
-    
+    [self updateView];
 
     
     
+ }
+-(void)updateView
+{
     //取得治疗信息
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     //持续时间
@@ -130,7 +133,7 @@
         //调到对应的时间和分钟
         [self.minutePicker selectRow:minute inComponent:0 animated:NO];
         [self.hourPicker selectRow:hour inComponent:0 animated:NO];
-
+        
         //10小时取消minute的选择
         if (hour == 10)
         {
@@ -148,6 +151,7 @@
     [userDefaults setBool:customTimeSelected forKey:@"CustomTimeSelected"];
     [userDefaults setInteger:pressLevel forKey:@"PressLevel"];
     [self configureTimeSelectButton];
+    
 
 }
 -(void)configureTimeSelectButton
@@ -283,6 +287,24 @@
         });
     }
 }
+-(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
+{
+    NSString *text;
+    Byte *bytes = (Byte *)[data bytes];
+    
+    text = [NSString stringWithFormat:@"%d",bytes[2]];
+    //治疗信息
+    if (bytes[2]==0x90)
+    {
+        [self.treatInfomation analyzeWithData:data];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self updateView];
+        });
+    }
+    
+    [sock readDataWithTimeout:- 1 tag:0];
+}
+
 
 
 #pragma mark - pickerViewDelegate

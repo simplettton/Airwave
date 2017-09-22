@@ -48,6 +48,11 @@
     self.hourPicker.dataSource = self;
     self.minutePicker.dataSource = self;
     
+    if (self.treatInfomation == nil)
+    {
+        self.treatInfomation = [[TreatInformation alloc]init];
+    }
+    
     modeArray = @[@"1",@"2",@"3",@"4",@"5",@"6"];
     hourArray = [[NSMutableArray alloc]initWithCapacity:20];
     for (int i =0; i<11; i++)
@@ -60,6 +65,12 @@
         [minuteArray addObject:[NSString stringWithFormat:@"%d",i]];
     }
     [self configureView];
+    
+    if (self.treatInfomation == nil)
+    {
+        self.treatInfomation = [[TreatInformation alloc]init];
+    }
+    
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -68,6 +79,8 @@
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     self.clientSocket = myDelegate.cclientSocket;
     self.clientSocket.delegate = self;
+    [self.clientSocket readDataWithTimeout:- 1 tag:0];
+    [self askForTreatInfomation];
 }
 
 -(void)configureView
@@ -103,7 +116,12 @@
     maskLayer1.strokeColor = UIColorFromHex(0x85ABE4).CGColor;
     maskLayer1.fillColor = nil;
     [self.cancelButton.layer addSublayer:maskLayer1];
+    [self updateView];
+ 
     
+}
+-(void)updateView
+{
     //取得治疗信息
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     //持续时间
@@ -143,7 +161,6 @@
     [userDefaults setBool:customTimeSelected forKey:@"CustomTimeSelected"];
     [self configureTimeSelectButton];
 
-    
 }
 -(void)configureTimeSelectButton
 {
@@ -269,6 +286,16 @@
     [self save:sender];
     [self showAlertViewWithMessage:@"取消更改成功"];
 }
+-(void)askForTreatInfomation
+{
+    Pack *pack = [[Pack alloc]init];
+    Byte addrBytes[2] = {0,0};
+    Byte dataBytes[2] = {1,0x62};
+    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
+                                 dataEnabled:YES data:[self dataWithBytes:dataBytes]];
+    [self.clientSocket writeData:sendData withTimeout:-1 tag:1000];
+}
+
 #pragma mark - socketDelegate
 -(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
 {
@@ -278,6 +305,23 @@
             [self showAlertViewWithMessage:@"保存成功"];
         });
     }
+}
+-(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
+{
+    NSString *text;
+    Byte *bytes = (Byte *)[data bytes];
+    
+    text = [NSString stringWithFormat:@"%d",bytes[2]];
+    //治疗信息
+    if (bytes[2]==0x90)
+    {
+        [self.treatInfomation analyzeWithData:data];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self updateView];
+        });
+    }
+    
+    [sock readDataWithTimeout:- 1 tag:0];
 }
 
 #pragma mark - UIPickerViewDelegate

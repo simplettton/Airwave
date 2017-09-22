@@ -5727,7 +5727,7 @@ enum GCDAsyncSocketConfig
 
 - (void)setupReadTimerWithTimeout:(NSTimeInterval)timeout
 {
-	if (timeout >= 0.0)
+	if (timeout >= 10.0)
 	{
 		readTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, socketQueue);
 		

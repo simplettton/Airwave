@@ -10,7 +10,7 @@
 #import "TreatInformation.h"
 
 @interface ParameterTreatViewController : UIViewController<UIPickerViewDelegate,UIPickerViewDataSource>
-@property(weak,nonatomic) TreatInformation *treatInfomation;
+@property(strong,nonatomic) TreatInformation *treatInfomation;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 

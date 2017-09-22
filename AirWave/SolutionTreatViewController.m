@@ -7,6 +7,7 @@
 //
 
 #import "SolutionTreatViewController.h"
+#import "TreatInformation.h"
 #import "AppDelegate.h"
 #import "Pack.h"
 #import <GCDAsyncSocket.h>
@@ -29,6 +30,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if (self.treatInfomation == nil)
+    {
+        self.treatInfomation = [[TreatInformation alloc]init];
+    }
+    
     [self configureView];
 }
 -(void)viewDidAppear:(BOOL)animated
@@ -37,6 +43,8 @@
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     self.clientSocket = myDelegate.cclientSocket;
     self.clientSocket.delegate = self;
+    [self.clientSocket readDataWithTimeout:- 1 tag:0];
+    [self askForTreatInfomation];
 }
 -(void)configureView
 {
@@ -50,13 +58,6 @@
     topBorder.backgroundColor = UIColorFromHex(0xE4E4E4).CGColor;
     [self.buttonView.layer addSublayer:topBorder];
     
-    //stepper
-    self.stepper.minimumValue = 0;
-    self.stepper.maximumValue = 240.0;
-    self.stepper.tintColor = UIColorFromHex(0x65BBA9);
-    self.stepper.value = [self.treatInfomation.press[0]doubleValue];
-    [self.stepper addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
-    self.pressTextField.text = [NSString stringWithFormat:@"%ld",(long)[self.treatInfomation.press[0] integerValue]];
     
     //save button
     //设置单边圆角
@@ -68,8 +69,21 @@
     maskLayer.strokeColor = UIColorFromHex(0x85ABE4).CGColor;
     maskLayer.fillColor = UIColorFromHex(0x85ABE4).CGColor;
     [self.saveButton.layer addSublayer:maskLayer];
+    self.saveButton.titleLabel.textColor = [UIColor whiteColor];
+    
+    [self updateView];
 
     
+}
+-(void)updateView
+{
+    //stepper
+    self.stepper.minimumValue = 0;
+    self.stepper.maximumValue = 240.0;
+    self.stepper.tintColor = UIColorFromHex(0x65BBA9);
+    self.stepper.value = [self.treatInfomation.press[0]doubleValue];
+    [self.stepper addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+    self.pressTextField.text = [NSString stringWithFormat:@"%ld",(long)[self.treatInfomation.press[0] integerValue]];
     //select button
     for (int i = 1; i<11; i++)
     {
@@ -85,7 +99,7 @@
             UIButton *button;
             for (NSString *tag in unableBtnTag )
             {
-
+                
                 button =(UIButton *)[self.backgroudView viewWithTag:[tag integerValue]];
                 button.layer.borderColor = UIColorFromHex(0xDDE4EE).CGColor;
                 button.layer.backgroundColor = UIColorFromHex(0xDDE4EE).CGColor;
@@ -105,6 +119,8 @@
             }
         }
     }
+
+
 }
 -(void)valueChanged:(id)sender
 {
@@ -141,31 +157,7 @@
         [warningImageView removeFromSuperview];
     });
 }
-#pragma mark - segue
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if (segue.identifier != nil)
-    {
-        Pack *pack = [[Pack alloc]init];
-        NSData *sendata;
-        if ([segue.identifier isEqualToString: @"SolutionToStandard"])
-        {
-            sendata = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                                    dataEnabled:YES data:[self dataWithValue:0x0d]];
-            
-        }
-        else if ([segue.identifier isEqualToString:@"SolutionToParameter"])
-        {
-            NSData *switchModeData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                                                   dataEnabled:YES data:[self dataWithValue:0x0f]];
-            [self.clientSocket writeData:switchModeData withTimeout:-1 tag:0];
-            sendata = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                                    dataEnabled:YES data:[self dataWithValue:0X82]];
-        }
-        [self.clientSocket writeData:sendata withTimeout:-1 tag:0];
 
-    }
-}
 #pragma mark - private method
 -(CABasicAnimation *)warningMessageAnimation:(float)time
 {
@@ -180,6 +172,20 @@
     animation.fillMode = kCAFillModeForwards;
     return animation;
 }
+-(void)showAlertViewWithMessage:(NSString *)message
+{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Attention"
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              
+                                                          }];
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 -(NSData*) dataWithValue:(NSInteger)value
 {
     Byte src[2]={0,0};
@@ -193,6 +199,7 @@
     NSData *data = [NSData dataWithBytes:bytes length:2];
     return data;
 }
+
 
 - (IBAction)onClick:(id)sender
 {
@@ -249,6 +256,16 @@
     
     [self.clientSocket writeData:sendData withTimeout:-1 tag:1];
 }
+-(void)askForTreatInfomation
+{
+    Pack *pack = [[Pack alloc]init];
+    Byte addrBytes[2] = {0,0};
+    Byte dataBytes[2] = {1,0x62};
+    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
+                                 dataEnabled:YES data:[self dataWithBytes:dataBytes]];
+    [self.clientSocket writeData:sendData withTimeout:-1 tag:1000];
+}
+#pragma mark - SocketDelegate
 -(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
 {
     if (tag == 1)
@@ -256,19 +273,48 @@
         [self showAlertViewWithMessage:@"保存成功"];
     }
 }
--(void)showAlertViewWithMessage:(NSString *)message
+-(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Attention"
-                                                                   message:message
-                                                            preferredStyle:UIAlertControllerStyleAlert];
+    NSString *text;
+    Byte *bytes = (Byte *)[data bytes];
     
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * action) {
-                                                              
-                                                          }];
+    text = [NSString stringWithFormat:@"%d",bytes[2]];
+    //治疗信息
+    if (bytes[2]==0x90)
+    {
+        [self.treatInfomation analyzeWithData:data];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self updateView];
+        });
+    }
     
-    [alert addAction:defaultAction];
-    [self presentViewController:alert animated:YES completion:nil];
+    [sock readDataWithTimeout:- 1 tag:0];
+    
+}
+#pragma mark - segue
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if (segue.identifier != nil)
+    {
+        Pack *pack = [[Pack alloc]init];
+        NSData *sendata;
+        if ([segue.identifier isEqualToString: @"SolutionToStandard"])
+        {
+            sendata = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                                dataEnabled:YES data:[self dataWithValue:0x0d]];
+            
+        }
+        else if ([segue.identifier isEqualToString:@"SolutionToParameter"])
+        {
+            NSData *switchModeData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                                               dataEnabled:YES data:[self dataWithValue:0x0f]];
+            [self.clientSocket writeData:switchModeData withTimeout:-1 tag:0];
+            sendata = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                                dataEnabled:YES data:[self dataWithValue:0X82]];
+        }
+        [self.clientSocket writeData:sendata withTimeout:-1 tag:0];
+        
+    }
 }
 
 

@@ -82,8 +82,9 @@
     [super viewDidAppear:YES];
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     self.clientSocket = myDelegate.cclientSocket;
-    NSLog(@"stadard clientsocket = %@",self.clientSocket);
+    NSLog(@"standardsocket --%@",self.clientSocket);
     self.clientSocket.delegate = self;
+    [self.clientSocket readDataWithTimeout:- 1 tag:0];
     [self askForTreatInfomation];
 
     
@@ -113,6 +114,11 @@
     maskLayer1.strokeColor = UIColorFromHex(0x85ABE4).CGColor;
     maskLayer1.fillColor = nil;
     [self.cancelButton.layer addSublayer:maskLayer1];
+    [self updateView];
+    
+ }
+-(void)updateView
+{
     //取得治疗信息
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     //持续时间
@@ -156,6 +162,7 @@
     [self configureTimeSelectButton];
     [userDefaults setInteger:press forKey:@"Press"];
     
+
 }
 -(void)configureTimeSelectButton
 {
@@ -397,9 +404,11 @@
     {
         [self.treatInfomation analyzeWithData:data];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self configureView];
+            [self updateView];
         });
     }
+    
+    [sock readDataWithTimeout:- 1 tag:0];
 
 }
 -(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
@@ -408,10 +417,10 @@
     {
         [self showAlertViewWithMessage:@"保存成功"];
     }
-    if (tag == 1000)
-    {
-        NSLog(@"ask--------");
-    }
+//    if (tag == 1000)
+//    {
+//        NSLog(@"ask--------");
+//    }
 }
 #pragma mark - private method
 -(CABasicAnimation *)warningMessageAnimation:(float)time
