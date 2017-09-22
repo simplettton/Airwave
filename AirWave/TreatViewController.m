@@ -55,7 +55,6 @@ NSString *const POST = @"8080";
 @interface TreatViewController ()<GCDAsyncSocketDelegate>
 //客户端socket
 @property (strong,nonatomic)GCDAsyncSocket *clientSocket;
-@property (nonatomic,copy)NSMutableArray *clientSockets;
 //计时器
 @property (nonatomic, strong) NSTimer *connectTimer;
 @property (nonatomic, strong) NSTimer *updateTimer;
@@ -86,8 +85,6 @@ NSString *const POST = @"8080";
 {
     BOOL isPlayButton;
     BOOL isPauseButton;
-//    TreatInformation *treatInfomation;
-//    RunningInfomation *runningInfomation;
     NSArray *bodyNames;
     NSMutableArray *bodyButtons;
 }
@@ -95,8 +92,8 @@ NSString *const POST = @"8080";
 {
     [super viewWillAppear:YES];
     [self askForTreatInfomation];
-    [self configureBodyView];
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -159,6 +156,8 @@ NSString *const POST = @"8080";
     [self addTimer];
     // 连接后,可读取服务器端的数据
     [self.clientSocket readDataWithTimeout:- 1 tag:0];
+    AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
+    myDelegate.cclientSocket=self.clientSocket;
     self.connected = YES;
 }
 /**
@@ -211,10 +210,9 @@ NSString *const POST = @"8080";
 //    [self.connectTimer invalidate];
 }
 
--(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag{
-//    if (tag == 1000) {
-//        NSLog(@"askForTreatMentInfoMATION写入成功");
-//    }
+-(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
+{
+
 }
 #pragma mark - configureViews
 -(void)configureView

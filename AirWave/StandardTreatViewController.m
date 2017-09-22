@@ -11,7 +11,6 @@
 #import <GCDAsyncSocket.h>
 #import "Pack.h"
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
-const NSString *ARMA003 = @"ARMA003";
 @interface StandardTreatViewController ()<GCDAsyncSocketDelegate>
 {
     NSMutableArray *pressArray;
@@ -55,6 +54,11 @@ const NSString *ARMA003 = @"ARMA003";
     self.minutePicker.dataSource = self;
     self.pressPicker.dataSource = self;
     
+    if (self.treatInfomation == nil)
+    {
+        self.treatInfomation = [[TreatInformation alloc]init];
+    }
+    
     pressArray = [[NSMutableArray alloc]initWithCapacity:20];
     for (int i = 0; i< 241; i++) {
         [pressArray addObject:[NSString stringWithFormat:@"%d",i]];
@@ -78,6 +82,7 @@ const NSString *ARMA003 = @"ARMA003";
     [super viewDidAppear:YES];
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     self.clientSocket = myDelegate.cclientSocket;
+    NSLog(@"stadard clientsocket = %@",self.clientSocket);
     self.clientSocket.delegate = self;
     [self askForTreatInfomation];
 
@@ -185,7 +190,6 @@ const NSString *ARMA003 = @"ARMA003";
     warningLabel.textAlignment = NSTextAlignmentLeft;
     warningLabel.text = @"气囊类型不合适";
     warningLabel.textColor = UIColorFromHex(0xFF8247);
-    
     UIImageView *warningImageView = [[UIImageView alloc]initWithFrame:CGRectMake(34, 509, 35, 35)];
     warningImageView.image = [UIImage imageNamed:@"warning"];
     [self.backgroundView addSubview:warningImageView];
@@ -404,7 +408,8 @@ const NSString *ARMA003 = @"ARMA003";
     {
         [self showAlertViewWithMessage:@"保存成功"];
     }
-    if (tag == 1000) {
+    if (tag == 1000)
+    {
         NSLog(@"ask--------");
     }
 }
