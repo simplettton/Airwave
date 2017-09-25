@@ -45,7 +45,11 @@ typedef NS_ENUM(NSUInteger,BodyTags)
 {
     leftup1tag   =17,leftup2tag   =16,leftup3tag   =15,lefthandtag  =14,leftdown1tag =13,leftdown2tag =12,leftdown3tag =11,
     leftfoottag  =10,rightup1tag  =27,rightup2tag  =26,rightup3tag  =25,righthandtag =24,rightdown1tag=23,rightdown2tag=22,
-    rightdown3tag=21,rightfoottag =20,middle1tag   =33,middle2tag   =32,middle3tag   =31,middle4tag   =30
+    rightdown3tag=21,rightfoottag =20,middle1tag   =33,middle2tag   =32,middle3tag   =31,middle4tag   =30,
+    
+    rightleg1tag =47,rightleg2tag =46,rightleg3tag =45,rightleg4tag =44,rightleg5tag =43,rightleg6tag =42,rightleg7tag =41,
+    leftleg1tag  =57,leftleg2tag  =56,leftleg3tag  =55,leftleg4tag  =54,leftleg5tag  =53,leftleg6tag  =52,leftleg7tag  =51
+    
 };
 static int bodyPartTags[] = {leftup1tag,leftup2tag,leftup3tag,lefthandtag,leftdown1tag,leftdown2tag,leftdown3tag,leftfoottag,rightup1tag,rightup2tag,rightup3tag,righthandtag,rightdown1tag,rightdown2tag,rightdown3tag,rightfoottag,middle1tag,middle2tag,middle3tag,middle4tag};
 
@@ -62,6 +66,7 @@ NSString *const POST = @"8080";
 @property (nonatomic,strong) NSTimer *changeColorTimer;
 @property (nonatomic,strong) TreatInformation *treatInformation;
 @property (nonatomic,strong) RunningInfomation *runningInfomation;
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *barBtItem;
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
 @property (weak, nonatomic) IBOutlet UIButton *pauseButton;
@@ -98,7 +103,6 @@ NSString *const POST = @"8080";
 {
     [super viewDidLoad];
 
-    
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     if (myDelegate.cclientSocket != nil)
@@ -107,7 +111,6 @@ NSString *const POST = @"8080";
         self.clientSocket.delegate = self;
         self.connected = myDelegate.cconnected;
     }
-    
     
     //连接服务器
     if (!self.connected )
@@ -131,16 +134,14 @@ NSString *const POST = @"8080";
     {
         NSLog(@"与服务器连接已建立");
     }
-
-    
     isPlayButton = YES;
     isPauseButton = NO;
     bodyNames= [NSArray arrayWithObjects:@"leftup1",@"leftup2",@"leftup3",@"lefthand",@"leftdown1",@"leftdown2",@"leftdown3",@"leftfoot",@"rightup1",@"rightup2",@"rightup3",@"righthand",@"rightdown1",@"rightdown2",@"rightdown3",@"rightfoot",@"middle1",@"middle2",@"middle3",@"middle4",nil];
     bodyButtons = [[NSMutableArray alloc]initWithCapacity:20];
     self.treatInformation = [[TreatInformation alloc]init];
     self.runningInfomation = [[RunningInfomation alloc]init];
+//    [self askForTreatInfomation];
     [self configureView];
-    [self configureBodyView];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -191,6 +192,10 @@ NSString *const POST = @"8080";
     //治疗信息
     if (bytes[2]==0x90)
     {
+//        static dispatch_once_t onceToken;
+//        dispatch_once(&onceToken, ^{
+//            [self configureView];
+//        });
         [self.treatInformation analyzeWithData:data];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self configureBodyView];
@@ -224,15 +229,10 @@ NSString *const POST = @"8080";
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     myDelegate.cconnected = NO;
     
-    
+
     NSError *error = nil;
     self.connected = [self.clientSocket connectToHost:HOST onPort:[POST integerValue] viaInterface:nil withTimeout:-1 error:&error];
     [self.connectTimer invalidate];
-}
-
--(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
-{
-
 }
 #pragma mark - configureViews
 -(void)configureView
@@ -251,16 +251,10 @@ NSString *const POST = @"8080";
     //配置播放按钮
     [self configurePlayButton];
     
-    //加载身体部位按钮
-    for (int i=0; i<[bodyNames count]; i++)
-    {
-        int tag = bodyPartTags[i];
-        BodyButton *button = [self bodyButtonReturnWithTag:tag];
-        [button setImage:[UIImage imageNamed:bodyNames[i] withColor:@"grey"] forState:UIControlStateNormal];
-        [bodyButtons addObject:button];
-        [self.backgroundView addSubview:button];
-        button.enabled = NO;
-    }
+    //配置进度条
+    [self.progressView drawProgress:1];
+    self.progressView.label.text = [NSString stringWithFormat:@"100%%"];
+
     NSArray *lightUpCommitDics = @[@{@"position":@"leftup1",   @"commit":[NSNumber numberWithUnsignedInteger:0x18]},
                                    @{@"position":@"leftup2",   @"commit":[NSNumber numberWithUnsignedInteger:0x17]},
                                    @{@"position":@"leftup3",   @"commit":[NSNumber numberWithUnsignedInteger:0x16]},
@@ -281,21 +275,33 @@ NSString *const POST = @"8080";
                                    @{@"position":@"middle2",   @"commit":[NSNumber numberWithUnsignedInteger:0x27]},
                                    @{@"position":@"middle3",   @"commit":[NSNumber numberWithUnsignedInteger:0x26]},
                                    @{@"position":@"middle4",   @"commit":[NSNumber numberWithUnsignedInteger:0x1d]}];
-    //button附带点亮模块的命令参数
+    
+    //加载身体部位按钮
     for (int i=0; i<[bodyNames count]; i++)
     {
-        BodyButton *button = bodyButtons[i];
+        int tag = bodyPartTags[i];
+        BodyButton *button = [self bodyButtonReturnWithTag:tag];
         button.enabled = NO;
         [button setImage:[UIImage imageNamed:bodyNames[i] withColor:@"grey"] forState:UIControlStateNormal];
+        //button附带点亮模块的命令参数
         button.multiParamDic = [NSMutableDictionary dictionaryWithDictionary:lightUpCommitDics[i]];
+        //加入bodybuttons数组
+        [bodyButtons addObject:button];
+        [self.backgroundView addSubview:button];
     }
-    [self.progressView drawProgress:1];
-    self.progressView.label.text = [NSString stringWithFormat:@"100%%"];
-
-    
 }
 -(void)configureBodyView
 {
+    NSString *aport = self.treatInformation.aPort;
+//    //腿部八腔和六腔
+//    if ([aport isEqualToString:@"LEGA006"]||[aport isEqualToString:@"LEGA008"])
+//    {
+//        //去除腿部三腔按钮
+//        
+//        int legPartTags[] = {leftdown1tag,leftdown2tag,leftdown3tag,rightdown1tag,rightdown2tag,rightdown3tag}
+//    }
+//    
+    
     //改变前先让所以按钮变成灰色/取消定时器
     if (self.treatInformation.treatState == Stop)
     {
@@ -313,25 +319,23 @@ NSString *const POST = @"8080";
     //停止更新压力和进度圈UI
     if (self.treatInformation.treatTime -1 == self.runningInfomation.treatProcessTime || self.treatInformation.treatState == Stop)
     {
-//        if (treatInfomation.treatTime -1 == runningInfomation.treatProcessTime)
-//        {
-            isPlayButton = YES;
-            isPauseButton = NO;
-            [self configurePlayButton];
-//        }
+        isPlayButton = YES;
+        isPauseButton = NO;
+        [self configurePlayButton];
         self.pressLabel.text = [NSString stringWithFormat:@"0"];
         [self.progressView drawProgress:1];
         self.progressView.label.text = [NSString stringWithFormat:@"100%%"];
     }
     else if((self.treatInformation.treatState == Running && self.treatInformation.aPort != nil) ||self.treatInformation.treatState == Pause)
     {
-        //treatInfomation.aPort != nil 确保收到了下位机的treatInfomation
+        //treatInfomation.aPort != nil 确保收到了下位机的treatInfomation（运行）
         if (self.treatInformation.treatState == Running && self.treatInformation.aPort !=nil )
         {
             isPlayButton = NO;
             isPauseButton = YES;
             [self configurePlayButton];
         }
+        //（暂停）
         else if(self.treatInformation.treatState == Pause)
         {
             isPlayButton = YES;
@@ -348,12 +352,12 @@ NSString *const POST = @"8080";
         NSString *press = self.runningInfomation.press[self.runningInfomation.curFocuse];
         self.pressLabel.text = [NSString stringWithFormat:@"%@",press];
     }
-    
+
     
     //A端
-    NSString *aport = self.treatInformation.aPort;
 
-    if ([aport isEqualToString:@"ARMA003"]) {   [self configureLeftWithType:@"ARMA003"];   }
+
+    if ([aport isEqualToString:@"ARMA003"])      {   [self configureLeftWithType:@"ARMA003"];   }
     else if ([aport isEqualToString:@"LEGA003"]) {   [self configureLeftWithType:@"LEGA003"];   }
     else if ([aport isEqualToString:@"ARMB004"])
     {
@@ -371,6 +375,7 @@ NSString *const POST = @"8080";
     }
     else if ([aport isEqualToString:@"FOTA001"]) {   [self configureLeftWithType:@"LEFTFOOT"];   }
     else if ([aport isEqualToString:@"ABDA004"]) {   [self configureLeftWithType:@"ABDA004"];    }
+    
     
     //B端
     NSString *bport = self.treatInformation.bPort;
@@ -399,7 +404,7 @@ NSString *const POST = @"8080";
 -(void)configureLeftWithType:(NSString *)type
 {
     //手臂三腔 腿部梯度
-    if ([type isEqualToString:@"ARMA003"]||[type     isEqualToString:@"LEGA003"])
+    if ([type isEqualToString:@"ARMA003"]||[type isEqualToString:@"LEGA003"])
     {   int indexArray[3];
         if ([type isEqualToString:@"ARMA003"]){     indexArray[0]= leftup3index;  indexArray[1]=leftup2index;  indexArray[2]=leftup1index;      }else
         if ([type isEqualToString:@"LEGA003"]){     indexArray[0]= leftdown3index;indexArray[1]=leftdown2index;indexArray[2]=leftdown1index;    }
@@ -456,6 +461,7 @@ NSString *const POST = @"8080";
     else if ([type isEqualToString:@"LEFTHAND"])
     {
         BodyButton *button = bodyButtons[lefthandindex];
+        [self enableButton:button];
         if ([self.treatInformation.enabled[0] isEqualToString:@"1"])
         {
             if (self.treatInformation.treatState == Running)
@@ -484,20 +490,19 @@ NSString *const POST = @"8080";
             else
             {
                 [self deallocTimerWithButton:button];
-            [bodyButtons[lefthandindex ] setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
+                [bodyButtons[lefthandindex ] setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
             }
-            [self enableButton:bodyButtons[lefthandindex]];
         }
         else
         {
             [button setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"grey"] forState:UIControlStateNormal];
         }
-
     }
     //足部一腔
     else if ([type isEqualToString:@"LEFTFOOT"])
     {
         BodyButton *button = bodyButtons[leftfootindex];
+        [self enableButton:button];
         if ([self.treatInformation.enabled[0] isEqualToString:@"1"])
         {
  
@@ -530,7 +535,6 @@ NSString *const POST = @"8080";
                 [self deallocTimerWithButton:button];
                 [bodyButtons[leftfootindex] setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
             }
-            [self enableButton:bodyButtons[leftfootindex]];
         }
         else
         {
@@ -667,6 +671,7 @@ NSString *const POST = @"8080";
     else if ([type isEqualToString:@"RIGHTHAND"])
     {
         BodyButton *button = bodyButtons[righthandindex];
+        [self enableButton:button];
         if ([self.treatInformation.enabled[4] isEqualToString:@"1"])
         {
         
@@ -698,7 +703,6 @@ NSString *const POST = @"8080";
                 [self deallocTimerWithButton:button];
                 [bodyButtons[righthandindex ] setImage:[UIImage imageNamed:bodyNames[righthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
             }
-            [self enableButton:bodyButtons[righthandindex]];
         }
         else
         {
@@ -710,6 +714,7 @@ NSString *const POST = @"8080";
     else if ([type isEqualToString:@"RIGHTFOOT"])
     {
         BodyButton *button = bodyButtons[rightfootindex];
+        [self enableButton:button];
         if ([self.treatInformation.enabled[4] isEqualToString:@"1"])
         {
             
@@ -742,7 +747,6 @@ NSString *const POST = @"8080";
                 [self deallocTimerWithButton:button];
                 [button setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
             }
-            [self enableButton:bodyButtons[rightfootindex]];
         }
         else
         {
@@ -803,30 +807,28 @@ NSString *const POST = @"8080";
 }
 -(void)updateBodyButton
 {
-
     [self askForTreatInfomation];
-    [self configureBodyView];
 }
 
 -(BodyButton *)bodyButtonReturnWithTag:(NSInteger)tag
 {
     BodyButton *button = [[BodyButton alloc]init];
+    //取背景块的frame
     button.frame = [self.backgroundView viewWithTag:tag].frame;
-    switch (tag) {
+    switch (tag)
+    {
         case middle1tag:
         case middle2tag:
         case middle3tag:
         case middle4tag: [[button imageView]setContentMode:UIViewContentModeScaleToFill];
             break;
-            
-        default:[[button imageView]setContentMode:UIViewContentModeScaleAspectFit];
+        default: [[button imageView]setContentMode:UIViewContentModeScaleAspectFit];
             break;
     }
-
     return button;
 }
-
--(void)enableButton:(BodyButton *)button{
+-(void)enableButton:(BodyButton *)button
+{
     button.enabled = YES;
     [button addTarget:self action:@selector(lightupBodyButton:) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -867,10 +869,6 @@ NSString *const POST = @"8080";
     [warningLabel.layer addAnimation:[self warningMessageAnimation:0.5] forKey:nil];
     // 延迟的时间
     int64_t delayInSeconds = 4;
-    /*
-     *@parameter 1,时间参照，从此刻开始计时
-     *@parameter 2,延时多久，此处为秒级，还有纳秒等。10ull * NSEC_PER_MSEC
-     */
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [warningLabel removeFromSuperview];
@@ -898,15 +896,15 @@ NSString *const POST = @"8080";
     [self.clientSocket writeData:sendData withTimeout:-1 tag:0];
     
 }
--(void)continue
-{
-    Pack *pack = [[Pack alloc]init];
-    Byte addrBytes[2] = {0,0};
-    Byte dataBytes[2] = {0,0x12};
-    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
-                                                     dataEnabled:YES data:[self dataWithBytes:dataBytes]];
-    [self.clientSocket writeData:sendData withTimeout:-1 tag:0];
-}
+//-(void)continue
+//{
+//    Pack *pack = [[Pack alloc]init];
+//    Byte addrBytes[2] = {0,0};
+//    Byte dataBytes[2] = {0,0x12};
+//    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
+//                                                     dataEnabled:YES data:[self dataWithBytes:dataBytes]];
+//    [self.clientSocket writeData:sendData withTimeout:-1 tag:0];
+//}
 -(void)askForTreatInfomation
 {
     Pack *pack = [[Pack alloc]init];
@@ -938,10 +936,9 @@ NSString *const POST = @"8080";
                                                        selector:@selector(longConnectToSocket)
                                                        userInfo:nil
                                                         repeats:YES];
-    
     //将定时器添加到当前运行循环，并且调为通用模式
     [[NSRunLoop currentRunLoop] addTimer:self.connectTimer forMode:NSRunLoopCommonModes];
-//    [[NSRunLoop currentRunLoop] addTimer:self.updateTimer forMode:NSRunLoopCommonModes];
+    //[[NSRunLoop currentRunLoop] addTimer:self.updateTimer forMode:NSRunLoopCommonModes];
 }
 
 // 心跳连接

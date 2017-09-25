@@ -407,7 +407,6 @@
             [self updateView];
         });
     }
-    
     [sock readDataWithTimeout:- 1 tag:0];
 
 }
@@ -417,10 +416,6 @@
     {
         [self showAlertViewWithMessage:@"保存成功"];
     }
-//    if (tag == 1000)
-//    {
-//        NSLog(@"ask--------");
-//    }
 }
 #pragma mark - private method
 -(CABasicAnimation *)warningMessageAnimation:(float)time
@@ -438,7 +433,6 @@
 }
 -(NSData*) dataWithValue:(NSInteger)value
 {
-    
     Byte src[2]={0,0};
     src[0] =  (Byte) ((value>>8) & 0xFF);
     src[1] =  (Byte) (value & 0xFF);
@@ -457,14 +451,12 @@
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Attention"
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
-    
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {
                                                               
                                                               //                                                              //返回主界面
                                                               //                                                              UINavigationController *controller = [self.storyboard instantiateInitialViewController];
                                                               //                                                              [self presentViewController:controller animated:YES completion:nil];
-                                                              
                                                           }];
     
     [alert addAction:defaultAction];

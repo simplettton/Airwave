@@ -291,6 +291,11 @@
     [sock readDataWithTimeout:- 1 tag:0];
     
 }
+-(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
+{
+    NSLog(@"断开连接 error:%@",err);
+
+}
 #pragma mark - segue
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

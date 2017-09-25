@@ -30,7 +30,6 @@
     {
         [self setImage:[UIImage imageNamed:imageName withColor:@"yellow"] forState:UIControlStateNormal];
     }
-
 }
 -(void)changeGreenColor
 {
