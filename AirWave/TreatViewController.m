@@ -126,16 +126,16 @@ NSString *const POST = @"8080";
         NSLog(@"开始连接%@",self.clientSocket);
         
         NSError *error = nil;
-        [self.clientSocket connectToHost:HOST onPort:[POST integerValue] viaInterface:nil withTimeout:-1 error:&error];
-//        if (self.connected)
-//        {
-//            NSLog(@"客户端尝试连接");
-//        }
-//        else
-//        {
-//            self.connected = NO;
-//            NSLog(@"客户端未创建连接");
-//        }
+        self.connected = [self.clientSocket connectToHost:HOST onPort:[POST integerValue] viaInterface:nil withTimeout:-1 error:&error];
+        if (self.connected)
+        {
+            NSLog(@"客户端尝试连接");
+        }
+        else
+        {
+            self.connected = NO;
+            NSLog(@"客户端未创建连接");
+        }
     }
     else
     {
@@ -184,11 +184,11 @@ NSString *const POST = @"8080";
     
 }
 /**
- 读取数据
- 
- @param sock 客户端的Socket
- @param data 读取到的数据
- @param tag 当前读取的标记
+     读取数据
+     
+     @param sock 客户端的Socket
+     @param data 读取到的数据
+     @param tag 当前读取的标记
  */
 -(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
@@ -232,9 +232,9 @@ NSString *const POST = @"8080";
     
     NSError *error = nil;
     self.clientSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-    [self.clientSocket connectToHost:HOST onPort:[POST integerValue] viaInterface:nil withTimeout:-1 error:&error];
-    
+    self.connected = [self.clientSocket connectToHost:HOST onPort:[POST integerValue] viaInterface:nil withTimeout:-1 error:&error];
     [self.connectTimer invalidate];
+    self.connectTimer = nil;
 }
 #pragma mark - configureViews
 -(void)configureView
