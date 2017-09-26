@@ -119,19 +119,11 @@
             }
         }
     }
-
-
 }
 -(void)valueChanged:(id)sender
 {
     self.pressTextField.text = [NSString stringWithFormat:@"%d",(int)self.stepper.value];
 }
-
-
-
-
-
-
 
 
 
@@ -174,7 +166,7 @@
 }
 -(void)showAlertViewWithMessage:(NSString *)message
 {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Attention"
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Attention!!"
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
     

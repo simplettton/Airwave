@@ -119,11 +119,34 @@
     [self updateView];
  
     
+    //保存初始设置
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if (self.treatInfomation.treatTime == 36060)
+    {
+        customTimeSelected = NO;
+    }
+    else        //自定义时间
+    {
+        
+        NSInteger hour = self.treatInfomation.treatTime / 3600;
+        NSInteger minute = self.treatInfomation.treatTime / 60;
+        minute = minute % 60;
+        
+        //保存设置前的时间和分钟
+        [userDefaults setInteger:hour forKey:@"Hour"];
+        [userDefaults setInteger:minute forKey:@"Minute"];
+        customTimeSelected = YES;
+    }
+    NSInteger mode = self.treatInfomation.treatMode;
+    //保存模式和选择
+    [userDefaults setInteger:mode forKey:@"Mode"];
+    [userDefaults setBool:customTimeSelected forKey:@"CustomTimeSelected"];
+
+
 }
 -(void)updateView
 {
-    //取得治疗信息
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+
     //持续时间
     if (self.treatInfomation.treatTime == 36060)
     {
@@ -137,9 +160,6 @@
         NSInteger minute = self.treatInfomation.treatTime / 60;
         minute = minute % 60;
         
-        //保存设置前的时间和分钟
-        [userDefaults setInteger:hour forKey:@"Hour"];
-        [userDefaults setInteger:minute forKey:@"Minute"];
         //调到对应的时间和分钟
         [self.minutePicker selectRow:minute inComponent:0 animated:NO];
         [self.hourPicker selectRow:hour inComponent:0 animated:NO];
@@ -156,9 +176,7 @@
     NSInteger mode = self.treatInfomation.treatMode;
     [self.modePicker selectRow:(mode-1) inComponent:0 animated:YES];
     
-    //保存模式和选择和压力
-    [userDefaults setInteger:mode forKey:@"Mode"];
-    [userDefaults setBool:customTimeSelected forKey:@"CustomTimeSelected"];
+
     [self configureTimeSelectButton];
 
 }
@@ -443,7 +461,7 @@
 }
 -(void)showAlertViewWithMessage:(NSString *)message
 {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Attention"
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Attention!!"
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
     

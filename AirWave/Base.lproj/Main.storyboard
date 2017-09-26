@@ -251,7 +251,7 @@
                     <navigationItem key="navigationItem" title="空气波治疗仪" id="0cT-Wo-4A6">
                         <barButtonItem key="rightBarButtonItem" title="设置" id="K1o-XT-gzF">
                             <connections>
-                                <segue destination="s5j-zE-Ka8" kind="presentation" identifier="PresentSettingView" id="bnI-Yd-YTo"/>
+                                <segue destination="s5j-zE-Ka8" kind="presentation" identifier="PresentSettingView" animates="NO" id="bnI-Yd-YTo"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -706,7 +706,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rov-08-NIQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1992.8" y="71.514242878560722"/>
+            <point key="canvasLocation" x="1993" y="53"/>
         </scene>
         <!--标准治疗-->
         <scene sceneID="uRZ-nm-BsC">
@@ -2019,10 +2019,10 @@
         <image name="unselected" width="86" height="86"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="gIv-VQ-fEb"/>
+        <segue reference="9v8-UG-YI2"/>
         <segue reference="YZz-rL-WdO"/>
-        <segue reference="gP2-f7-lrR"/>
         <segue reference="4g4-bt-O77"/>
         <segue reference="bnI-Yd-YTo"/>
-        <segue reference="gIv-VQ-fEb"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -105,14 +105,8 @@
     maskLayer1.strokeColor = UIColorFromHex(0x85ABE4).CGColor;
     maskLayer1.fillColor = nil;
     [self.cancelButton.layer addSublayer:maskLayer1];
-    [self updateView];
-
     
-    
- }
--(void)updateView
-{
-    //取得治疗信息
+    //保存设置
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     //持续时间
     if (self.treatInfomation.treatTime == 36060)
@@ -130,6 +124,31 @@
         //保存设置前的时间和分钟
         [userDefaults setInteger:hour forKey:@"Hour"];
         [userDefaults setInteger:minute forKey:@"Minute"];
+        customTimeSelected = YES;
+    }
+    NSInteger pressLevel = self.treatInfomation.pressLevel;
+    //保存压力和时间选择
+    [userDefaults setBool:customTimeSelected forKey:@"CustomTimeSelected"];
+    [userDefaults setInteger:pressLevel forKey:@"PressLevel"];
+
+    
+    [self updateView];
+
+    
+ }
+-(void)updateView
+{
+    //持续时间
+    if (self.treatInfomation.treatTime == 36060)
+    {
+        customTimeSelected = NO;
+    }
+    else        //自定义时间
+    {
+        
+        NSInteger hour = self.treatInfomation.treatTime / 3600;
+        NSInteger minute = self.treatInfomation.treatTime / 60;
+        minute = minute % 60;
         //调到对应的时间和分钟
         [self.minutePicker selectRow:minute inComponent:0 animated:NO];
         [self.hourPicker selectRow:hour inComponent:0 animated:NO];
@@ -145,14 +164,7 @@
     NSInteger pressLevel = self.treatInfomation.pressLevel;
     [self.pressGradePicker selectRow:pressLevel inComponent:0 animated:NO];
     
-    
-    
-    //保存压力和时间选择
-    [userDefaults setBool:customTimeSelected forKey:@"CustomTimeSelected"];
-    [userDefaults setInteger:pressLevel forKey:@"PressLevel"];
     [self configureTimeSelectButton];
-    
-
 }
 -(void)configureTimeSelectButton
 {
@@ -407,16 +419,12 @@
 }
 -(void)showAlertViewWithMessage:(NSString *)message
 {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Attention"
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Attention!!"
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {
-                                                              
-                                                              //                                                              //返回主界面
-                                                              //                                                              UINavigationController *controller = [self.storyboard instantiateInitialViewController];
-                                                              //                                                              [self presentViewController:controller animated:YES completion:nil];
                                                               
                                                           }];
     

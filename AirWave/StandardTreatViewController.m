@@ -114,14 +114,10 @@
     maskLayer1.strokeColor = UIColorFromHex(0x85ABE4).CGColor;
     maskLayer1.fillColor = nil;
     [self.cancelButton.layer addSublayer:maskLayer1];
-    [self updateView];
     
- }
--(void)updateView
-{
-    //取得治疗信息
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    //持续时间
+    
+    //保存初始设置
+     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if (self.treatInfomation.treatTime == 36060)
     {
         customTimeSelected = NO;
@@ -136,6 +132,32 @@
         //保存设置前的时间和分钟
         [userDefaults setInteger:hour forKey:@"Hour"];
         [userDefaults setInteger:minute forKey:@"Minute"];
+        customTimeSelected = YES;
+    }
+    
+    NSInteger mode = self.treatInfomation.treatMode;
+    NSInteger press = [self.treatInfomation.press[0] integerValue];
+    //保存模式和选择和压力
+    [userDefaults setInteger:mode forKey:@"Mode"];
+    [userDefaults setInteger:press forKey:@"Press"];
+    [userDefaults setBool:customTimeSelected forKey:@"CustomTimeSelected"];
+    [self updateView];
+    
+ }
+-(void)updateView
+{
+    //持续时间
+    if (self.treatInfomation.treatTime == 36060)
+    {
+        customTimeSelected = NO;
+    }
+    else        //自定义时间
+    {
+        
+        NSInteger hour = self.treatInfomation.treatTime / 3600;
+        NSInteger minute = self.treatInfomation.treatTime / 60;
+        minute = minute % 60;
+        
         //调到对应的时间和分钟
         [self.minutePicker selectRow:minute inComponent:0 animated:NO];
         [self.hourPicker selectRow:hour inComponent:0 animated:NO];
@@ -147,6 +169,7 @@
         }
         customTimeSelected = YES;
     }
+        [self configureTimeSelectButton];
     
     //调到对应的模式
     NSInteger mode = self.treatInfomation.treatMode;
@@ -155,13 +178,6 @@
     //调到对应的压力
     NSInteger press = [self.treatInfomation.press[0] integerValue];
     [self.pressPicker selectRow:press inComponent:0 animated:YES];
-    
-    //保存模式和选择和压力
-    [userDefaults setInteger:mode forKey:@"Mode"];
-    [userDefaults setBool:customTimeSelected forKey:@"CustomTimeSelected"];
-    [self configureTimeSelectButton];
-    [userDefaults setInteger:press forKey:@"Press"];
-    
 
 }
 -(void)configureTimeSelectButton
@@ -242,7 +258,6 @@
     NSInteger minute = [userDefaults integerForKey:@"Minute"];
     [self.hourPicker selectRow:hour inComponent:0 animated:YES];
     [self.minutePicker selectRow:minute inComponent:0 animated:YES];
-    
 
     
     //更改前的模式
@@ -274,7 +289,6 @@
         {
             minutes = 601;
         }
-        
         
         //设置治疗时间
         Pack *pack = [[Pack alloc]init];
@@ -448,15 +462,12 @@
 
 -(void)showAlertViewWithMessage:(NSString *)message
 {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Attention"
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Attention!!"
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * action) {
-                                                              
-                                                              //                                                              //返回主界面
-                                                              //                                                              UINavigationController *controller = [self.storyboard instantiateInitialViewController];
-                                                              //                                                              [self presentViewController:controller animated:YES completion:nil];
+                                                          handler:^(UIAlertAction * action){
+
                                                           }];
     
     [alert addAction:defaultAction];
