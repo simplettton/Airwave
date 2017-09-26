@@ -154,7 +154,7 @@ NSString *const POST = @"8080";
     legButtons = [[NSMutableArray alloc]initWithCapacity:20];
     self.treatInformation = [[TreatInformation alloc]init];
     self.runningInfomation = [[RunningInfomation alloc]init];
-//    [self askForTreatInfomation];
+    [self askForTreatInfomation];
     [self configureView];
 }
 
@@ -286,21 +286,36 @@ NSString *const POST = @"8080";
 
             }
             bodyButtons = [[NSMutableArray alloc]initWithCapacity:20];
+            
+            
+            //设置腿部的背景块为背景色
+            int legTags[] = {leftdown1tag,leftdown2tag,leftdown3tag,rightdown1tag,rightdown2tag,rightdown3tag};
+            int legIndex[]={leftdown1index,leftdown2index,leftdown3index,rightdown1index,rightdown2index,rightdown3index};
+            for (int i = 0; i<6; i++)
+            {
+                UIImageView *imgView = [self.backgroundView viewWithTag:legTags[i]];
+                [imgView setImage:[UIImage imageNamed:bodyNames[legIndex[i]] withColor:@"white"]];
+            }
+
         }
         //没有加载过按钮则加载
         if ([legButtons count] == 0)
         {
             NSArray *lightUpLegsDics = @[@{@"position":@"leftleg1",   @"commit":[NSNumber numberWithUnsignedInteger:0xe4]},
-                                         @{@"position":@"leftleg2",   @"commit":[NSNumber numberWithUnsignedInteger:0xe2]},
-                                         @{@"position":@"leftleg3",   @"commit":[NSNumber numberWithUnsignedInteger:0xe0]},
-                                         @{@"position":@"leftleg4",   @"commit":[NSNumber numberWithUnsignedInteger:0x21]},
-                                         @{@"position":@"leftleg5",   @"commit":[NSNumber numberWithUnsignedInteger:0xe3]},
-                                         @{@"position":@"leftleg6",   @"commit":[NSNumber numberWithUnsignedInteger:0xe1]},
-                                         @{@"position":@"leftleg7",   @"commit":[NSNumber numberWithUnsignedInteger:0xcf]},
-                                         @{@"position":@"leftfoot",   @"commit":[NSNumber numberWithUnsignedInteger:0xee]}];
+                                         @{@"position":@"leftleg2",   @"commit":[NSNumber numberWithUnsignedInteger:0xe3]},
+                                         @{@"position":@"leftleg3",   @"commit":[NSNumber numberWithUnsignedInteger:0xe2]},
+                                         @{@"position":@"leftleg4",   @"commit":[NSNumber numberWithUnsignedInteger:0xe1]},
+                                         @{@"position":@"leftleg5",   @"commit":[NSNumber numberWithUnsignedInteger:0xe0]},
+                                         @{@"position":@"leftleg6",   @"commit":[NSNumber numberWithUnsignedInteger:0xcf]},
+                                         @{@"position":@"leftleg7",   @"commit":[NSNumber numberWithUnsignedInteger:0xce]},
+                                         @{@"position":@"leftfoot",   @"commit":[NSNumber numberWithUnsignedInteger:0x21]}];
             for (int i = 0; i<[legNames count]; i++)
             {
                 int tag = legTags[i];
+                //设置背景块颜色
+                UIImageView *imgView = [self.backgroundView viewWithTag:tag];
+                [imgView setImage:[UIImage imageNamed:legNames[i] withColor:@"grey"]];
+                
                 BodyButton *button = [self bodyButtonReturnWithTag:tag];
                 button.enabled = NO;
                 [button setImage:[UIImage imageNamed:legNames[i] withColor:@"grey"] forState:UIControlStateNormal];
@@ -320,7 +335,6 @@ NSString *const POST = @"8080";
             {
                 BodyButton *button = legButtons[i];
                 [button setImage:[UIImage imageNamed:legNames[i] withColor:@"grey"] forState:UIControlStateNormal];
-                button.enabled = NO;
                 if (button.changeColorTimer != nil)
                 {
                     [self deallocTimerWithButton:button];
@@ -339,6 +353,13 @@ NSString *const POST = @"8080";
                 [legButtons[i] removeFromSuperview];
             }
              legButtons = [[NSMutableArray alloc]initWithCapacity:20];
+            for (int i = 0; i<[legNames count]; i++)
+            {
+                int tag = legTags[i];
+                //设置背景块颜色
+                UIImageView *imgView = [self.backgroundView viewWithTag:tag];
+                [imgView setImage:nil];
+            }
         }
         
         //没加载过身体部位则加载
@@ -368,6 +389,10 @@ NSString *const POST = @"8080";
             for (int i=0; i<[bodyNames count]; i++)
             {
                 int tag = bodyPartTags[i];
+                //加载背景颜色块 否则button unable颜色变浅
+                UIImageView *imgView = [self.backgroundView viewWithTag:tag];
+                [imgView setImage:[UIImage imageNamed:bodyNames[i] withColor:@"grey"]];
+                
                 BodyButton *button = [self bodyButtonReturnWithTag:tag];
                 button.enabled = NO;
                 [button setImage:[UIImage imageNamed:bodyNames[i] withColor:@"grey"] forState:UIControlStateNormal];
@@ -385,7 +410,6 @@ NSString *const POST = @"8080";
             {
                 BodyButton *button = bodyButtons[i];
                 [button setImage:[UIImage imageNamed:bodyNames[i] withColor:@"grey"] forState:UIControlStateNormal];
-                button.enabled = NO;
                 if (button.changeColorTimer != nil)
                 {
                     [self deallocTimerWithButton:button];
@@ -612,7 +636,7 @@ NSString *const POST = @"8080";
             else
             {
                 [self deallocTimerWithButton:button];
-                [bodyButtons[leftfootindex] setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
+                [button setImage:[UIImage imageNamed:bodyNames[leftfootindex] withColor:@"yellow"] forState:UIControlStateNormal];
             }
         }
         else
@@ -702,9 +726,9 @@ NSString *const POST = @"8080";
             BodyButton *button = legButtons[i];
             if ([self.treatInformation.enabled[7-i]isEqualToString:@"1"])
             {
-                if(self.treatInformation.treatWay == Running)
+                if(self.treatInformation.treatState == Running)
                 {
-                    NSInteger cellState = [self.runningInfomation.cellState[7-i]integerValue];
+                    NSInteger cellState = [self.runningInfomation.cellState[7-i] integerValue];
                     switch (cellState)
                     {
                         case UnWorking:
@@ -729,7 +753,10 @@ NSString *const POST = @"8080";
                 }
                 else //非运行状态
                 {
-                    [self deallocTimerWithButton:button];
+                    if (button.changeColorTimer !=nil)
+                    {
+                        [self deallocTimerWithButton:button];
+                    }
                     [button setImage:[UIImage imageNamed:legNames[i] withColor:@"yellow"] forState:UIControlStateNormal];
                 }
 
@@ -872,12 +899,14 @@ NSString *const POST = @"8080";
                         [button setImage:[UIImage imageNamed:bodyNames[rightfootindex] withColor:@"yellow"] forState:UIControlStateNormal];
                         break;
                     case Working:
-                        if (button.changeColorTimer == nil) {
+                        if (button.changeColorTimer == nil)
+                        {
                             [self startTimerToChangeColorOfButton:bodyButtons[rightfootindex]];
                         }
                         break;
                     case KeepingAir:
-                        if (button.changeColorTimer != nil) {
+                        if (button.changeColorTimer != nil)
+                        {
                             [self deallocTimerWithButton:button];
                         }
                         [button setImage:[UIImage imageNamed:bodyNames[rightfootindex] withColor:@"green"]forState:UIControlStateNormal];
@@ -890,12 +919,12 @@ NSString *const POST = @"8080";
             else
             {
                 [self deallocTimerWithButton:button];
-                [button setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
+                [button setImage:[UIImage imageNamed:bodyNames[rightfootindex] withColor:@"yellow"] forState:UIControlStateNormal];
             }
         }
         else
         {
-            [button setImage:[UIImage imageNamed:bodyNames[leftfootindex] withColor:@"grey"] forState:UIControlStateNormal];
+            [button setImage:[UIImage imageNamed:bodyNames[rightfootindex] withColor:@"grey"] forState:UIControlStateNormal];
         }
     }
     //腹部

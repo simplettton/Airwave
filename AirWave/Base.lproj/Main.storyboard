@@ -132,7 +132,7 @@
                                         <rect key="frame" x="129" y="229" width="72" height="9"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" tag="21" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="lefthand_grey" translatesAutoresizingMaskIntoConstraints="NO" id="aJj-QC-ebX" userLabel="rightfoot_grey">
+                                    <imageView userInteractionEnabled="NO" tag="20" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="lefthand_grey" translatesAutoresizingMaskIntoConstraints="NO" id="aJj-QC-ebX" userLabel="rightfoot_grey">
                                         <rect key="frame" x="249" y="497" width="15" height="15"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="tintColor" red="0.38431372549019605" green="0.42745098039215684" blue="0.56862745098039214" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -181,8 +181,8 @@
                                         <rect key="frame" x="267" y="8" width="75" height="75"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MSC-Lt-fwX">
-                                                <rect key="frame" x="22" y="18" width="31" height="21"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MSC-Lt-fwX">
+                                                <rect key="frame" x="32" y="18" width="11" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.44812256099999997" green="0.49131524560000001" blue="0.61758631470000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
