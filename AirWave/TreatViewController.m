@@ -126,16 +126,16 @@ NSString *const POST = @"8080";
         NSLog(@"开始连接%@",self.clientSocket);
         
         NSError *error = nil;
-        self.connected = [self.clientSocket connectToHost:HOST onPort:[POST integerValue] viaInterface:nil withTimeout:-1 error:&error];
-        if (self.connected)
-        {
-            NSLog(@"客户端尝试连接");
-        }
-        else
-        {
-            self.connected = NO;
-            NSLog(@"客户端未创建连接");
-        }
+        [self.clientSocket connectToHost:HOST onPort:[POST integerValue] viaInterface:nil withTimeout:-1 error:&error];
+//        if (self.connected)
+//        {
+//            NSLog(@"客户端尝试连接");
+//        }
+//        else
+//        {
+//            self.connected = NO;
+//            NSLog(@"客户端未创建连接");
+//        }
     }
     else
     {
@@ -155,15 +155,8 @@ NSString *const POST = @"8080";
     self.treatInformation = [[TreatInformation alloc]init];
     self.runningInfomation = [[RunningInfomation alloc]init];
     [self askForTreatInfomation];
-    [self configureView];
-}
-
--(void)viewWillDisappear:(BOOL)animated{
     
-//    for (int i=0; i<[bodyNames count]; i++)
-//    {
-//        [bodyButtons[i] removeFromSuperview];
-//    }
+    [self configureView];
 }
 
 
@@ -232,16 +225,15 @@ NSString *const POST = @"8080";
 -(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
     NSLog(@"断开连接 error:%@",err);
-    self.clientSocket = nil;
-    
-    
+
     self.connected = NO;
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     myDelegate.cconnected = NO;
     
-
     NSError *error = nil;
-    self.connected = [self.clientSocket connectToHost:HOST onPort:[POST integerValue] viaInterface:nil withTimeout:-1 error:&error];
+    self.clientSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+    [self.clientSocket connectToHost:HOST onPort:[POST integerValue] viaInterface:nil withTimeout:-1 error:&error];
+    
     [self.connectTimer invalidate];
 }
 #pragma mark - configureViews

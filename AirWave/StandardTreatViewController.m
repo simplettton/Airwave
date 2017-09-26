@@ -406,6 +406,10 @@
         [self.clientSocket writeData:sendata withTimeout:-1 tag:0];
     }
 }
+-(void)returnToMain
+{
+    [self performSegueWithIdentifier:@"StandardToMain" sender:nil];
+}
 #pragma mark - socketDelegate
 -(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
@@ -431,6 +435,31 @@
         [self showAlertViewWithMessage:@"保存成功"];
     }
 }
+-(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
+{
+    AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
+    myDelegate.cconnected = NO;
+        [self presentDisconnectAlert];
+}
+-(void)presentDisconnectAlert
+{
+    UIView *disconnectView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, 375, 557)];
+    disconnectView.backgroundColor = [UIColor whiteColor];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(93, 150, 190, 30)];
+    label.text = [NSString stringWithFormat:@"ohno！网络连接断开了~"];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button.frame = CGRectMake(122, 230, 130, 30);
+    button.backgroundColor = UIColorFromHex(0x65BBA9);
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button setTitle:[NSString stringWithFormat:@"重新连接"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(returnToMain) forControlEvents:UIControlEventTouchUpInside];
+    [disconnectView addSubview:label];
+    [disconnectView addSubview:button];
+    [self.view addSubview:disconnectView];
+    
+}
+
 #pragma mark - private method
 -(CABasicAnimation *)warningMessageAnimation:(float)time
 {
@@ -469,7 +498,19 @@
                                                           handler:^(UIAlertAction * action){
 
                                                           }];
+//    // title
+//    NSMutableAttributedString *alertControllerStr = [[NSMutableAttributedString alloc] initWithString:@"Attention!!"];
+//    [alertControllerStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 3)];
+//    [alertControllerStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:20] range:NSMakeRange(0, 11)];
+//    [alert setValue:alertControllerStr forKey:@"attributedTitle"];
+//    
+//    // message
+//    NSMutableAttributedString *alertControllerMessageStr = [[NSMutableAttributedString alloc] initWithString:message];
+//    [alertControllerMessageStr addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:NSMakeRange(0,15)];
+//    [alertControllerMessageStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(0, 6)];
+//    [alert setValue:alertControllerMessageStr forKey:@"attributedMessage"];
     
+
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
 }

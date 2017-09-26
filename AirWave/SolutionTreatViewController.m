@@ -7,6 +7,7 @@
 //
 
 #import "SolutionTreatViewController.h"
+#import "TreatViewController.h"
 #import "TreatInformation.h"
 #import "AppDelegate.h"
 #import "Pack.h"
@@ -125,8 +126,6 @@
     self.pressTextField.text = [NSString stringWithFormat:@"%d",(int)self.stepper.value];
 }
 
-
-
 - (IBAction)tapGradientTreat:(id)sender
 {
     UILabel *warningLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 509, 135, 35)];
@@ -174,10 +173,10 @@
                                                           handler:^(UIAlertAction * action) {
                                                               
                                                           }];
-    
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
+
 -(NSData*) dataWithValue:(NSInteger)value
 {
     Byte src[2]={0,0};
@@ -248,15 +247,7 @@
     
     [self.clientSocket writeData:sendData withTimeout:-1 tag:1];
 }
--(void)askForTreatInfomation
-{
-    Pack *pack = [[Pack alloc]init];
-    Byte addrBytes[2] = {0,0};
-    Byte dataBytes[2] = {1,0x62};
-    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
-                                 dataEnabled:YES data:[self dataWithBytes:dataBytes]];
-    [self.clientSocket writeData:sendData withTimeout:-1 tag:1000];
-}
+
 #pragma mark - SocketDelegate
 -(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
 {
@@ -286,7 +277,36 @@
 -(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
     NSLog(@"断开连接 error:%@",err);
-
+    AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
+    myDelegate.cconnected = NO;
+    [self presentDisconnectAlert];
+}
+-(void)presentDisconnectAlert
+{
+    UIView *disconnectView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, 375, 557)];
+    disconnectView.backgroundColor = [UIColor whiteColor];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(93, 150, 190, 30)];
+    label.text = [NSString stringWithFormat:@"ohno！网络连接断开了~"];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button.frame = CGRectMake(122, 230, 130, 30);
+    button.backgroundColor = UIColorFromHex(0x65BBA9);
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button setTitle:[NSString stringWithFormat:@"重新连接"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(returnToMain) forControlEvents:UIControlEventTouchUpInside];
+    [disconnectView addSubview:label];
+    [disconnectView addSubview:button];
+    [self.view addSubview:disconnectView];
+    
+}
+-(void)askForTreatInfomation
+{
+    Pack *pack = [[Pack alloc]init];
+    Byte addrBytes[2] = {0,0};
+    Byte dataBytes[2] = {1,0x62};
+    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
+                                 dataEnabled:YES data:[self dataWithBytes:dataBytes]];
+    [self.clientSocket writeData:sendData withTimeout:-1 tag:1000];
 }
 #pragma mark - segue
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -299,7 +319,6 @@
         {
             sendata = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                 dataEnabled:YES data:[self dataWithValue:0x0d]];
-            
         }
         else if ([segue.identifier isEqualToString:@"SolutionToParameter"])
         {
@@ -310,8 +329,11 @@
                                 dataEnabled:YES data:[self dataWithValue:0X82]];
         }
         [self.clientSocket writeData:sendata withTimeout:-1 tag:0];
-        
     }
+}
+-(void)returnToMain
+{
+    [self performSegueWithIdentifier:@"SolutionToMain" sender:nil];
 }
 
 
