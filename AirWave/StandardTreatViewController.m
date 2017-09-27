@@ -86,8 +86,6 @@
     self.clientSocket.delegate = self;
     [self.clientSocket readDataWithTimeout:- 1 tag:0];
     [self askForTreatInfomation];
-
-    
 }
 -(void)configureView
 {
@@ -124,7 +122,6 @@
     }
     else        //自定义时间
     {
-        
         NSInteger hour = self.treatInfomation.treatTime / 3600;
         NSInteger minute = self.treatInfomation.treatTime / 60;
         minute = minute % 60;
@@ -271,7 +268,6 @@
     [self save:sender];
     [self showAlertViewWithMessage:@"取消更改成功"];
 }
-
 - (IBAction)save:(id)sender
 {
     if (self.clientSocket != nil)
@@ -390,20 +386,24 @@
     {
         Pack *pack = [[Pack alloc]init];
         NSData *sendata;
-        if ([segue.identifier isEqualToString: @"StandardToParameter"])
-        {
-            sendata = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                                    dataEnabled:YES data:[self dataWithValue:0x82]];
-            
-        }
-        else if ([segue.identifier isEqualToString:@"StandardToSolution"])
+        if ([segue.identifier isEqualToString:@"StandardToParameter"]||[segue.identifier isEqualToString:@"StandardToSolution"])
         {
             NSData *switchModeData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0x0f]];
             [self.clientSocket writeData:switchModeData withTimeout:-1 tag:0];
-            sendata = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                dataEnabled:YES data:[self dataWithValue:0X81]];
+            
+            if ([segue.identifier isEqualToString: @"StandardToParameter"])
+            {
+                sendata = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                                    dataEnabled:YES data:[self dataWithValue:0x82]];
+                
+            }
+            else if ([segue.identifier isEqualToString:@"StandardToSolution"])
+            {
+                sendata = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                                    dataEnabled:YES data:[self dataWithValue:0X81]];
+            }
+            [self.clientSocket writeData:sendata withTimeout:-1 tag:0];
         }
-        [self.clientSocket writeData:sendata withTimeout:-1 tag:0];
     }
 }
 -(void)returnToMain
@@ -434,12 +434,13 @@
     {
         [self showAlertViewWithMessage:@"保存成功"];
     }
+    
 }
 -(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     myDelegate.cconnected = NO;
-        [self presentDisconnectAlert];
+    [self presentDisconnectAlert];
 }
 -(void)presentDisconnectAlert
 {
@@ -457,7 +458,6 @@
     [disconnectView addSubview:label];
     [disconnectView addSubview:button];
     [self.view addSubview:disconnectView];
-    
 }
 
 #pragma mark - private method

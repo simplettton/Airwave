@@ -51,7 +51,7 @@ typedef NS_ENUM(NSUInteger,BodyTags)
     rightdown3tag=21,rightfoottag =20,middle1tag   =33,middle2tag   =32,middle3tag   =31,middle4tag   =30,
     
     rightleg1tag =47,rightleg2tag =46,rightleg3tag =45,rightleg4tag =44,rightleg5tag =43,rightleg6tag =42,rightleg7tag =41,
-    leftleg1tag  =57,leftleg2tag  =56,leftleg3tag  =55,leftleg4tag  =54,leftleg5tag  =53,leftleg6tag  =52,leftleg7tag  =51
+    leftleg1tag  =57,leftleg2tag  =56,leftleg3tag  =55,leftleg4tag  =54,leftleg5tag  =53,leftleg6tag  =52,leftleg7tag  =51, disconnectViewtag = 999
     
 };
 static int bodyPartTags[] = {leftup1tag,leftup2tag,leftup3tag,lefthandtag,leftdown1tag,leftdown2tag,leftdown3tag,leftfoottag,rightup1tag,rightup2tag,rightup3tag,righthandtag,rightdown1tag,rightdown2tag,rightdown3tag,rightfoottag,middle1tag,middle2tag,middle3tag,middle4tag};
@@ -87,6 +87,7 @@ NSString *const POST = @"8080";
 - (IBAction)tapPlayButton:(id)sender;
 - (IBAction)tapPauseButton:(id)sender;
 - (IBAction)tapSettingButton:(id)sender;
+- (IBAction)reconnect:(id)sender;
 
 
 @end
@@ -118,13 +119,11 @@ NSString *const POST = @"8080";
         self.clientSocket.delegate = self;
         self.connected = myDelegate.cconnected;
     }
-    
     //连接服务器
     if (!self.connected )
     {
         self.clientSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
         NSLog(@"开始连接%@",self.clientSocket);
-        
         NSError *error = nil;
         self.connected = [self.clientSocket connectToHost:HOST onPort:[POST integerValue] viaInterface:nil withTimeout:-1 error:&error];
         if (self.connected)
@@ -155,11 +154,8 @@ NSString *const POST = @"8080";
     self.treatInformation = [[TreatInformation alloc]init];
     self.runningInfomation = [[RunningInfomation alloc]init];
     [self askForTreatInfomation];
-    
     [self configureView];
 }
-
-
 #pragma mark - GCDAsyncSocketDelegate
 
 /**
@@ -169,9 +165,14 @@ NSString *const POST = @"8080";
  @param host 主机
  @param port 端口号
  
- */
-- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
+ **/
+- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port
+{
     NSLog(@"连接成功");
+    if ([self.view viewWithTag:disconnectViewtag])
+    {
+        [[self.view viewWithTag:disconnectViewtag]removeFromSuperview];
+    }
     [self addTimer];
     // 连接后,可读取服务器端的数据
     [self.clientSocket readDataWithTimeout:- 1 tag:0];
@@ -181,7 +182,6 @@ NSString *const POST = @"8080";
     myDelegate.cclientSocket=self.clientSocket;
     myDelegate.cconnected = YES;
     self.connected = YES;
-    
 }
 /**
      读取数据
@@ -189,7 +189,7 @@ NSString *const POST = @"8080";
      @param sock 客户端的Socket
      @param data 读取到的数据
      @param tag 当前读取的标记
- */
+**/
 -(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
     NSString *text;
@@ -225,14 +225,15 @@ NSString *const POST = @"8080";
 -(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
     NSLog(@"断开连接 error:%@",err);
-
+    if (![self.view viewWithTag:disconnectViewtag])
+    {
+        [self presentDisconnectAlert];
+    }
+    
     self.connected = NO;
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     myDelegate.cconnected = NO;
-    
-    NSError *error = nil;
-    self.clientSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-    self.connected = [self.clientSocket connectToHost:HOST onPort:[POST integerValue] viaInterface:nil withTimeout:-1 error:&error];
+
     [self.connectTimer invalidate];
     self.connectTimer = nil;
 }
@@ -1062,15 +1063,7 @@ NSString *const POST = @"8080";
     [self.clientSocket writeData:sendData withTimeout:-1 tag:0];
     
 }
-//-(void)continue
-//{
-//    Pack *pack = [[Pack alloc]init];
-//    Byte addrBytes[2] = {0,0};
-//    Byte dataBytes[2] = {0,0x12};
-//    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
-//                                                     dataEnabled:YES data:[self dataWithBytes:dataBytes]];
-//    [self.clientSocket writeData:sendData withTimeout:-1 tag:0];
-//}
+
 -(void)askForTreatInfomation
 {
     Pack *pack = [[Pack alloc]init];
@@ -1113,6 +1106,7 @@ NSString *const POST = @"8080";
     Pack *pack =[[Pack alloc]init];
     NSData *sendData = [pack packetWithCmdid:0x93 addressEnabled:NO addr:nil dataEnabled:NO data:nil];
     [self.clientSocket writeData:sendData withTimeout:- 1 tag:2];
+
 }
 
 #pragma mark - Private Method
@@ -1162,6 +1156,15 @@ NSString *const POST = @"8080";
             break;
     }
 }
+
+- (void)reconnect:(id)sender
+{
+    NSError *error= nil;
+    self.clientSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+    [self.clientSocket connectToHost:HOST onPort:[POST integerValue] viaInterface:nil withTimeout:-1 error:&error];
+
+    
+}
 -(CABasicAnimation *)warningMessageAnimation:(float)time
 {
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
@@ -1191,6 +1194,25 @@ NSString *const POST = @"8080";
     NSData *data = [NSData dataWithBytes:bytes length:2];
     return data;
 }
+-(void)presentDisconnectAlert
+{
+    UIView *disconnectView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, 375, 557)];
+    disconnectView.backgroundColor = [UIColor whiteColor];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(93, 150, 190, 30)];
+    label.text = [NSString stringWithFormat:@"ohno！网络连接断开了~"];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button.frame = CGRectMake(122, 230, 130, 30);
+    button.backgroundColor = UIColorFromHex(0x65BBA9);
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button setTitle:[NSString stringWithFormat:@"重新连接"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(reconnect:) forControlEvents:UIControlEventTouchUpInside];
+    [disconnectView addSubview:label];
+    [disconnectView addSubview:button];
+    [disconnectView setTag:disconnectViewtag];
+    [self.view addSubview:disconnectView];
+}
+
 #pragma mark - segue
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

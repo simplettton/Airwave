@@ -165,11 +165,6 @@
                                         <rect key="frame" x="225" y="466" width="16" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0s8-Eq-8Tt" customClass="ProgressView">
-                                        <rect key="frame" x="24" y="8" width="75" height="75"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4SW-Ss-zX8">
                                         <rect key="frame" x="48" y="520" width="264" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -226,6 +221,11 @@
                                         <rect key="frame" x="118" y="313" width="39" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RSK-jT-3vG" customClass="ProgressView">
+                                        <rect key="frame" x="25" y="8" width="75" height="75"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
@@ -262,7 +262,7 @@
                         <outlet property="pauseButton" destination="jT5-Gn-W6K" id="sdg-3H-2lN"/>
                         <outlet property="playButton" destination="ZuS-uD-XdE" id="eRt-Cy-lqH"/>
                         <outlet property="pressLabel" destination="MSC-Lt-fwX" id="5VR-lP-PUz"/>
-                        <outlet property="progressView" destination="0s8-Eq-8Tt" id="CYb-AP-DHm"/>
+                        <outlet property="progressView" destination="RSK-jT-3vG" id="tzY-gY-M26"/>
                         <outlet property="warnningLabel" destination="4SW-Ss-zX8" id="Q2s-Y1-qPD"/>
                         <segue destination="T0J-Xi-qbF" kind="showDetail" identifier="MainToGradient" animates="NO" id="Dgw-1N-eN9"/>
                         <segue destination="jtX-Ho-uJp" kind="showDetail" identifier="MainToStandard" animates="NO" id="gIv-VQ-fEb"/>
@@ -2143,29 +2143,29 @@
                                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                             </button>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gE9-qe-gnn" userLabel="断开连接">
-                                                <rect key="frame" x="-67" y="-111" width="375" height="557"/>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gE9-qe-gnn" userLabel="断开连接">
+                                        <rect key="frame" x="10" y="301" width="375" height="557"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="啊哦，网络连接已断开~" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fNG-8o-kUr">
+                                                <rect key="frame" x="93" y="150" width="190" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="啊哦，网络连接已断开~" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fNG-8o-kUr">
-                                                        <rect key="frame" x="93" y="150" width="190" height="30"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="clt-uw-gCa">
-                                                        <rect key="frame" x="122" y="230" width="130" height="30"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <color key="backgroundColor" red="0.39607843139999999" green="0.73333333329999995" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                        <state key="normal" title="重新连接">
-                                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        </state>
-                                                    </button>
-                                                </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            </view>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="clt-uw-gCa">
+                                                <rect key="frame" x="122" y="230" width="130" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" red="0.39607843139999999" green="0.73333333329999995" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <state key="normal" title="重新连接">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
@@ -2284,10 +2284,10 @@
         <image name="unselected" width="86" height="86"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gEg-WG-Ynq"/>
-        <segue reference="32F-K8-RkS"/>
-        <segue reference="4g4-bt-O77"/>
-        <segue reference="aEa-fh-ynZ"/>
+        <segue reference="YZz-rL-WdO"/>
+        <segue reference="9v8-UG-YI2"/>
         <segue reference="bnI-Yd-YTo"/>
+        <segue reference="4g4-bt-O77"/>
+        <segue reference="gIv-VQ-fEb"/>
     </inferredMetricsTieBreakers>
 </document>
