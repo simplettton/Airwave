@@ -14,8 +14,6 @@
 #import <GCDAsyncSocket.h>
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 
-                                      
-                                      
 @interface SolutionTreatViewController ()<GCDAsyncSocketDelegate>
 @property (strong,nonatomic) GCDAsyncSocket *clientSocket;
 @property (weak,  nonatomic) IBOutlet UIView *buttonView;
@@ -61,7 +59,6 @@
     
     
     //save button
-    //设置单边圆角
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.saveButton.bounds byRoundingCorners:UIRectCornerTopRight|UIRectCornerBottomRight|UIRectCornerTopLeft|UIRectCornerBottomLeft cornerRadii:CGSizeMake(10.0, 10.0)];
     CAShapeLayer *maskLayer = [CAShapeLayer layer];
     maskLayer.frame = self.saveButton.bounds;

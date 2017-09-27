@@ -322,8 +322,6 @@
                                                      dataEnabled:YES data:[self dataWithBytes:dataBytes]];
     [self.clientSocket writeData:sendData withTimeout:-1 tag:1000];
 }
-
-
 #pragma mark -pickerViewDelegate
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {

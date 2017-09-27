@@ -21,6 +21,7 @@
 #import "GradientTreatViewController.h"
 #import "ParameterTreatViewController.h"
 #import "SolutionTreatViewController.h"
+#import "SettingViewController.h"
 
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 
@@ -106,7 +107,27 @@ NSString *const POST = @"8080";
     [super viewWillAppear:YES];
     [self askForTreatInfomation];
 }
-
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:YES];
+    if (bodyButtons)
+    {
+        for(UIButton *button in bodyButtons)
+        {
+            [button removeFromSuperview];
+            bodyButtons = nil;
+        }
+    }
+    if (legButtons)
+    {
+        for(UIButton *button in legButtons)
+        {
+            [button removeFromSuperview];
+            legButtons = nil;
+        }
+    }
+    
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -138,7 +159,7 @@ NSString *const POST = @"8080";
     }
     else
     {
-        NSLog(@"与服务器连接已建立");
+        NSLog(@"与服务器连接已建立 %@",self.clientSocket);
     }
     isPlayButton = YES;
     isPauseButton = NO;
@@ -153,8 +174,8 @@ NSString *const POST = @"8080";
     legButtons = [[NSMutableArray alloc]initWithCapacity:20];
     self.treatInformation = [[TreatInformation alloc]init];
     self.runningInfomation = [[RunningInfomation alloc]init];
-    [self askForTreatInfomation];
     [self configureView];
+    
 }
 #pragma mark - GCDAsyncSocketDelegate
 
@@ -222,6 +243,14 @@ NSString *const POST = @"8080";
     }
     [sock readDataWithTimeout:- 1 tag:0];
 }
+-(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
+{
+    //ask
+//    if (tag==1000)
+//    {
+//        NSLog(@"ask");
+//    }
+}
 -(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
     NSLog(@"断开连接 error:%@",err);
@@ -264,14 +293,14 @@ NSString *const POST = @"8080";
     
     NSString *aport = self.treatInformation.aPort;
     
-    
-
     //腿部八腔和六腔
     if ([aport isEqualToString:@"LEGA006"]||[aport isEqualToString:@"LEGA008"])
     {
 
+        
+
         //去除其他按钮
-        if ([bodyButtons count] >0)
+        if ([bodyButtons count] >=0)
         {
             for (int i = 0; i<[bodyButtons count]; i++)
             {
@@ -289,7 +318,6 @@ NSString *const POST = @"8080";
                 UIImageView *imgView = [self.backgroundView viewWithTag:legTags[i]];
                 [imgView setImage:[UIImage imageNamed:bodyNames[legIndex[i]] withColor:@"white"]];
             }
-
         }
         //没有加载过按钮则加载
         if ([legButtons count] == 0)
@@ -1239,6 +1267,14 @@ NSString *const POST = @"8080";
         UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
         SolutionTreatViewController *controller = (SolutionTreatViewController *)navigationController.topViewController;
         controller.treatInfomation = self.treatInformation;
+    }else if ([segue.identifier isEqualToString:@"MainToSetting"])
+    {
+        SettingViewController *controller = (SettingViewController *)segue.destinationViewController;
+        controller.treatInfomation = self.treatInformation;
+        
+        Pack *pack = [[Pack alloc]init];
+        NSData *data = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xaf]];
+        [self.clientSocket writeData:data withTimeout:-1 tag:0];
     }
 }
 @end
