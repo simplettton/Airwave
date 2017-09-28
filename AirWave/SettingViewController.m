@@ -156,7 +156,6 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
 - (IBAction)save:(id)sender
 {
     Pack *pack = [[Pack alloc]init];
-    NSData *data;
     
     //设置保持时间
     Byte addr[] = {80,2};

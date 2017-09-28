@@ -30,8 +30,6 @@
     [self askForTreatInfomation];
 }
 
-
-
 -(void)askForTreatInfomation
 {
     Pack *pack = [[Pack alloc]init];
@@ -76,8 +74,7 @@
     if ([segue.identifier isEqualToString:@"OtherSettingToSetting"])
     {
         Pack *pack = [[Pack alloc]init];
-        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0Xaf]]
- withTimeout:-1 tag:0];
+        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0Xaf]] withTimeout:-1 tag:0];
     }else if ([segue.identifier isEqualToString:@"OtherSettingToMain"])
     {
         Pack *pack = [[Pack alloc]init];

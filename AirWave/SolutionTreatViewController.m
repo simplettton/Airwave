@@ -167,13 +167,10 @@
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * action) {
-                                                              
-                                                          }];
+                                                          handler:nil];
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
-
 -(NSData*) dataWithValue:(NSInteger)value
 {
     Byte src[2]={0,0};
@@ -187,8 +184,6 @@
     NSData *data = [NSData dataWithBytes:bytes length:2];
     return data;
 }
-
-
 - (IBAction)onClick:(id)sender
 {
     self.selectedModeTag = [(UIButton *)sender tag];
