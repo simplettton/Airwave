@@ -517,7 +517,7 @@
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="dGh-mk-HF3" kind="presentation" modalTransitionStyle="crossDissolve" id="YjL-T0-1N7"/>
+                                            <segue destination="dGh-mk-HF3" kind="presentation" identifier="OtherSettingToMain" modalTransitionStyle="crossDissolve" id="YjL-T0-1N7"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PWf-uU-jc2">
@@ -2302,8 +2302,8 @@
         <image name="unselected" width="86" height="86"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="hW4-xW-9f9"/>
-        <segue reference="bnI-Yd-YTo"/>
+        <segue reference="YjL-T0-1N7"/>
+        <segue reference="bkz-JL-cM5"/>
         <segue reference="gIv-VQ-fEb"/>
         <segue reference="YZz-rL-WdO"/>
         <segue reference="4g4-bt-O77"/>
