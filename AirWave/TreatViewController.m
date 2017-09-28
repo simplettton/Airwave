@@ -77,10 +77,10 @@ NSString *const POST = @"8080";
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
 @property (weak, nonatomic) IBOutlet UIButton *pauseButton;
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
-@property (weak, nonatomic) IBOutlet UIView *bodyView;
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
 @property (weak, nonatomic) IBOutlet UILabel *pressLabel;
 @property (weak, nonatomic) IBOutlet ProgressView *progressView;
+@property (weak, nonatomic) IBOutlet ProgressView *progressBackground;
 @property (weak, nonatomic) IBOutlet UILabel *warnningLabel;
 
 
@@ -284,7 +284,14 @@ NSString *const POST = @"8080";
     [self configurePlayButton];
     
     //配置进度条
-    [self.progressView drawProgress:1];
+    //背景圈
+    self.progressBackground.circleColor = UIColorFromHex(0x65BBA9);
+    [self.progressBackground drawProgress:1];
+    self.progressBackground.lineWith = 8.0;
+    
+    //进度圈
+    self.progressView.circleColor = [UIColor whiteColor];
+    self.progressView.lineWith = 9.0;
     self.progressView.label.text = [NSString stringWithFormat:@"100%%"];
 
 }
@@ -447,7 +454,9 @@ NSString *const POST = @"8080";
         isPauseButton = NO;
         [self configurePlayButton];
         self.pressLabel.text = [NSString stringWithFormat:@"0"];
-        [self.progressView drawProgress:1];
+//        [self.progressView drawProgress:1];
+        [self.progressBackground drawProgress:1];
+        [self.progressView drawProgress:0];
         self.progressView.label.text = [NSString stringWithFormat:@"100%%"];
     }
     else if((self.treatInformation.treatState == Running && self.treatInformation.aPort != nil) ||self.treatInformation.treatState == Pause)
@@ -470,13 +479,13 @@ NSString *const POST = @"8080";
         CGFloat currentProgress =(CGFloat)(self.runningInfomation.treatProcessTime)/(CGFloat)self.treatInformation.treatTime;
         
         int progress = self.runningInfomation.treatProcessTime *100 / self.treatInformation.treatTime;
-        
-        self.progressView.label.text = [NSString stringWithFormat:@"%d%%",(int)progress];
+        self.progressView.label.text = [NSString stringWithFormat:@"%d%%",100-(int)progress];
         [self.progressView drawProgress:currentProgress];
         NSString *press = self.runningInfomation.press[self.runningInfomation.curFocuse];
         self.pressLabel.text = [NSString stringWithFormat:@"%@",press];
     }
 
+    
     
     //A端
 

@@ -196,7 +196,7 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
                                                                    message:[NSString stringWithFormat:@"恢复出厂设置"]
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {
                                                               
                                                               Pack *pack = [[Pack alloc]init];
@@ -205,7 +205,7 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
                                                               [self.clientSocket writeData:data withTimeout:-1 tag:1000];
                                                               
                                                           }];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleCancel handler:nil];
     
     
     [alert addAction:defaultAction];

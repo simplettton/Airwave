@@ -9,7 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface ProgressView : UIView
+
+@property (nonatomic,strong)UIColor *circleColor;
+@property (nonatomic,assign)CGFloat lineWith;
 @property (nonatomic,assign)CGFloat progress;
 @property (nonatomic,strong)UILabel *label;
 - (void)drawProgress:(CGFloat )progress;
+
 @end
