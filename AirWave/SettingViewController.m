@@ -7,6 +7,7 @@
 //
 
 #import "SettingViewController.h"
+#import "OtherSettingViewController.h"
 #import "TreatInformation.h"
 #import "AppDelegate.h"
 #import "Pack.h"
@@ -234,14 +235,14 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
     Pack *pack = [[Pack alloc]init];
     if ([segue.identifier isEqualToString:@"SettingToMain"])
     {
-        
         Byte addr[]={0x23,0x06};
         [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addr] dataEnabled:YES data:[self dataWithValue:0xf1]] withTimeout:-1 tag:0];
         [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]    dataEnabled:YES data:[self dataWithValue:0XAE]] withTimeout:-1 tag:0];
     }else if ([segue.identifier isEqualToString:@"SettingToOtherSetting"])
     {
+        OtherSettingViewController *controller = (OtherSettingViewController *)segue.destinationViewController;
+        controller.treatInfomation = self.treatInfomation;
         [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xb2]] withTimeout:-1 tag:0];
-
     }
     
 }

@@ -291,10 +291,12 @@ NSString *const POST = @"8080";
 
 
         //去除其他按钮
+        if ([bodyButtons count]>=0)
+        {
             for (int i = 0; i<[bodyButtons count]; i++)
             {
                 [bodyButtons[i] removeFromSuperview];
-
+                
             }
             bodyButtons = [[NSMutableArray alloc]initWithCapacity:20];
             
@@ -307,6 +309,8 @@ NSString *const POST = @"8080";
                 UIImageView *imgView = [self.backgroundView viewWithTag:legTags[i]];
                 [imgView setImage:[UIImage imageNamed:bodyNames[legIndex[i]] withColor:@"white"]];
             }
+
+        }
 
         
         //没有加载过按钮则加载

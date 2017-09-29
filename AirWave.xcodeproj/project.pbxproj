@@ -26,6 +26,7 @@
 		046BA7861F480DF2004D7E74 /* AirWaveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BA7851F480DF2004D7E74 /* AirWaveTests.m */; };
 		046BA7911F480DF2004D7E74 /* AirWaveUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BA7901F480DF2004D7E74 /* AirWaveUITests.m */; };
 		046BA7A21F4817C8004D7E74 /* TreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BA7A11F4817C8004D7E74 /* TreatViewController.m */; };
+		046FCF251F7E31FB00B8CBF6 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 046FCF241F7E31FB00B8CBF6 /* Constants.m */; };
 		048A3B141F53C54900929C37 /* UIColor+UIcolor_RGB.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A3B131F53C54900929C37 /* UIColor+UIcolor_RGB.m */; };
 		048A3B1A1F540DC500929C37 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A3B191F540DC500929C37 /* SettingViewController.m */; };
 		048A3B1D1F5411D700929C37 /* OtherSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A3B1C1F5411D700929C37 /* OtherSettingViewController.m */; };
@@ -90,6 +91,8 @@
 		046BA7921F480DF2004D7E74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		046BA7A01F4817C8004D7E74 /* TreatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreatViewController.h; sourceTree = "<group>"; };
 		046BA7A11F4817C8004D7E74 /* TreatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreatViewController.m; sourceTree = "<group>"; };
+		046FCF241F7E31FB00B8CBF6 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		046FCF261F7E321200B8CBF6 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		048A3B121F53C54900929C37 /* UIColor+UIcolor_RGB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+UIcolor_RGB.h"; sourceTree = "<group>"; };
 		048A3B131F53C54900929C37 /* UIColor+UIcolor_RGB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+UIcolor_RGB.m"; sourceTree = "<group>"; };
 		048A3B181F540DC500929C37 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
@@ -197,6 +200,8 @@
 		046BA76B1F480DF2004D7E74 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				046FCF261F7E321200B8CBF6 /* Constants.h */,
+				046FCF241F7E31FB00B8CBF6 /* Constants.m */,
 				048A3B121F53C54900929C37 /* UIColor+UIcolor_RGB.h */,
 				048A3B131F53C54900929C37 /* UIColor+UIcolor_RGB.m */,
 				044E4F501F60D63B009DD7E7 /* UIImage+ImageWithColor.h */,
@@ -455,6 +460,7 @@
 				048A3B1A1F540DC500929C37 /* SettingViewController.m in Sources */,
 				041FD7E51F58FDEA00522D64 /* SolutionTreatViewController.m in Sources */,
 				046BA7A21F4817C8004D7E74 /* TreatViewController.m in Sources */,
+				046FCF251F7E31FB00B8CBF6 /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
