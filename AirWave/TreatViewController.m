@@ -10,7 +10,6 @@
 #import "Pack.h"
 #import "BodyButton.h"
 #import "TreatViewController.h"
-
 #import "TreatInformation.h"
 #import "RunningInfomation.h"
 #import "UIImage+ImageWithColor.h"
@@ -172,21 +171,14 @@ NSString *const POST = @"8080";
     
     bodyButtons = [[NSMutableArray alloc]initWithCapacity:20];
     legButtons = [[NSMutableArray alloc]initWithCapacity:20];
+    
     self.treatInformation = [[TreatInformation alloc]init];
+   
     self.runningInfomation = [[RunningInfomation alloc]init];
     [self configureView];
     
 }
 #pragma mark - GCDAsyncSocketDelegate
-
-/**
- 连接主机对应端口号
- 
- @param sock 客户端socket
- @param host 主机
- @param port 端口号
- 
- **/
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port
 {
     NSLog(@"连接成功");
@@ -195,7 +187,6 @@ NSString *const POST = @"8080";
         [[self.view viewWithTag:disconnectViewtag]removeFromSuperview];
     }
     [self addTimer];
-    // 连接后,可读取服务器端的数据
     [self.clientSocket readDataWithTimeout:- 1 tag:0];
     
     //保存socket
@@ -204,13 +195,7 @@ NSString *const POST = @"8080";
     myDelegate.cconnected = YES;
     self.connected = YES;
 }
-/**
-     读取数据
-     
-     @param sock 客户端的Socket
-     @param data 读取到的数据
-     @param tag 当前读取的标记
-**/
+
 -(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
     NSString *text;
@@ -286,8 +271,8 @@ NSString *const POST = @"8080";
     //配置进度条
     //背景圈
     self.progressBackground.circleColor = UIColorFromHex(0x65BBA9);
-    [self.progressBackground drawProgress:1];
     self.progressBackground.lineWith = 8.0;
+    [self.progressBackground drawProgress:1];
     
     //进度圈
     self.progressView.circleColor = [UIColor whiteColor];
@@ -304,11 +289,8 @@ NSString *const POST = @"8080";
     if ([aport isEqualToString:@"LEGA006"]||[aport isEqualToString:@"LEGA008"])
     {
 
-        
 
         //去除其他按钮
-        if ([bodyButtons count] >=0)
-        {
             for (int i = 0; i<[bodyButtons count]; i++)
             {
                 [bodyButtons[i] removeFromSuperview];
@@ -325,7 +307,8 @@ NSString *const POST = @"8080";
                 UIImageView *imgView = [self.backgroundView viewWithTag:legTags[i]];
                 [imgView setImage:[UIImage imageNamed:bodyNames[legIndex[i]] withColor:@"white"]];
             }
-        }
+
+        
         //没有加载过按钮则加载
         if ([legButtons count] == 0)
         {
@@ -362,7 +345,8 @@ NSString *const POST = @"8080";
             for (int i=0; i<[legNames count]; i++)
             {
                 BodyButton *button = legButtons[i];
-                [button setImage:[UIImage imageNamed:legNames[i] withColor:@"grey"] forState:UIControlStateNormal];
+                [button setImage:[UIImage imageNamed:legNames[i] withColor:@"grey"]
+                        forState:UIControlStateNormal];
                 if (button.changeColorTimer != nil)
                 {
                     [self deallocTimerWithButton:button];
@@ -606,12 +590,14 @@ NSString *const POST = @"8080";
                         [bodyButtons[lefthandindex] setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"yellow"] forState:UIControlStateNormal];
                         break;
                     case Working:
-                        if (button.changeColorTimer == nil) {
+                        if (button.changeColorTimer == nil)
+                        {
                             [self startTimerToChangeColorOfButton:bodyButtons[lefthandindex]];
                         }
                         break;
                     case KeepingAir:
-                        if (button.changeColorTimer != nil) {
+                        if (button.changeColorTimer != nil)
+                        {
                             [self deallocTimerWithButton:button];
                         }
                         [bodyButtons[lefthandindex]setImage:[UIImage imageNamed:bodyNames[lefthandindex] withColor:@"green"]forState:UIControlStateNormal];
@@ -1083,44 +1069,34 @@ NSString *const POST = @"8080";
 - (void)start
 {
     Pack *pack = [[Pack alloc]init];
-    
-    Byte addrBytes[2] = {0,0};
     Byte dataBytes[2] = {0,0x10};
-    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
-                                                     dataEnabled:YES data:[self dataWithBytes:dataBytes]];
-    [self.clientSocket writeData:sendData withTimeout:-1 tag:0];
+    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                                                               dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:0];
 }
 -(void)pause
 {
     Pack *pack = [[Pack alloc]init];
-    Byte addrBytes[2] = {0,0};
     Byte dataBytes[2] = {0,0x11};
-    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
-                                                     dataEnabled:YES data:[self dataWithBytes:dataBytes]];
-    [self.clientSocket writeData:sendData withTimeout:-1 tag:0];
+    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                                                               dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:0];
     
 }
 
 -(void)askForTreatInfomation
 {
     Pack *pack = [[Pack alloc]init];
-    Byte addrBytes[2] = {0,0};
     Byte dataBytes[2] = {1,0x62};
-    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
-                                                     dataEnabled:YES data:[self dataWithBytes:dataBytes]];
-    [self.clientSocket writeData:sendData withTimeout:-1 tag:1000];
+    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                                                               dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:1000];
 }
 -(void)lightupBodyButton:(BodyButton *)button
 {
     [button changeGreyColor];
-    NSNumber *commitNumber = [button.multiParamDic objectForKey:@"commit"];
     Pack *pack = [[Pack alloc]init];
+    NSNumber *commitNumber = [button.multiParamDic objectForKey:@"commit"];
     Byte dataBytes[2] = {0,[commitNumber unsignedIntegerValue]};
-    Byte addrBytes[2] = {0,0};
-    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
-                                                     dataEnabled:YES data:[self dataWithBytes:dataBytes]];
-    
-    [self.clientSocket writeData:sendData withTimeout:-1 tag:0];
+    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                                                               dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:0];
     
 }
 //添加计时器
@@ -1134,16 +1110,14 @@ NSString *const POST = @"8080";
                                                         repeats:YES];
     //将定时器添加到当前运行循环，并且调为通用模式
     [[NSRunLoop currentRunLoop] addTimer:self.connectTimer forMode:NSRunLoopCommonModes];
-    //[[NSRunLoop currentRunLoop] addTimer:self.updateTimer forMode:NSRunLoopCommonModes];
 }
 
 // 心跳连接
 - (void)longConnectToSocket
 {
     Pack *pack =[[Pack alloc]init];
-    NSData *sendData = [pack packetWithCmdid:0x93 addressEnabled:NO addr:nil dataEnabled:NO data:nil];
-    [self.clientSocket writeData:sendData withTimeout:- 1 tag:2];
-
+    [self.clientSocket writeData:[pack packetWithCmdid:0x93 addressEnabled:NO addr:nil
+                                                               dataEnabled:NO data:nil] withTimeout:- 1 tag:2];
 }
 
 #pragma mark - Private Method
@@ -1280,10 +1254,9 @@ NSString *const POST = @"8080";
     {
         SettingViewController *controller = (SettingViewController *)segue.destinationViewController;
         controller.treatInfomation = self.treatInformation;
-        
         Pack *pack = [[Pack alloc]init];
-        NSData *data = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xaf]];
-        [self.clientSocket writeData:data withTimeout:-1 tag:0];
+        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                                                                   dataEnabled:YES data:[self dataWithValue:0xaf]] withTimeout:-1 tag:0];
     }
 }
 @end

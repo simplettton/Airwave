@@ -296,9 +296,8 @@
     Pack *pack = [[Pack alloc]init];
     Byte addrBytes[2] = {0,0};
     Byte dataBytes[2] = {1,0x62};
-    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
-                                 dataEnabled:YES data:[self dataWithBytes:dataBytes]];
-    [self.clientSocket writeData:sendData withTimeout:-1 tag:1000];
+    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
+                                                               dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:1000];
 }
 #pragma mark - segue
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -314,9 +313,8 @@
         }
         else if ([segue.identifier isEqualToString:@"SolutionToParameter"])
         {
-            NSData *switchModeData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                               dataEnabled:YES data:[self dataWithValue:0x0f]];
-            [self.clientSocket writeData:switchModeData withTimeout:-1 tag:0];
+            [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                                                   dataEnabled:YES data:[self dataWithValue:0x0f]] withTimeout:-1 tag:0];
             sendata = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                 dataEnabled:YES data:[self dataWithValue:0X82]];
         }

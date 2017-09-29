@@ -254,13 +254,11 @@
         //压力等级
         Byte addrBytes2[2] = {80,16};
         NSInteger pressValue = [self.pressGradePicker selectedRowInComponent:0];
-        NSData *sendData2 = [pack packetWithCmdid:0X90 addressEnabled:YES addr:[self dataWithBytes:addrBytes2]dataEnabled:YES data:[self dataWithValue:pressValue]];
-        [self.clientSocket writeData:sendData2 withTimeout:-1 tag:1];
+        [self.clientSocket writeData:[pack packetWithCmdid:0X90 addressEnabled:YES addr:[self dataWithBytes:addrBytes2]dataEnabled:YES data:[self dataWithValue:pressValue]] withTimeout:-1 tag:1];
         
         //持续时间
         Byte addrBytes1[2] = {80,4};
-        NSData *sendData1 = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes1] dataEnabled:YES data:[self dataWithValue:minutes]];
-        [self.clientSocket writeData:sendData1 withTimeout:-1 tag:1];
+        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes1] dataEnabled:YES data:[self dataWithValue:minutes]] withTimeout:-1 tag:1];
     }
     else
     {
@@ -451,13 +449,9 @@
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * action) {
-                                                              
-                                                          }];
+                                                          handler:nil];
     
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
-
-
 @end

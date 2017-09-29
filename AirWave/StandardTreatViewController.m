@@ -206,7 +206,6 @@
 -(IBAction)tapGradientTreat:(id)sender
 {
     UILabel *warningLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 509, 135, 35)];
-    // warningLabel.backgroundColor = UIColorFromHex(0xF7F8F8);
     warningLabel.textAlignment = NSTextAlignmentLeft;
     warningLabel.text = @"气囊类型不合适";
     warningLabel.textColor = UIColorFromHex(0xFF8247);
@@ -218,10 +217,6 @@
     [warningLabel.layer addAnimation:[self warningMessageAnimation:0.5] forKey:nil];
     // 延迟后警告消失
     int64_t delayInSeconds = 2;
-    /*
-     *@parameter 1,时间参照，从此刻开始计时
-     *@parameter 2,延时多久，此处为秒级，还有纳秒等。10ull * NSEC_PER_MSEC
-     */
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [warningLabel removeFromSuperview];
@@ -289,23 +284,21 @@
         //设置治疗时间
         Pack *pack = [[Pack alloc]init];
         Byte addrBytes[2] = {80,4};
-        NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes] dataEnabled:YES data:[self dataWithValue:minutes]];
-        [self.clientSocket writeData:sendData withTimeout:-1 tag:1];
+        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
+                                                                   dataEnabled:YES data:[self dataWithValue:minutes]] withTimeout:-1 tag:1];
         
         //设置治疗方案
         Byte addrBytes1[2] = {80,3};
         NSInteger mode = [self.modePicker selectedRowInComponent:0];
-        NSData *sendData1 = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes1] dataEnabled:YES data:[self dataWithValue:(mode+1)]];
-
-        [self.clientSocket writeData:sendData1 withTimeout:-1 tag:1];
+        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes1]
+                                                                   dataEnabled:YES data:[self dataWithValue:(mode+1)]] withTimeout:-1 tag:1];
         
         //设置治疗压力
         Byte addrByte2[2] = {80,0};
         NSInteger press= [self.pressPicker selectedRowInComponent:0];
-        NSData *sendData2 = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrByte2]
-                                                          dataEnabled:YES data:[self dataWithValue:press]];
-        
-        [self.clientSocket writeData:sendData2 withTimeout:-1 tag:1];
+
+        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrByte2]
+                                                                   dataEnabled:YES data:[self dataWithValue:press]] withTimeout:-1 tag:1];
         
     }
     else
@@ -316,11 +309,9 @@
 -(void)askForTreatInfomation
 {
     Pack *pack = [[Pack alloc]init];
-    Byte addrBytes[2] = {0,0};
     Byte dataBytes[2] = {1,0x62};
-    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
-                                                     dataEnabled:YES data:[self dataWithBytes:dataBytes]];
-    [self.clientSocket writeData:sendData withTimeout:-1 tag:1000];
+    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                                                               dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:1000];
 }
 #pragma mark -pickerViewDelegate
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -386,19 +377,18 @@
         NSData *sendata;
         if ([segue.identifier isEqualToString:@"StandardToParameter"]||[segue.identifier isEqualToString:@"StandardToSolution"])
         {
-            NSData *switchModeData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0x0f]];
-            [self.clientSocket writeData:switchModeData withTimeout:-1 tag:0];
-            
+            [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                                                                       dataEnabled:YES data:[self dataWithValue:0x0f]] withTimeout:-1 tag:0];
             if ([segue.identifier isEqualToString: @"StandardToParameter"])
             {
                 sendata = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                    dataEnabled:YES data:[self dataWithValue:0x82]];
+                                                        dataEnabled:YES data:[self dataWithValue:0x82]];
                 
             }
             else if ([segue.identifier isEqualToString:@"StandardToSolution"])
             {
                 sendata = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                    dataEnabled:YES data:[self dataWithValue:0X81]];
+                                                        dataEnabled:YES data:[self dataWithValue:0X81]];
             }
             [self.clientSocket writeData:sendata withTimeout:-1 tag:0];
         }
@@ -475,8 +465,8 @@
 -(NSData*) dataWithValue:(NSInteger)value
 {
     Byte src[2]={0,0};
-    src[0] =  (Byte) ((value>>8) & 0xFF);
-    src[1] =  (Byte) (value & 0xFF);
+    src[0] = (Byte) ((value>>8) & 0xFF);
+    src[1] = (Byte) (value & 0xFF);
     NSData *data = [NSData dataWithBytes:src length:2];
     return data;
 }
@@ -493,22 +483,7 @@
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * action){
-
-                                                          }];
-//    // title
-//    NSMutableAttributedString *alertControllerStr = [[NSMutableAttributedString alloc] initWithString:@"Attention!!"];
-//    [alertControllerStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 3)];
-//    [alertControllerStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:20] range:NSMakeRange(0, 11)];
-//    [alert setValue:alertControllerStr forKey:@"attributedTitle"];
-//    
-//    // message
-//    NSMutableAttributedString *alertControllerMessageStr = [[NSMutableAttributedString alloc] initWithString:message];
-//    [alertControllerMessageStr addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:NSMakeRange(0,15)];
-//    [alertControllerMessageStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(0, 6)];
-//    [alert setValue:alertControllerMessageStr forKey:@"attributedMessage"];
-    
-
+                                                          handler:nil];
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
 }

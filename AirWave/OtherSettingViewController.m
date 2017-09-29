@@ -12,6 +12,11 @@
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 @interface OtherSettingViewController ()<GCDAsyncSocketDelegate>
 @property (strong,nonatomic) GCDAsyncSocket *clientSocket;
+@property (assign,nonatomic) NSInteger selectedATag;
+@property (assign,nonatomic) NSInteger selectedBTag;
+- (IBAction)onclickAport:(id)sender;
+- (IBAction)onclickBport:(id)sender;
+
 @end
 
 @implementation OtherSettingViewController
@@ -29,15 +34,13 @@
     [self.clientSocket readDataWithTimeout:-1 tag:0];
     [self askForTreatInfomation];
 }
-
 -(void)askForTreatInfomation
 {
     Pack *pack = [[Pack alloc]init];
     Byte addrBytes[2] = {0,0};
     Byte dataBytes[2] = {1,0x62};
-    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
-                                 dataEnabled:YES data:[self dataWithBytes:dataBytes]];
-    [self.clientSocket writeData:sendData withTimeout:-1 tag:0];
+    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
+                                                               dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:0];
 }
 #pragma mark - private method
 -(NSData*) dataWithValue:(NSInteger)value
@@ -59,10 +62,9 @@
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * action) {
-                                                              
-                                                          }];
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认"
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:nil];
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
@@ -74,14 +76,38 @@
     if ([segue.identifier isEqualToString:@"OtherSettingToSetting"])
     {
         Pack *pack = [[Pack alloc]init];
-        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0Xaf]] withTimeout:-1 tag:0];
+        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                                                                   dataEnabled:YES data:[self dataWithValue:0Xaf]] withTimeout:-1 tag:0];
     }else if ([segue.identifier isEqualToString:@"OtherSettingToMain"])
     {
         Pack *pack = [[Pack alloc]init];
-        Byte addr[]={0x23,0x06};
+        Byte addr[]= {0x23,0x06};
         //设置更改生效 返回主界面
-        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addr] dataEnabled:YES data:[self dataWithValue:0xf1]] withTimeout:-1 tag:0];
-        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0XAE]]withTimeout:-1 tag:0];
+        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addr]
+                                                                   dataEnabled:YES data:[self dataWithValue:0xf1]] withTimeout:-1 tag:0];
+        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                                                                   dataEnabled:YES data:[self dataWithValue:0XAE]] withTimeout:-1 tag:0];
     }
+}
+- (IBAction)onclickAport:(id)sender
+{
+    for (int i =1; i<12; i++)
+    {
+        UIButton *btn = [self.view viewWithTag:i];
+        //配置选中按钮
+        if (btn.tag == [(UIButton *)sender tag])
+        {
+            
+        }
+        //未选中按钮
+        else
+        {
+            
+        }
+    }
+}
+
+- (IBAction)onclickBport:(id)sender
+{
 }
 @end

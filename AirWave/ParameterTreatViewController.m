@@ -23,7 +23,6 @@
 @property (weak, nonatomic) IBOutlet UIPickerView *hourPicker;
 @property (weak, nonatomic) IBOutlet UIPickerView *minutePicker;
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
-
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UIButton *continueTimeButton;
 @property (weak, nonatomic) IBOutlet UIButton *customTimeButton;
@@ -36,7 +35,8 @@
 
 @implementation ParameterTreatViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
 
     
@@ -125,7 +125,7 @@
     {
         customTimeSelected = NO;
     }
-    else        //自定义时间
+    else //自定义时间
     {
         
         NSInteger hour = self.treatInfomation.treatTime / 3600;
@@ -220,12 +220,8 @@
     [[self.view viewWithTag:1000] addSubview:warningLabel];
     [warningImageView.layer addAnimation:[self warningMessageAnimation:0.5] forKey:nil];
     [warningLabel.layer addAnimation:[self warningMessageAnimation:0.5] forKey:nil];
-    // 延迟后警告消失
+    // 延迟2s后警告消失
     int64_t delayInSeconds = 2;
-    /*
-     *@parameter 1,时间参照，从此刻开始计时
-     *@parameter 2,延时多久，此处为秒级，还有纳秒等。10ull * NSEC_PER_MSEC
-     */
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [warningLabel removeFromSuperview];
@@ -267,15 +263,13 @@
         
         //设置时间
         Byte addrBytes1[2] = {80,4};
-        NSData *sendData1 = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes1] dataEnabled:YES data:[self dataWithValue:minutes]];
-        [self.clientSocket writeData:sendData1 withTimeout:-1 tag:1];
+        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes1] dataEnabled:YES data:[self dataWithValue:minutes]] withTimeout:-1 tag:1];
         
         //设置治疗方案
         Byte addrBytes2[2] = {80,3};
         NSInteger mode = [self.modePicker selectedRowInComponent:0];
-        NSData *sendData2 = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes2] dataEnabled:YES data:[self dataWithValue:(mode+1)]];
         
-        [self.clientSocket writeData:sendData2 withTimeout:-1 tag:1];
+        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes2] dataEnabled:YES data:[self dataWithValue:(mode+1)]] withTimeout:-1 tag:1];
     }
     else
     {
@@ -307,11 +301,9 @@
 -(void)askForTreatInfomation
 {
     Pack *pack = [[Pack alloc]init];
-    Byte addrBytes[2] = {0,0};
     Byte dataBytes[2] = {1,0x62};
-    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
-                                 dataEnabled:YES data:[self dataWithBytes:dataBytes]];
-    [self.clientSocket writeData:sendData withTimeout:-1 tag:1000];
+    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                                                               dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:1000];
 }
 
 #pragma mark - socketDelegate
@@ -442,9 +434,8 @@
         }
         else if ([segue.identifier isEqualToString:@"ParameterToSolution"])
         {
-            NSData *firstSend = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                                              dataEnabled:YES data:[self dataWithValue:0x0f]    ];
-            [self.clientSocket writeData:firstSend withTimeout:-1 tag:0];
+            [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                                                                       dataEnabled:YES data:[self dataWithValue:0x0f]] withTimeout:-1 tag:0];
             sendata = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                 dataEnabled:YES data:[self dataWithValue:0X81]];
         }
@@ -499,8 +490,4 @@
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
-
-
-
-
 @end
