@@ -60,7 +60,8 @@
     }
     
     pressArray = [[NSMutableArray alloc]initWithCapacity:20];
-    for (int i = 0; i< 241; i++) {
+    for (int i = 0; i< 241; i++)
+    {
         [pressArray addObject:[NSString stringWithFormat:@"%d",i]];
     }
     
@@ -75,14 +76,21 @@
         [minuteArray addObject:[NSString stringWithFormat:@"%d",i]];
     }
     modeArray = @[@"1",@"2",@"3",@"4",@"5",@"6"];
+    
+    [self.minutePicker selectRow:20 inComponent:0 animated:NO];
+    [self.hourPicker selectRow:0 inComponent:0 animated:NO];
+    [self.pressPicker selectRow:100 inComponent:0 animated:NO];
+    [self.modePicker selectRow:0 inComponent:0 animated:NO];
+    customTimeSelected = YES;
+    [self configureTimeSelectButton];
     [self configureView];
+    
 }
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     self.clientSocket = myDelegate.cclientSocket;
-    NSLog(@"standardsocket --%@",self.clientSocket);
     self.clientSocket.delegate = self;
     [self.clientSocket readDataWithTimeout:- 1 tag:0];
     [self askForTreatInfomation];
@@ -112,34 +120,6 @@
     maskLayer1.strokeColor = UIColorFromHex(0x85ABE4).CGColor;
     maskLayer1.fillColor = nil;
     [self.cancelButton.layer addSublayer:maskLayer1];
-    
-    
-    //保存初始设置
-     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    if (self.treatInfomation.treatTime == 36060)
-    {
-        customTimeSelected = NO;
-    }
-    else        //自定义时间
-    {
-        NSInteger hour = self.treatInfomation.treatTime / 3600;
-        NSInteger minute = self.treatInfomation.treatTime / 60;
-        minute = minute % 60;
-        
-        //保存设置前的时间和分钟
-        [userDefaults setInteger:hour forKey:@"Hour"];
-        [userDefaults setInteger:minute forKey:@"Minute"];
-        customTimeSelected = YES;
-    }
-    
-    NSInteger mode = self.treatInfomation.treatMode;
-    NSInteger press = [self.treatInfomation.press[0] integerValue];
-    //保存模式和选择和压力
-    [userDefaults setInteger:mode forKey:@"Mode"];
-    [userDefaults setInteger:press forKey:@"Press"];
-    [userDefaults setBool:customTimeSelected forKey:@"CustomTimeSelected"];
-    [self updateView];
-    
  }
 -(void)updateView
 {
@@ -156,8 +136,8 @@
         minute = minute % 60;
         
         //调到对应的时间和分钟
-        [self.minutePicker selectRow:minute inComponent:0 animated:NO];
-        [self.hourPicker selectRow:hour inComponent:0 animated:NO];
+        [self.minutePicker selectRow:minute inComponent:0 animated:YES];
+        [self.hourPicker selectRow:hour inComponent:0 animated:YES];
         
         //10小时取消minute的选择
         if (hour == 10)
@@ -238,30 +218,17 @@
 }
 #pragma mark - cmd
 
-- (IBAction)cancel:(id)sender {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    
-    //更改前的选择
-    customTimeSelected = [userDefaults boolForKey:@"CustomTimeSelected"];
+- (IBAction)cancel:(id)sender
+{
+    //默认值
+    [self.minutePicker selectRow:20 inComponent:0 animated:NO];
+    [self.hourPicker selectRow:0 inComponent:0 animated:NO];
+    [self.pressPicker selectRow:100 inComponent:0 animated:NO];
+    [self.modePicker selectRow:0 inComponent:0 animated:NO];
+    customTimeSelected = YES;
     [self configureTimeSelectButton];
-    
-    //更改前的时间和分钟
-    NSInteger hour = [userDefaults integerForKey:@"Hour"];
-    NSInteger minute = [userDefaults integerForKey:@"Minute"];
-    [self.hourPicker selectRow:hour inComponent:0 animated:YES];
-    [self.minutePicker selectRow:minute inComponent:0 animated:YES];
 
-    
-    //更改前的模式
-    NSInteger mode = [userDefaults integerForKey:@"Mode"];
-    [self.modePicker selectRow:(mode-1) inComponent:0 animated:YES];
-    
-    //更改前的压力
-    NSInteger press = [userDefaults integerForKey:@"Press"];
-    [self.pressPicker selectRow:press inComponent:0 animated:YES];
-    
     [self save:sender];
-    [self showAlertViewWithMessage:@"取消更改成功"];
 }
 - (IBAction)save:(id)sender
 {
@@ -281,24 +248,27 @@
             minutes = 601;
         }
         
+        int tag = 1;
+        if ([sender isEqual:self.cancelButton]){ tag = 0; }
+        
         //设置治疗时间
         Pack *pack = [[Pack alloc]init];
         Byte addrBytes[2] = {80,4};
         [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
-                                                                   dataEnabled:YES data:[self dataWithValue:minutes]] withTimeout:-1 tag:1];
+                                                                   dataEnabled:YES data:[self dataWithValue:minutes]] withTimeout:-1 tag:tag];
         
         //设置治疗方案
         Byte addrBytes1[2] = {80,3};
         NSInteger mode = [self.modePicker selectedRowInComponent:0];
         [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes1]
-                                                                   dataEnabled:YES data:[self dataWithValue:(mode+1)]] withTimeout:-1 tag:1];
+                                                                   dataEnabled:YES data:[self dataWithValue:(mode+1)]] withTimeout:-1 tag:tag];
         
         //设置治疗压力
         Byte addrByte2[2] = {80,0};
         NSInteger press= [self.pressPicker selectedRowInComponent:0];
 
         [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrByte2]
-                                                                   dataEnabled:YES data:[self dataWithValue:press]] withTimeout:-1 tag:1];
+                                                                   dataEnabled:YES data:[self dataWithValue:press]] withTimeout:-1 tag:tag];
         
     }
     else

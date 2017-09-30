@@ -39,6 +39,11 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
 {
     [super viewDidLoad];
 
+    if (self.treatInfomation == nil)
+    {
+        self.treatInfomation = [[TreatInformation alloc]init];
+    }
+
     //设置边框
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.keepTimeLabel.bounds byRoundingCorners:UIRectCornerTopRight|UIRectCornerBottomRight|UIRectCornerTopLeft|UIRectCornerBottomLeft cornerRadii:CGSizeMake(5.0, 5.0)];
     CAShapeLayer *maskLayer = [CAShapeLayer layer];
@@ -67,12 +72,6 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
     maskLayer2.strokeColor = UIColorFromHex(0xe7e8e7).CGColor;
     maskLayer2.fillColor = [UIColor clearColor].CGColor;
     [self.chargeSpeedLabel.layer addSublayer:maskLayer2];
-    
-    if (self.treatInfomation == nil)
-    {
-            self.treatInfomation = [[TreatInformation alloc]init];
-    }
-
     
 }
 -(void)viewDidAppear:(BOOL)animated

@@ -38,6 +38,7 @@
 
 @implementation GradientTreatViewController
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -61,9 +62,13 @@
     {
         [minuteArray addObject:[NSString stringWithFormat:@"%d",i]];
     }
-    
+    //默认选择
+    [self.pressGradePicker selectRow:1 inComponent:0 animated:NO];
+    [self.hourPicker selectRow:0 inComponent:0 animated:NO];
+    [self.minutePicker selectRow:20 inComponent:0 animated:NO];
+    customTimeSelected = YES;
+    [self configureTimeSelectButton];
     [self configureView];
-
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -72,6 +77,7 @@
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     self.clientSocket = myDelegate.cclientSocket;
     self.clientSocket.delegate = self;
+    [self askForTreatInfomation];
 
 }
 -(void)configureView
@@ -106,35 +112,6 @@
     maskLayer1.fillColor = nil;
     [self.cancelButton.layer addSublayer:maskLayer1];
     
-    //保存设置
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    //持续时间
-    if (self.treatInfomation.treatTime == 36060)
-    {
-        customTimeSelected = NO;
-        
-    }
-    else        //自定义时间
-    {
-        
-        NSInteger hour = self.treatInfomation.treatTime / 3600;
-        NSInteger minute = self.treatInfomation.treatTime / 60;
-        minute = minute % 60;
-        
-        //保存设置前的时间和分钟
-        [userDefaults setInteger:hour forKey:@"Hour"];
-        [userDefaults setInteger:minute forKey:@"Minute"];
-        customTimeSelected = YES;
-    }
-    NSInteger pressLevel = self.treatInfomation.pressLevel;
-    //保存压力和时间选择
-    [userDefaults setBool:customTimeSelected forKey:@"CustomTimeSelected"];
-    [userDefaults setInteger:pressLevel forKey:@"PressLevel"];
-
-    
-    [self updateView];
-
-    
  }
 -(void)updateView
 {
@@ -150,8 +127,8 @@
         NSInteger minute = self.treatInfomation.treatTime / 60;
         minute = minute % 60;
         //调到对应的时间和分钟
-        [self.minutePicker selectRow:minute inComponent:0 animated:NO];
-        [self.hourPicker selectRow:hour inComponent:0 animated:NO];
+        [self.minutePicker selectRow:minute inComponent:0 animated:YES];
+        [self.hourPicker selectRow:hour inComponent:0 animated:YES];
         
         //10小时取消minute的选择
         if (hour == 10)
@@ -162,7 +139,7 @@
     }
     //压力调到对应的压力等级
     NSInteger pressLevel = self.treatInfomation.pressLevel;
-    [self.pressGradePicker selectRow:pressLevel inComponent:0 animated:NO];
+    [self.pressGradePicker selectRow:pressLevel inComponent:0 animated:YES];
     
     [self configureTimeSelectButton];
 }
@@ -250,15 +227,16 @@
         }
 
         Pack *pack = [[Pack alloc]init];
-        
+        int tag = 1;
+        if ([sender isEqual:self.cancelButton]){ tag = 0; }
         //压力等级
         Byte addrBytes2[2] = {80,16};
         NSInteger pressValue = [self.pressGradePicker selectedRowInComponent:0];
-        [self.clientSocket writeData:[pack packetWithCmdid:0X90 addressEnabled:YES addr:[self dataWithBytes:addrBytes2]dataEnabled:YES data:[self dataWithValue:pressValue]] withTimeout:-1 tag:1];
+        [self.clientSocket writeData:[pack packetWithCmdid:0X90 addressEnabled:YES addr:[self dataWithBytes:addrBytes2]dataEnabled:YES data:[self dataWithValue:pressValue]] withTimeout:-1 tag:tag];
         
         //持续时间
         Byte addrBytes1[2] = {80,4};
-        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes1] dataEnabled:YES data:[self dataWithValue:minutes]] withTimeout:-1 tag:1];
+        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes1] dataEnabled:YES data:[self dataWithValue:minutes]] withTimeout:-1 tag:tag];
     }
     else
     {
@@ -268,23 +246,12 @@
 - (IBAction)cancel:(id)sender
 
 {
-    //更改前的压力等级
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSInteger pressLevel = [userDefaults integerForKey:@"PressLevel"];
-    [self.pressGradePicker selectRow:pressLevel inComponent:0 animated:YES];
-    
-    //更改前的选择
-    customTimeSelected = [userDefaults boolForKey:@"CustomTimeSelected"];
-    
-    //更改前的时间和分钟
-    NSInteger hour = [userDefaults integerForKey:@"Hour"];
-    NSInteger minute = [userDefaults integerForKey:@"Minute"];
-    [self.hourPicker selectRow:hour inComponent:0 animated:YES];
-    [self.minutePicker selectRow:minute inComponent:0 animated:YES];
-    
+    [self.pressGradePicker selectRow:1 inComponent:0 animated:NO];
+    [self.hourPicker selectRow:0 inComponent:0 animated:NO];
+    [self.minutePicker selectRow:20 inComponent:0 animated:NO];
+    customTimeSelected = YES;
     [self configureTimeSelectButton];
     [self save:sender];
-    [self showAlertViewWithMessage:@"取消更改成功"];
 }
 
 #pragma mark - socketDelegate
@@ -320,7 +287,13 @@
     myDelegate.cconnected = NO;
     [self presentDisconnectAlert];
 }
-
+-(void)askForTreatInfomation
+{
+    Pack *pack = [[Pack alloc]init];
+    Byte dataBytes[2] = {1,0x62};
+    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                                           dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:1000];
+}
 -(void)presentDisconnectAlert
 {
     UIView *disconnectView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, 375, 557)];
@@ -371,7 +344,6 @@
     {
         label = [[UILabel alloc]init];
         label.font= [UIFont systemFontOfSize:20];
-//        label.textColor = UIColorFromHex(0x2b5694);
         label.textColor = UIColorFromHex(0x65bba9);
         [label setTextAlignment:NSTextAlignmentCenter];
     }
@@ -428,17 +400,14 @@
 }
 -(NSData*) dataWithValue:(NSInteger)value
 {
-    
     Byte src[2]={0,0};
     src[0] =  (Byte) ((value>>8) & 0xFF);
     src[1] =  (Byte) (value & 0xFF);
     NSData *data = [NSData dataWithBytes:src length:2];
     return data;
 }
-
 -(NSData*) dataWithBytes:(Byte[])bytes
 {
-    
     NSData *data = [NSData dataWithBytes:bytes length:2];
     return data;
 }

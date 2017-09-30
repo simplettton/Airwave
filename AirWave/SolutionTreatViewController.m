@@ -33,8 +33,14 @@
     {
         self.treatInfomation = [[TreatInformation alloc]init];
     }
+    self.pressTextField.text = [NSString stringWithFormat:@"100"];
+    self.stepper.value = 100;
+    self.stepper.minimumValue = 0;
+    self.stepper.maximumValue = 240.0;
+    self.stepper.tintColor = UIColorFromHex(0x65BBA9);
     
     [self configureView];
+    [self updateView];
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -69,19 +75,19 @@
     [self.saveButton.layer addSublayer:maskLayer];
     self.saveButton.titleLabel.textColor = [UIColor whiteColor];
     
-    [self updateView];
-
-    
 }
 -(void)updateView
 {
     //stepper
-    self.stepper.minimumValue = 0;
-    self.stepper.maximumValue = 240.0;
-    self.stepper.tintColor = UIColorFromHex(0x65BBA9);
-    self.stepper.value = [self.treatInfomation.press[0]doubleValue];
+    self.stepper.value = [self.treatInfomation.press[0]integerValue];
     [self.stepper addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
-    self.pressTextField.text = [NSString stringWithFormat:@"%ld",(long)[self.treatInfomation.press[0] integerValue]];
+    AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
+
+    if (myDelegate.cconnected)
+    {
+        self.pressTextField.text = [NSString stringWithFormat:@"%ld",(long)self.stepper.value];
+    }
+
     //select button
     for (int i = 1; i<11; i++)
     {

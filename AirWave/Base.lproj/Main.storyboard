@@ -246,7 +246,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7I1-MJ-qIP">
                                 <rect key="frame" x="240" y="629" width="83" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="set_normal-1"/>
+                                <state key="normal" title="Button" image="mode_normal"/>
                                 <connections>
                                     <action selector="tapSettingButton:" destination="49W-s7-z4E" eventType="touchUpInside" id="LUg-41-JLc"/>
                                 </connections>
@@ -1012,7 +1012,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eVy-dJ-dNN">
                                 <rect key="frame" x="240" y="629" width="83" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="set_press-1">
+                                <state key="normal" title="Button" image="mode_press">
                                     <color key="titleColor" red="0.57667076587677002" green="0.7670014500617981" blue="0.96600097417831421" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
@@ -1237,7 +1237,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PKp-y5-OUT">
                                 <rect key="frame" x="240" y="629" width="83" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="set_press-1"/>
+                                <state key="normal" title="Button" image="mode_press"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1437,7 +1437,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iiU-cs-Gmr">
                                 <rect key="frame" x="240" y="629" width="83" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="set_press-1"/>
+                                <state key="normal" title="Button" image="mode_press"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1519,7 +1519,7 @@
                                             <action selector="onClick:" destination="0kn-LS-pQG" eventType="touchUpInside" id="aCK-eA-Ese"/>
                                         </connections>
                                     </button>
-                                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="Q1L-se-ZVW">
+                                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="100" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="Q1L-se-ZVW">
                                         <rect key="frame" x="228" y="134" width="94" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </stepper>
@@ -1793,7 +1793,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XPQ-i4-UKl">
                                 <rect key="frame" x="240" y="629" width="83" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="set_press-1"/>
+                                <state key="normal" title="Button" image="mode_press"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2361,6 +2361,8 @@
         <image name="middle2_grey" width="275" height="35"/>
         <image name="middle3_grey" width="275" height="35"/>
         <image name="middle4_grey" width="275" height="35"/>
+        <image name="mode_normal" width="580" height="200"/>
+        <image name="mode_press" width="580" height="200"/>
         <image name="pause_write" width="85" height="85"/>
         <image name="play" width="85" height="85"/>
         <image name="rightdown1_grey" width="151" height="193"/>
@@ -2378,7 +2380,6 @@
         <image name="rightup3_grey" width="107" height="100"/>
         <image name="selected" width="85" height="85"/>
         <image name="set_normal-1" width="580" height="200"/>
-        <image name="set_press-1" width="580" height="200"/>
         <image name="speed" width="85" height="85"/>
         <image name="time" width="85" height="85"/>
         <image name="treat_normal-1" width="580" height="200"/>
@@ -2386,10 +2387,10 @@
         <image name="unselected" width="86" height="86"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Vh8-vL-iVQ"/>
+        <segue reference="qKM-P1-yvi"/>
+        <segue reference="32F-K8-RkS"/>
+        <segue reference="gP2-f7-lrR"/>
         <segue reference="bkz-JL-cM5"/>
-        <segue reference="YjL-T0-1N7"/>
-        <segue reference="4g4-bt-O77"/>
-        <segue reference="gIv-VQ-fEb"/>
-        <segue reference="YZz-rL-WdO"/>
     </inferredMetricsTieBreakers>
 </document>

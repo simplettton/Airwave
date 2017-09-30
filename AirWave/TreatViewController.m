@@ -54,23 +54,24 @@ typedef NS_ENUM(NSUInteger,BodyTags)
     leftleg1tag  =57,leftleg2tag  =56,leftleg3tag  =55,leftleg4tag  =54,leftleg5tag  =53,leftleg6tag  =52,leftleg7tag  =51, disconnectViewtag = 999
     
 };
-static int bodyPartTags[] = {leftup1tag,leftup2tag,leftup3tag,lefthandtag,leftdown1tag,leftdown2tag,leftdown3tag,leftfoottag,rightup1tag,rightup2tag,rightup3tag,righthandtag,rightdown1tag,rightdown2tag,rightdown3tag,rightfoottag,middle1tag,middle2tag,middle3tag,middle4tag};
+static int bodyPartTags[] = {   leftup1tag , leftup2tag , leftup3tag , lefthandtag , leftdown1tag , leftdown2tag , leftdown3tag , leftfoottag ,
+                                rightup1tag, rightup2tag, rightup3tag, righthandtag, rightdown1tag, rightdown2tag, rightdown3tag, rightfoottag,
+                                 middle1tag, middle2tag , middle3tag , middle4tag    };
 
-static int legTags[] = {leftleg1tag,leftleg2tag,leftleg3tag,leftleg4tag,leftleg5tag,leftleg6tag,leftleg7tag,leftfoottag,rightleg1tag,rightleg2tag,rightleg3tag,rightleg4tag,rightleg5tag,rightleg6tag,rightleg7tag,rightfoottag};
+static int legTags[] = {    leftleg1tag , leftleg2tag , leftleg3tag , leftleg4tag , leftleg5tag , leftleg6tag , leftleg7tag , leftfoottag,
+                            rightleg1tag, rightleg2tag, rightleg3tag, rightleg4tag, rightleg5tag, rightleg6tag, rightleg7tag, rightfoottag    };
 
 NSString *const HOST = @"10.10.100.254";
 NSString *const POST = @"8080";
 
 @interface TreatViewController ()<GCDAsyncSocketDelegate>
-//客户端socket
-@property (strong,nonatomic)GCDAsyncSocket *clientSocket;
-//计时器
 @property (nonatomic, strong) NSTimer *connectTimer;
 @property (nonatomic, strong) NSTimer *updateTimer;
 @property (nonatomic, assign) BOOL connected;
-@property (nonatomic,strong) NSTimer *changeColorTimer;
-@property (nonatomic,strong) TreatInformation *treatInformation;
-@property (nonatomic,strong) RunningInfomation *runningInfomation;
+@property (nonatomic, strong) NSTimer *changeColorTimer;
+@property (nonatomic, strong) TreatInformation *treatInformation;
+@property (nonatomic, strong) RunningInfomation *runningInfomation;
+@property (nonatomic, strong) GCDAsyncSocket *clientSocket;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *barBtItem;
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
@@ -78,19 +79,16 @@ NSString *const POST = @"8080";
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
 @property (weak, nonatomic) IBOutlet UILabel *pressLabel;
+@property (weak, nonatomic) IBOutlet UILabel *warnningLabel;
 @property (weak, nonatomic) IBOutlet ProgressView *progressView;
 @property (weak, nonatomic) IBOutlet ProgressView *progressBackground;
-@property (weak, nonatomic) IBOutlet UILabel *warnningLabel;
-
 
 
 - (IBAction)tapPlayButton:(id)sender;
 - (IBAction)tapPauseButton:(id)sender;
 - (IBAction)tapSettingButton:(id)sender;
-- (IBAction)reconnect:(id)sender;
-
-
 @end
+
 
 @implementation TreatViewController
 {
@@ -1178,7 +1176,6 @@ NSString *const POST = @"8080";
     self.clientSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
     [self.clientSocket connectToHost:HOST onPort:[POST integerValue] viaInterface:nil withTimeout:-1 error:&error];
 
-    
 }
 -(CABasicAnimation *)warningMessageAnimation:(float)time
 {

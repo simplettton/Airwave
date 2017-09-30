@@ -38,7 +38,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     
     self.modePicker.delegate = self;
     self.hourPicker.delegate = self;
@@ -64,17 +63,18 @@
     {
         [minuteArray addObject:[NSString stringWithFormat:@"%d",i]];
     }
-    [self configureView];
     
-    if (self.treatInfomation == nil)
-    {
-        self.treatInfomation = [[TreatInformation alloc]init];
-    }
+    //默认的设置
+    [self.hourPicker selectRow:0 inComponent:0 animated:NO];
+    [self.minutePicker selectRow:20 inComponent:0 animated:NO];
+    [self.modePicker selectRow:0 inComponent:0 animated:NO];
+    customTimeSelected = YES;
+    [self configureTimeSelectButton];
+    [self configureView];
     
 }
 -(void)viewDidAppear:(BOOL)animated
 {
-    //取出全局变量clientsocket
     [super viewDidAppear:YES];
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     self.clientSocket = myDelegate.cclientSocket;
@@ -116,33 +116,6 @@
     maskLayer1.strokeColor = UIColorFromHex(0x85ABE4).CGColor;
     maskLayer1.fillColor = nil;
     [self.cancelButton.layer addSublayer:maskLayer1];
-    [self updateView];
- 
-    
-    //保存初始设置
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    if (self.treatInfomation.treatTime == 36060)
-    {
-        customTimeSelected = NO;
-    }
-    else //自定义时间
-    {
-        
-        NSInteger hour = self.treatInfomation.treatTime / 3600;
-        NSInteger minute = self.treatInfomation.treatTime / 60;
-        minute = minute % 60;
-        
-        //保存设置前的时间和分钟
-        [userDefaults setInteger:hour forKey:@"Hour"];
-        [userDefaults setInteger:minute forKey:@"Minute"];
-        customTimeSelected = YES;
-    }
-    NSInteger mode = self.treatInfomation.treatMode;
-    //保存模式和选择
-    [userDefaults setInteger:mode forKey:@"Mode"];
-    [userDefaults setBool:customTimeSelected forKey:@"CustomTimeSelected"];
-
-
 }
 -(void)updateView
 {
@@ -161,8 +134,8 @@
         minute = minute % 60;
         
         //调到对应的时间和分钟
-        [self.minutePicker selectRow:minute inComponent:0 animated:NO];
-        [self.hourPicker selectRow:hour inComponent:0 animated:NO];
+        [self.minutePicker selectRow:minute inComponent:0 animated:YES];
+        [self.hourPicker selectRow:hour inComponent:0 animated:YES];
         
         //10小时取消minute的选择
         if (hour == 10)
@@ -171,14 +144,12 @@
         }
         customTimeSelected = YES;
     }
+        [self configureTimeSelectButton];
     
     //调到对应的模式
     NSInteger mode = self.treatInfomation.treatMode;
     [self.modePicker selectRow:(mode-1) inComponent:0 animated:YES];
     
-
-    [self configureTimeSelectButton];
-
 }
 -(void)configureTimeSelectButton
 {
@@ -260,16 +231,20 @@
         }
         
         Pack *pack = [[Pack alloc]init];
-        
+        //取消不弹框
+        int tag = 1;
+        if ([sender isEqual:self.cancelButton])
+        {
+            tag =0;
+        }
         //设置时间
         Byte addrBytes1[2] = {80,4};
-        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes1] dataEnabled:YES data:[self dataWithValue:minutes]] withTimeout:-1 tag:1];
+        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes1] dataEnabled:YES data:[self dataWithValue:minutes]] withTimeout:-1 tag:tag];
         
         //设置治疗方案
         Byte addrBytes2[2] = {80,3};
         NSInteger mode = [self.modePicker selectedRowInComponent:0];
-        
-        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes2] dataEnabled:YES data:[self dataWithValue:(mode+1)]] withTimeout:-1 tag:1];
+        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes2]dataEnabled:YES data:[self dataWithValue:(mode+1)]] withTimeout:-1 tag:tag];
     }
     else
     {
@@ -279,24 +254,12 @@
 - (IBAction)cancel:(id)sender
 
 {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    
-    //更改前的选择
-    customTimeSelected = [userDefaults boolForKey:@"CustomTimeSelected"];
+    [self.hourPicker selectRow:0 inComponent:0 animated:NO];
+    [self.minutePicker selectRow:20 inComponent:0 animated:NO];
+    [self.modePicker selectRow:0 inComponent:0 animated:NO];
+    customTimeSelected = YES;
     [self configureTimeSelectButton];
-    
-    //更改前的时间和分钟
-    NSInteger hour = [userDefaults integerForKey:@"Hour"];
-    NSInteger minute = [userDefaults integerForKey:@"Minute"];
-    [self.hourPicker selectRow:hour inComponent:0 animated:YES];
-    [self.minutePicker selectRow:minute inComponent:0 animated:YES];
-    
-    //更改前的模式
-    NSInteger mode = [userDefaults integerForKey:@"Mode"];
-    [self.modePicker selectRow:(mode-1) inComponent:0 animated:YES];
-    
     [self save:sender];
-    [self showAlertViewWithMessage:@"取消更改成功"];
 }
 -(void)askForTreatInfomation
 {
@@ -326,6 +289,7 @@
     if (bytes[2]==0x90)
     {
         [self.treatInfomation analyzeWithData:data];
+
         dispatch_async(dispatch_get_main_queue(), ^{
             [self updateView];
         });
@@ -356,12 +320,12 @@
     [disconnectView addSubview:button];
     [self.view addSubview:disconnectView];
 }
-
 #pragma mark - UIPickerViewDelegate
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
     return 1;
 }
--(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
     if (pickerView.tag == 1000)
     {
         return modeArray.count;
@@ -371,7 +335,8 @@
         return hourArray.count;
     }else return minuteArray.count;
 }
--(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view{
+-(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+{
     UILabel *label = (UILabel *)view;
     if (label == nil)
     {
@@ -469,7 +434,6 @@
     NSData *data = [NSData dataWithBytes:src length:2];
     return data;
 }
-
 -(NSData*) dataWithBytes:(Byte[])bytes
 {
     
@@ -481,12 +445,8 @@
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Attention!!"
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
-    
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * action) {
-                                                              
-                                                          }];
-    
+                                                          handler:nil];
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
