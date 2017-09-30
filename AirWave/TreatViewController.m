@@ -103,9 +103,20 @@ NSString *const POST = @"8080";
     NSMutableArray *bodyButtons;
     NSMutableArray *legButtons;
 }
+//设置状态栏颜色
+- (void)setStatusBarBackgroundColor:(UIColor *)color {
+    
+    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
+    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)])
+    {
+        statusBar.backgroundColor = color;
+    }
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+//    [self setStatusBarBackgroundColor:UIColorFromHex(0x65BBA9)];
+//    [UIApplication sharedApplication].statusBarStyle=UIStatusBarStyleLightContent;
     [self askForTreatInfomation];
 }
 -(void)viewDidDisappear:(BOOL)animated

@@ -17,6 +17,7 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
     restoreFactoryBtnTag = 1000,cancelChangeBtnTag = 2000,saveBtnTag = 3000
 };
 @interface SettingViewController ()<GCDAsyncSocketDelegate>
+
 @property (strong,nonatomic) GCDAsyncSocket *clientSocket;
 @property (weak, nonatomic) IBOutlet UILabel *keepTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *intervalTimeLabel;
@@ -25,8 +26,6 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
 @property (weak, nonatomic) IBOutlet UIStepper *intervalTimeStepper;
 @property (weak, nonatomic) IBOutlet UIStepper *chargeSpeedStepper;
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
-
-
 - (IBAction)save:(id)sender;
 - (IBAction)cancelChange:(id)sender;
 - (IBAction)restoreFactorySetting:(id)sender;
@@ -34,6 +33,26 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
 @end
 
 @implementation SettingViewController
+//设置字体颜色
+//- (UIStatusBarStyle)preferredStatusBarStyle
+//{
+//    return UIStatusBarStyleLightContent;//白色
+//}
+
+//设置状态栏颜色
+- (void)setStatusBarBackgroundColor:(UIColor *)color
+{
+    
+    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
+    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
+        statusBar.backgroundColor = color;
+    }
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+//    [self preferredStatusBarStyle];
+//    [self setStatusBarBackgroundColor:UIColorFromHex(0xB5D2F0)];
+}
 
 - (void)viewDidLoad
 {

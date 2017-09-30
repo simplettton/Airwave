@@ -475,7 +475,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0.70980387926101685" green="0.824077308177948" blue="0.94204825162887573" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.70980392156862748" green="0.82352941176470584" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -491,7 +491,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A8B-E2-Zwi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3765.5999999999999" y="71.514242878560722"/>
+            <point key="canvasLocation" x="3676" y="53"/>
         </scene>
         <!--Other Setting View Controller-->
         <scene sceneID="KVb-lR-xCA">
@@ -2386,10 +2386,10 @@
         <image name="unselected" width="86" height="86"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Vh8-vL-iVQ"/>
-        <segue reference="qKM-P1-yvi"/>
-        <segue reference="32F-K8-RkS"/>
-        <segue reference="gP2-f7-lrR"/>
-        <segue reference="bnI-Yd-YTo"/>
+        <segue reference="gIv-VQ-fEb"/>
+        <segue reference="hW4-xW-9f9"/>
+        <segue reference="bkz-JL-cM5"/>
+        <segue reference="YZz-rL-WdO"/>
+        <segue reference="4g4-bt-O77"/>
     </inferredMetricsTieBreakers>
 </document>

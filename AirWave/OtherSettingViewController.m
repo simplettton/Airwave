@@ -37,15 +37,32 @@ typedef NS_ENUM(NSUInteger,typeTags)
     NSArray *typeNames;
     NSArray *typeDics;
 }
+//- (UIStatusBarStyle)preferredStatusBarStyle
+//{
+//    return UIStatusBarStyleLightContent;//白色
+//}
 
+//设置状态栏颜色
+- (void)setStatusBarBackgroundColor:(UIColor *)color
+{
+    
+    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
+    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
+        statusBar.backgroundColor = color;
+    }
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+//    [self preferredStatusBarStyle];
+//    [self setStatusBarBackgroundColor:UIColorFromHex(0xB5D2F0)];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     //B端与A端图片名称一样
     typeNames = [NSArray arrayWithObjects:@"",@"A1",@"A2",@"A3",@"A4",@"A5",@"A6",@"A7",@"A8",@"A9",@"A10",@"A11",
                                               @"A1",@"A2",@"A3",@"A4",@"A5",@"A6",@"A7",@"A8",@"A9", nil];
-    typeDics =          @[@{@"TYPE   ":@"tag",                                         @"commit":[NSNumber numberWithUnsignedInteger:0x0]},
-                          
+    typeDics =          @[@{@"TYPE   ":@"tag",                                 @"commit":[NSNumber numberWithUnsignedInteger:0x0]},
                           @{@"FOTA001": [NSNumber numberWithInteger:A1tag],    @"commit":[NSNumber numberWithUnsignedInteger:0x196]},
                           @{@"LEGA003": [NSNumber numberWithInteger:A2tag],    @"commit":[NSNumber numberWithUnsignedInteger:0x148]},
                           @{@"HNDA001": [NSNumber numberWithInteger:A3tag],    @"commit":[NSNumber numberWithUnsignedInteger:0x198]},
