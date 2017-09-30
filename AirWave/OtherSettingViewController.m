@@ -60,9 +60,9 @@ typedef NS_ENUM(NSUInteger,typeTags)
                            
                           @{@"FOTB001": [NSNumber numberWithInteger:B1tag],    @"commit":[NSNumber numberWithUnsignedInteger:0x197]},
                           @{@"LEGB003": [NSNumber numberWithInteger:B2tag],    @"commit":[NSNumber numberWithUnsignedInteger:0x149]},
-                          @{@"LEGB004": [NSNumber numberWithInteger:B3tag],    @"commit":[NSNumber numberWithUnsignedInteger:0x199]},
+                          @{@"HNDB001": [NSNumber numberWithInteger:B3tag],    @"commit":[NSNumber numberWithUnsignedInteger:0x199]},
                           @{@"ARMB003": [NSNumber numberWithInteger:B4tag],    @"commit":[NSNumber numberWithUnsignedInteger:0x14b]},
-                          @{@"LEGA004": [NSNumber numberWithInteger:B5tag],    @"commit":[NSNumber numberWithUnsignedInteger:0x14d]},
+                          @{@"LEGB004": [NSNumber numberWithInteger:B5tag],    @"commit":[NSNumber numberWithUnsignedInteger:0x14d]},
                           @{@"ARMB004": [NSNumber numberWithInteger:B6tag],    @"commit":[NSNumber numberWithUnsignedInteger:0x14f]},
                           @{@"ABDB004": [NSNumber numberWithInteger:B7tag],    @"commit":[NSNumber numberWithUnsignedInteger:0x157]},
                           @{@"HANB008": [NSNumber numberWithInteger:B8tag],    @"commit":[NSNumber numberWithUnsignedInteger:0x195]},
@@ -74,15 +74,24 @@ typedef NS_ENUM(NSUInteger,typeTags)
     {
         for(NSString *key in dic)
         {
-            if ([key isEqualToString:aport])
+            if (![key isEqualToString:@"commit"])
             {
-                NSNumber *tagNumber = [dic objectForKey:key];
-                [self onclickAport:[self.view viewWithTag:[tagNumber integerValue]]];
-            }
-            if ([key isEqualToString:bport])
-            {
-                NSNumber *tagNumber = [dic objectForKey:key];
-                [self onclickBport:[self.view viewWithTag:[tagNumber integerValue]]];
+                if ([key isEqualToString:aport])
+                {
+                    NSNumber *tagNumber = [dic objectForKey:key];
+                    if ([tagNumber integerValue] <= A11tag)
+                    {
+                        [self onclickAport:[self.view viewWithTag:[tagNumber integerValue]]];
+                    }
+                }
+                if ([key isEqualToString:bport])
+                {
+                    NSNumber *tagNumber = [dic objectForKey:key];
+                    if ([tagNumber integerValue] >= B1tag)
+                    {
+                        [self onclickBport:[self.view viewWithTag:[tagNumber integerValue]]];
+                    }
+                }
             }
         }
     }
@@ -149,7 +158,12 @@ typedef NS_ENUM(NSUInteger,typeTags)
     
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认"
                                                             style:UIAlertActionStyleDefault
-                                                          handler:nil];
+                                                          handler:^(UIAlertAction * _Nonnull action)
+                                    {
+                                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                                  [self performSegueWithIdentifier:@"OtherSettingToMain" sender:nil];}  );
+                                    }];
+
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
 }

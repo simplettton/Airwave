@@ -43,7 +43,8 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
     {
         self.treatInfomation = [[TreatInformation alloc]init];
     }
-
+    
+    
     //设置边框
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.keepTimeLabel.bounds byRoundingCorners:UIRectCornerTopRight|UIRectCornerBottomRight|UIRectCornerTopLeft|UIRectCornerBottomLeft cornerRadii:CGSizeMake(5.0, 5.0)];
     CAShapeLayer *maskLayer = [CAShapeLayer layer];

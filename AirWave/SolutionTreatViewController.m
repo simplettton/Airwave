@@ -5,7 +5,6 @@
 //  Created by Macmini on 2017/9/1.
 //  Copyright © 2017年 Shenzhen Lifotronic Technology Co.,Ltd. All rights reserved.
 //
-
 #import "SolutionTreatViewController.h"
 #import "TreatViewController.h"
 #import "TreatInformation.h"
@@ -15,12 +14,12 @@
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 
 @interface SolutionTreatViewController ()<GCDAsyncSocketDelegate>
-@property (strong,nonatomic) GCDAsyncSocket *clientSocket;
-@property (weak,  nonatomic) IBOutlet UIView *buttonView;
-@property (weak,  nonatomic) IBOutlet UIStepper *stepper;
-@property (weak,  nonatomic) IBOutlet UIView *backgroudView;
-@property (weak,  nonatomic) IBOutlet UITextField *pressTextField;
-@property (assign,nonatomic) NSInteger selectedModeTag;
+@property (nonatomic,strong) GCDAsyncSocket *clientSocket;
+@property (nonatomic,  weak) IBOutlet UIView *buttonView;
+@property (nonatomic,  weak) IBOutlet UIStepper *stepper;
+@property (nonatomic,  weak) IBOutlet UIView *backgroudView;
+@property (nonatomic,  weak) IBOutlet UITextField *pressTextField;
+@property (nonatomic,) NSInteger selectedModeTag;
 - (IBAction)onClick:(id)sender;
 - (IBAction)save:(id)sender;
 @end
@@ -38,7 +37,6 @@
     self.stepper.minimumValue = 0;
     self.stepper.maximumValue = 240.0;
     self.stepper.tintColor = UIColorFromHex(0x65BBA9);
-    
     [self configureView];
     [self updateView];
 }
@@ -62,7 +60,6 @@
     topBorder.frame = CGRectMake(0.0f, 0.0f, self.buttonView.frame.size.width, 0.5f);
     topBorder.backgroundColor = UIColorFromHex(0xE4E4E4).CGColor;
     [self.buttonView.layer addSublayer:topBorder];
-    
     
     //save button
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.saveButton.bounds byRoundingCorners:UIRectCornerTopRight|UIRectCornerBottomRight|UIRectCornerTopLeft|UIRectCornerBottomLeft cornerRadii:CGSizeMake(10.0, 10.0)];
@@ -224,7 +221,8 @@
                                    @{@"tag":@"7",   @"commit":[NSNumber numberWithUnsignedInteger:0xbf]},
                                    @{@"tag":@"8",   @"commit":[NSNumber numberWithUnsignedInteger:0xc0]},
                                    @{@"tag":@"9",   @"commit":[NSNumber numberWithUnsignedInteger:0xc1]},
-                                   @{@"tag":@"10",  @"commit":[NSNumber numberWithUnsignedInteger:0xc2]}];
+                                   @{@"tag":@"10",  @"commit":[NSNumber numberWithUnsignedInteger:0xc2]}    ];
+    
     Pack *pack = [[Pack alloc]init];
     for(NSDictionary *dic in modeSettingDics)
     {
@@ -234,7 +232,6 @@
             NSData *dataToSend = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:commit]];
             [self.clientSocket writeData:dataToSend withTimeout:-1 tag:1];
         }
-        
     }
     
     //设置治疗压力
@@ -242,7 +239,6 @@
     NSInteger press= [self.pressTextField.text integerValue];
     NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrByte2]
                                   dataEnabled:YES data:[self dataWithValue:press]];
-    
     [self.clientSocket writeData:sendData withTimeout:-1 tag:1];
 }
 
@@ -268,9 +264,7 @@
             [self updateView];
         });
     }
-    
     [sock readDataWithTimeout:- 1 tag:0];
-    
 }
 -(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
@@ -295,7 +289,6 @@
     [disconnectView addSubview:label];
     [disconnectView addSubview:button];
     [self.view addSubview:disconnectView];
-    
 }
 -(void)askForTreatInfomation
 {

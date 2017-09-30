@@ -239,7 +239,7 @@
                                 <rect key="frame" x="52" y="629" width="83" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" image="treat_press-1">
+                                <state key="normal" image="treat_press">
                                     <color key="titleColor" red="0.21176470589999999" green="0.3921568627" blue="0.56477864580000003" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
@@ -517,7 +517,7 @@
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="dGh-mk-HF3" kind="presentation" identifier="OtherSettingToMain" modalTransitionStyle="crossDissolve" id="YjL-T0-1N7"/>
+                                            <segue destination="dGh-mk-HF3" kind="presentation" identifier="OtherSettingToMain" animates="NO" id="YjL-T0-1N7"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PWf-uU-jc2">
@@ -1020,7 +1020,7 @@
                                 <rect key="frame" x="52" y="629" width="83" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" image="treat_normal-1">
+                                <state key="normal" image="treat_normal">
                                     <color key="titleColor" red="0.89365547895431519" green="0.89433497190475464" blue="0.89376074075698853" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -1227,7 +1227,7 @@
                                 <rect key="frame" x="52" y="629" width="83" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" image="treat_normal-1">
+                                <state key="normal" image="treat_normal">
                                     <color key="titleColor" red="0.21176470589999999" green="0.3921568627" blue="0.56477864580000003" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -1427,7 +1427,7 @@
                                 <rect key="frame" x="52" y="629" width="83" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" image="treat_normal-1">
+                                <state key="normal" image="treat_normal">
                                     <color key="titleColor" red="0.21176470589999999" green="0.3921568627" blue="0.56477864580000003" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -1783,7 +1783,7 @@
                                 <rect key="frame" x="52" y="629" width="83" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" image="treat_normal-1">
+                                <state key="normal" image="treat_normal">
                                     <color key="titleColor" red="0.21176470589999999" green="0.3921568627" blue="0.56477864580000003" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -2035,14 +2035,14 @@
                                 <rect key="frame" x="52" y="629" width="83" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" image="treat_press-1">
+                                <state key="normal" image="treat_press">
                                     <color key="titleColor" red="0.21176470589999999" green="0.3921568627" blue="0.56477864580000003" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uOT-oO-ezU">
                                 <rect key="frame" x="240" y="629" width="83" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="set_normal-1"/>
+                                <state key="normal" title="Button" image="mode_normal"/>
                                 <connections>
                                     <action selector="tapSettingButton:" destination="QB7-DW-qNb" eventType="touchUpInside" id="7f1-yq-48S"/>
                                 </connections>
@@ -2278,14 +2278,14 @@
                                 <rect key="frame" x="52" y="629" width="83" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" image="treat_press-1">
+                                <state key="normal" image="treat_press">
                                     <color key="titleColor" red="0.21176470589999999" green="0.3921568627" blue="0.56477864580000003" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f5J-ld-4QO">
                                 <rect key="frame" x="240" y="629" width="83" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="set_normal-1"/>
+                                <state key="normal" title="Button" image="mode_normal"/>
                                 <connections>
                                     <action selector="tapSettingButton:" destination="Eir-8A-uaS" eventType="touchUpInside" id="eRF-hW-WQo"/>
                                 </connections>
@@ -2379,11 +2379,10 @@
         <image name="rightup2_grey" width="128" height="127"/>
         <image name="rightup3_grey" width="107" height="100"/>
         <image name="selected" width="85" height="85"/>
-        <image name="set_normal-1" width="580" height="200"/>
         <image name="speed" width="85" height="85"/>
         <image name="time" width="85" height="85"/>
-        <image name="treat_normal-1" width="580" height="200"/>
-        <image name="treat_press-1" width="580" height="200"/>
+        <image name="treat_normal" width="580" height="200"/>
+        <image name="treat_press" width="580" height="200"/>
         <image name="unselected" width="86" height="86"/>
     </resources>
     <inferredMetricsTieBreakers>
@@ -2391,6 +2390,6 @@
         <segue reference="qKM-P1-yvi"/>
         <segue reference="32F-K8-RkS"/>
         <segue reference="gP2-f7-lrR"/>
-        <segue reference="bkz-JL-cM5"/>
+        <segue reference="bnI-Yd-YTo"/>
     </inferredMetricsTieBreakers>
 </document>

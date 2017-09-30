@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIPickerView *hourPicker;
 @property (weak, nonatomic) IBOutlet UIPickerView *minutePicker;
 @property (weak, nonatomic) IBOutlet UIPickerView *pressPicker;
+
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
 @property (weak, nonatomic) IBOutlet UIButton *continueTimeButton;
 @property (weak, nonatomic) IBOutlet UIButton *customTimeButton;
