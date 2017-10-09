@@ -189,6 +189,7 @@ NSString *const POST = @"8080";
     self.runningInfomation = [[RunningInfomation alloc]init];
     [self configureView];
     
+    
 }
 #pragma mark - GCDAsyncSocketDelegate
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port
@@ -305,6 +306,8 @@ NSString *const POST = @"8080";
     self.progressView.circleColor = [UIColor whiteColor];
     self.progressView.lineWith = 9.0;
     self.progressView.label.text = [NSString stringWithFormat:@"100%%"];
+    
+    [self configureBodyView];
 
 }
 -(void)configureBodyView
@@ -340,6 +343,7 @@ NSString *const POST = @"8080";
         //没有加载过按钮则加载
         if ([legButtons count] == 0)
         {
+            legButtons = [[NSMutableArray alloc]initWithCapacity:20];
             NSArray *lightUpLegsDics = @[@{@"position":@"leftleg1",   @"commit":[NSNumber numberWithUnsignedInteger:0xe4]},
                                          @{@"position":@"leftleg2",   @"commit":[NSNumber numberWithUnsignedInteger:0xe3]},
                                          @{@"position":@"leftleg3",   @"commit":[NSNumber numberWithUnsignedInteger:0xe2]},
@@ -405,6 +409,7 @@ NSString *const POST = @"8080";
         //没加载过身体部位则加载
         if ([bodyButtons count] == 0)
         {
+            bodyButtons = [[NSMutableArray alloc]initWithCapacity:20];
             NSArray *lightUpCommitDics = @[@{@"position":@"leftup1",   @"commit":[NSNumber numberWithUnsignedInteger:0x18]},
                                            @{@"position":@"leftup2",   @"commit":[NSNumber numberWithUnsignedInteger:0x17]},
                                            @{@"position":@"leftup3",   @"commit":[NSNumber numberWithUnsignedInteger:0x16]},
@@ -1192,11 +1197,14 @@ NSString *const POST = @"8080";
     {
         UIImageWriteToSavedPhotosAlbum(image, self, nil, nil);
     }
-    [self.picker dismissViewControllerAnimated:YES completion:NULL];
+        [self.picker dismissViewControllerAnimated:YES completion:^{
+             [self configureBodyView];
+        }];
 }
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [self.picker dismissViewControllerAnimated:YES completion:NULL];
+    [self configureBodyView];
     
 }
 #pragma mark - Private Method

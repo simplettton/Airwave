@@ -30,6 +30,7 @@
 		048A3B1A1F540DC500929C37 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A3B191F540DC500929C37 /* SettingViewController.m */; };
 		048A3B1D1F5411D700929C37 /* OtherSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A3B1C1F5411D700929C37 /* OtherSettingViewController.m */; };
 		0496EFBE1F8B4C7E0098C7BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0496EFBD1F8B4C7E0098C7BE /* Assets.xcassets */; };
+		0496EFC31F8B856C0098C7BE /* TreatRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 0496EFC21F8B856C0098C7BE /* TreatRecord.m */; };
 		04B68F491F4EDAE200FD31E5 /* ParameterTreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B68F481F4EDAE200FD31E5 /* ParameterTreatViewController.m */; };
 		80238F6720C2423CFD5B8E71 /* libPods-AirWave.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98F75C0AC4207A763C4E062D /* libPods-AirWave.a */; };
 /* End PBXBuildFile section */
@@ -99,6 +100,8 @@
 		048A3B1B1F5411D700929C37 /* OtherSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherSettingViewController.h; sourceTree = "<group>"; };
 		048A3B1C1F5411D700929C37 /* OtherSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherSettingViewController.m; sourceTree = "<group>"; };
 		0496EFBD1F8B4C7E0098C7BE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0496EFC11F8B856C0098C7BE /* TreatRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreatRecord.h; sourceTree = "<group>"; };
+		0496EFC21F8B856C0098C7BE /* TreatRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreatRecord.m; sourceTree = "<group>"; };
 		04B68F471F4EDAE200FD31E5 /* ParameterTreatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParameterTreatViewController.h; sourceTree = "<group>"; };
 		04B68F481F4EDAE200FD31E5 /* ParameterTreatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParameterTreatViewController.m; sourceTree = "<group>"; };
 		98F75C0AC4207A763C4E062D /* libPods-AirWave.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AirWave.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -142,6 +145,8 @@
 				045D81B21F6295B400D4D998 /* RunningInfomation.m */,
 				0450307B1F6955DB008CFAB4 /* WarnMessage.h */,
 				0450307C1F6955DB008CFAB4 /* WarnMessage.m */,
+				0496EFC11F8B856C0098C7BE /* TreatRecord.h */,
+				0496EFC21F8B856C0098C7BE /* TreatRecord.m */,
 			);
 			name = dataAnalyze;
 			sourceTree = "<group>";
@@ -445,6 +450,7 @@
 				045D81B31F6295B400D4D998 /* RunningInfomation.m in Sources */,
 				044E4F571F6140D8009DD7E7 /* BodyButton.m in Sources */,
 				04B68F491F4EDAE200FD31E5 /* ParameterTreatViewController.m in Sources */,
+				0496EFC31F8B856C0098C7BE /* TreatRecord.m in Sources */,
 				048A3B1D1F5411D700929C37 /* OtherSettingViewController.m in Sources */,
 				048A3B141F53C54900929C37 /* UIColor+UIcolor_RGB.m in Sources */,
 				044D54BE1F4D1A4C002C1E35 /* GradientTreatViewController.m in Sources */,

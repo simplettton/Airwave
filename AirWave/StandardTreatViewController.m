@@ -443,7 +443,6 @@
 }
 -(NSData*) dataWithBytes:(Byte[])bytes
 {
-    
     NSData *data = [NSData dataWithBytes:bytes length:2];
     return data;
 }
