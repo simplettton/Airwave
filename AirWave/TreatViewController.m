@@ -12,9 +12,11 @@
 #import "TreatViewController.h"
 #import "TreatInformation.h"
 #import "RunningInfomation.h"
+#import "WarnMessage.h"
+
 #import "UIImage+ImageWithColor.h"
 #import "ProgressView.h"
-#import "WarnMessage.h"
+
 #import "AppDelegate.h"
 #import "StandardTreatViewController.h"
 #import "GradientTreatViewController.h"
@@ -64,7 +66,8 @@ static int legTags[] = {    leftleg1tag , leftleg2tag , leftleg3tag , leftleg4ta
 NSString *const HOST = @"10.10.100.254";
 NSString *const POST = @"8080";
 
-@interface TreatViewController ()<GCDAsyncSocketDelegate>
+@interface TreatViewController ()<GCDAsyncSocketDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@property (nonatomic, strong) UIImagePickerController *picker;
 @property (nonatomic, strong) NSTimer *connectTimer;
 @property (nonatomic, strong) NSTimer *updateTimer;
 @property (nonatomic, assign) BOOL connected;
@@ -73,17 +76,15 @@ NSString *const POST = @"8080";
 @property (nonatomic, strong) TreatInformation *treatInformation;
 @property (nonatomic, strong) RunningInfomation *runningInfomation;
 
-
-
-
-
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
 @property (weak, nonatomic) IBOutlet UILabel *pressLabel;
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
 @property (weak, nonatomic) IBOutlet UIButton *pauseButton;
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UILabel *warnningLabel;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *barBtItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *settingButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *recordButton;
+
 @property (weak, nonatomic) IBOutlet ProgressView *progressView;
 @property (weak, nonatomic) IBOutlet ProgressView *progressBackground;
 
@@ -104,8 +105,8 @@ NSString *const POST = @"8080";
     NSMutableArray *legButtons;
 }
 //设置状态栏颜色
-- (void)setStatusBarBackgroundColor:(UIColor *)color {
-    
+- (void)setStatusBarBackgroundColor:(UIColor *)color
+{
     UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
     if ([statusBar respondsToSelector:@selector(setBackgroundColor:)])
     {
@@ -237,6 +238,15 @@ NSString *const POST = @"8080";
         NSString *message = [warnMessage analyzeWithData:data];
         [self showWarningMessage:message];
     }
+    //治疗信息
+    if(bytes[2]==0x98)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+        [self takePhotoAlert];
+        });
+
+        NSLog(@"拍照记录");
+    }
     [sock readDataWithTimeout:- 1 tag:0];
 }
 -(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
@@ -269,7 +279,13 @@ NSString *const POST = @"8080";
     self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     
-    self.barBtItem.tintColor = UIColorFromHex(0xFFFFFF);
+    self.settingButton.tintColor = UIColorFromHex(0xFFFFFF);
+
+    //治疗记录按钮
+
+    self.recordButton.tintColor = UIColorFromHex(0xFFFFFF);
+    
+    
     
     CALayer *topBorder = [CALayer layer];
     topBorder.frame = CGRectMake(0.0f, 0.0f, self.buttonView.frame.size.width, 0.5f);
@@ -311,7 +327,6 @@ NSString *const POST = @"8080";
             }
             bodyButtons = [[NSMutableArray alloc]initWithCapacity:20];
             
-            
             //设置腿部的背景块为背景色
             int legTags[] = {leftdown1tag,leftdown2tag,leftdown3tag,rightdown1tag,rightdown2tag,rightdown3tag};
             int legIndex[]={leftdown1index,leftdown2index,leftdown3index,rightdown1index,rightdown2index,rightdown3index};
@@ -320,9 +335,7 @@ NSString *const POST = @"8080";
                 UIImageView *imgView = [self.backgroundView viewWithTag:legTags[i]];
                 [imgView setImage:[UIImage imageNamed:bodyNames[legIndex[i]] withColor:@"white"]];
             }
-
         }
-
         
         //没有加载过按钮则加载
         if ([legButtons count] == 0)
@@ -485,7 +498,6 @@ NSString *const POST = @"8080";
         self.pressLabel.text = [NSString stringWithFormat:@"%@",press];
     }
 
-    
     
     //A端
 
@@ -1038,6 +1050,10 @@ NSString *const POST = @"8080";
     button.enabled = YES;
     [button addTarget:self action:@selector(lightupBodyButton:) forControlEvents:UIControlEventTouchUpInside];
 }
+-(void)recordButtonClicked:(UIButton *)button
+{
+    
+}
 
 -(void)configurePlayButton
 {
@@ -1135,7 +1151,54 @@ NSString *const POST = @"8080";
     [self.clientSocket writeData:[pack packetWithCmdid:0x93 addressEnabled:NO addr:nil
                                                                dataEnabled:NO data:nil] withTimeout:- 1 tag:2];
 }
+#pragma mark - Take Photo
 
+-(void)takePhotoAlert
+{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil
+                                                                   message:@"是否拍照记录治疗情况?"
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:nil];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认"
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * _Nonnull action){
+                                                              
+                                                              [self takePhoto];
+                                                          }];
+
+    [alert addAction:cancelAction];
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+-(void)takePhoto
+{
+    if (self.picker == nil)
+    {
+        self.picker = [[UIImagePickerController alloc]init];
+    }
+    self.picker.delegate = self;
+    self.picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    [self presentViewController:self.picker animated:YES completion:NULL];
+};
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
+{
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    //保存到本地相册
+    if (self.picker.sourceType == UIImagePickerControllerSourceTypeCamera)
+    {
+        UIImageWriteToSavedPhotosAlbum(image, self, nil, nil);
+    }
+    [self.picker dismissViewControllerAnimated:YES completion:NULL];
+}
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self.picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
 #pragma mark - Private Method
 - (NSString *)getCurrentTime
 {
@@ -1219,6 +1282,16 @@ NSString *const POST = @"8080";
     
     NSData *data = [NSData dataWithBytes:bytes length:2];
     return data;
+}
+//修改图片大小
+- (UIImage *)reSizeImage:(UIImage *)image toSize:(CGSize)reSize
+{
+    UIGraphicsBeginImageContext(CGSizeMake(reSize.width, reSize.height));
+    [image drawInRect:CGRectMake(0, 0, reSize.width, reSize.height)];
+    UIImage *reSizeImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return [reSizeImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 }
 -(void)presentDisconnectAlert
 {

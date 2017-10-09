@@ -21,7 +21,6 @@
 		0462C8131F5D42CE00AEC2D6 /* TreatInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0462C8121F5D42CE00AEC2D6 /* TreatInformation.m */; };
 		046BA76D1F480DF2004D7E74 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BA76C1F480DF2004D7E74 /* main.m */; };
 		046BA7701F480DF2004D7E74 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BA76F1F480DF2004D7E74 /* AppDelegate.m */; };
-		046BA7781F480DF2004D7E74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 046BA7771F480DF2004D7E74 /* Assets.xcassets */; };
 		046BA77B1F480DF2004D7E74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 046BA7791F480DF2004D7E74 /* LaunchScreen.storyboard */; };
 		046BA7861F480DF2004D7E74 /* AirWaveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BA7851F480DF2004D7E74 /* AirWaveTests.m */; };
 		046BA7911F480DF2004D7E74 /* AirWaveUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BA7901F480DF2004D7E74 /* AirWaveUITests.m */; };
@@ -30,6 +29,7 @@
 		048A3B141F53C54900929C37 /* UIColor+UIcolor_RGB.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A3B131F53C54900929C37 /* UIColor+UIcolor_RGB.m */; };
 		048A3B1A1F540DC500929C37 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A3B191F540DC500929C37 /* SettingViewController.m */; };
 		048A3B1D1F5411D700929C37 /* OtherSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A3B1C1F5411D700929C37 /* OtherSettingViewController.m */; };
+		0496EFBE1F8B4C7E0098C7BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0496EFBD1F8B4C7E0098C7BE /* Assets.xcassets */; };
 		04B68F491F4EDAE200FD31E5 /* ParameterTreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B68F481F4EDAE200FD31E5 /* ParameterTreatViewController.m */; };
 		80238F6720C2423CFD5B8E71 /* libPods-AirWave.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98F75C0AC4207A763C4E062D /* libPods-AirWave.a */; };
 /* End PBXBuildFile section */
@@ -80,7 +80,6 @@
 		046BA76C1F480DF2004D7E74 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		046BA76E1F480DF2004D7E74 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		046BA76F1F480DF2004D7E74 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		046BA7771F480DF2004D7E74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		046BA77A1F480DF2004D7E74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		046BA77C1F480DF2004D7E74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		046BA7811F480DF2004D7E74 /* AirWaveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirWaveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,6 +98,7 @@
 		048A3B191F540DC500929C37 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		048A3B1B1F5411D700929C37 /* OtherSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherSettingViewController.h; sourceTree = "<group>"; };
 		048A3B1C1F5411D700929C37 /* OtherSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherSettingViewController.m; sourceTree = "<group>"; };
+		0496EFBD1F8B4C7E0098C7BE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04B68F471F4EDAE200FD31E5 /* ParameterTreatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParameterTreatViewController.h; sourceTree = "<group>"; };
 		04B68F481F4EDAE200FD31E5 /* ParameterTreatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParameterTreatViewController.m; sourceTree = "<group>"; };
 		98F75C0AC4207A763C4E062D /* libPods-AirWave.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AirWave.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -187,7 +187,7 @@
 				048A3B191F540DC500929C37 /* SettingViewController.m */,
 				048A3B1B1F5411D700929C37 /* OtherSettingViewController.h */,
 				048A3B1C1F5411D700929C37 /* OtherSettingViewController.m */,
-				046BA7771F480DF2004D7E74 /* Assets.xcassets */,
+				0496EFBD1F8B4C7E0098C7BE /* Assets.xcassets */,
 				0457C63C1F5563EE0050C604 /* Main.storyboard */,
 				046BA7791F480DF2004D7E74 /* LaunchScreen.storyboard */,
 				046BA77C1F480DF2004D7E74 /* Info.plist */,
@@ -365,7 +365,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				046BA77B1F480DF2004D7E74 /* LaunchScreen.storyboard in Resources */,
-				046BA7781F480DF2004D7E74 /* Assets.xcassets in Resources */,
+				0496EFBE1F8B4C7E0098C7BE /* Assets.xcassets in Resources */,
 				0457C63E1F5563EE0050C604 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

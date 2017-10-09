@@ -350,7 +350,6 @@ typedef NS_ENUM(NSUInteger,typeTags)
 
     }else if ([segue.identifier isEqualToString:@"OtherSettingToMain"])
     {
-        Byte addr[]= {0x23,0x06};
         //设置更改生效 返回主界面
         [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0x230f] dataEnabled:YES data:[self dataWithValue:0xf1]] withTimeout:-1 tag:0];
         [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]    dataEnabled:YES data:[self dataWithValue:0Xae]] withTimeout:-1 tag:0];

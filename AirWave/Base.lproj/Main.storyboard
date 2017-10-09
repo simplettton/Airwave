@@ -255,6 +255,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="空气波治疗仪" id="0cT-Wo-4A6">
+                        <barButtonItem key="leftBarButtonItem" title="记录" id="uzN-9B-Qno"/>
                         <barButtonItem key="rightBarButtonItem" title="设置" id="K1o-XT-gzF">
                             <connections>
                                 <segue destination="s5j-zE-Ka8" kind="showDetail" identifier="MainToSetting" animates="NO" id="bnI-Yd-YTo"/>
@@ -263,13 +264,14 @@
                     </navigationItem>
                     <connections>
                         <outlet property="backgroundView" destination="KsC-Us-dCx" id="mZ1-WE-Jhh"/>
-                        <outlet property="barBtItem" destination="K1o-XT-gzF" id="6t7-Js-8jD"/>
                         <outlet property="buttonView" destination="17Z-tY-EuQ" id="rLQ-kg-X0X"/>
                         <outlet property="pauseButton" destination="jT5-Gn-W6K" id="sdg-3H-2lN"/>
                         <outlet property="playButton" destination="ZuS-uD-XdE" id="eRt-Cy-lqH"/>
                         <outlet property="pressLabel" destination="MSC-Lt-fwX" id="5VR-lP-PUz"/>
                         <outlet property="progressBackground" destination="c22-cR-Zlm" id="Mgz-uv-Aa0"/>
                         <outlet property="progressView" destination="RSK-jT-3vG" id="tzY-gY-M26"/>
+                        <outlet property="recordButton" destination="uzN-9B-Qno" id="Mgw-VV-SvG"/>
+                        <outlet property="settingButton" destination="K1o-XT-gzF" id="XhF-14-xfn"/>
                         <outlet property="warnningLabel" destination="4SW-Ss-zX8" id="Q2s-Y1-qPD"/>
                         <segue destination="T0J-Xi-qbF" kind="showDetail" identifier="MainToGradient" animates="NO" id="Dgw-1N-eN9"/>
                         <segue destination="jtX-Ho-uJp" kind="showDetail" identifier="MainToStandard" animates="NO" id="gIv-VQ-fEb"/>
@@ -551,7 +553,7 @@
                                 <rect key="frame" x="34" y="111" width="134" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <color key="textColor" red="0.38431372549999998" green="0.42745098040000001" blue="0.56862745100000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.38338592648506165" green="0.42771971225738525" blue="0.56859201192855835" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QFX-AL-MZ8">
@@ -576,20 +578,6 @@
                                     <action selector="cancelSave:" destination="6CV-bu-DSe" eventType="touchUpInside" id="tYJ-po-1k4"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="使能" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="949-7n-X2I">
-                                <rect key="frame" x="221" y="118" width="35" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.38431372549019605" green="0.42745098039215684" blue="0.56862745098039214" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="不使能" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rcl-4d-gbg">
-                                <rect key="frame" x="290" y="118" width="52" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.38431372549999998" green="0.42745098040000001" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="A端" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VUk-hi-KIM">
                                 <rect key="frame" x="91" y="156" width="29" height="13"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -784,6 +772,18 @@
                                     <action selector="onclickBport:" destination="6CV-bu-DSe" eventType="touchUpInside" id="S8f-Zf-xah"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ig3-KT-8Y5">
+                                <rect key="frame" x="233" y="119" width="19" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="selected_0x626d91"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="使能" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="949-7n-X2I">
+                                <rect key="frame" x="264" y="118" width="35" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.38431372549019605" green="0.42745098039215684" blue="0.56862745098039214" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -2379,6 +2379,7 @@
         <image name="rightup2_grey" width="128" height="127"/>
         <image name="rightup3_grey" width="107" height="100"/>
         <image name="selected" width="85" height="85"/>
+        <image name="selected_0x626d91" width="85" height="85"/>
         <image name="speed" width="85" height="85"/>
         <image name="time" width="85" height="85"/>
         <image name="treat_normal" width="580" height="200"/>
@@ -2386,10 +2387,10 @@
         <image name="unselected" width="86" height="86"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gIv-VQ-fEb"/>
-        <segue reference="hW4-xW-9f9"/>
-        <segue reference="bkz-JL-cM5"/>
-        <segue reference="YZz-rL-WdO"/>
+        <segue reference="YjL-T0-1N7"/>
+        <segue reference="bnI-Yd-YTo"/>
         <segue reference="4g4-bt-O77"/>
+        <segue reference="gIv-VQ-fEb"/>
+        <segue reference="YZz-rL-WdO"/>
     </inferredMetricsTieBreakers>
 </document>
