@@ -1196,35 +1196,45 @@ NSString *const POST = @"8080";
 //选择照片完成后回调
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
-    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-
-    //UIImage转成NSData
-    NSData *imgData;
-    if (UIImagePNGRepresentation(image) == nil)
-    {
-        imgData = UIImageJPEGRepresentation(image, 1);
-    }
-    else
-    {
-        imgData = UIImagePNGRepresentation(image);
-    }
-    //写入record中
-    self.treatRecord.imgData = imgData;
-    [self saveRecord];
+    //开一个线程保存
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+        //UIImage转成NSData
+        NSData *imgData;
+        if (UIImagePNGRepresentation(image) == nil)
+        {
+            imgData = UIImageJPEGRepresentation(image, 1);
+        }
+        else
+        {
+            imgData = UIImagePNGRepresentation(image);
+        }
+        //写入record中
+        self.treatRecord.imgData = imgData;
+        [self saveRecord];
+        
+        
+        //保存到本地相册
+        if (self.picker.sourceType == UIImagePickerControllerSourceTypeCamera)
+        {
+            UIImageWriteToSavedPhotosAlbum(image, self, nil, nil);
+        }
+        //保存完将图片消除
+        self.treatRecord.imgData = nil;
+    });
     
-    //保存到本地相册
-    if (self.picker.sourceType == UIImagePickerControllerSourceTypeCamera)
-    {
-        UIImageWriteToSavedPhotosAlbum(image, self, nil, nil);
-    }
+    
     [self.picker dismissViewControllerAnimated:YES completion:^{
              [self configureBodyView];
         }];
 
+
 }
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    [self saveRecord];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
+       [self saveRecord];
+    });
     [self.picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
@@ -1251,13 +1261,9 @@ NSString *const POST = @"8080";
         NSData * resultdata = [[NSData alloc] initWithContentsOfFile:documentPath];
         NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:resultdata];
         recordArray = [unArchiver decodeObjectForKey:@"recordArray"];
-        TreatRecord *record = [recordArray objectAtIndex:0];
-        NSLog(@"record  =%@",record.dateString);
     }
-    //添加record
-    NSLog(@"record1 = %@",self.treatRecord.dateString);
     NSMutableArray *array = [NSMutableArray arrayWithArray:recordArray];
-    
+    //新增record
     [array addObject:self.treatRecord];
     recordArray = [array copy];
     //写入文件
@@ -1265,6 +1271,7 @@ NSString *const POST = @"8080";
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data] ;
     [archiver encodeObject:recordArray forKey:@"recordArray"];
     [archiver finishEncoding];
+    
     BOOL success = [data writeToFile:documentPath atomically:YES];
     
 }
