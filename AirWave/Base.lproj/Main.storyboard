@@ -187,7 +187,7 @@
                                                 <rect key="frame" x="13" y="37" width="48" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                <color key="textColor" red="0.44812256097793579" green="0.49131524562835693" blue="0.61758631467819214" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="textColor" red="0.44705882352941173" green="0.49019607843137253" blue="0.61568627450980395" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -255,7 +255,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="空气波治疗仪" id="0cT-Wo-4A6">
-                        <barButtonItem key="leftBarButtonItem" title="记录" id="uzN-9B-Qno"/>
+                        <barButtonItem key="leftBarButtonItem" title="记录" id="uzN-9B-Qno">
+                            <connections>
+                                <segue destination="Dc5-NS-ggL" kind="show" id="JIE-89-FNC"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="设置" id="K1o-XT-gzF">
                             <connections>
                                 <segue destination="s5j-zE-Ka8" kind="showDetail" identifier="MainToSetting" animates="NO" id="bnI-Yd-YTo"/>
@@ -1258,6 +1262,62 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="stZ-Bt-V3T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2904.8000000000002" y="-797.45127436281871"/>
+        </scene>
+        <!--治疗记录-->
+        <scene sceneID="We0-jt-u4D">
+            <objects>
+                <tableViewController id="Dc5-NS-ggL" customClass="RecordTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="88" sectionHeaderHeight="28" sectionFooterHeight="28" id="b4C-j5-87m">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="88" id="XqF-S2-Vk3">
+                                <rect key="frame" x="0.0" y="28" width="375" height="88"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XqF-S2-Vk3" id="fje-PZ-cls">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" tag="555" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aOc-cd-DF6">
+                                            <rect key="frame" x="279" y="-1" width="88" height="88"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="666" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="treatWay" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="faR-cj-BRm">
+                                            <rect key="frame" x="90" y="29" width="119" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.52156862749999999" green="0.6705882353" blue="0.89411764709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="222" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="001" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wTt-my-QaS">
+                                            <rect key="frame" x="26" y="29" width="29" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.39607843139999999" green="0.73333333329999995" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="55" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DFb-8a-fHH">
+                                            <rect key="frame" x="68" y="52" width="181" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.38431372549019605" green="0.38431372549019605" blue="0.38431372549019605" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Dc5-NS-ggL" id="wCE-c3-XaQ"/>
+                            <outlet property="delegate" destination="Dc5-NS-ggL" id="U2o-94-kZE"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="治疗记录" id="VaC-YA-hQp"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KJ0-lH-bD7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4016.8000000000002" y="-738.08095952023996"/>
         </scene>
         <!--参数治疗-->
         <scene sceneID="vPh-ZE-2xJ">
@@ -2387,10 +2447,10 @@
         <image name="unselected" width="86" height="86"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="YjL-T0-1N7"/>
-        <segue reference="bnI-Yd-YTo"/>
-        <segue reference="4g4-bt-O77"/>
+        <segue reference="bkz-JL-cM5"/>
+        <segue reference="aEa-fh-ynZ"/>
         <segue reference="gIv-VQ-fEb"/>
         <segue reference="YZz-rL-WdO"/>
+        <segue reference="4g4-bt-O77"/>
     </inferredMetricsTieBreakers>
 </document>

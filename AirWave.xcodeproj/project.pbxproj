@@ -17,6 +17,7 @@
 		0450307D1F6955DB008CFAB4 /* WarnMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0450307C1F6955DB008CFAB4 /* WarnMessage.m */; };
 		0457C63E1F5563EE0050C604 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0457C63C1F5563EE0050C604 /* Main.storyboard */; };
 		045D81B31F6295B400D4D998 /* RunningInfomation.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D81B21F6295B400D4D998 /* RunningInfomation.m */; };
+		04608BE41F8CDD8C00995E12 /* RecordTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04608BE31F8CDD8C00995E12 /* RecordTableViewController.m */; };
 		0462C80F1F5D3FA900AEC2D6 /* Infoclass.m in Sources */ = {isa = PBXBuildFile; fileRef = 0462C80E1F5D3FA900AEC2D6 /* Infoclass.m */; };
 		0462C8131F5D42CE00AEC2D6 /* TreatInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0462C8121F5D42CE00AEC2D6 /* TreatInformation.m */; };
 		046BA76D1F480DF2004D7E74 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BA76C1F480DF2004D7E74 /* main.m */; };
@@ -73,6 +74,8 @@
 		0457C63D1F5563EE0050C604 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		045D81B11F6295B400D4D998 /* RunningInfomation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunningInfomation.h; sourceTree = "<group>"; };
 		045D81B21F6295B400D4D998 /* RunningInfomation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunningInfomation.m; sourceTree = "<group>"; };
+		04608BE21F8CDD8C00995E12 /* RecordTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordTableViewController.h; sourceTree = "<group>"; };
+		04608BE31F8CDD8C00995E12 /* RecordTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordTableViewController.m; sourceTree = "<group>"; };
 		0462C80D1F5D3FA900AEC2D6 /* Infoclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Infoclass.h; sourceTree = "<group>"; };
 		0462C80E1F5D3FA900AEC2D6 /* Infoclass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Infoclass.m; sourceTree = "<group>"; };
 		0462C8111F5D42CE00AEC2D6 /* TreatInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreatInformation.h; sourceTree = "<group>"; };
@@ -192,6 +195,8 @@
 				048A3B191F540DC500929C37 /* SettingViewController.m */,
 				048A3B1B1F5411D700929C37 /* OtherSettingViewController.h */,
 				048A3B1C1F5411D700929C37 /* OtherSettingViewController.m */,
+				04608BE21F8CDD8C00995E12 /* RecordTableViewController.h */,
+				04608BE31F8CDD8C00995E12 /* RecordTableViewController.m */,
 				0496EFBD1F8B4C7E0098C7BE /* Assets.xcassets */,
 				0457C63C1F5563EE0050C604 /* Main.storyboard */,
 				046BA7791F480DF2004D7E74 /* LaunchScreen.storyboard */,
@@ -448,6 +453,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				045D81B31F6295B400D4D998 /* RunningInfomation.m in Sources */,
+				04608BE41F8CDD8C00995E12 /* RecordTableViewController.m in Sources */,
 				044E4F571F6140D8009DD7E7 /* BodyButton.m in Sources */,
 				04B68F491F4EDAE200FD31E5 /* ParameterTreatViewController.m in Sources */,
 				0496EFC31F8B856C0098C7BE /* TreatRecord.m in Sources */,

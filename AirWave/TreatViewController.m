@@ -145,7 +145,9 @@ NSString *const POST = @"8080";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    //在前一个界面设置下个界面的返回按钮:self.navigationItem.backBarButtonItem
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = item;
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     if (myDelegate.cclientSocket != nil)
