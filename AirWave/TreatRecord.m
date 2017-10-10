@@ -11,12 +11,39 @@
 @implementation TreatRecord
 -(TreatRecord *)analyzeWithData:(NSData *)data
 {
+    
     Byte *bytes = (Byte *)[data bytes];
-    self.treatWay = bytes[4];
-    Byte dutationByte[] = {bytes[6],bytes[7],bytes[8],bytes[9]};
-    self.duration = [self lBytesToInt:dutationByte withLength:4];
+    
+    self.treatMode = bytes[5];
+    
+    if (self.duration)
+    {
+        
+        int hour = _duration / 3600;
+        int min = (_duration / 60)%60;
+        int second = _duration % 60;
+        
+        //保证治疗时长为两位数
+        NSString *hourString = [NSString stringWithFormat:hour>9?@"%d":@"0%d",hour];
+        NSString *minString = [NSString stringWithFormat:min>9?@"%d":@"0%d",min];
+        NSString *secondString = [NSString stringWithFormat:second>9?@"%d":@"0%d",second];
+        
+        
+        self.durationString = [NSString stringWithFormat:@"%@:%@:%@",hourString,minString,secondString];
+        NSLog(@"duration = %@",_durationString);
+    }
+    else
+    {
+        self.durationString = [NSString stringWithFormat:@"00:00:00"];
+    }
+    self.dateTime = [NSDate date];
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    fmt.dateFormat = @"yyyy-MM-dd HH:mm";
+    self.dateString = [fmt stringFromDate:self.dateTime];
+    NSLog(@"date = %@",self.dateString);
     return self;
 }
+
 //Byte数组转成int类型
 -(int) lBytesToInt:(Byte[]) byte withLength:(int)length
 {

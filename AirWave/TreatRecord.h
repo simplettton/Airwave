@@ -10,7 +10,10 @@
 
 @interface TreatRecord : NSObject
 @property (nonatomic,assign)Byte treatWay;
+@property (nonatomic,assign)Byte treatMode;
 @property (nonatomic,assign)UInt32 duration;
+@property (nonatomic,strong)NSString *durationString;
 @property (nonatomic,strong)NSDate *dateTime;
+@property (nonatomic,strong)NSString *dateString;
 -(TreatRecord *)analyzeWithData:(NSData*)data;
 @end

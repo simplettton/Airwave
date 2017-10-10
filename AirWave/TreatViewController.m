@@ -13,6 +13,7 @@
 #import "TreatInformation.h"
 #import "RunningInfomation.h"
 #import "WarnMessage.h"
+#import "TreatRecord.h"
 
 #import "UIImage+ImageWithColor.h"
 #import "ProgressView.h"
@@ -242,10 +243,15 @@ NSString *const POST = @"8080";
     //治疗信息
     if(bytes[2]==0x98)
     {
+        TreatRecord *record = [[TreatRecord alloc]init];
+        record.treatWay = self.treatInformation.treatWay;
+//        record.duration = self.treatInformation.treatTime - self.runningInfomation.treatProcessTime; 剩余时间
+        record.duration = self.runningInfomation.treatProcessTime;
+        [record analyzeWithData:data];
+
         dispatch_async(dispatch_get_main_queue(), ^{
         [self takePhotoAlert];
         });
-
         NSLog(@"拍照记录");
     }
     [sock readDataWithTimeout:- 1 tag:0];
