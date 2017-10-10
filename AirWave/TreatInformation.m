@@ -13,7 +13,6 @@
 {
     Byte *bytes = (Byte *)[data bytes];
     self.treatState = bytes[51];
-//    NSLog(@"treatState = %d ",_treatState);
     self.treatWay = bytes[52];
     self.abFirst = bytes[69];
     self.pressLevel = bytes[70];
@@ -34,7 +33,6 @@
     {
         NSString *aPortString = [NSString stringWithFormat:@"%c",bytes[53+i]];
         [self.aPort appendString:aPortString];
-//        NSLog(@"bytes[%d] = %@",53+i,aPortString);
         NSString *bPortString = [NSString stringWithFormat:@"%c",bytes[61+i]];
         [self.bPort appendString:bPortString];
         
@@ -46,12 +44,8 @@
         NSString *pressString = [NSString stringWithFormat:@"%hd",pressInt];
         self.press[i] = pressString;
     }
-//    NSLog(@"aport=%@",self.aPort);
-    
     return self;
 }
-
-
 //Byte数组转成int类型
 -(int) lBytesToInt:(Byte[]) byte withLength:(int)length
 {

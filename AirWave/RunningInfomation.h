@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface RunningInfomation : NSObject
+
 @property (nonatomic,strong)NSMutableArray *press;
 @property (nonatomic,strong)NSMutableArray *cellState;
 @property (nonatomic,assign)UInt32 treatProcessTime;

@@ -74,6 +74,7 @@ NSString *const POST = @"8080";
 @property (nonatomic, assign) BOOL connected;
 @property (nonatomic, strong) NSTimer *changeColorTimer;
 @property (nonatomic, strong) GCDAsyncSocket *clientSocket;
+@property (nonatomic, strong) TreatRecord *treatRecord;
 @property (nonatomic, strong) TreatInformation *treatInformation;
 @property (nonatomic, strong) RunningInfomation *runningInfomation;
 
@@ -188,8 +189,16 @@ NSString *const POST = @"8080";
     
     self.treatInformation = [[TreatInformation alloc]init];
     self.runningInfomation = [[RunningInfomation alloc]init];
-    [self configureView];
+    self.treatRecord = [[TreatRecord alloc]init];
     
+    if (self.picker == nil)
+    {
+        self.picker = [[UIImagePickerController alloc]init];
+    }
+    self.picker.delegate = self;
+    self.picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    NSLog(@"home = %@",NSHomeDirectory());
+    [self configureView];
     
 }
 #pragma mark - GCDAsyncSocketDelegate
@@ -243,22 +252,18 @@ NSString *const POST = @"8080";
     //治疗信息
     if(bytes[2]==0x98)
     {
-        TreatRecord *record = [[TreatRecord alloc]init];
-        record.treatWay = self.treatInformation.treatWay;
-//        record.duration = self.treatInformation.treatTime - self.runningInfomation.treatProcessTime; 剩余时间
-        record.duration = self.runningInfomation.treatProcessTime;
-        [record analyzeWithData:data];
-
+        self.treatRecord.treatWay = self.treatInformation.treatWay;
+        self.treatRecord.duration = self.runningInfomation.treatProcessTime;
+        [self.treatRecord analyzeWithData:data];
         dispatch_async(dispatch_get_main_queue(), ^{
         [self takePhotoAlert];
         });
-        NSLog(@"拍照记录");
     }
     [sock readDataWithTimeout:- 1 tag:0];
 }
 -(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
 {
-    //ask
+//    ask
 //    if (tag==1000)
 //    {
 //        NSLog(@"ask");
@@ -1140,7 +1145,6 @@ NSString *const POST = @"8080";
     Byte dataBytes[2] = {0,[commitNumber unsignedIntegerValue]};
     [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                                dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:0];
-    
 }
 //添加计时器
 -(void)addTimer
@@ -1169,48 +1173,99 @@ NSString *const POST = @"8080";
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil
                                                                    message:@"是否拍照记录治疗情况?"
                                                             preferredStyle:UIAlertControllerStyleAlert];
-    
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消"
                                                            style:UIAlertActionStyleDefault
-                                                         handler:nil];
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [self saveRecord];
+                                                         }];
     
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认"
                                                             style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * _Nonnull action){
-                                                              
                                                               [self takePhoto];
                                                           }];
-
     [alert addAction:cancelAction];
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
 -(void)takePhoto
 {
-    if (self.picker == nil)
-    {
-        self.picker = [[UIImagePickerController alloc]init];
-    }
-    self.picker.delegate = self;
-    self.picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     [self presentViewController:self.picker animated:YES completion:NULL];
 };
+
+//选择照片完成后回调
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+
+    //UIImage转成NSData
+    NSData *imgData;
+    if (UIImagePNGRepresentation(image) == nil)
+    {
+        imgData = UIImageJPEGRepresentation(image, 1);
+    }
+    else
+    {
+        imgData = UIImagePNGRepresentation(image);
+    }
+    //写入record中
+    self.treatRecord.imgData = imgData;
+    [self saveRecord];
+    
     //保存到本地相册
     if (self.picker.sourceType == UIImagePickerControllerSourceTypeCamera)
     {
         UIImageWriteToSavedPhotosAlbum(image, self, nil, nil);
     }
-        [self.picker dismissViewControllerAnimated:YES completion:^{
+    [self.picker dismissViewControllerAnimated:YES completion:^{
              [self configureBodyView];
         }];
+
 }
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
+    [self saveRecord];
     [self.picker dismissViewControllerAnimated:YES completion:NULL];
-    [self configureBodyView];
+}
+
+//保存
+-(void)saveRecord
+{
+    //文件名
+    NSString *documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    if (!documents)
+    {
+        NSLog(@"目录未找到");
+    }
+    NSString *documentPath = [documents stringByAppendingPathComponent:@"record.plist"];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath:documentPath])
+    {
+        [fileManager createFileAtPath:documentPath contents:nil attributes:nil];
+    }
+    
+    NSArray *recordArray = [[NSArray alloc]init];
+    //取出以前保存的record数组
+    if ([fileManager fileExistsAtPath:documentPath])
+    {
+        NSData * resultdata = [[NSData alloc] initWithContentsOfFile:documentPath];
+        NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:resultdata];
+        recordArray = [unArchiver decodeObjectForKey:@"recordArray"];
+        TreatRecord *record = [recordArray objectAtIndex:0];
+        NSLog(@"record  =%@",record.dateString);
+    }
+    //添加record
+    NSLog(@"record1 = %@",self.treatRecord.dateString);
+    NSMutableArray *array = [NSMutableArray arrayWithArray:recordArray];
+    
+    [array addObject:self.treatRecord];
+    recordArray = [array copy];
+    //写入文件
+    NSMutableData *data = [[NSMutableData alloc] init] ;
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data] ;
+    [archiver encodeObject:recordArray forKey:@"recordArray"];
+    [archiver finishEncoding];
+    BOOL success = [data writeToFile:documentPath atomically:YES];
     
 }
 #pragma mark - Private Method

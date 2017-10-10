@@ -33,13 +33,8 @@
     
 //    NSLog(@"treatProcessTime = %d",self.treatProcessTime);
     self.curFocuse = bytes[31];
-//    NSLog(@"curfocuse = %d",self.curFocuse);
     return self;
 }
-
-
-
-
 //Byte数组转成int类型
 -(int) lBytesToInt:(Byte[]) byte withLength:(int)length
 {

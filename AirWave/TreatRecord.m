@@ -9,6 +9,31 @@
 #import "TreatRecord.h"
 
 @implementation TreatRecord
+-(void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeInteger:self.treatWay forKey:@"treatWay"];
+    [aCoder encodeObject:self.dateString forKey:@"dateString"];
+    [aCoder encodeObject:self.durationString forKey:@"durationString"];
+    [aCoder encodeObject:self.imgData forKey:@"imgData"];
+
+    [aCoder encodeObject:self.dateTime forKey:@"dateTime"];
+    [aCoder encodeInt:self.duration forKey:@"duration"];
+    
+}
+-(instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super init])
+    {
+        self.treatWay = [aDecoder decodeIntegerForKey:@"treatWay"];
+        self.dateString = [aDecoder decodeObjectForKey:@"dateString"];
+        self.durationString = [aDecoder decodeObjectForKey:@"durationString"];
+        self.imgData = [aDecoder decodeObjectForKey:@"imgData"];
+        
+        self.dateTime = [aDecoder decodeObjectForKey:@"dateTime"];
+        self.duration = [aDecoder decodeIntForKey:@"duration"];
+    }
+    return self;
+}
 -(TreatRecord *)analyzeWithData:(NSData *)data
 {
     
@@ -23,14 +48,12 @@
         int min = (_duration / 60)%60;
         int second = _duration % 60;
         
-        //保证治疗时长为两位数
+        //治疗时间为两位数
         NSString *hourString = [NSString stringWithFormat:hour>9?@"%d":@"0%d",hour];
         NSString *minString = [NSString stringWithFormat:min>9?@"%d":@"0%d",min];
         NSString *secondString = [NSString stringWithFormat:second>9?@"%d":@"0%d",second];
         
-        
         self.durationString = [NSString stringWithFormat:@"%@:%@:%@",hourString,minString,secondString];
-        NSLog(@"duration = %@",_durationString);
     }
     else
     {
@@ -40,7 +63,6 @@
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
     fmt.dateFormat = @"yyyy-MM-dd HH:mm";
     self.dateString = [fmt stringFromDate:self.dateTime];
-    NSLog(@"date = %@",self.dateString);
     return self;
 }
 
