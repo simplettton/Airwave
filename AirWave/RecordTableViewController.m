@@ -9,6 +9,7 @@
 #import "RecordTableViewController.h"
 #import "RecordTableViewCell.h"
 #import "UIImage+Rotate.h"
+#import "DetailViewController.h"
 #import "TreatRecord.h"
 typedef NS_ENUM(NSUInteger,cellViewTag)
 {
@@ -16,8 +17,10 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
 };
 @interface RecordTableViewController ()
 {
-    NSArray *records;
+    NSMutableArray *records;
+    NSMutableArray *mResult;
 }
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @end
 
 @implementation RecordTableViewController
@@ -41,10 +44,14 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
     {
         NSData * resultdata = [[NSData alloc] initWithContentsOfFile:documentPath];
         NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:resultdata];
-        records = [unArchiver decodeObjectForKey:@"recordArray"];
+        NSArray *savedArray = [unArchiver decodeObjectForKey:@"recordArray"];
+        NSMutableArray *array = [NSMutableArray arrayWithArray:savedArray];
+        //倒序
+        records = [NSMutableArray arrayWithArray:[[array reverseObjectEnumerator] allObjects]];
+        mResult = records;
         if (!records)
         {
-            records = [NSArray array];
+            records = [NSMutableArray array];
         }
     }
 }
@@ -64,7 +71,7 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [records count];
+    return [mResult count];
 }
 //- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 //{
@@ -96,16 +103,17 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
     //序号
     cell.numberLabel.text = [NSString stringWithFormat:@"%ld",indexPath.row +1];
     //取出record
-    TreatRecord *record = (TreatRecord *)[records objectAtIndex:indexPath.row];
+    TreatRecord *record = (TreatRecord *)[mResult objectAtIndex:indexPath.row];
     //时间
     cell.timeLabel.text = record.dateString;
     
     //治疗方式
     
     cell.treatWayLabel.text = record.treatWayString;
-
-    //图片
+    //治疗时长
+//    cell.durationLabel.text = record.durationString;
     
+    //图片
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *imageData =record.imgData;
         UIImage *image = [UIImage imageWithData:imageData];
@@ -116,17 +124,65 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
     });
     return cell;
 }
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - table view delegate
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+//  NSIndexPath *selectedIndex = [self.tableView indexPathForSelectedRow];
+    TreatRecord *record = mResult[indexPath.row];
+    if ([record.imgData length]>0)
+    {
+        [self performSegueWithIdentifier:@"ShowDetail" sender:record];
+    }
 }
-*/
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    NSString *searchResult = self.searchBar.text;
+    if ([searchResult length]>0)
+    {
+        //搜索结果
+        NSString *searchString = self.searchBar.text;
+        
+        
+        //tmpt保存搜索结果数组
+        NSMutableArray *tmpt = [NSMutableArray array];
+        //便利records
+        for (TreatRecord *record in records )
+        {
+            NSDate *date = record.dateTime;
+            NSDateFormatter *fmt = [[NSDateFormatter alloc]init];
+            fmt.dateFormat = @"yyyy-MM-dd";
+            NSString *dateString = [fmt stringFromDate:date];
+            
+            if ([dateString isEqualToString:searchString])
+            {
+                
+                [tmpt addObject:record];
+            }
+        }
+        if ([tmpt count]>0)
+        {
+            mResult = tmpt;
+        }
+        else
+        {
+            mResult = records;
+        }
+    }
+    else
+    {
+        mResult = records;
+    }
+    [self.tableView reloadData];
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"ShowDetail"])
+    {
+        DetailViewController *controller = (DetailViewController* )segue.destinationViewController;
+        controller.record = sender;
+    }
+}
 #pragma mark - picture
 //等比例压缩
 -(UIImage *) imageCompressForSize:(UIImage *)sourceImage targetSize:(CGSize)size
@@ -178,6 +234,7 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
     
 }
 
+#pragma mark - private method
 -(UIImage *) imageCompressForWidth:(UIImage *)sourceImage targetWidth:(CGFloat)defineWidth{
     UIImage *newImage = nil;
     CGSize imageSize = sourceImage.size;
@@ -223,84 +280,4 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
     UIGraphicsEndImageContext();
     return newImage;
 }
-static CGRect swapWidthAndHeight(CGRect rect)
-{
-    CGFloat swap = rect.size.width;
-    
-    rect.size.width = rect.size.height;
-    rect.size.height = swap;
-    
-    return rect;
-}
-
-//- (UIImage *)fixOrientation:(UIImage *)srcImg {
-//    if (srcImg.imageOrientation == UIImageOrientationUp) return srcImg;
-//    CGAffineTransform transform = CGAffineTransformIdentity;
-//    switch (srcImg.imageOrientation) {
-//        case UIImageOrientationDown:
-//        case UIImageOrientationDownMirrored:
-//            transform = CGAffineTransformTranslate(transform, srcImg.size.width, srcImg.size.height);
-//            transform = CGAffineTransformRotate(transform, M_PI);
-//            break;
-//            
-//        case UIImageOrientationLeft:
-//        case UIImageOrientationLeftMirrored:
-//            transform = CGAffineTransformTranslate(transform, srcImg.size.width, 0);
-//            transform = CGAffineTransformRotate(transform, M_PI_2);
-//            break;
-//            
-//        case UIImageOrientationRight:
-//        case UIImageOrientationRightMirrored:
-//            transform = CGAffineTransformTranslate(transform, 0, srcImg.size.height);
-//            transform = CGAffineTransformRotate(transform, -M_PI_2);
-//            break;
-//        case UIImageOrientationUp:
-//        case UIImageOrientationUpMirrored:
-//            break;
-//    }
-//    
-//    switch (srcImg.imageOrientation) {
-//        case UIImageOrientationUpMirrored:
-//        case UIImageOrientationDownMirrored:
-//            transform = CGAffineTransformTranslate(transform, srcImg.size.width, 0);
-//            transform = CGAffineTransformScale(transform, -1, 1);
-//            break;
-//            
-//        case UIImageOrientationLeftMirrored:
-//        case UIImageOrientationRightMirrored:
-//            transform = CGAffineTransformTranslate(transform, srcImg.size.height, 0);
-//            transform = CGAffineTransformScale(transform, -1, 1);
-//            break;
-//        case UIImageOrientationUp:
-//        case UIImageOrientationDown:
-//        case UIImageOrientationLeft:
-//        case UIImageOrientationRight:
-//            break;
-//    }
-//    
-//    CGContextRef ctx = CGBitmapContextCreate(NULL, srcImg.size.width, srcImg.size.height,
-//                                             CGImageGetBitsPerComponent(srcImg.CGImage), 0,
-//                                             CGImageGetColorSpace(srcImg.CGImage),
-//                                             CGImageGetBitmapInfo(srcImg.CGImage));
-//    CGContextConcatCTM(ctx, transform);
-//    switch (srcImg.imageOrientation) {
-//        case UIImageOrientationLeft:
-//        case UIImageOrientationLeftMirrored:
-//        case UIImageOrientationRight:
-//        case UIImageOrientationRightMirrored:
-//            CGContextDrawImage(ctx, CGRectMake(0,0,srcImg.size.height,srcImg.size.width), srcImg.CGImage);
-//            break;
-//            
-//        default:
-//            CGContextDrawImage(ctx, CGRectMake(0,0,srcImg.size.width,srcImg.size.height), srcImg.CGImage);
-//            break;
-//    }
-//    
-//    CGImageRef cgimg = CGBitmapContextCreateImage(ctx);
-//    UIImage *img = [UIImage imageWithCGImage:cgimg];
-//    CGContextRelease(ctx);
-//    CGImageRelease(cgimg);
-//    return img;
-//}
-
 @end

@@ -19,7 +19,8 @@
     return self;
 }
 //重写 awakeFromNib 方法以自定义单元格从nib加载
-- (void)awakeFromNib {
+- (void)awakeFromNib
+{
     [super awakeFromNib];
     // Initialization code
 }

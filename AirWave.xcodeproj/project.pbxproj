@@ -35,6 +35,7 @@
 		0496EFBE1F8B4C7E0098C7BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0496EFBD1F8B4C7E0098C7BE /* Assets.xcassets */; };
 		0496EFC31F8B856C0098C7BE /* TreatRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 0496EFC21F8B856C0098C7BE /* TreatRecord.m */; };
 		04B68F491F4EDAE200FD31E5 /* ParameterTreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B68F481F4EDAE200FD31E5 /* ParameterTreatViewController.m */; };
+		04CAE36F1F8DFA2500840AD6 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CAE36E1F8DFA2500840AD6 /* DetailViewController.m */; };
 		80238F6720C2423CFD5B8E71 /* libPods-AirWave.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98F75C0AC4207A763C4E062D /* libPods-AirWave.a */; };
 /* End PBXBuildFile section */
 
@@ -113,6 +114,8 @@
 		0496EFC21F8B856C0098C7BE /* TreatRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreatRecord.m; sourceTree = "<group>"; };
 		04B68F471F4EDAE200FD31E5 /* ParameterTreatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParameterTreatViewController.h; sourceTree = "<group>"; };
 		04B68F481F4EDAE200FD31E5 /* ParameterTreatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParameterTreatViewController.m; sourceTree = "<group>"; };
+		04CAE36D1F8DFA2500840AD6 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		04CAE36E1F8DFA2500840AD6 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		98F75C0AC4207A763C4E062D /* libPods-AirWave.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AirWave.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D1B39FA922AAA28BEDFF4EA /* Pods-AirWave.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirWave.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AirWave/Pods-AirWave.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -205,6 +208,8 @@
 				04608BE31F8CDD8C00995E12 /* RecordTableViewController.m */,
 				0476B66B1F8DAAF90075B953 /* RecordTableViewCell.h */,
 				0476B66C1F8DAAF90075B953 /* RecordTableViewCell.m */,
+				04CAE36D1F8DFA2500840AD6 /* DetailViewController.h */,
+				04CAE36E1F8DFA2500840AD6 /* DetailViewController.m */,
 				0496EFBD1F8B4C7E0098C7BE /* Assets.xcassets */,
 				0457C63C1F5563EE0050C604 /* Main.storyboard */,
 				046BA7791F480DF2004D7E74 /* LaunchScreen.storyboard */,
@@ -473,6 +478,7 @@
 				046BA7701F480DF2004D7E74 /* AppDelegate.m in Sources */,
 				0462C8131F5D42CE00AEC2D6 /* TreatInformation.m in Sources */,
 				0450307D1F6955DB008CFAB4 /* WarnMessage.m in Sources */,
+				04CAE36F1F8DFA2500840AD6 /* DetailViewController.m in Sources */,
 				044D54BB1F4D15F7002C1E35 /* Pack.m in Sources */,
 				0462C80F1F5D3FA900AEC2D6 /* Infoclass.m in Sources */,
 				0424CF6A1F6794F1008D138E /* ProgressView.m in Sources */,

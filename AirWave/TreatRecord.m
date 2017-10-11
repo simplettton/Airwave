@@ -79,6 +79,11 @@
         NSString *minString = [NSString stringWithFormat:min>9?@"%d":@"0%d",min];
         NSString *secondString = [NSString stringWithFormat:second>9?@"%d":@"0%d",second];
         
+        if (hour>0)
+        {
+            [self.durationString stringByAppendingString:[NSString stringWithFormat:@"%@小时",hourString]];
+        }
+        
         self.durationString = [NSString stringWithFormat:@"%@:%@:%@",hourString,minString,secondString];
     }
     else

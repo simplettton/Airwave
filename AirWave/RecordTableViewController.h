@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RecordTableViewController : UITableViewController
+@interface RecordTableViewController : UITableViewController<UISearchBarDelegate>
 
 @end
