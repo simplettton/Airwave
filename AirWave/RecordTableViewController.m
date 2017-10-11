@@ -7,6 +7,7 @@
 //
 
 #import "RecordTableViewController.h"
+#import "RecordTableViewCell.h"
 #import "TreatRecord.h"
 typedef NS_ENUM(NSUInteger,cellViewTag)
 {
@@ -39,6 +40,10 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
         NSData * resultdata = [[NSData alloc] initWithContentsOfFile:documentPath];
         NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:resultdata];
         records = [unArchiver decodeObjectForKey:@"recordArray"];
+        if (!records)
+        {
+            records = [NSArray array];
+        }
     }
 }
 
@@ -59,51 +64,53 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
 {
     return [records count];
 }
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    //然后再新开一个线程去加载网页
-    [NSThread detachNewThreadSelector:@selector(updateImageForCellAtIndexPath:) toTarget:self withObject:indexPath];
-}
-- (void)updateImageForCellAtIndexPath:(NSIndexPath *)indexPath
-{
-    //取出record
-    TreatRecord *record = (TreatRecord *)[records objectAtIndex:indexPath.row];
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    UIImageView *imageView = [cell viewWithTag:imageTag];
-    NSData *imageData =record.imgData;
-    UIImage *image = [self imageCompressForSize:[UIImage imageWithData:imageData] targetSize:imageView.frame.size];
-    [imageView performSelectorOnMainThread:@selector(setImage:) withObject:image waitUntilDone:NO];
-
-}
+//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    //然后再新开一个线程去加载网页
+//    [NSThread detachNewThreadSelector:@selector(updateImageForCellAtIndexPath:) toTarget:self withObject:indexPath];
+//}
+//- (void)updateImageForCellAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    //取出record
+//    TreatRecord *record = (TreatRecord *)[records objectAtIndex:indexPath.row];
+//    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+//    UIImageView *imageView = [cell viewWithTag:imageTag];
+//    NSData *imageData =record.imgData;
+//    UIImage *image = [self imageCompressForSize:[UIImage imageWithData:imageData] targetSize:imageView.frame.size];
+//    [imageView performSelectorOnMainThread:@selector(setImage:) withObject:image waitUntilDone:NO];
+//
+//}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    static NSString *CellIdentifier = @"Cell";
+    RecordTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
+    if (cell == nil)
+    {
+        cell = [[RecordTableViewCell init]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
     //序号
-    UILabel *numberLabel = [cell viewWithTag:numberLabelTag];
-    numberLabel.text = [NSString stringWithFormat:@"%ld",indexPath.row +1];
+    cell.numberLabel.text = [NSString stringWithFormat:@"%ld",indexPath.row +1];
     //取出record
     TreatRecord *record = (TreatRecord *)[records objectAtIndex:indexPath.row];
     //时间
-    UILabel *timeLabel = [cell viewWithTag:timeLabelTag];
-    timeLabel.text = record.dateString;
+    cell.timeLabel.text = record.dateString;
     
     //治疗方式
-    UILabel *treatWayLabel = [cell viewWithTag:treatWayLableTag];
-
-    if (record.treatWay == 2)
-    {
-        treatWayLabel.text = [NSString stringWithFormat:@"参数治疗"];
-    }else
-    {
-        treatWayLabel.text = [NSString stringWithFormat:@"%d",record.treatWay];
-    }
     
-//    图片
-    UIImageView *imageView = [cell viewWithTag:imageTag];
-    NSData *imageData =record.imgData;
-//    imageView.image = [UIImage imageWithData:imageData];
-    imageView.image = [self imageCompressForSize:[UIImage imageWithData:imageData] targetSize:imageView.frame.size];
+    cell.treatWayLabel.text = record.treatWayString;
+
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *imageData =record.imgData;
+        UIImage *image = [UIImage imageWithData:imageData];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            cell.resultImageView.image = [self imageCompressForSize:image targetSize:cell.resultImageView.frame.size];
+        });
+        
+
+    });
     return cell;
 }
 

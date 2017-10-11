@@ -11,10 +11,12 @@
 @implementation TreatRecord
 -(void)encodeWithCoder:(NSCoder *)aCoder
 {
+    
     [aCoder encodeInteger:self.treatWay forKey:@"treatWay"];
     [aCoder encodeObject:self.dateString forKey:@"dateString"];
     [aCoder encodeObject:self.durationString forKey:@"durationString"];
     [aCoder encodeObject:self.imgData forKey:@"imgData"];
+    [aCoder encodeObject:self.treatWayString forKey:@"treatWayString"];
 
     [aCoder encodeObject:self.dateTime forKey:@"dateTime"];
     [aCoder encodeInt:self.duration forKey:@"duration"];
@@ -28,6 +30,7 @@
         self.dateString = [aDecoder decodeObjectForKey:@"dateString"];
         self.durationString = [aDecoder decodeObjectForKey:@"durationString"];
         self.imgData = [aDecoder decodeObjectForKey:@"imgData"];
+        self.treatWayString = [aDecoder decodeObjectForKey:@"treatWayString"];
         
         self.dateTime = [aDecoder decodeObjectForKey:@"dateTime"];
         self.duration = [aDecoder decodeIntForKey:@"duration"];
@@ -40,10 +43,33 @@
     Byte *bytes = (Byte *)[data bytes];
     
     self.treatMode = bytes[5];
-    
+    if (self.treatWay)
+    {
+        switch (self.treatWay)
+        {
+            case 1:
+                self.treatWayString = @"标准治疗";
+                break;
+            case 2:
+                self.treatWayString = @"梯度治疗";
+                break;
+            case 3:
+                self.treatWayString = @"参数治疗";
+                break;
+            case 4:
+                self.treatWayString = @"方案治疗";
+                break;
+            default:
+                self.treatWayString = @"标准治疗";
+                break;
+        }
+    }
+    else
+    {
+        self.treatWayString = @"治疗方式";
+    }
     if (self.duration)
     {
-        
         int hour = _duration / 3600;
         int min = (_duration / 60)%60;
         int second = _duration % 60;
@@ -65,6 +91,7 @@
     self.dateString = [fmt stringFromDate:self.dateTime];
     return self;
 }
+
 
 //Byte数组转成int类型
 -(int) lBytesToInt:(Byte[]) byte withLength:(int)length

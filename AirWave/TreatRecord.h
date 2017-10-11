@@ -11,7 +11,7 @@
 @interface TreatRecord : NSObject<NSCoding>
 //治疗模式
 @property (nonatomic,assign)Byte treatWay;
-//@property (nonatomic,strong)NSString *ttreatWay;
+@property (nonatomic,strong)NSString *treatWayString;
 //治疗方案
 @property (nonatomic,assign)Byte treatMode;
 @property (nonatomic,assign)UInt32 duration;
