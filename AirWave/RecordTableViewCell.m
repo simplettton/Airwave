@@ -8,6 +8,7 @@
 
 #import "RecordTableViewCell.h"
 
+
 @implementation RecordTableViewCell
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -27,6 +28,9 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+-(void)drawRect:(CGRect)rect
+{
 }
 
 @end

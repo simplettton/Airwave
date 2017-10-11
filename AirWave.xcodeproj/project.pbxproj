@@ -28,6 +28,7 @@
 		046BA7A21F4817C8004D7E74 /* TreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BA7A11F4817C8004D7E74 /* TreatViewController.m */; };
 		046FCF251F7E31FB00B8CBF6 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 046FCF241F7E31FB00B8CBF6 /* Constants.m */; };
 		0476B66D1F8DAAF90075B953 /* RecordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0476B66C1F8DAAF90075B953 /* RecordTableViewCell.m */; };
+		0476B6761F8DE5B30075B953 /* UIImage+Rotate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0476B6751F8DE5B30075B953 /* UIImage+Rotate.m */; };
 		048A3B141F53C54900929C37 /* UIColor+UIcolor_RGB.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A3B131F53C54900929C37 /* UIColor+UIcolor_RGB.m */; };
 		048A3B1A1F540DC500929C37 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A3B191F540DC500929C37 /* SettingViewController.m */; };
 		048A3B1D1F5411D700929C37 /* OtherSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A3B1C1F5411D700929C37 /* OtherSettingViewController.m */; };
@@ -99,6 +100,8 @@
 		046FCF261F7E321200B8CBF6 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		0476B66B1F8DAAF90075B953 /* RecordTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordTableViewCell.h; sourceTree = "<group>"; };
 		0476B66C1F8DAAF90075B953 /* RecordTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordTableViewCell.m; sourceTree = "<group>"; };
+		0476B6741F8DE5B30075B953 /* UIImage+Rotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Rotate.h"; sourceTree = "<group>"; };
+		0476B6751F8DE5B30075B953 /* UIImage+Rotate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Rotate.m"; sourceTree = "<group>"; };
 		048A3B121F53C54900929C37 /* UIColor+UIcolor_RGB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+UIcolor_RGB.h"; sourceTree = "<group>"; };
 		048A3B131F53C54900929C37 /* UIColor+UIcolor_RGB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+UIcolor_RGB.m"; sourceTree = "<group>"; };
 		048A3B181F540DC500929C37 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
@@ -221,6 +224,8 @@
 				048A3B131F53C54900929C37 /* UIColor+UIcolor_RGB.m */,
 				044E4F501F60D63B009DD7E7 /* UIImage+ImageWithColor.h */,
 				044E4F511F60D63B009DD7E7 /* UIImage+ImageWithColor.m */,
+				0476B6741F8DE5B30075B953 /* UIImage+Rotate.h */,
+				0476B6751F8DE5B30075B953 /* UIImage+Rotate.m */,
 				044E4F531F611C83009DD7E7 /* BodyButton.h */,
 				044E4F561F6140D8009DD7E7 /* BodyButton.m */,
 				0462C80D1F5D3FA900AEC2D6 /* Infoclass.h */,
@@ -471,6 +476,7 @@
 				044D54BB1F4D15F7002C1E35 /* Pack.m in Sources */,
 				0462C80F1F5D3FA900AEC2D6 /* Infoclass.m in Sources */,
 				0424CF6A1F6794F1008D138E /* ProgressView.m in Sources */,
+				0476B6761F8DE5B30075B953 /* UIImage+Rotate.m in Sources */,
 				046BA76D1F480DF2004D7E74 /* main.m in Sources */,
 				044E4F521F60D63B009DD7E7 /* UIImage+ImageWithColor.m in Sources */,
 				044D54B81F4D159D002C1E35 /* StandardTreatViewController.m in Sources */,
