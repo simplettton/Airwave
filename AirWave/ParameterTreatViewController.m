@@ -246,10 +246,6 @@
         NSInteger mode = [self.modePicker selectedRowInComponent:0];
         [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes2]dataEnabled:YES data:[self dataWithValue:(mode+1)]] withTimeout:-1 tag:tag];
     }
-    else
-    {
-        [self showAlertViewWithMessage:@"网络连接已断开"];
-    }
 }
 - (IBAction)cancel:(id)sender
 
@@ -274,9 +270,24 @@
 {
     if (tag == 1)
     {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self showAlertViewWithMessage:@"保存成功"];
-        });
+        NSString *title = @"保存成功";
+        
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+                                                                       message:nil
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        //修改提示标题的颜色和大小
+        NSMutableAttributedString *titleAtt = [[NSMutableAttributedString alloc] initWithString:title];
+        [titleAtt addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16] range:NSMakeRange(0, title.length)];
+        [titleAtt addAttribute:NSForegroundColorAttributeName value:[UIColor darkGrayColor] range:NSMakeRange(0, title.length)];
+        [alert setValue:titleAtt forKey:@"attributedTitle"];
+        
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认"
+                                                                style:UIAlertActionStyleDefault
+                                                              handler:nil];
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
+        
     }
 }
 -(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
@@ -439,15 +450,5 @@
     
     NSData *data = [NSData dataWithBytes:bytes length:2];
     return data;
-}
--(void)showAlertViewWithMessage:(NSString *)message
-{
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Attention!!"
-                                                                   message:message
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault
-                                                          handler:nil];
-    [alert addAction:defaultAction];
-    [self presentViewController:alert animated:YES completion:nil];
 }
 @end

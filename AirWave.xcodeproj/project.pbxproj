@@ -18,7 +18,6 @@
 		0457C63E1F5563EE0050C604 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0457C63C1F5563EE0050C604 /* Main.storyboard */; };
 		045D81B31F6295B400D4D998 /* RunningInfomation.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D81B21F6295B400D4D998 /* RunningInfomation.m */; };
 		04608BE41F8CDD8C00995E12 /* RecordTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04608BE31F8CDD8C00995E12 /* RecordTableViewController.m */; };
-		0462C80F1F5D3FA900AEC2D6 /* Infoclass.m in Sources */ = {isa = PBXBuildFile; fileRef = 0462C80E1F5D3FA900AEC2D6 /* Infoclass.m */; };
 		0462C8131F5D42CE00AEC2D6 /* TreatInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0462C8121F5D42CE00AEC2D6 /* TreatInformation.m */; };
 		046BA76D1F480DF2004D7E74 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BA76C1F480DF2004D7E74 /* main.m */; };
 		046BA7701F480DF2004D7E74 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BA76F1F480DF2004D7E74 /* AppDelegate.m */; };
@@ -79,8 +78,6 @@
 		045D81B21F6295B400D4D998 /* RunningInfomation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunningInfomation.m; sourceTree = "<group>"; };
 		04608BE21F8CDD8C00995E12 /* RecordTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordTableViewController.h; sourceTree = "<group>"; };
 		04608BE31F8CDD8C00995E12 /* RecordTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordTableViewController.m; sourceTree = "<group>"; };
-		0462C80D1F5D3FA900AEC2D6 /* Infoclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Infoclass.h; sourceTree = "<group>"; };
-		0462C80E1F5D3FA900AEC2D6 /* Infoclass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Infoclass.m; sourceTree = "<group>"; };
 		0462C8111F5D42CE00AEC2D6 /* TreatInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreatInformation.h; sourceTree = "<group>"; };
 		0462C8121F5D42CE00AEC2D6 /* TreatInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreatInformation.m; sourceTree = "<group>"; };
 		046BA7681F480DF2004D7E74 /* AirWave.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirWave.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -233,8 +230,6 @@
 				0476B6751F8DE5B30075B953 /* UIImage+Rotate.m */,
 				044E4F531F611C83009DD7E7 /* BodyButton.h */,
 				044E4F561F6140D8009DD7E7 /* BodyButton.m */,
-				0462C80D1F5D3FA900AEC2D6 /* Infoclass.h */,
-				0462C80E1F5D3FA900AEC2D6 /* Infoclass.m */,
 				0424CF681F6794F1008D138E /* ProgressView.h */,
 				0424CF691F6794F1008D138E /* ProgressView.m */,
 				046BA76C1F480DF2004D7E74 /* main.m */,
@@ -480,7 +475,6 @@
 				0450307D1F6955DB008CFAB4 /* WarnMessage.m in Sources */,
 				04CAE36F1F8DFA2500840AD6 /* DetailViewController.m in Sources */,
 				044D54BB1F4D15F7002C1E35 /* Pack.m in Sources */,
-				0462C80F1F5D3FA900AEC2D6 /* Infoclass.m in Sources */,
 				0424CF6A1F6794F1008D138E /* ProgressView.m in Sources */,
 				0476B6761F8DE5B30075B953 /* UIImage+Rotate.m in Sources */,
 				046BA76D1F480DF2004D7E74 /* main.m in Sources */,

@@ -11,7 +11,6 @@
 
 @interface DetailViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *imageResult;
-
 @end
 
 @implementation DetailViewController
@@ -20,12 +19,14 @@
     [super viewDidLoad];
     self.title = @"治疗结果";
     UIImage *image = [UIImage imageWithData:self.record.imgData];
+    _imageResult.contentMode = UIViewContentModeScaleAspectFit;
     _imageResult.image = [image rotate:UIImageOrientationRight];
     
     // Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
 }
 

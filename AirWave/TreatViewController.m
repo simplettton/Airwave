@@ -199,7 +199,6 @@ NSString *const POST = @"8080";
     }
     self.picker.delegate = self;
     self.picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    NSLog(@"home = %@",NSHomeDirectory());
     [self configureView];
     
 }
@@ -1172,9 +1171,18 @@ NSString *const POST = @"8080";
 
 -(void)takePhotoAlert
 {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil
-                                                                   message:@"是否拍照记录治疗情况?"
+    NSString *title = @"是否拍照记录治疗情况？";
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+                                                                   message:nil
                                                             preferredStyle:UIAlertControllerStyleAlert];
+    
+    //修改提示标题的颜色和大小
+    NSMutableAttributedString *titleAtt = [[NSMutableAttributedString alloc] initWithString:title];
+    [titleAtt addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16] range:NSMakeRange(0, title.length)];
+    [titleAtt addAttribute:NSForegroundColorAttributeName value:[UIColor darkGrayColor] range:NSMakeRange(0, title.length)];
+    [alert setValue:titleAtt forKey:@"attributedTitle"];
+
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消"
                                                            style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * _Nonnull action) {

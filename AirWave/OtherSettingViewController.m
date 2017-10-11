@@ -150,7 +150,28 @@ typedef NS_ENUM(NSUInteger,typeTags)
 {
     if (tag == 1)
     {
-        [self showAlertViewWithMessage:@"保存成功"];
+        NSString *title = @"保存成功，返回主界面";
+        
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+                                                                       message:nil
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        //修改提示标题的颜色和大小
+        NSMutableAttributedString *titleAtt = [[NSMutableAttributedString alloc] initWithString:title];
+        [titleAtt addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16] range:NSMakeRange(0, title.length)];
+        [titleAtt addAttribute:NSForegroundColorAttributeName value:[UIColor darkGrayColor] range:NSMakeRange(0, title.length)];
+        [alert setValue:titleAtt forKey:@"attributedTitle"];
+        
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认"
+                                                                style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * _Nonnull action)
+                                        {
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                [self performSegueWithIdentifier:@"OtherSettingToMain" sender:nil];}  );
+                                        }];
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
+
     }
 }
 #pragma mark - private method
@@ -167,25 +188,6 @@ typedef NS_ENUM(NSUInteger,typeTags)
     NSData *data = [NSData dataWithBytes:bytes length:2];
     return data;
 }
--(void)showAlertViewWithMessage:(NSString *)message
-{
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Attention!!"
-                                                                   message:message
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认"
-                                                            style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * _Nonnull action)
-                                    {
-                                                              dispatch_async(dispatch_get_main_queue(), ^{
-                                                                  [self performSegueWithIdentifier:@"OtherSettingToMain" sender:nil];}  );
-                                    }];
-
-    [alert addAction:defaultAction];
-    [self presentViewController:alert animated:YES completion:nil];
-}
-
-
 - (IBAction)onclickAport:(id)sender
 {
     self.selectedATag = [sender tag];
@@ -334,7 +336,7 @@ typedef NS_ENUM(NSUInteger,typeTags)
     Pack *pack = [[Pack alloc]init];
     [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xba]] withTimeout:-1 tag:0];
     [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xae]] withTimeout:-1 tag:0];
-    [self performSegueWithIdentifier:@"OthersettingToMain" sender:nil];
+    [self performSegueWithIdentifier:@"OtherSettingToMain" sender:nil];
 }
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
