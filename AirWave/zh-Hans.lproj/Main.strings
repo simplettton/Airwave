@@ -1,0 +1,423 @@
+
+/* Class = "UINavigationItem"; title = "空气波治疗仪"; ObjectID = "0cT-Wo-4A6"; */
+"0cT-Wo-4A6.title" = "空气波治疗仪";
+
+/* Class = "UILabel"; text = "5"; ObjectID = "0qz-D5-LX9"; */
+"0qz-D5-LX9.text" = "5";
+
+/* Class = "UIButton"; normalTitle = "4"; ObjectID = "1XY-wJ-V3g"; */
+"1XY-wJ-V3g.normalTitle" = "4";
+
+/* Class = "UILabel"; text = "（1-6级）"; ObjectID = "1cd-0I-IOz"; */
+"1cd-0I-IOz.text" = "（1-6级）";
+
+/* Class = "UIButton"; normalTitle = "保存"; ObjectID = "1vC-1X-Qqw"; */
+"1vC-1X-Qqw.normalTitle" = "保存";
+
+/* Class = "UILabel"; text = "间隔时间"; ObjectID = "2Sw-RP-gAf"; */
+"2Sw-RP-gAf.text" = "间隔时间";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "2YO-Ke-JDW"; */
+"2YO-Ke-JDW.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "时"; ObjectID = "2bp-20-tMQ"; */
+"2bp-20-tMQ.text" = "时";
+
+/* Class = "UILabel"; text = "自定义"; ObjectID = "2kJ-fT-nuG"; */
+"2kJ-fT-nuG.text" = "自定义";
+
+/* Class = "UIButton"; normalTitle = "梯度治疗"; ObjectID = "2xW-9S-2E1"; */
+"2xW-9S-2E1.normalTitle" = "梯度治疗";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "3RS-kH-DCw"; */
+"3RS-kH-DCw.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "4"; ObjectID = "3eH-PK-g3z"; */
+"3eH-PK-g3z.normalTitle" = "4";
+
+/* Class = "UIButton"; normalTitle = "1"; ObjectID = "3ns-wL-LNU"; */
+"3ns-wL-LNU.normalTitle" = "1";
+
+/* Class = "UITextField"; text = "100"; ObjectID = "4bd-EP-FPN"; */
+"4bd-EP-FPN.text" = "100";
+
+/* Class = "UIButton"; normalTitle = "取消更改"; ObjectID = "4sr-rj-FeJ"; */
+"4sr-rj-FeJ.normalTitle" = "取消更改";
+
+/* Class = "UILabel"; text = "时"; ObjectID = "5Te-yc-jks"; */
+"5Te-yc-jks.text" = "时";
+
+/* Class = "UIButton"; normalTitle = "标准治疗"; ObjectID = "6RL-9X-OjO"; */
+"6RL-9X-OjO.normalTitle" = "标准治疗";
+
+/* Class = "UIButton"; normalTitle = "参数治疗"; ObjectID = "6wD-75-DO1"; */
+"6wD-75-DO1.normalTitle" = "参数治疗";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "7I1-MJ-qIP"; */
+"7I1-MJ-qIP.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "取消更改"; ObjectID = "7js-5k-fUt"; */
+"7js-5k-fUt.normalTitle" = "取消更改";
+
+/* Class = "UILabel"; text = "B端"; ObjectID = "8Cp-Ca-7je"; */
+"8Cp-Ca-7je.text" = "B端";
+
+/* Class = "UIButton"; normalTitle = "6"; ObjectID = "8cw-zk-I8r"; */
+"8cw-zk-I8r.normalTitle" = "6";
+
+/* Class = "UILabel"; text = "使能"; ObjectID = "949-7n-X2I"; */
+"949-7n-X2I.text" = "使能";
+
+/* Class = "UIButton"; normalTitle = "3"; ObjectID = "9cr-7o-gbO"; */
+"9cr-7o-gbO.normalTitle" = "3";
+
+/* Class = "UILabel"; text = "20"; ObjectID = "A6h-Cu-O19"; */
+"A6h-Cu-O19.text" = "20";
+
+/* Class = "UIButton"; normalTitle = "参数治疗"; ObjectID = "AR8-6r-17n"; */
+"AR8-6r-17n.normalTitle" = "参数治疗";
+
+/* Class = "UIButton"; normalTitle = "恢复出厂设置"; ObjectID = "AUj-ux-uwA"; */
+"AUj-ux-uwA.normalTitle" = "恢复出厂设置";
+
+/* Class = "UINavigationItem"; title = "模式选择"; ObjectID = "B18-Jb-vPj"; */
+"B18-Jb-vPj.title" = "模式选择";
+
+/* Class = "UILabel"; text = "治疗压力"; ObjectID = "BR5-Jr-bZU"; */
+"BR5-Jr-bZU.text" = "治疗压力";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "BUW-SD-uBx"; */
+"BUW-SD-uBx.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "时间"; ObjectID = "Bdv-ax-rtl"; */
+"Bdv-ax-rtl.text" = "时间";
+
+/* Class = "UIButton"; normalTitle = "参数治疗"; ObjectID = "Bw8-Lb-09k"; */
+"Bw8-Lb-09k.normalTitle" = "参数治疗";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "CEV-75-XhK"; */
+"CEV-75-XhK.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "全科"; ObjectID = "CO7-7J-qKn"; */
+"CO7-7J-qKn.text" = "全科";
+
+/* Class = "UILabel"; text = "time"; ObjectID = "DFb-8a-fHH"; */
+"DFb-8a-fHH.text" = "time";
+
+/* Class = "UIButton"; normalTitle = "2"; ObjectID = "DQx-5C-Ylc"; */
+"DQx-5C-Ylc.normalTitle" = "2";
+
+/* Class = "UILabel"; text = "mmHg"; ObjectID = "DZD-Fb-yCF"; */
+"DZD-Fb-yCF.text" = "mmHg";
+
+/* Class = "UILabel"; text = "（1-12s）"; ObjectID = "Fjq-WH-5dG"; */
+"Fjq-WH-5dG.text" = "（1-12s）";
+
+/* Class = "UIButton"; normalTitle = "5"; ObjectID = "FkK-l3-6DN"; */
+"FkK-l3-6DN.normalTitle" = "5";
+
+/* Class = "UIButton"; normalTitle = "←"; ObjectID = "G7L-SL-aKB"; */
+"G7L-SL-aKB.normalTitle" = "←";
+
+/* Class = "UILabel"; text = "气囊类型识别"; ObjectID = "GUm-VU-6Ee"; */
+"GUm-VU-6Ee.text" = "气囊类型识别";
+
+/* Class = "UILabel"; text = "6"; ObjectID = "IAJ-FR-7KG"; */
+"IAJ-FR-7KG.text" = "6";
+
+/* Class = "UILabel"; text = "时"; ObjectID = "IUB-0X-dYz"; */
+"IUB-0X-dYz.text" = "时";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Ig3-KT-8Y5"; */
+"Ig3-KT-8Y5.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "取消"; ObjectID = "JGr-dQ-6b6"; */
+"JGr-dQ-6b6.normalTitle" = "取消";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Je7-8v-pLi"; */
+"Je7-8v-pLi.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "1"; ObjectID = "JlP-7h-Bzc"; */
+"JlP-7h-Bzc.normalTitle" = "1";
+
+/* Class = "UIBarButtonItem"; title = "设置"; ObjectID = "K1o-XT-gzF"; */
+"K1o-XT-gzF.title" = "设置";
+
+/* Class = "UISearchBar"; placeholder = "搜索日期  格式 2017-10-11"; ObjectID = "KQ6-TE-93X"; */
+"KQ6-TE-93X.placeholder" = "搜索日期  格式 2017-10-11";
+
+/* Class = "UILabel"; text = "mmHg"; ObjectID = "Lqb-cK-L4y"; */
+"Lqb-cK-L4y.text" = "mmHg";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "MSC-Lt-fwX"; */
+"MSC-Lt-fwX.text" = "0";
+
+/* Class = "UILabel"; text = "持续"; ObjectID = "Mqg-at-xhr"; */
+"Mqg-at-xhr.text" = "持续";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "NU8-KA-TKF"; */
+"NU8-KA-TKF.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "腿部"; ObjectID = "Nfj-ax-l1E"; */
+"Nfj-ax-l1E.text" = "腿部";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "O1h-V7-dAG"; */
+"O1h-V7-dAG.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "P1k-NB-4xm"; */
+"P1k-NB-4xm.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "PKp-y5-OUT"; */
+"PKp-y5-OUT.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "PSM-3T-wiL"; */
+"PSM-3T-wiL.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "标准治疗"; ObjectID = "PWf-uU-jc2"; */
+"PWf-uU-jc2.normalTitle" = "标准治疗";
+
+/* Class = "UIButton"; normalTitle = "梯度治疗"; ObjectID = "PcB-d5-q4P"; */
+"PcB-d5-q4P.normalTitle" = "梯度治疗";
+
+/* Class = "UILabel"; text = "四肢"; ObjectID = "Q9I-eo-p3X"; */
+"Q9I-eo-p3X.text" = "四肢";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "QD3-p0-oeU"; */
+"QD3-p0-oeU.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "保存"; ObjectID = "QFX-AL-MZ8"; */
+"QFX-AL-MZ8.normalTitle" = "保存";
+
+/* Class = "UIButton"; normalTitle = "方案治疗"; ObjectID = "REX-4z-lfH"; */
+"REX-4z-lfH.normalTitle" = "方案治疗";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "ROA-96-odF"; */
+"ROA-96-odF.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "RSi-W1-N1E"; */
+"RSi-W1-N1E.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "3"; ObjectID = "Rec-tJ-huL"; */
+"Rec-tJ-huL.normalTitle" = "3";
+
+/* Class = "UITabBarItem"; title = "模式"; ObjectID = "SwQ-Qu-75D"; */
+"SwQ-Qu-75D.title" = "模式";
+
+/* Class = "UILabel"; text = "模式"; ObjectID = "T2s-rT-y7N"; */
+"T2s-rT-y7N.text" = "模式";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "TuR-23-4BB"; */
+"TuR-23-4BB.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "方案选择"; ObjectID = "UPs-hx-Ihq"; */
+"UPs-hx-Ihq.text" = "方案选择";
+
+/* Class = "UIButton"; normalTitle = "1"; ObjectID = "VBJ-NJ-TDi"; */
+"VBJ-NJ-TDi.normalTitle" = "1";
+
+/* Class = "UILabel"; text = "压力"; ObjectID = "VRt-lT-tt3"; */
+"VRt-lT-tt3.text" = "压力";
+
+/* Class = "UILabel"; text = "A端"; ObjectID = "VUk-hi-KIM"; */
+"VUk-hi-KIM.text" = "A端";
+
+/* Class = "UINavigationItem"; title = "治疗记录"; ObjectID = "VaC-YA-hQp"; */
+"VaC-YA-hQp.title" = "治疗记录";
+
+/* Class = "UIButton"; normalTitle = "梯度治疗"; ObjectID = "WVD-vl-GzO"; */
+"WVD-vl-GzO.normalTitle" = "梯度治疗";
+
+/* Class = "UIButton"; normalTitle = "方案治疗"; ObjectID = "WbB-j3-YdC"; */
+"WbB-j3-YdC.normalTitle" = "方案治疗";
+
+/* Class = "UILabel"; text = "压力设置（/mmHg）"; ObjectID = "WpG-Zj-fKC"; */
+"WpG-Zj-fKC.text" = "压力设置（/mmHg）";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "XPQ-i4-UKl"; */
+"XPQ-i4-UKl.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "参数治疗"; ObjectID = "XQ4-h4-xWc"; */
+"XQ4-h4-xWc.normalTitle" = "参数治疗";
+
+/* Class = "UINavigationItem"; title = "模式选择"; ObjectID = "XsK-ME-rf2"; */
+"XsK-ME-rf2.title" = "模式选择";
+
+/* Class = "UIButton"; normalTitle = "标准治疗"; ObjectID = "YAA-ph-au2"; */
+"YAA-ph-au2.normalTitle" = "标准治疗";
+
+/* Class = "UIButton"; normalTitle = "取消"; ObjectID = "ZHe-Gf-TYD"; */
+"ZHe-Gf-TYD.normalTitle" = "取消";
+
+/* Class = "UIButton"; normalTitle = "4"; ObjectID = "ZMt-m8-gAc"; */
+"ZMt-m8-gAc.normalTitle" = "4";
+
+/* Class = "UIButton"; normalTitle = "方案治疗"; ObjectID = "aDM-pX-3Yy"; */
+"aDM-pX-3Yy.normalTitle" = "方案治疗";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "b2Q-wM-EVc"; */
+"b2Q-wM-EVc.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "保持时间"; ObjectID = "bWk-WI-Ydu"; */
+"bWk-WI-Ydu.text" = "保持时间";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "dPU-ez-54t"; */
+"dPU-ez-54t.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "保存"; ObjectID = "dYf-BL-SGn"; */
+"dYf-BL-SGn.normalTitle" = "保存";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "djT-nP-f8a"; */
+"djT-nP-f8a.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "eVy-dJ-dNN"; */
+"eVy-dJ-dNN.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "egf-0u-lza"; */
+"egf-0u-lza.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "3"; ObjectID = "f5d-RQ-vAj"; */
+"f5d-RQ-vAj.normalTitle" = "3";
+
+/* Class = "UILabel"; text = "模式"; ObjectID = "fCj-cq-GeG"; */
+"fCj-cq-GeG.text" = "模式";
+
+/* Class = "UILabel"; text = "持续"; ObjectID = "fPA-tY-12K"; */
+"fPA-tY-12K.text" = "持续";
+
+/* Class = "UILabel"; text = "treatWay"; ObjectID = "faR-cj-BRm"; */
+"faR-cj-BRm.text" = "treatWay";
+
+/* Class = "UIButton"; normalTitle = "6"; ObjectID = "fgR-Dz-6cV"; */
+"fgR-Dz-6cV.normalTitle" = "6";
+
+/* Class = "UILabel"; text = "持续"; ObjectID = "fm9-ci-I4g"; */
+"fm9-ci-I4g.text" = "持续";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "hDj-bR-lUX"; */
+"hDj-bR-lUX.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "气囊类型"; ObjectID = "hF8-Rc-kNV"; */
+"hF8-Rc-kNV.normalTitle" = "气囊类型";
+
+/* Class = "UIButton"; normalTitle = "2"; ObjectID = "hhX-rZ-Vzl"; */
+"hhX-rZ-Vzl.normalTitle" = "2";
+
+/* Class = "UIButton"; normalTitle = "气囊类型"; ObjectID = "iX0-nY-e12"; */
+"iX0-nY-e12.normalTitle" = "气囊类型";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "iiU-cs-Gmr"; */
+"iiU-cs-Gmr.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "2"; ObjectID = "itT-kp-vqj"; */
+"itT-kp-vqj.normalTitle" = "2";
+
+/* Class = "UIButton"; normalTitle = "标准治疗"; ObjectID = "j9D-nS-in8"; */
+"j9D-nS-in8.normalTitle" = "标准治疗";
+
+/* Class = "UIButton"; normalTitle = "方案治疗"; ObjectID = "jRZ-B9-fCq"; */
+"jRZ-B9-fCq.normalTitle" = "方案治疗";
+
+/* Class = "UIButton"; normalTitle = "treat"; ObjectID = "jT5-Gn-W6K"; */
+"jT5-Gn-W6K.normalTitle" = "treat";
+
+/* Class = "UIButton"; normalTitle = "标准治疗"; ObjectID = "jcR-QA-ngj"; */
+"jcR-QA-ngj.normalTitle" = "标准治疗";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "kG6-Hf-Dv2"; */
+"kG6-Hf-Dv2.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "lZb-WR-Qlq"; */
+"lZb-WR-Qlq.normalTitle" = "Button";
+
+/* Class = "UINavigationItem"; title = "模式选择"; ObjectID = "lzB-nX-oOw"; */
+"lzB-nX-oOw.title" = "模式选择";
+
+/* Class = "UIButton"; normalTitle = "←"; ObjectID = "mJ0-Zb-0sl"; */
+"mJ0-Zb-0sl.normalTitle" = "←";
+
+/* Class = "UILabel"; text = "自定义"; ObjectID = "myC-pS-QsS"; */
+"myC-pS-QsS.text" = "自定义";
+
+/* Class = "UIButton"; normalTitle = "5"; ObjectID = "nha-Q5-Ggj"; */
+"nha-Q5-Ggj.normalTitle" = "5";
+
+/* Class = "UILabel"; text = "时间设置（/秒）"; ObjectID = "nql-k5-sI9"; */
+"nql-k5-sI9.text" = "时间设置（/秒）";
+
+/* Class = "UILabel"; text = "（1-60s）"; ObjectID = "nyU-HK-7HI"; */
+"nyU-HK-7HI.text" = "（1-60s）";
+
+/* Class = "UILabel"; text = "压力等级"; ObjectID = "oOo-8T-HKP"; */
+"oOo-8T-HKP.text" = "压力等级";
+
+/* Class = "UILabel"; text = "时间"; ObjectID = "omz-Z3-aHx"; */
+"omz-Z3-aHx.text" = "时间";
+
+/* Class = "UIButton"; normalTitle = "标准治疗"; ObjectID = "osS-Md-paI"; */
+"osS-Md-paI.normalTitle" = "标准治疗";
+
+/* Class = "UILabel"; text = " "; ObjectID = "pjG-8g-uDo"; */
+"pjG-8g-uDo.text" = " ";
+
+/* Class = "UIButton"; normalTitle = "梯度治疗"; ObjectID = "qPo-ie-SPw"; */
+"qPo-ie-SPw.normalTitle" = "梯度治疗";
+
+/* Class = "UILabel"; text = "速度设置（/级）"; ObjectID = "qX1-hF-MHB"; */
+"qX1-hF-MHB.text" = "速度设置（/级）";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "qkj-Ng-dcY"; */
+"qkj-Ng-dcY.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "充气速度"; ObjectID = "r2U-W1-5Pn"; */
+"r2U-W1-5Pn.text" = "充气速度";
+
+/* Class = "UILabel"; text = "分"; ObjectID = "ri3-pb-v2X"; */
+"ri3-pb-v2X.text" = "分";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "u0L-DT-rKQ"; */
+"u0L-DT-rKQ.normalTitle" = "Button";
+
+/* Class = "UINavigationItem"; title = "模式选择"; ObjectID = "uAU-Mc-svI"; */
+"uAU-Mc-svI.title" = "模式选择";
+
+/* Class = "UILabel"; text = "分"; ObjectID = "uBn-0o-d6u"; */
+"uBn-0o-d6u.text" = "分";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "uIS-u1-Gzb"; */
+"uIS-u1-Gzb.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "时间"; ObjectID = "uWp-ru-Sb2"; */
+"uWp-ru-Sb2.text" = "时间";
+
+/* Class = "UILabel"; text = "分"; ObjectID = "uvc-zs-RTu"; */
+"uvc-zs-RTu.text" = "分";
+
+/* Class = "UIBarButtonItem"; title = "记录"; ObjectID = "uzN-9B-Qno"; */
+"uzN-9B-Qno.title" = "记录";
+
+/* Class = "UIButton"; normalTitle = "取消"; ObjectID = "vDS-Dk-exU"; */
+"vDS-Dk-exU.normalTitle" = "取消";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "vj5-sv-y0g"; */
+"vj5-sv-y0g.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "自定义"; ObjectID = "vmd-Tu-bZY"; */
+"vmd-Tu-bZY.text" = "自定义";
+
+/* Class = "UILabel"; text = "001"; ObjectID = "wTt-my-QaS"; */
+"wTt-my-QaS.text" = "001";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "xmu-bB-0jt"; */
+"xmu-bB-0jt.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "保存"; ObjectID = "yzJ-M3-aJ4"; */
+"yzJ-M3-aJ4.normalTitle" = "保存";
+
+/* Class = "UIButton"; normalTitle = "保存"; ObjectID = "zEa-oY-hfE"; */
+"zEa-oY-hfE.normalTitle" = "保存";
+
+/* Class = "UIButton"; normalTitle = "保存"; ObjectID = "zK4-U4-c8P"; */
+"zK4-U4-c8P.normalTitle" = "保存";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "zu0-NF-aOp"; */
+"zu0-NF-aOp.normalTitle" = "Button";

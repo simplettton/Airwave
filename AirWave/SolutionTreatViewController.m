@@ -220,7 +220,6 @@
             [self.clientSocket writeData:dataToSend withTimeout:-1 tag:1];
         }
     }
-    
     //设置治疗压力
     Byte addrByte2[2] = {80,0};
     NSInteger press= [self.pressTextField.text integerValue];
