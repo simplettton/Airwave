@@ -101,6 +101,10 @@
     [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc]init]];
     [[self.navigationController navigationBar]setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColorFromHex(0X626d91)}];
+    
+//    //导航栏
+//    self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X768BAB);
+//    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
 
     //设置单边圆角
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.saveButton.bounds byRoundingCorners:UIRectCornerTopRight|UIRectCornerBottomRight cornerRadii:CGSizeMake(10.0, 10.0)];

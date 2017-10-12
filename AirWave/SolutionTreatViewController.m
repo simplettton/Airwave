@@ -90,7 +90,6 @@
     {
         [self.backgroudView viewWithTag:i].layer.borderColor = UIColorFromHex(0X65BBA9).CGColor;
         [self.backgroudView viewWithTag:i].layer.borderWidth = 1.5;
-        
         //处理不可按的按钮
         NSString *aport = self.treatInfomation.aPort;
         NSString *bport = self.treatInfomation.bPort;
@@ -148,7 +147,6 @@
         [warningImageView removeFromSuperview];
     });
 }
-
 #pragma mark - private method
 -(CABasicAnimation *)warningMessageAnimation:(float)time
 {
