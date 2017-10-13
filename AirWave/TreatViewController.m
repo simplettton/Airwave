@@ -333,7 +333,7 @@ NSString *const POST = @"8080";
 
 
         //去除其他按钮
-        if ([bodyButtons count]>=0)
+        if ([bodyButtons count]>0)
         {
             for (int i = 0; i<[bodyButtons count]; i++)
             {
@@ -1283,6 +1283,10 @@ NSString *const POST = @"8080";
     [archiver finishEncoding];
     
     BOOL success = [data writeToFile:documentPath atomically:YES];
+    if (!success)
+    {
+        NSLog(@"写入文件失败");
+    }
     
 }
 #pragma mark - Private Method
