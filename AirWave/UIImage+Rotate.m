@@ -67,8 +67,6 @@
             break;
     }
     
-    // Now we draw the underlying CGImage into a new context, applying the transform
-    // calculated above.
     CGContextRef ctx = CGBitmapContextCreate(NULL, self.size.width, self.size.height,
                                              CGImageGetBitsPerComponent(self.CGImage), 0,
                                              CGImageGetColorSpace(self.CGImage),

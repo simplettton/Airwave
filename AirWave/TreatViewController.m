@@ -65,7 +65,7 @@ static int legTags[] = {    leftleg1tag , leftleg2tag , leftleg3tag , leftleg4ta
                             rightleg1tag, rightleg2tag, rightleg3tag, rightleg4tag, rightleg5tag, rightleg6tag, rightleg7tag, rightfoottag    };
 
 NSString *const HOST = @"10.10.100.254";
-NSString *const POST = @"8080";
+NSString *const PORT = @"8080";
 
 @interface TreatViewController ()<GCDAsyncSocketDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (nonatomic, strong) UIImagePickerController *picker;
@@ -162,7 +162,7 @@ NSString *const POST = @"8080";
         self.clientSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
         NSLog(@"开始连接%@",self.clientSocket);
         NSError *error = nil;
-        self.connected = [self.clientSocket connectToHost:HOST onPort:[POST integerValue] viaInterface:nil withTimeout:-1 error:&error];
+        self.connected = [self.clientSocket connectToHost:HOST onPort:[PORT integerValue] viaInterface:nil withTimeout:-1 error:&error];
         if (self.connected)
         {
             NSLog(@"客户端尝试连接");
@@ -264,11 +264,7 @@ NSString *const POST = @"8080";
 }
 -(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
 {
-//    ask
-//    if (tag==1000)
-//    {
-//        NSLog(@"ask");
-//    }
+
 }
 -(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
@@ -1130,7 +1126,6 @@ NSString *const POST = @"8080";
                                                                dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:0];
     
 }
-
 -(void)askForTreatInfomation
 {
     Pack *pack = [[Pack alloc]init];
@@ -1231,6 +1226,7 @@ NSString *const POST = @"8080";
         }
         //保存完将图片消除
         self.treatRecord.imgData = nil;
+        
     });
     
     
@@ -1251,43 +1247,42 @@ NSString *const POST = @"8080";
 //保存
 -(void)saveRecord
 {
-    //文件名
-    NSString *documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    if (!documents)
-    {
-        NSLog(@"目录未找到");
-    }
-    NSString *documentPath = [documents stringByAppendingPathComponent:@"record.plist"];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager fileExistsAtPath:documentPath])
-    {
-        [fileManager createFileAtPath:documentPath contents:nil attributes:nil];
-    }
-    
-    NSArray *recordArray = [[NSArray alloc]init];
-    //取出以前保存的record数组
-    if ([fileManager fileExistsAtPath:documentPath])
-    {
-        NSData * resultdata = [[NSData alloc] initWithContentsOfFile:documentPath];
-        NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:resultdata];
-        recordArray = [unArchiver decodeObjectForKey:@"recordArray"];
-    }
-    NSMutableArray *array = [NSMutableArray arrayWithArray:recordArray];
-    //新增record
-    [array addObject:self.treatRecord];
-    recordArray = [array copy];
-    //写入文件
-    NSMutableData *data = [[NSMutableData alloc] init] ;
-    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data] ;
-    [archiver encodeObject:recordArray forKey:@"recordArray"];
-    [archiver finishEncoding];
-    
-    BOOL success = [data writeToFile:documentPath atomically:YES];
-    if (!success)
-    {
-        NSLog(@"写入文件失败");
-    }
-    
+        //文件名
+        NSString *documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        if (!documents)
+        {
+            NSLog(@"目录未找到");
+        }
+        NSString *documentPath = [documents stringByAppendingPathComponent:@"record.plist"];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if (![fileManager fileExistsAtPath:documentPath])
+        {
+            [fileManager createFileAtPath:documentPath contents:nil attributes:nil];
+        }
+        
+        NSArray *recordArray = [[NSArray alloc]init];
+        //取出以前保存的record数组
+        if ([fileManager fileExistsAtPath:documentPath])
+        {
+            NSData * resultdata = [[NSData alloc] initWithContentsOfFile:documentPath];
+            NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:resultdata];
+            recordArray = [unArchiver decodeObjectForKey:@"recordArray"];
+        }
+        NSMutableArray *array = [NSMutableArray arrayWithArray:recordArray];
+        //新增record
+        [array addObject:self.treatRecord];
+        recordArray = [array copy];
+        //写入文件
+        NSMutableData *data = [[NSMutableData alloc] init] ;
+        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data] ;
+        [archiver encodeObject:recordArray forKey:@"recordArray"];
+        [archiver finishEncoding];
+        
+        BOOL success = [data writeToFile:documentPath atomically:YES];
+        if (!success)
+        {
+            NSLog(@"写入文件失败");
+        }
 }
 #pragma mark - Private Method
 - (NSString *)getCurrentTime
@@ -1341,7 +1336,7 @@ NSString *const POST = @"8080";
 {
     NSError *error= nil;
     self.clientSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-    [self.clientSocket connectToHost:HOST onPort:[POST integerValue] viaInterface:nil withTimeout:-1 error:&error];
+    [self.clientSocket connectToHost:HOST onPort:[PORT integerValue] viaInterface:nil withTimeout:-1 error:&error];
 
 }
 -(CABasicAnimation *)warningMessageAnimation:(float)time

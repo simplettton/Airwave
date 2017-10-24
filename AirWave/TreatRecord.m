@@ -78,13 +78,21 @@
         NSString *hourString = [NSString stringWithFormat:hour>9?@"%d":@"0%d",hour];
         NSString *minString = [NSString stringWithFormat:min>9?@"%d":@"0%d",min];
         NSString *secondString = [NSString stringWithFormat:second>9?@"%d":@"0%d",second];
-        
+        self.durationString = @"";
         if (hour>0)
         {
-            [self.durationString stringByAppendingString:[NSString stringWithFormat:@"%@小时",hourString]];
+            self.durationString = [self.durationString stringByAppendingString:[NSString stringWithFormat:@"%@小时",hourString]];
+        }
+        if (min>0)
+        {
+            self.durationString = [self.durationString stringByAppendingString:[NSString stringWithFormat:@"%@分钟",minString]];
+        }
+        if (second>0)
+        {
+            self.durationString = [self.durationString stringByAppendingString:[NSString stringWithFormat:@"%@秒",secondString]];
         }
         
-        self.durationString = [NSString stringWithFormat:@"%@:%@:%@",hourString,minString,secondString];
+//        self.durationString = [NSString stringWithFormat:@"%@:%@:%@",hourString,minString,secondString];
     }
     else
     {

@@ -11,6 +11,7 @@
 #import "UIImage+Rotate.h"
 #import "DetailViewController.h"
 #import "TreatRecord.h"
+#define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 typedef NS_ENUM(NSUInteger,cellViewTag)
 {
     timeLabelTag = 55,imageTag = 555,treatWayLableTag = 666,numberLabelTag = 222
@@ -21,6 +22,7 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
     NSMutableArray *mResult;
 }
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+- (IBAction)upload:(id)sender;
 @end
 
 @implementation RecordTableViewController
@@ -29,39 +31,56 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
 {
     [super viewDidLoad];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    //文件名
-    NSString *documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *documentPath = [documents stringByAppendingPathComponent:@"record.plist"];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-
-    if (![fileManager fileExistsAtPath:documentPath])
-    {
-        [fileManager createFileAtPath:documentPath contents:nil attributes:nil];
-    }
+    //加载数据
+    //导航栏
+    self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    self.navigationItem.rightBarButtonItem.tintColor = UIColorFromHex(0xffffff);
+    self.navigationItem.leftBarButtonItem.tintColor = UIColorFromHex(0xffffff);
     
-    //取出以前保存的record数组
-    if ([fileManager fileExistsAtPath:documentPath])
-    {
-        NSData * resultdata = [[NSData alloc] initWithContentsOfFile:documentPath];
-        NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:resultdata];
-        NSArray *savedArray = [unArchiver decodeObjectForKey:@"recordArray"];
-        NSMutableArray *array = [NSMutableArray arrayWithArray:savedArray];
-        //倒序
-        records = [NSMutableArray arrayWithArray:[[array reverseObjectEnumerator] allObjects]];
-        mResult = records;
-        if (!records)
+    //右上角按钮
+    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30 , 30)];
+    [btn setBackgroundImage:[UIImage imageNamed:@"list-2"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(rightBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.rightBarButtonItem = barButton;
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //文件名
+        NSString *documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *documentPath = [documents stringByAppendingPathComponent:@"record.plist"];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        
+        
+        if (![fileManager fileExistsAtPath:documentPath])
         {
-            records = [NSMutableArray array];
+            [fileManager createFileAtPath:documentPath contents:nil attributes:nil];
         }
-    }
-}
-
-- (void)didReceiveMemoryWarning
+        
+        //取出以前保存的record数组
+        if ([fileManager fileExistsAtPath:documentPath])
+        {
+            NSData * resultdata = [[NSData alloc] initWithContentsOfFile:documentPath];
+            NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:resultdata];
+            NSArray *savedArray = [unArchiver decodeObjectForKey:@"recordArray"];
+            NSMutableArray *array = [NSMutableArray arrayWithArray:savedArray];
+            //倒序
+            records = [NSMutableArray arrayWithArray:[[array reverseObjectEnumerator] allObjects]];
+            mResult = records;
+            if (!records)
+            {
+                records = [NSMutableArray array];
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];} );
+        }
+    });
+ }
+-(void)rightBarButtonClicked:(UIButton *)button
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self performSegueWithIdentifier:@"ShowServerRecords" sender:nil];
 }
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -73,24 +92,6 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
 {
     return [mResult count];
 }
-//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    //然后再新开一个线程去加载图片
-//    [NSThread detachNewThreadSelector:@selector(updateImageForCellAtIndexPath:) toTarget:self withObject:indexPath];
-//}
-//- (void)updateImageForCellAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    //取出record
-//    TreatRecord *record = (TreatRecord *)[records objectAtIndex:indexPath.row];
-//    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-//    UIImageView *imageView = [cell viewWithTag:imageTag];
-//    NSData *imageData =record.imgData;
-////  UIImage *image = [self imageCompressForSize:[UIImage imageWithData:imageData] targetSize:imageView.frame.size];
-//
-////    UIImage *image = [UIImage imageWithData:imageData];
-//    UIImage *image = [self fixOrientation:[UIImage imageWithData:imageData]];
-//    [imageView performSelectorOnMainThread:@selector(setImage:) withObject:image waitUntilDone:NO];
-//}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
@@ -113,15 +114,16 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
     //治疗时长
 //    cell.durationLabel.text = record.durationString;
     
-    //图片
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *imageData =record.imgData;
-        UIImage *image = [UIImage imageWithData:imageData];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            cell.resultImageView.image = [[self imageCompressForSize:image targetSize:cell.resultImageView.frame.size]rotate:UIImageOrientationRight];
-        });
-    });
+    
+    
+//    //图片
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        NSData *imageData =record.imgData;
+//        UIImage *image = [UIImage imageWithData:imageData];
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            cell.resultImageView.image = [[self imageCompressForSize:image targetSize:cell.resultImageView.frame.size]rotate:UIImageOrientationRight];
+//        });
+//    });
     return cell;
 }
 #pragma mark - table view delegate
@@ -130,10 +132,7 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 //  NSIndexPath *selectedIndex = [self.tableView indexPathForSelectedRow];
     TreatRecord *record = mResult[indexPath.row];
-    if ([record.imgData length]>0)
-    {
-        [self performSegueWithIdentifier:@"ShowDetail" sender:record];
-    }
+    [self performSegueWithIdentifier:@"ShowDetail" sender:record];
 }
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
@@ -197,7 +196,8 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
     CGFloat scaledWidth = targetWidth;
     CGFloat scaledHeight = targetHeight;
     CGPoint thumbnailPoint = CGPointMake(0.0, 0.0);
-    if(CGSizeEqualToSize(imageSize, size) == NO){
+    if(CGSizeEqualToSize(imageSize, size) == NO)
+    {
         CGFloat widthFactor = targetWidth / width;
         CGFloat heightFactor = targetHeight / height;
         if(widthFactor > heightFactor){
@@ -247,7 +247,8 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
     CGFloat scaledWidth = targetWidth;
     CGFloat scaledHeight = targetHeight;
     CGPoint thumbnailPoint = CGPointMake(0.0, 0.0);
-    if(CGSizeEqualToSize(imageSize, size) == NO){
+    if(CGSizeEqualToSize(imageSize, size) == NO)
+    {
         CGFloat widthFactor = targetWidth / width;
         CGFloat heightFactor = targetHeight / height;
         if(widthFactor > heightFactor){
@@ -258,9 +259,11 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
         }
         scaledWidth = width * scaleFactor;
         scaledHeight = height * scaleFactor;
-        if(widthFactor > heightFactor){
+        if(widthFactor > heightFactor)
+        {
             thumbnailPoint.y = (targetHeight - scaledHeight) * 0.5;
-        }else if(widthFactor < heightFactor){
+        }else if(widthFactor < heightFactor)
+        {
             thumbnailPoint.x = (targetWidth - scaledWidth) * 0.5;
         }
     }
@@ -279,5 +282,162 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
     
     UIGraphicsEndImageContext();
     return newImage;
+}
+- (UIImage *)scaleImage:(UIImage *)image maxSize:(CGFloat)maxSize {
+    NSData *data = UIImageJPEGRepresentation(image, 1.0);
+    if(data.length < 200 * 1024)
+    {//0.25M-0.5M(当图片小于此范围不压缩)
+        return image;
+    }
+    CGFloat imageWidth = image.size.width;
+    CGFloat imageHeight = image.size.height;
+    CGFloat targetWidth = imageWidth;
+    CGFloat targetHeight = imageHeight;
+    CGFloat imageMaxSize = MAX(imageWidth, imageHeight);
+    if (imageMaxSize > maxSize)
+    {
+        CGFloat scale = 0;
+        if (imageWidth >= imageHeight) {// 宽长
+            scale = maxSize / imageWidth;
+            targetWidth = maxSize;
+            targetHeight = imageHeight * scale;
+        } else { // 高长
+            scale = maxSize / imageHeight;
+            targetHeight = maxSize;
+            targetWidth = imageWidth * scale;
+        }
+        UIGraphicsBeginImageContext(CGSizeMake(targetWidth, targetHeight));
+        [image drawInRect:CGRectMake(0, 0, targetWidth, targetHeight)];
+        UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        return scaledImage;
+    }
+    return image;
+}
+- (IBAction)upload:(id)sender
+{
+//    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+//    
+//    
+//    //上传数据
+//    [params setObject:@"jasper" forKey:@"Name"];
+//    [params setObject:@"男" forKey:@"Sex"];
+//    [params setObject:@"7" forKey:@"Age"];
+//    [params setObject:@"18819467352" forKey:@"Phone"];
+//    [params setObject:@"address" forKey:@"Address"];
+//    
+//    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[self.record.dateTime timeIntervalSince1970]];
+//    NSLog(@"timesp = %@",timeSp);
+//    
+//    
+//    
+//    
+//    [params setObject:timeSp forKey:@"Date"];
+//    [params setObject:[NSString stringWithFormat:@"%d",self.record.duration] forKey:@"Treattime"];
+//    [params setObject:[NSString stringWithFormat:@"%d",self.record.treatWay] forKey:@"Mode"];
+//    
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        [[HttpHelper instance] post:@"add"
+//                             params:params
+//                           hasToken:NO
+//                         onResponse:^(HttpResponse *responseObject) {
+//                             
+//                             NSDictionary* jsonDict = [responseObject jsonDist];
+//                             NSLog(@"AddReturnJson = %@",jsonDict);
+//                             
+//                             if(jsonDict != nil)
+//                             {
+//                                 
+//                                 int state = [[jsonDict objectForKey:@"State"] intValue];
+//                                 self.idString = [jsonDict objectForKey:@"Id"];
+//                                 //上传照片
+//                                 if ([self.record.imgData length]>0)
+//                                 {
+//                                     NSMutableDictionary *params1 = [NSMutableDictionary dictionary];
+//                                     UIImage *imageBefore = [[UIImage imageWithData:self.record.imgData]rotate:UIImageOrientationRight];
+//                                     UIImage *image = [self scaleImage:imageBefore maxSize:1000];
+//                                     NSData *imageData;
+//                                     if (UIImagePNGRepresentation(image) == nil)
+//                                     {
+//                                         imageData = UIImageJPEGRepresentation(image, 1);
+//                                     }
+//                                     else
+//                                     {
+//                                         imageData = UIImageJPEGRepresentation(image,0.8);
+//                                     }
+//                                     NSString *imageString = [imageData base64EncodedStringWithOptions:0];
+//                                     [params1 setObject:imageString forKey:@"Img"];
+//                                     
+//                                     
+//                                     
+//                                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//                                         [[HttpHelper instance] post:[NSString stringWithFormat:@"addimg&Id=%@",self.idString]
+//                                                              params:params1
+//                                                            hasToken:NO
+//                                                          onResponse:^(HttpResponse *responseObject) {
+//                                                              
+//                                                              NSDictionary* jsonDict = [responseObject jsonDist];
+//                                                              NSLog(@"imagejson = %@",jsonDict);
+//                                                              if(jsonDict != nil)
+//                                                              {
+//                                                                  int state = [[jsonDict objectForKey:@"State"] intValue];
+//                                                                  
+//                                                                  if (state == 1)
+//                                                                  {
+//                                                                      NSString *title = @"上传成功";
+//                                                                      UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+//                                                                                                                                     message:nil
+//                                                                                                                              preferredStyle:UIAlertControllerStyleAlert];
+//                                                                      //修改提示标题的颜色和大小
+//                                                                      NSMutableAttributedString *titleAtt = [[NSMutableAttributedString alloc] initWithString:title];
+//                                                                      [titleAtt addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16] range:NSMakeRange(0, title.length)];
+//                                                                      [titleAtt addAttribute:NSForegroundColorAttributeName value:[UIColor darkGrayColor] range:NSMakeRange(0, title.length)];
+//                                                                      [alert setValue:titleAtt forKey:@"attributedTitle"];
+//                                                                      
+//                                                                      UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认"
+//                                                                                                                              style:UIAlertActionStyleDefault
+//                                                                                                                            handler:nil];
+//                                                                      [alert addAction:defaultAction];
+//                                                                      dispatch_async(dispatch_get_main_queue(), ^{
+//                                                                          [self presentViewController:alert animated:YES completion:nil];
+//                                                                      });
+//                                                                  }
+//                                                              }
+//                                                          }
+//                                                             onError:^(HttpError *responseError) {
+//                                                             }];
+//                                         
+//                                         
+//                                     });
+//                                 }
+//                                 if (state == 1)
+//                                 {
+//                                     NSString *title = @"上传成功";
+//                                     
+//                                     UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+//                                                                                                    message:nil
+//                                                                                             preferredStyle:UIAlertControllerStyleAlert];
+//                                     //修改提示标题的颜色和大小
+//                                     NSMutableAttributedString *titleAtt = [[NSMutableAttributedString alloc] initWithString:title];
+//                                     [titleAtt addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16] range:NSMakeRange(0, title.length)];
+//                                     [titleAtt addAttribute:NSForegroundColorAttributeName value:[UIColor darkGrayColor] range:NSMakeRange(0, title.length)];
+//                                     [alert setValue:titleAtt forKey:@"attributedTitle"];
+//                                     
+//                                     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认"
+//                                                                                             style:UIAlertActionStyleDefault
+//                                                                                           handler:nil];
+//                                     [alert addAction:defaultAction];
+//                                     
+//                                     dispatch_async(dispatch_get_main_queue(), ^{
+//                                         [self presentViewController:alert animated:YES completion:nil];
+//                                     });
+//                                 }
+//                             }
+//                         }
+//                            onError:^(HttpError *responseError) {
+//                            }];
+//        
+//    });
+
 }
 @end

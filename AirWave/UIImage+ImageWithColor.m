@@ -10,20 +10,16 @@
 
 @implementation UIImage(ImageWithColor)
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
-+(UIImage *)imageNamed:(NSString *)name withColor:(NSString *)color{
++(UIImage *)imageNamed:(NSString *)name withColor:(NSString *)color
+{
     UIImage *image = [[UIImage alloc]init];
     NSMutableString *imageName = [[NSMutableString alloc]initWithCapacity:20];
     if (color!=nil)
     {
         [imageName appendFormat:@"%@_%@",name,color];
-    }else{
+    }
+    else
+    {
         [imageName appendFormat:@"%@",name];
     }
     image = [UIImage imageNamed:imageName];
