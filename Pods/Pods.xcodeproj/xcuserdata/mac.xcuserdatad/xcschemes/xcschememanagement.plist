@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>FMDB.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-AirWave.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -17,12 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>13AE0CE6F731768A902485EE7C91C0D1</key>
+		<key>23D7DA26C40DEA0CBB49A7825C7CD4F1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>23D7DA26C40DEA0CBB49A7825C7CD4F1</key>
+		<key>8059F939F6DEE3BF6689C7AEA2DF2B81</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8642CC820CE8C5B88C113D7F47AF4BC3</key>
 		<dict>
 			<key>primary</key>
 			<true/>

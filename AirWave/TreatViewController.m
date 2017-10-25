@@ -77,6 +77,7 @@ NSString *const PORT = @"8080";
 @property (nonatomic, strong) TreatRecord *treatRecord;
 @property (nonatomic, strong) TreatInformation *treatInformation;
 @property (nonatomic, strong) RunningInfomation *runningInfomation;
+@property (nonatomic ,strong) FMDatabase *db;
 
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
 @property (weak, nonatomic) IBOutlet UILabel *pressLabel;
@@ -201,6 +202,18 @@ NSString *const PORT = @"8080";
     self.picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     [self configureView];
     
+    
+//    uint8_t *ls = malloc(sizeof(*ls)*100);
+//    ls[0] = 0Xaa;
+//    ls[1] = 0x01;
+//    ls[2] = 0x93;
+//    ls[3] = 0x40;
+//    ls[4] = 0x58;
+//    
+//    NSData * packData = [NSData dataWithBytes:ls length:5];
+//    [self.clientSocket writeData:packData withTimeout:-1 tag:10000];
+    
+    
 }
 #pragma mark - GCDAsyncSocketDelegate
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port
@@ -264,7 +277,9 @@ NSString *const PORT = @"8080";
 }
 -(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
 {
-
+    if (tag == 10000) {
+        NSLog(@"发动成功");
+    }
 }
 -(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
@@ -1117,6 +1132,8 @@ NSString *const PORT = @"8080";
     Byte dataBytes[2] = {0,0x10};
     [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                                dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:0];
+    
+    
 }
 -(void)pause
 {
@@ -1254,6 +1271,7 @@ NSString *const PORT = @"8080";
             NSLog(@"目录未找到");
         }
         NSString *documentPath = [documents stringByAppendingPathComponent:@"record.plist"];
+    
         NSFileManager *fileManager = [NSFileManager defaultManager];
         if (![fileManager fileExistsAtPath:documentPath])
         {
@@ -1283,6 +1301,28 @@ NSString *const PORT = @"8080";
         {
             NSLog(@"写入文件失败");
         }
+    
+    
+    //fmdb
+    // 0.拼接数据库存放的沙盒路径
+    NSString *sqlFilePath = [documentPath stringByAppendingPathComponent:@"record.sqlite"];
+    // 1.通过路径创建数据库
+    self.db = [FMDatabase databaseWithPath:sqlFilePath];
+    // 2.打开数据库
+    if ([self.db open]) {
+        NSLog(@"打开成功");
+        
+        BOOL success = [self.db executeUpdate:@"CREATE TABLE IF NOT EXISTS t_record (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, age INTEGER DEFAULT 1)"];
+        
+        if (success) {
+            NSLog(@"创建表成功");
+        } else {
+            NSLog(@"创建表失败");
+        }
+        
+    } else {
+        NSLog(@"打开失败");
+    }
 }
 #pragma mark - Private Method
 - (NSString *)getCurrentTime
@@ -1311,9 +1351,9 @@ NSString *const PORT = @"8080";
 
 - (IBAction)tapSettingButton:(id)sender
 {
-
     NSInteger treatWay = self.treatInformation.treatWay;
-    switch (treatWay) {
+    switch (treatWay)
+    {
         case Standart:
             [self performSegueWithIdentifier:@"MainToStandard" sender:nil];
             break;

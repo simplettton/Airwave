@@ -41,6 +41,7 @@
     [super viewDidLoad];
     self.upButton.enabled = NO;
     self.tableView.tableFooterView = [[UIView alloc]init];
+    //navigation
     self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     self.navigationItem.rightBarButtonItem.tintColor = UIColorFromHex(0xffffff);

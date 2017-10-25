@@ -26,37 +26,19 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
 @end
 
 @implementation RecordTableViewController
-
-- (void)viewDidLoad
+-(void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidLoad];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    //加载数据
-    //导航栏
-    self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-    self.navigationItem.rightBarButtonItem.tintColor = UIColorFromHex(0xffffff);
-    self.navigationItem.leftBarButtonItem.tintColor = UIColorFromHex(0xffffff);
+    [super viewWillAppear:YES];
     
-    //右上角按钮
-    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30 , 30)];
-    [btn setBackgroundImage:[UIImage imageNamed:@"list-2"] forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(rightBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithCustomView:btn];
-    self.navigationItem.rightBarButtonItem = barButton;
-
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         //文件名
         NSString *documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
         NSString *documentPath = [documents stringByAppendingPathComponent:@"record.plist"];
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        
-        
         if (![fileManager fileExistsAtPath:documentPath])
         {
             [fileManager createFileAtPath:documentPath contents:nil attributes:nil];
         }
-        
         //取出以前保存的record数组
         if ([fileManager fileExistsAtPath:documentPath])
         {
@@ -71,12 +53,32 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
             {
                 records = [NSMutableArray array];
             }
-            
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.tableView reloadData];} );
         }
     });
- }
+}
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.tableView.tableFooterView = [[UIView alloc]init];
+    //加载数据
+    //导航栏
+    self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    self.navigationItem.rightBarButtonItem.tintColor = UIColorFromHex(0xffffff);
+    self.navigationItem.leftBarButtonItem.tintColor = UIColorFromHex(0xffffff);
+    
+    //右上角按钮
+    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30 , 30)];
+    [btn setBackgroundImage:[UIImage imageNamed:@"list-2"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(rightBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.rightBarButtonItem = barButton;
+    [self.tableView reloadData];
+
+}
 -(void)rightBarButtonClicked:(UIButton *)button
 {
     [self performSegueWithIdentifier:@"ShowServerRecords" sender:nil];

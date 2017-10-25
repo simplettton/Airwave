@@ -44,6 +44,7 @@
 		04A4203B1F9D929C00A6C2E9 /* HttpResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A420361F9D929C00A6C2E9 /* HttpResponse.m */; };
 		04B68F491F4EDAE200FD31E5 /* ParameterTreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B68F481F4EDAE200FD31E5 /* ParameterTreatViewController.m */; };
 		04CAE36F1F8DFA2500840AD6 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CAE36E1F8DFA2500840AD6 /* DetailViewController.m */; };
+		04D73DF11FA03E81009DC929 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D73DF01FA03E81009DC929 /* libsqlite3.0.tbd */; };
 		80238F6720C2423CFD5B8E71 /* libPods-AirWave.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98F75C0AC4207A763C4E062D /* libPods-AirWave.a */; };
 /* End PBXBuildFile section */
 
@@ -141,6 +142,7 @@
 		04B68F481F4EDAE200FD31E5 /* ParameterTreatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParameterTreatViewController.m; sourceTree = "<group>"; };
 		04CAE36D1F8DFA2500840AD6 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		04CAE36E1F8DFA2500840AD6 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		04D73DF01FA03E81009DC929 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		98F75C0AC4207A763C4E062D /* libPods-AirWave.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AirWave.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D1B39FA922AAA28BEDFF4EA /* Pods-AirWave.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirWave.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AirWave/Pods-AirWave.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -150,6 +152,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04D73DF11FA03E81009DC929 /* libsqlite3.0.tbd in Frameworks */,
 				80238F6720C2423CFD5B8E71 /* libPods-AirWave.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -320,6 +323,7 @@
 		B9EDCE4D32300B225DE6189D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04D73DF01FA03E81009DC929 /* libsqlite3.0.tbd */,
 				98F75C0AC4207A763C4E062D /* libPods-AirWave.a */,
 			);
 			name = Frameworks;
