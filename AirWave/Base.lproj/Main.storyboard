@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="dGh-mk-HF3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="Ybz-nf-prl">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -283,7 +283,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5yB-9V-2Dd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1750.5" y="58.500000000000007"/>
+            <point key="canvasLocation" x="2924.5" y="58.5"/>
         </scene>
         <!--Setting View Controller-->
         <scene sceneID="o9c-6L-GLy">
@@ -492,7 +492,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A8B-E2-Zwi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2299" y="59"/>
+            <point key="canvasLocation" x="3472.5" y="58.5"/>
         </scene>
         <!--Other Setting View Controller-->
         <scene sceneID="KVb-lR-xCA">
@@ -786,7 +786,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Ec-fa-5ua" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2833" y="59"/>
+            <point key="canvasLocation" x="4006.5" y="58.5"/>
         </scene>
         <!--主页navi-->
         <scene sceneID="ywv-CE-7C4">
@@ -804,7 +804,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rov-08-NIQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1245.625" y="58.918333333333329"/>
+            <point key="canvasLocation" x="2419.5" y="58.5"/>
         </scene>
         <!--标准治疗-->
         <scene sceneID="uRZ-nm-BsC">
@@ -1038,7 +1038,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ff-oZ-VTZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1750.5" y="1134.5"/>
+            <point key="canvasLocation" x="2337.5" y="1134.5"/>
         </scene>
         <!--梯度治疗-->
         <scene sceneID="vHg-Ca-iTk">
@@ -1245,7 +1245,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="stZ-Bt-V3T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1815.5" y="-886.50000000000011"/>
+            <point key="canvasLocation" x="2338" y="-861"/>
         </scene>
         <!--本地治疗记录-->
         <scene sceneID="We0-jt-u4D">
@@ -1731,7 +1731,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V2P-Z9-e5o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2832.5" y="1155.0216666666665"/>
+            <point key="canvasLocation" x="3419.5" y="1154.5"/>
         </scene>
         <!--方案治疗-->
         <scene sceneID="nCm-Qy-vWh">
@@ -2079,7 +2079,36 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RAN-k8-iR6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3988.5" y="1154.5"/>
+            <point key="canvasLocation" x="4575.5" y="1154.5"/>
+        </scene>
+        <!--普门家庭+-->
+        <scene sceneID="rKw-He-tXP">
+            <objects>
+                <viewController id="KzE-nr-6yZ" customClass="HomeViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6P6-Eb-HUt">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="blood_dev_pure" id="cm8-pH-Cbd">
+                                <rect key="frame" x="37" y="96" width="139" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="airwave" id="pCT-ZD-YqO">
+                                <rect key="frame" x="220" y="96" width="139" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="普门家庭+" id="LR4-Ga-o5e"/>
+                    <connections>
+                        <outlet property="imageView1" destination="cm8-pH-Cbd" id="z5Y-HK-v2c"/>
+                        <outlet property="imageView2" destination="pCT-ZD-YqO" id="lfQ-G4-g3R"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3JA-pw-3Wr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1458.5" y="484.5"/>
         </scene>
         <!--标准navi-->
         <scene sceneID="4PP-6l-3Dy">
@@ -2098,7 +2127,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ms3-cd-zHE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1245.625" y="1135.0116666666665"/>
+            <point key="canvasLocation" x="1832.5" y="1134.5"/>
         </scene>
         <!--梯度navi-->
         <scene sceneID="DcF-zH-mVZ">
@@ -2116,7 +2145,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8vF-wq-6s3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1245.625" y="-885.99833333333322"/>
+            <point key="canvasLocation" x="1833" y="-861"/>
         </scene>
         <!--参数navi-->
         <scene sceneID="tfq-fK-Ajw">
@@ -2134,7 +2163,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UvT-1D-DHm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2353.75" y="1135.0116666666665"/>
+            <point key="canvasLocation" x="2940.5" y="1134.5"/>
         </scene>
         <!--方案navi-->
         <scene sceneID="ttl-8W-KEO">
@@ -2152,7 +2181,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yZb-G7-lPM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3466.25" y="1155.0216666666665"/>
+            <point key="canvasLocation" x="4052.5" y="1154.5"/>
         </scene>
         <!--服务器治疗记录-->
         <scene sceneID="5Kk-fg-KzX">
@@ -2455,6 +2484,24 @@
             </objects>
             <point key="canvasLocation" x="4163" y="-1593"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="kTc-Bl-tM2">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ybz-nf-prl" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ahN-NJ-Vp7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="KzE-nr-6yZ" kind="relationship" relationship="rootViewController" id="ZkJ-P9-ETF"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xAI-HE-4Je" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="965.5" y="484.5"/>
+        </scene>
     </scenes>
     <resources>
         <image name="A1" width="900" height="200"/>
@@ -2468,6 +2515,8 @@
         <image name="A7" width="900" height="200"/>
         <image name="A8" width="900" height="200"/>
         <image name="A9" width="900" height="200"/>
+        <image name="airwave" width="709" height="425"/>
+        <image name="blood_dev_pure" width="539" height="454"/>
         <image name="body626d91" width="2362" height="3365"/>
         <image name="date-3" width="85" height="85"/>
         <image name="home" width="85" height="85"/>
@@ -2512,13 +2561,13 @@
         <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="vVo-uy-3YT"/>
-        <segue reference="zc6-SB-WJ2"/>
-        <segue reference="hVw-wR-HqB"/>
-        <segue reference="OYR-tj-I2R"/>
-        <segue reference="bnI-Yd-YTo"/>
-        <segue reference="YZz-rL-WdO"/>
+        <segue reference="kTA-kc-yd1"/>
         <segue reference="Vh8-vL-iVQ"/>
         <segue reference="nwV-fw-Hh0"/>
+        <segue reference="bnI-Yd-YTo"/>
+        <segue reference="YZz-rL-WdO"/>
+        <segue reference="OYR-tj-I2R"/>
+        <segue reference="hVw-wR-HqB"/>
+        <segue reference="zc6-SB-WJ2"/>
     </inferredMetricsTieBreakers>
 </document>

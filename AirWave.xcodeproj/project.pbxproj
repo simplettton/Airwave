@@ -30,6 +30,7 @@
 		046BA7911F480DF2004D7E74 /* AirWaveUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BA7901F480DF2004D7E74 /* AirWaveUITests.m */; };
 		046BA7A21F4817C8004D7E74 /* TreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BA7A11F4817C8004D7E74 /* TreatViewController.m */; };
 		046FCF251F7E31FB00B8CBF6 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 046FCF241F7E31FB00B8CBF6 /* Constants.m */; };
+		0471C87A1FA1E153005D847B /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0471C8791FA1E153005D847B /* HomeViewController.m */; };
 		0476B66D1F8DAAF90075B953 /* RecordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0476B66C1F8DAAF90075B953 /* RecordTableViewCell.m */; };
 		0476B6761F8DE5B30075B953 /* UIImage+Rotate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0476B6751F8DE5B30075B953 /* UIImage+Rotate.m */; };
 		048A3B141F53C54900929C37 /* UIColor+UIcolor_RGB.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A3B131F53C54900929C37 /* UIColor+UIcolor_RGB.m */; };
@@ -115,6 +116,8 @@
 		046BA7A11F4817C8004D7E74 /* TreatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreatViewController.m; sourceTree = "<group>"; };
 		046FCF241F7E31FB00B8CBF6 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		046FCF261F7E321200B8CBF6 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		0471C8781FA1E153005D847B /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		0471C8791FA1E153005D847B /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		0476B66B1F8DAAF90075B953 /* RecordTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordTableViewCell.h; sourceTree = "<group>"; };
 		0476B66C1F8DAAF90075B953 /* RecordTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordTableViewCell.m; sourceTree = "<group>"; };
 		0476B6741F8DE5B30075B953 /* UIImage+Rotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Rotate.h"; sourceTree = "<group>"; };
@@ -219,6 +222,8 @@
 			children = (
 				046BA76E1F480DF2004D7E74 /* AppDelegate.h */,
 				046BA76F1F480DF2004D7E74 /* AppDelegate.m */,
+				0471C8781FA1E153005D847B /* HomeViewController.h */,
+				0471C8791FA1E153005D847B /* HomeViewController.m */,
 				046BA7A01F4817C8004D7E74 /* TreatViewController.h */,
 				046BA7A11F4817C8004D7E74 /* TreatViewController.m */,
 				044D54B61F4D159D002C1E35 /* StandardTreatViewController.h */,
@@ -400,7 +405,7 @@
 					046BA7671F480DF2004D7E74 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = UUWZ3JRNLN;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					046BA7801F480DF2004D7E74 = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -543,6 +548,7 @@
 				0476B6761F8DE5B30075B953 /* UIImage+Rotate.m in Sources */,
 				046BA76D1F480DF2004D7E74 /* main.m in Sources */,
 				04A4203A1F9D929C00A6C2E9 /* HttpRequest.m in Sources */,
+				0471C87A1FA1E153005D847B /* HomeViewController.m in Sources */,
 				044E4F521F60D63B009DD7E7 /* UIImage+ImageWithColor.m in Sources */,
 				044D54B81F4D159D002C1E35 /* StandardTreatViewController.m in Sources */,
 				048A3B1A1F540DC500929C37 /* SettingViewController.m in Sources */,
@@ -706,11 +712,15 @@
 			baseConfigurationReference = 9D1B39FA922AAA28BEDFF4EA /* Pods-AirWave.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: 515315183@qq.com (L33H2377CF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 515315183@qq.com (L33H2377CF)";
 				DEVELOPMENT_TEAM = UUWZ3JRNLN;
 				INFOPLIST_FILE = AirWave/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Lifotronic.AirWave;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "cdb4c74e-d968-459a-82e3-73fb0a3009db";
+				PROVISIONING_PROFILE_SPECIFIER = simplettton;
 			};
 			name = Debug;
 		};
@@ -719,11 +729,15 @@
 			baseConfigurationReference = 00F29BDE28750DB8ECD90253 /* Pods-AirWave.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: 515315183@qq.com (L33H2377CF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 515315183@qq.com (L33H2377CF)";
 				DEVELOPMENT_TEAM = UUWZ3JRNLN;
 				INFOPLIST_FILE = AirWave/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Lifotronic.AirWave;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "cdb4c74e-d968-459a-82e3-73fb0a3009db";
+				PROVISIONING_PROFILE_SPECIFIER = simplettton;
 			};
 			name = Release;
 		};

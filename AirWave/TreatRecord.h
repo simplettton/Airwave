@@ -10,6 +10,12 @@
 
 @interface TreatRecord : NSObject<NSCoding>
 
+//@property (nonatomic,strong)NSString *name;
+//@property (nonatomic,strong)NSString *sex;
+//@property (nonatomic,strong)NSString *phone;
+//@property (nonatomic,strong)NSString *address;
+
+@property (nonatomic,assign)NSString *idString;
 //治疗模式
 @property (nonatomic,assign)Byte treatWay;
 @property (nonatomic,strong)NSString *treatWayString;
@@ -22,6 +28,9 @@
 @property (nonatomic,strong)NSDate *dateTime;
 @property (nonatomic,strong)NSString *dateString;
 
-@property (nonatomic,strong)NSData *imgData;
+@property (nonatomic,assign)BOOL hasImage;
+@property (nonatomic,strong)NSString *imagePath;
+//@property (nonatomic,strong)NSData *imgData;
+
 -(TreatRecord *)analyzeWithData:(NSData*)data;
 @end

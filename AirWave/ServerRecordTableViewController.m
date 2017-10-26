@@ -71,7 +71,6 @@
                                                     hasToken:NO
                                                   onResponse:^(HttpResponse *responseObject) {
                                                       NSDictionary* jsonDict = [responseObject jsonDist];
-//                                                      NSLog(@"jsonDict = %@ ",jsonDict);
                                                       if (jsonDict !=nil)
                                                       {
                                                           datas = [[NSMutableArray alloc]initWithCapacity:20];

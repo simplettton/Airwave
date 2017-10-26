@@ -119,8 +119,12 @@ NSString *const PORT = @"8080";
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-//    [self setStatusBarBackgroundColor:UIColorFromHex(0x65BBA9)];
-//    [UIApplication sharedApplication].statusBarStyle=UIStatusBarStyleLightContent;
+    if (!self.connected )
+    {
+        self.clientSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+        NSError *error = nil;
+        self.connected = [self.clientSocket connectToHost:HOST onPort:[PORT integerValue] viaInterface:nil withTimeout:-1 error:&error];
+    }
     [self askForTreatInfomation];
 }
 -(void)viewDidDisappear:(BOOL)animated
@@ -192,7 +196,6 @@ NSString *const PORT = @"8080";
     
     self.treatInformation = [[TreatInformation alloc]init];
     self.runningInfomation = [[RunningInfomation alloc]init];
-    self.treatRecord = [[TreatRecord alloc]init];
     
     if (self.picker == nil)
     {
@@ -202,23 +205,13 @@ NSString *const PORT = @"8080";
     self.picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     [self configureView];
     
-    
-//    uint8_t *ls = malloc(sizeof(*ls)*100);
-//    ls[0] = 0Xaa;
-//    ls[1] = 0x01;
-//    ls[2] = 0x93;
-//    ls[3] = 0x40;
-//    ls[4] = 0x58;
-//    
-//    NSData * packData = [NSData dataWithBytes:ls length:5];
-//    [self.clientSocket writeData:packData withTimeout:-1 tag:10000];
-    
-    
+  
 }
 #pragma mark - GCDAsyncSocketDelegate
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port
 {
     NSLog(@"连接成功");
+    [self configureBodyView];
     if ([self.view viewWithTag:disconnectViewtag])
     {
         [[self.view viewWithTag:disconnectViewtag]removeFromSuperview];
@@ -266,8 +259,11 @@ NSString *const PORT = @"8080";
     //治疗信息
     if(bytes[2]==0x98)
     {
+        self.treatRecord = [[TreatRecord alloc]init];
+        NSLog(@"------------------------------------------------");
         self.treatRecord.treatWay = self.treatInformation.treatWay;
         self.treatRecord.duration = self.runningInfomation.treatProcessTime;
+        
         [self.treatRecord analyzeWithData:data];
         dispatch_async(dispatch_get_main_queue(), ^{
         [self takePhotoAlert];
@@ -1220,21 +1216,15 @@ NSString *const PORT = @"8080";
 {
     //开一个线程保存
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-        //UIImage转成NSData
-        NSData *imgData;
-        if (UIImagePNGRepresentation(image) == nil)
-        {
-            imgData = UIImageJPEGRepresentation(image, 1);
-        }
-        else
-        {
-            imgData = UIImagePNGRepresentation(image);
-        }
-        //写入record中
-        self.treatRecord.imgData = imgData;
-        [self saveRecord];
         
+        
+        
+        //保存图片
+        self.treatRecord.hasImage = YES;
+        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+        [self saveImage:image];
+        //保存记录
+        [self saveRecord];
         
         //保存到本地相册
         if (self.picker.sourceType == UIImagePickerControllerSourceTypeCamera)
@@ -1242,16 +1232,13 @@ NSString *const PORT = @"8080";
             UIImageWriteToSavedPhotosAlbum(image, self, nil, nil);
         }
         //保存完将图片消除
-        self.treatRecord.imgData = nil;
-        
+        self.treatRecord.imagePath = nil;
     });
     
     
     [self.picker dismissViewControllerAnimated:YES completion:^{
              [self configureBodyView];
         }];
-
-
 }
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
@@ -1271,7 +1258,6 @@ NSString *const PORT = @"8080";
             NSLog(@"目录未找到");
         }
         NSString *documentPath = [documents stringByAppendingPathComponent:@"record.plist"];
-    
         NSFileManager *fileManager = [NSFileManager defaultManager];
         if (![fileManager fileExistsAtPath:documentPath])
         {
@@ -1301,28 +1287,18 @@ NSString *const PORT = @"8080";
         {
             NSLog(@"写入文件失败");
         }
-    
-    
-    //fmdb
-    // 0.拼接数据库存放的沙盒路径
-    NSString *sqlFilePath = [documentPath stringByAppendingPathComponent:@"record.sqlite"];
-    // 1.通过路径创建数据库
-    self.db = [FMDatabase databaseWithPath:sqlFilePath];
-    // 2.打开数据库
-    if ([self.db open]) {
-        NSLog(@"打开成功");
-        
-        BOOL success = [self.db executeUpdate:@"CREATE TABLE IF NOT EXISTS t_record (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, age INTEGER DEFAULT 1)"];
-        
-        if (success) {
-            NSLog(@"创建表成功");
-        } else {
-            NSLog(@"创建表失败");
-        }
-        
-    } else {
-        NSLog(@"打开失败");
+}
+-(void)saveImage:(UIImage *)image
+{
+    NSString *documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *imagePath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",self.treatRecord.idString]];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath:imagePath])
+    {
+        [fileManager createFileAtPath:imagePath contents:nil attributes:nil];
     }
+    self.treatRecord.imagePath = imagePath;
+    [UIImagePNGRepresentation(image) writeToFile:imagePath atomically:YES];
 }
 #pragma mark - Private Method
 - (NSString *)getCurrentTime

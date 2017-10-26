@@ -11,11 +11,15 @@
 @implementation TreatRecord
 -(void)encodeWithCoder:(NSCoder *)aCoder
 {
-    
+    [aCoder encodeObject:self.idString forKey:@"idString"];
     [aCoder encodeInteger:self.treatWay forKey:@"treatWay"];
     [aCoder encodeObject:self.dateString forKey:@"dateString"];
     [aCoder encodeObject:self.durationString forKey:@"durationString"];
-    [aCoder encodeObject:self.imgData forKey:@"imgData"];
+    
+    [aCoder encodeObject:self.imagePath forKey:@"imagePath"];
+//    [aCoder encodeObject:self.imgData forKey:@"imgData"];
+    [aCoder encodeBool:self.hasImage forKey:@"hasImage"];
+    
     [aCoder encodeObject:self.treatWayString forKey:@"treatWayString"];
 
     [aCoder encodeObject:self.dateTime forKey:@"dateTime"];
@@ -26,14 +30,41 @@
 {
     if (self = [super init])
     {
+        self.idString = [aDecoder decodeObjectForKey:@"idString"];
         self.treatWay = [aDecoder decodeIntegerForKey:@"treatWay"];
         self.dateString = [aDecoder decodeObjectForKey:@"dateString"];
         self.durationString = [aDecoder decodeObjectForKey:@"durationString"];
-        self.imgData = [aDecoder decodeObjectForKey:@"imgData"];
+        
+        self.imagePath= [aDecoder decodeObjectForKey:@"imagePath"];
+//        self.imgData = [aDecoder decodeObjectForKey:@"imgData"];
+        self.hasImage = [aDecoder decodeBoolForKey:@"hasImage"];
+        
         self.treatWayString = [aDecoder decodeObjectForKey:@"treatWayString"];
         
         self.dateTime = [aDecoder decodeObjectForKey:@"dateTime"];
         self.duration = [aDecoder decodeIntForKey:@"duration"];
+    }
+    return self;
+}
+-(instancetype)init
+{
+    if(self = [super init])
+    {
+        self.hasImage = NO;
+        NSString *number = [[NSString alloc]init];
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        
+        if (![userDefaults objectForKey:@"idString"])
+        {
+            self.idString = @"0";
+            [userDefaults setObject:self.idString forKey:@"idString"];
+        }
+        else
+        {
+            number = [userDefaults objectForKey:@"idString"];
+            self.idString =[NSString stringWithFormat:@"%ld",[number integerValue]+1];
+            [userDefaults setObject:self.idString forKey:@"idString"];
+        }
     }
     return self;
 }
@@ -104,8 +135,6 @@
     self.dateString = [fmt stringFromDate:self.dateTime];
     return self;
 }
-
-
 //Byte数组转成int类型
 -(int) lBytesToInt:(Byte[]) byte withLength:(int)length
 {
@@ -125,7 +154,8 @@
     if (byte[0] >= 0)
     {
         height = height + byte[0];
-    } else {
+    } else
+    {
         height = height + 256 + byte[0];
     }
     return height;

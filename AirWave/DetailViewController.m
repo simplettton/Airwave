@@ -36,15 +36,23 @@
     UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.rightBarButtonItem = barButton;
     self.title = @"治疗结果";
-    UIImage *image = [UIImage imageWithData:self.record.imgData];
-    _imageResult.contentMode = UIViewContentModeScaleAspectFit;
-    _imageResult.image = [image rotate:UIImageOrientationRight];
-    
-    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSString *documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *imagePath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",self.record.idString]];
+        self.record.imagePath = imagePath;
+        UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _imageResult.contentMode = UIViewContentModeScaleAspectFit;
+            _imageResult.image = [image rotate:UIImageOrientationRight];
+        });
+    });
+   
     CGFloat width=[UIScreen mainScreen].bounds.size.width;
     CGFloat height=[UIScreen mainScreen].bounds.size.height;
     
-    if ([self.record.imgData length]>0)
+    
+    
+    if (self.record.imagePath>0)
     {
          self.scrollView.contentSize = CGSizeMake(width, 1100);
     }
@@ -68,13 +76,9 @@
     [params setObject:@"address" forKey:@"Address"];
     
     NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[self.record.dateTime timeIntervalSince1970]];
-    NSLog(@"timesp = %@",timeSp);
-    
-    
-    
-    
+
     [params setObject:timeSp forKey:@"Date"];
-    [params setObject:[NSString stringWithFormat:@"%d",self.record.duration] forKey:@"Treattime"];
+    [params setObject:[NSString stringWithFormat:@"%d",(unsigned int)self.record.duration] forKey:@"Treattime"];
     [params setObject:[NSString stringWithFormat:@"%d",self.record.treatWay] forKey:@"Mode"];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -92,10 +96,10 @@
                                  int state = [[jsonDict objectForKey:@"State"] intValue];
                                  self.idString = [jsonDict objectForKey:@"Id"];
                                  //上传照片
-                                 if ([self.record.imgData length]>0)
+                                 if (self.record.imagePath!=nil)
                                  {
                                      NSMutableDictionary *params1 = [NSMutableDictionary dictionary];
-                                     UIImage *imageBefore = [[UIImage imageWithData:self.record.imgData]rotate:UIImageOrientationRight];
+                                     UIImage *imageBefore = [[UIImage imageWithContentsOfFile:self.record.imagePath]rotate:UIImageOrientationRight];
                                      UIImage *image = [self scaleImage:imageBefore maxSize:1000];
                                      NSData *imageData;
                                      if (UIImagePNGRepresentation(image) == nil)
@@ -104,7 +108,7 @@
                                      }
                                      else
                                      {
-                                         imageData = UIImageJPEGRepresentation(image,0.8);
+                                         imageData = UIImageJPEGRepresentation(image, 0.8);
                                      }
                                      NSString *imageString = [imageData base64EncodedStringWithOptions:0];
                                      [params1 setObject:imageString forKey:@"Img"];
@@ -118,7 +122,6 @@
                                                           onResponse:^(HttpResponse *responseObject) {
                                                               
                                                               NSDictionary* jsonDict = [responseObject jsonDist];
-                                                              NSLog(@"imagejson = %@",jsonDict);
                                                               if(jsonDict != nil)
                                                               {
                                                                   int state = [[jsonDict objectForKey:@"State"] intValue];
@@ -177,7 +180,6 @@
                          }
                             onError:^(HttpError *responseError) {
                             }];
-        
     });
 }
 /**
