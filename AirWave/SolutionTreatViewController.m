@@ -218,6 +218,8 @@
             NSInteger commit = [[dic objectForKey:@"commit"]unsignedIntegerValue];
             NSData *dataToSend = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:commit]];
             [self.clientSocket writeData:dataToSend withTimeout:-1 tag:1];
+            NSData *saveCommand = [pack packetWithCmdid:0X90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xbb]];
+            [self.clientSocket writeData:saveCommand withTimeout:-1 tag:1];
         }
     }
     //设置治疗压力

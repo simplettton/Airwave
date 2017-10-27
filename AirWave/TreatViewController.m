@@ -204,6 +204,8 @@ NSString *const PORT = @"8080";
     self.picker.delegate = self;
     self.picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     [self configureView];
+    //添加扫动手势
+    [self setupSwipe];
     
   
 }
@@ -1411,6 +1413,32 @@ NSString *const PORT = @"8080";
     [disconnectView addSubview:button];
     [disconnectView setTag:disconnectViewtag];
     [self.view addSubview:disconnectView];
+}
+#pragma mark - <轻扫手势>
+- (void)setupSwipe
+{
+    
+    // 多加几个轻扫手势，便能够实现多个方向的轻扫。
+    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeLeft)];
+    
+    [self.view addGestureRecognizer:swipe];
+    // 修改轻扫的的方向
+    swipe.direction = UISwipeGestureRecognizerDirectionLeft;
+    
+    UISwipeGestureRecognizer *swipe1 = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight)];
+    
+    [self.view addGestureRecognizer:swipe1];
+    // 修改轻扫的的方向
+    swipe1.direction = UISwipeGestureRecognizerDirectionRight;
+
+}
+- (void)swipeLeft
+{
+    NSLog(@"%s",__func__);
+}
+- (void)swipeRight
+{
+    [self performSegueWithIdentifier:@"ReturnHome" sender:nil];
 }
 
 #pragma mark - segue

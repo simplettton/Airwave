@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0419A9CD1FA324560020A088 /* AlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0419A9CC1FA324560020A088 /* AlertViewController.m */; };
+		0419A9D31FA329620020A088 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0419A9D21FA329620020A088 /* HomeViewController.m */; };
+		0419A9D61FA329BE0020A088 /* MyPresentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0419A9D51FA329BE0020A088 /* MyPresentViewController.m */; };
 		041FD7E51F58FDEA00522D64 /* SolutionTreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 041FD7E41F58FDEA00522D64 /* SolutionTreatViewController.m */; };
 		0424CF6A1F6794F1008D138E /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0424CF691F6794F1008D138E /* ProgressView.m */; };
 		044D54B81F4D159D002C1E35 /* StandardTreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D54B71F4D159D002C1E35 /* StandardTreatViewController.m */; };
@@ -30,9 +33,9 @@
 		046BA7911F480DF2004D7E74 /* AirWaveUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BA7901F480DF2004D7E74 /* AirWaveUITests.m */; };
 		046BA7A21F4817C8004D7E74 /* TreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BA7A11F4817C8004D7E74 /* TreatViewController.m */; };
 		046FCF251F7E31FB00B8CBF6 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 046FCF241F7E31FB00B8CBF6 /* Constants.m */; };
-		0471C87A1FA1E153005D847B /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0471C8791FA1E153005D847B /* HomeViewController.m */; };
 		0476B66D1F8DAAF90075B953 /* RecordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0476B66C1F8DAAF90075B953 /* RecordTableViewCell.m */; };
 		0476B6761F8DE5B30075B953 /* UIImage+Rotate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0476B6751F8DE5B30075B953 /* UIImage+Rotate.m */; };
+		04878A1D1FA2C738006EE4A9 /* ClickEffectImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04878A1C1FA2C738006EE4A9 /* ClickEffectImageView.m */; };
 		048A3B141F53C54900929C37 /* UIColor+UIcolor_RGB.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A3B131F53C54900929C37 /* UIColor+UIcolor_RGB.m */; };
 		048A3B1A1F540DC500929C37 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A3B191F540DC500929C37 /* SettingViewController.m */; };
 		048A3B1D1F5411D700929C37 /* OtherSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A3B1C1F5411D700929C37 /* OtherSettingViewController.m */; };
@@ -68,6 +71,12 @@
 
 /* Begin PBXFileReference section */
 		00F29BDE28750DB8ECD90253 /* Pods-AirWave.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirWave.release.xcconfig"; path = "Pods/Target Support Files/Pods-AirWave/Pods-AirWave.release.xcconfig"; sourceTree = "<group>"; };
+		0419A9CB1FA324560020A088 /* AlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertViewController.h; sourceTree = "<group>"; };
+		0419A9CC1FA324560020A088 /* AlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertViewController.m; sourceTree = "<group>"; };
+		0419A9D11FA329620020A088 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		0419A9D21FA329620020A088 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		0419A9D41FA329BE0020A088 /* MyPresentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPresentViewController.h; sourceTree = "<group>"; };
+		0419A9D51FA329BE0020A088 /* MyPresentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPresentViewController.m; sourceTree = "<group>"; };
 		041FD7E31F58FDEA00522D64 /* SolutionTreatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SolutionTreatViewController.h; sourceTree = "<group>"; };
 		041FD7E41F58FDEA00522D64 /* SolutionTreatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SolutionTreatViewController.m; sourceTree = "<group>"; };
 		0424CF681F6794F1008D138E /* ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressView.h; sourceTree = "<group>"; };
@@ -116,12 +125,12 @@
 		046BA7A11F4817C8004D7E74 /* TreatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreatViewController.m; sourceTree = "<group>"; };
 		046FCF241F7E31FB00B8CBF6 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		046FCF261F7E321200B8CBF6 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		0471C8781FA1E153005D847B /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
-		0471C8791FA1E153005D847B /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		0476B66B1F8DAAF90075B953 /* RecordTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordTableViewCell.h; sourceTree = "<group>"; };
 		0476B66C1F8DAAF90075B953 /* RecordTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordTableViewCell.m; sourceTree = "<group>"; };
 		0476B6741F8DE5B30075B953 /* UIImage+Rotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Rotate.h"; sourceTree = "<group>"; };
 		0476B6751F8DE5B30075B953 /* UIImage+Rotate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Rotate.m"; sourceTree = "<group>"; };
+		04878A1B1FA2C738006EE4A9 /* ClickEffectImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClickEffectImageView.h; sourceTree = "<group>"; };
+		04878A1C1FA2C738006EE4A9 /* ClickEffectImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClickEffectImageView.m; sourceTree = "<group>"; };
 		048A3B121F53C54900929C37 /* UIColor+UIcolor_RGB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+UIcolor_RGB.h"; sourceTree = "<group>"; };
 		048A3B131F53C54900929C37 /* UIColor+UIcolor_RGB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+UIcolor_RGB.m"; sourceTree = "<group>"; };
 		048A3B181F540DC500929C37 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
@@ -222,8 +231,12 @@
 			children = (
 				046BA76E1F480DF2004D7E74 /* AppDelegate.h */,
 				046BA76F1F480DF2004D7E74 /* AppDelegate.m */,
-				0471C8781FA1E153005D847B /* HomeViewController.h */,
-				0471C8791FA1E153005D847B /* HomeViewController.m */,
+				0419A9D11FA329620020A088 /* HomeViewController.h */,
+				0419A9D21FA329620020A088 /* HomeViewController.m */,
+				0419A9D41FA329BE0020A088 /* MyPresentViewController.h */,
+				0419A9D51FA329BE0020A088 /* MyPresentViewController.m */,
+				0419A9CB1FA324560020A088 /* AlertViewController.h */,
+				0419A9CC1FA324560020A088 /* AlertViewController.m */,
 				046BA7A01F4817C8004D7E74 /* TreatViewController.h */,
 				046BA7A11F4817C8004D7E74 /* TreatViewController.m */,
 				044D54B61F4D159D002C1E35 /* StandardTreatViewController.h */,
@@ -266,6 +279,8 @@
 				0451A1911F9EDEF400AF521C /* MyLabel.m */,
 				046FCF261F7E321200B8CBF6 /* Constants.h */,
 				046FCF241F7E31FB00B8CBF6 /* Constants.m */,
+				04878A1B1FA2C738006EE4A9 /* ClickEffectImageView.h */,
+				04878A1C1FA2C738006EE4A9 /* ClickEffectImageView.m */,
 				048A3B121F53C54900929C37 /* UIColor+UIcolor_RGB.h */,
 				048A3B131F53C54900929C37 /* UIColor+UIcolor_RGB.m */,
 				044E4F501F60D63B009DD7E7 /* UIImage+ImageWithColor.h */,
@@ -542,13 +557,16 @@
 				04CAE36F1F8DFA2500840AD6 /* DetailViewController.m in Sources */,
 				044D54BB1F4D15F7002C1E35 /* Pack.m in Sources */,
 				0424CF6A1F6794F1008D138E /* ProgressView.m in Sources */,
+				04878A1D1FA2C738006EE4A9 /* ClickEffectImageView.m in Sources */,
 				04A420391F9D929C00A6C2E9 /* HttpHelper.m in Sources */,
 				04A420381F9D929C00A6C2E9 /* HttpError.m in Sources */,
 				0451A1921F9EDEF400AF521C /* MyLabel.m in Sources */,
+				0419A9CD1FA324560020A088 /* AlertViewController.m in Sources */,
 				0476B6761F8DE5B30075B953 /* UIImage+Rotate.m in Sources */,
+				0419A9D61FA329BE0020A088 /* MyPresentViewController.m in Sources */,
 				046BA76D1F480DF2004D7E74 /* main.m in Sources */,
 				04A4203A1F9D929C00A6C2E9 /* HttpRequest.m in Sources */,
-				0471C87A1FA1E153005D847B /* HomeViewController.m in Sources */,
+				0419A9D31FA329620020A088 /* HomeViewController.m in Sources */,
 				044E4F521F60D63B009DD7E7 /* UIImage+ImageWithColor.m in Sources */,
 				044D54B81F4D159D002C1E35 /* StandardTreatViewController.m in Sources */,
 				048A3B1A1F540DC500929C37 /* SettingViewController.m in Sources */,
