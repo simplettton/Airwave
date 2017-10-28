@@ -12,5 +12,6 @@
 //在接收方调用
 @end
 @interface AlertViewController : UIViewController
+@property (nonatomic,copy)void(^returnBlock)(BOOL,BOOL);
 
 @end

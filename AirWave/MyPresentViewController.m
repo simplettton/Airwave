@@ -9,7 +9,7 @@
 #import "MyPresentViewController.h"
 
 @implementation MyPresentViewController
-//使A始终可见
+//使A(presentview的视图)始终可见
 -(BOOL)shouldRemovePresentersView
 {
     return NO;

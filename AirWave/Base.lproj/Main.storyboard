@@ -2120,6 +2120,61 @@
             </objects>
             <point key="canvasLocation" x="1873.5" y="58.5"/>
         </scene>
+        <!--Alert View Controller-->
+        <scene sceneID="f9b-8C-QHp">
+            <objects>
+                <viewController id="uEM-zt-TGf" customClass="AlertViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8ke-Id-vkR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" misplaced="YES" id="qdD-R9-arH">
+                                <rect key="frame" x="50" y="180" width="275" height="230"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="请选择要添加的设备" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Fj3-nH-B1B">
+                                        <rect key="frame" x="15" y="25" width="210" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                        <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="abd-bl-2wq">
+                                        <rect key="frame" x="27" y="170" width="110" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="取消"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="22Q-Ns-wm7">
+                                        <rect key="frame" x="137" y="170" width="110" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="确认"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="KnW-L1-4f6">
+                                        <rect key="frame" x="40" y="66" width="136" height="18"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="空气波治疗仪" image="airwave_selected"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="saT-aB-yXL">
+                                        <rect key="frame" x="40" y="126" width="136" height="18"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="便携式负压产品" image="bianxie_unselected"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1GJ-hB-HOn">
+                                        <rect key="frame" x="40" y="96" width="136" height="18"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="血瘘治疗仪" image="xuelou_unselected"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HyI-MX-w4e" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1254.5" y="974.5"/>
+        </scene>
         <!--标准navi-->
         <scene sceneID="4PP-6l-3Dy">
             <objects>
@@ -2526,6 +2581,8 @@
         <image name="A8" width="900" height="200"/>
         <image name="A9" width="900" height="200"/>
         <image name="airwave" width="709" height="425"/>
+        <image name="airwave_selected" width="1177" height="163"/>
+        <image name="bianxie_unselected" width="1177" height="163"/>
         <image name="blood_dev_pure" width="539" height="454"/>
         <image name="body626d91" width="2362" height="3365"/>
         <image name="date-3" width="85" height="85"/>
@@ -2565,6 +2622,7 @@
         <image name="treat_normal" width="580" height="200"/>
         <image name="treat_press" width="580" height="200"/>
         <image name="unselected" width="86" height="86"/>
+        <image name="xuelou_unselected" width="1177" height="163"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
@@ -2572,13 +2630,13 @@
         <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Gnw-az-Cez"/>
-        <segue reference="KYM-6d-kmt"/>
-        <segue reference="YZz-rL-WdO"/>
-        <segue reference="OYR-tj-I2R"/>
-        <segue reference="hVw-wR-HqB"/>
         <segue reference="bnI-Yd-YTo"/>
-        <segue reference="Vh8-vL-iVQ"/>
+        <segue reference="KYM-6d-kmt"/>
+        <segue reference="OYR-tj-I2R"/>
+        <segue reference="Gnw-az-Cez"/>
+        <segue reference="YZz-rL-WdO"/>
+        <segue reference="hVw-wR-HqB"/>
+        <segue reference="82N-be-2Ws"/>
         <segue reference="nwV-fw-Hh0"/>
     </inferredMetricsTieBreakers>
 </document>

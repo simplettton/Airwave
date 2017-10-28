@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface MyPresentViewController : UIPresentationController
-
+@property (nonatomic,strong)UIVisualEffectView *visualView;
 @end
