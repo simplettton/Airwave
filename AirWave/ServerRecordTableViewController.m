@@ -16,6 +16,7 @@
 #import "HttpError.h"
 #import "HttpHelper.h"
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
+NSString *const TYPE = @"7681";
 
 @interface ServerRecordTableViewController ()
 {
@@ -52,9 +53,10 @@
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     [params setObject:[NSString stringWithFormat:@"%ld",(long)currentPage] forKey:@"Page"];
+    [params setObject:TYPE forKey:TYPE];
     //获取总数
     [[HttpHelper instance] post:@"count"
-                         params:nil
+                         params:@{@"Type":TYPE}
                        hasToken:NO
                      onResponse:^(HttpResponse *responseObject) {
                          NSDictionary* jsonDict = [responseObject jsonDist];

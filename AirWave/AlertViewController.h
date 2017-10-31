@@ -13,5 +13,7 @@
 @end
 @interface AlertViewController : UIViewController
 @property (nonatomic,copy)void(^returnBlock)(BOOL,BOOL);
-
+@property (assign ,nonatomic) BOOL firstSelected;
+@property (assign ,nonatomic) BOOL secondSelected;
+@property (assign ,nonatomic) BOOL thirdSelected;
 @end

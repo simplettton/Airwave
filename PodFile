@@ -1,5 +1,5 @@
 platform :ios,'8.0'
 target 'AirWave' do
    pod 'CocoaAsyncSocket' ,‘~>7.6.1’
-   pod 'FMDB'
+   pod 'BabyBluetooth', '~> 0.7.0'
 end

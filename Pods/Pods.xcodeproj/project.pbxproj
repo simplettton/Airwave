@@ -7,92 +7,106 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2012864C735C3DD88ECE425F6C981F6B /* FMDatabasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = 15320453C746F6B1A8033E3373D3D6E1 /* FMDatabasePool.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		241E71118B10D7807D5E964D6D9D0022 /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = F20CF9286C6025264CB7A9DA80D839C3 /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2DA009FA176B40644D5FE6B82832E9A3 /* Pods-AirWave-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AA10380E328264839297F38038391EE /* Pods-AirWave-dummy.m */; };
-		398A5C11EFB816892FD5E18AD24F03D4 /* FMResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 5F26584D0A2E3EE3965F36CD519501DC /* FMResultSet.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3FECFDE87253334FA356C4898AA1478D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E3725257C79D0C80F87B9E2B291C17A /* Foundation.framework */; };
-		4B3B2EABA01FE0065CA6693CEE33CA92 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1158D5AAFC79405D0FB88DC5EF5315 /* FMResultSet.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		4DB541C1C41B1C597EC36CDAB5243D1A /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F6FE732844507C42C2986D6AF40FEF29 /* FMDatabaseAdditions.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		5445B897FA3DC81DABEDF9719FBC0E8F /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 8652BC344CECFDE3724CE609CE620093 /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		6199817CB29DADBC9AB1D4C44E52F5BA /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = C61EDAE18D1BB1E9C6F2AD14986B0C24 /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		714D74BBAC857D21E4BE628C6E296BC5 /* GCDAsyncUdpSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 32D3D497A8E9574F5682D89EB0A5E88B /* GCDAsyncUdpSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8021697A1557D425AC130472DA1317CC /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CAEE6BE100EE628AB7F690930CCD93 /* FMDatabasePool.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		0D5CF00AA1226E3E0E7DD1DD925F76BF /* BabyPeripheralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4299925C8425CAE38127ED891A13BD52 /* BabyPeripheralManager.m */; };
+		189089D2CF429C83EA04607BA6D8764B /* BabySpeaker.h in Headers */ = {isa = PBXBuildFile; fileRef = F11A6E6BE4838FB4823D0B6EA41E2598 /* BabySpeaker.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		21F329E651E0B72A6E4AC9559C92A1E2 /* BabyRhythm.h in Headers */ = {isa = PBXBuildFile; fileRef = 684B2CC78ADE4BC6FCB06562A08FD3BC /* BabyRhythm.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		241E71118B10D7807D5E964D6D9D0022 /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = D33F2A028979D65E0F78282F400BA45B /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		24EF7168E0DB3E8F25C4365B8E71BF05 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E3725257C79D0C80F87B9E2B291C17A /* Foundation.framework */; };
+		5445B897FA3DC81DABEDF9719FBC0E8F /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 69CA66FE961A0E47756C26CB6BD55A01 /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		68216322A1397D13C4672F5BFB6BAE2A /* BabyBluetooth-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B25D5204E25A2ECFE3937B3CFC9C8CB1 /* BabyBluetooth-dummy.m */; };
+		6E30295EEDAB51C6E626A80446C92C18 /* BabyBluetooth.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A02DF6945BDC47D6719F9317DF9EBD4 /* BabyBluetooth.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		70A4D7579BFCCDF872DA30D65F4F6EA1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E3725257C79D0C80F87B9E2B291C17A /* Foundation.framework */; };
+		714D74BBAC857D21E4BE628C6E296BC5 /* GCDAsyncUdpSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E5A4B3547C74703B3F0E2716F8E0A87 /* GCDAsyncUdpSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7681427B4B48831724D10EF4B8174927 /* BabyDefine.m in Sources */ = {isa = PBXBuildFile; fileRef = 34460BBD04B09EB7F524F42ADD5D2D82 /* BabyDefine.m */; };
+		78B3B735F7459684CA85D44D31153FA1 /* BabyRhythm.m in Sources */ = {isa = PBXBuildFile; fileRef = D23A2D443FBE5F7E6347FC2014B0FD2E /* BabyRhythm.m */; };
+		7E3F919B5FED4FEE5BFE97F58D758E90 /* Pods-AirWave-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AA10380E328264839297F38038391EE /* Pods-AirWave-dummy.m */; };
+		823DA3ACD9F2AA61FEB41205C435E016 /* BabyCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = 7354D4F830CD9ACE824B651872C7E74F /* BabyCallback.m */; };
 		841B8CE13BB1CBD6958BE652700DBFD0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E3725257C79D0C80F87B9E2B291C17A /* Foundation.framework */; };
-		889D48A9B81ADF617C1D4E4E9473E3A9 /* FMDB.h in Headers */ = {isa = PBXBuildFile; fileRef = 21FF3FE23913B69306BBA8DD9FDFA501 /* FMDB.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		98ABF277A45F1AB72A8D02D53FFE67BF /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC695DB1E25BF9CC6B05CCDB76852F6 /* FMDatabaseQueue.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		99714143FA44A34F87D1F2AA6D254177 /* FMDatabaseQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = ABC44DB79A4609847F3D40E5E478D313 /* FMDatabaseQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ABFAD23BA6072516D52DFFEA6A992A18 /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB2FDE108FC38EBBC120144F5336EAF /* GCDAsyncUdpSocket.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		B02751F04D94318510ADC66992DED2DC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E3725257C79D0C80F87B9E2B291C17A /* Foundation.framework */; };
-		C40CFE1274D588CA1A9DF9394BF76EAE /* FMDB-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B952CB517F849B39C83C64106BF27E4F /* FMDB-dummy.m */; };
-		D852415DFD46E85C293E0DDE01868EA2 /* FMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = DE01E9CF7E2026FB7EA232D4AD7E1187 /* FMDatabase.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E1D3558E80197D62084FD585403BAFA3 /* CocoaAsyncSocket-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7219FAE21E01EDBD07421C3AE06FC763 /* CocoaAsyncSocket-dummy.m */; };
+		8FD4C75A0443F6B8EFBFD26B50079FA9 /* BabyOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = E9C76822E5D9A961F41AB92ECB2D9CC9 /* BabyOptions.m */; };
+		A2A2384846F2B0339E6C7E4ACCACDC0E /* BabyBluetooth.m in Sources */ = {isa = PBXBuildFile; fileRef = 84186AAA0D99F8F7181522992575E1EF /* BabyBluetooth.m */; };
+		A357C49D39B2682FC57B9B4407BF605D /* BabyToy.m in Sources */ = {isa = PBXBuildFile; fileRef = C98EA6B8A532494EBDA3AC6DA2328A8B /* BabyToy.m */; };
+		ABFAD23BA6072516D52DFFEA6A992A18 /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F5AE82E4DEEDDA626185F70BAE5970 /* GCDAsyncUdpSocket.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		C39EB7AB2744FF9826F3CBD1D85AD649 /* BabyCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = 53C1613C2D56F96D113C614DD5B6A083 /* BabyCallback.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CB46BDD2F505FD4C0BC3A3D212238A55 /* BabySpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B394E49171858278E142B107976B39E /* BabySpeaker.m */; };
+		D9601A235C598AF2FC78F35D027DA95B /* BabyCentralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD7F513F6A58B97B268E1F970C215EF /* BabyCentralManager.m */; };
+		DDFB9D8E0612A7F6151A240A805D17B7 /* BabyPeripheralManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 630DE884D7C3C3341FEEAA22B9E77092 /* BabyPeripheralManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E1D3558E80197D62084FD585403BAFA3 /* CocoaAsyncSocket-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 36FA6E35046DFAAC716D75EE74984879 /* CocoaAsyncSocket-dummy.m */; };
 		E575FA89B3D3BDAD4ECB70F7281DEA6A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A847C3B26F9C9E99A5ACEACF501F86DD /* CFNetwork.framework */; };
-		F00CCFAB93A4F18419CD91217B1D5F66 /* FMDatabaseAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 8DA83232718BDCF0639D9A4FC182A941 /* FMDatabaseAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E5A4C7FDB4395B539F28307C74029C6A /* BabyDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D6BE9925C3A588172CC38EA63E15C82 /* BabyDefine.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E692A50B8E3E7B5B8C1A925A52592D86 /* BabyCentralManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F2C32A1CC56D35948A3C392E70523D2D /* BabyCentralManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E7644BBE0B8D8C343874B904A90CA9B8 /* BabyToy.h in Headers */ = {isa = PBXBuildFile; fileRef = 6244D2A558E3CD7DBACF932D443956AC /* BabyToy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F1F5EC682076627134D77BC79AC7B8D5 /* BabyOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 0EC991BA2964C69EE825E454A418902C /* BabyOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6FF78434042C2A8ABADEDE0E9D45431 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50F6DD994291AA39A94BEECAFAF0D785 /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		563085FC4906BBED22902AF5A8DCC906 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8642CC820CE8C5B88C113D7F47AF4BC3;
-			remoteInfo = FMDB;
-		};
-		FAAD232B0C0E40FF2A0D365F00681B1A /* PBXContainerItemProxy */ = {
+		2536A9BC0249D974ED831C08204B03C2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 23D7DA26C40DEA0CBB49A7825C7CD4F1;
 			remoteInfo = CocoaAsyncSocket;
 		};
+		7C37127B72C0E4B7FE0BDEEDC097224F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B35CB295C1DF6B318D4EC0A99AD1982D;
+			remoteInfo = BabyBluetooth;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0BA21D7E8516ABA1484C6B21F59BB511 /* FMDB-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FMDB-prefix.pch"; sourceTree = "<group>"; };
-		15320453C746F6B1A8033E3373D3D6E1 /* FMDatabasePool.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FMDatabasePool.h; path = src/fmdb/FMDatabasePool.h; sourceTree = "<group>"; };
-		1C1158D5AAFC79405D0FB88DC5EF5315 /* FMResultSet.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FMResultSet.m; path = src/fmdb/FMResultSet.m; sourceTree = "<group>"; };
-		21FF3FE23913B69306BBA8DD9FDFA501 /* FMDB.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FMDB.h; path = src/fmdb/FMDB.h; sourceTree = "<group>"; };
-		2DC695DB1E25BF9CC6B05CCDB76852F6 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FMDatabaseQueue.m; path = src/fmdb/FMDatabaseQueue.m; sourceTree = "<group>"; };
+		0A02DF6945BDC47D6719F9317DF9EBD4 /* BabyBluetooth.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BabyBluetooth.h; path = Classes/objc/BabyBluetooth.h; sourceTree = "<group>"; };
+		0EC991BA2964C69EE825E454A418902C /* BabyOptions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BabyOptions.h; path = Classes/objc/BabyOptions.h; sourceTree = "<group>"; };
+		286A894FCD4DEFAFD450E55A49055DBB /* libBabyBluetooth.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libBabyBluetooth.a; path = libBabyBluetooth.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D6BE9925C3A588172CC38EA63E15C82 /* BabyDefine.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BabyDefine.h; path = Classes/objc/BabyDefine.h; sourceTree = "<group>"; };
+		2E5A4B3547C74703B3F0E2716F8E0A87 /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GCDAsyncUdpSocket.h; path = Source/GCD/GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
 		31DC14F6E567BFD903B3B1F5C8583D65 /* Pods-AirWave-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AirWave-resources.sh"; sourceTree = "<group>"; };
-		32D3D497A8E9574F5682D89EB0A5E88B /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GCDAsyncUdpSocket.h; path = Source/GCD/GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
-		38CAEE6BE100EE628AB7F690930CCD93 /* FMDatabasePool.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FMDatabasePool.m; path = src/fmdb/FMDatabasePool.m; sourceTree = "<group>"; };
+		34460BBD04B09EB7F524F42ADD5D2D82 /* BabyDefine.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BabyDefine.m; path = Classes/objc/BabyDefine.m; sourceTree = "<group>"; };
+		36FA6E35046DFAAC716D75EE74984879 /* CocoaAsyncSocket-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CocoaAsyncSocket-dummy.m"; sourceTree = "<group>"; };
+		3C1B221A62462C022A0E46B2860D9071 /* libCocoaAsyncSocket.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libCocoaAsyncSocket.a; path = libCocoaAsyncSocket.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4299925C8425CAE38127ED891A13BD52 /* BabyPeripheralManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BabyPeripheralManager.m; path = Classes/objc/BabyPeripheralManager.m; sourceTree = "<group>"; };
 		4970F4FE021F1DC3E4AB815A00D9039B /* Pods-AirWave.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AirWave.release.xcconfig"; sourceTree = "<group>"; };
 		50F6DD994291AA39A94BEECAFAF0D785 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		53C1613C2D56F96D113C614DD5B6A083 /* BabyCallback.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BabyCallback.h; path = Classes/objc/BabyCallback.h; sourceTree = "<group>"; };
 		59173369B27EE5801CD3B157E8E65327 /* Pods-AirWave-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AirWave-acknowledgements.markdown"; sourceTree = "<group>"; };
-		5B8EB253631FD4C0EA243822B9859E0E /* CocoaAsyncSocket.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CocoaAsyncSocket.xcconfig; sourceTree = "<group>"; };
-		5F26584D0A2E3EE3965F36CD519501DC /* FMResultSet.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FMResultSet.h; path = src/fmdb/FMResultSet.h; sourceTree = "<group>"; };
-		7219FAE21E01EDBD07421C3AE06FC763 /* CocoaAsyncSocket-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CocoaAsyncSocket-dummy.m"; sourceTree = "<group>"; };
-		8652BC344CECFDE3724CE609CE620093 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocket.m; path = Source/GCD/GCDAsyncSocket.m; sourceTree = "<group>"; };
+		5CD7F513F6A58B97B268E1F970C215EF /* BabyCentralManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BabyCentralManager.m; path = Classes/objc/BabyCentralManager.m; sourceTree = "<group>"; };
+		6244D2A558E3CD7DBACF932D443956AC /* BabyToy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BabyToy.h; path = Classes/objc/BabyToy.h; sourceTree = "<group>"; };
+		630DE884D7C3C3341FEEAA22B9E77092 /* BabyPeripheralManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BabyPeripheralManager.h; path = Classes/objc/BabyPeripheralManager.h; sourceTree = "<group>"; };
+		684B2CC78ADE4BC6FCB06562A08FD3BC /* BabyRhythm.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BabyRhythm.h; path = Classes/objc/BabyRhythm.h; sourceTree = "<group>"; };
+		69CA66FE961A0E47756C26CB6BD55A01 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocket.m; path = Source/GCD/GCDAsyncSocket.m; sourceTree = "<group>"; };
+		7354D4F830CD9ACE824B651872C7E74F /* BabyCallback.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BabyCallback.m; path = Classes/objc/BabyCallback.m; sourceTree = "<group>"; };
+		7475A0CD506C7AE0BC087F4DBF43DFD1 /* BabyBluetooth.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = BabyBluetooth.xcconfig; sourceTree = "<group>"; };
+		78F5AE82E4DEEDDA626185F70BAE5970 /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncUdpSocket.m; path = Source/GCD/GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
+		84186AAA0D99F8F7181522992575E1EF /* BabyBluetooth.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BabyBluetooth.m; path = Classes/objc/BabyBluetooth.m; sourceTree = "<group>"; };
 		873F497D0FECAD1B64B9198E9FC4FD53 /* Pods-AirWave.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AirWave.debug.xcconfig"; sourceTree = "<group>"; };
-		8AA5FBA6589F3C882CA3E08AED3AB250 /* libCocoaAsyncSocket.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libCocoaAsyncSocket.a; path = libCocoaAsyncSocket.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		8BB2FDE108FC38EBBC120144F5336EAF /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncUdpSocket.m; path = Source/GCD/GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
-		8C3E9569418A0639DADD4AB25E48CAE4 /* libFMDB.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libFMDB.a; path = libFMDB.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		8DA83232718BDCF0639D9A4FC182A941 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FMDatabaseAdditions.h; path = src/fmdb/FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		92939814C992429997900100BC68B72D /* CocoaAsyncSocket-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CocoaAsyncSocket-prefix.pch"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9443C891C6230A739A6E987A55DFFE89 /* FMDB.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FMDB.xcconfig; sourceTree = "<group>"; };
 		9AA10380E328264839297F38038391EE /* Pods-AirWave-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AirWave-dummy.m"; sourceTree = "<group>"; };
+		9B394E49171858278E142B107976B39E /* BabySpeaker.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BabySpeaker.m; path = Classes/objc/BabySpeaker.m; sourceTree = "<group>"; };
 		9E3725257C79D0C80F87B9E2B291C17A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		9E61F212C2996F2E6BB0D990A2112F7D /* CocoaAsyncSocket.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CocoaAsyncSocket.xcconfig; sourceTree = "<group>"; };
 		A847C3B26F9C9E99A5ACEACF501F86DD /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
-		ABC44DB79A4609847F3D40E5E478D313 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FMDatabaseQueue.h; path = src/fmdb/FMDatabaseQueue.h; sourceTree = "<group>"; };
-		B952CB517F849B39C83C64106BF27E4F /* FMDB-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FMDB-dummy.m"; sourceTree = "<group>"; };
+		B25D5204E25A2ECFE3937B3CFC9C8CB1 /* BabyBluetooth-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "BabyBluetooth-dummy.m"; sourceTree = "<group>"; };
 		BCB2149B1BA9C945D95DAD7205DFFC1D /* Pods-AirWave-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AirWave-frameworks.sh"; sourceTree = "<group>"; };
-		C14A9B678EF6D225763AA4A3EB6ACD6B /* libPods-AirWave.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-AirWave.a"; path = "libPods-AirWave.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C61EDAE18D1BB1E9C6F2AD14986B0C24 /* FMDatabase.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FMDatabase.m; path = src/fmdb/FMDatabase.m; sourceTree = "<group>"; };
-		D8B57F84907DFF577A87DE3EA536FAF5 /* CocoaAsyncSocket-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CocoaAsyncSocket-prefix.pch"; sourceTree = "<group>"; };
-		DE01E9CF7E2026FB7EA232D4AD7E1187 /* FMDatabase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FMDatabase.h; path = src/fmdb/FMDatabase.h; sourceTree = "<group>"; };
+		C98EA6B8A532494EBDA3AC6DA2328A8B /* BabyToy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BabyToy.m; path = Classes/objc/BabyToy.m; sourceTree = "<group>"; };
+		D23A2D443FBE5F7E6347FC2014B0FD2E /* BabyRhythm.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BabyRhythm.m; path = Classes/objc/BabyRhythm.m; sourceTree = "<group>"; };
+		D33F2A028979D65E0F78282F400BA45B /* GCDAsyncSocket.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = Source/GCD/GCDAsyncSocket.h; sourceTree = "<group>"; };
+		DE8426BA96C68CDF19A8B813956583A9 /* libPods-AirWave.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-AirWave.a"; path = "libPods-AirWave.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9AE5EE3DADB94052D1C93F602CDAC21 /* Pods-AirWave-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AirWave-acknowledgements.plist"; sourceTree = "<group>"; };
-		F20CF9286C6025264CB7A9DA80D839C3 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = Source/GCD/GCDAsyncSocket.h; sourceTree = "<group>"; };
-		F6FE732844507C42C2986D6AF40FEF29 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FMDatabaseAdditions.m; path = src/fmdb/FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		E9C76822E5D9A961F41AB92ECB2D9CC9 /* BabyOptions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BabyOptions.m; path = Classes/objc/BabyOptions.m; sourceTree = "<group>"; };
+		EF13E37B42DC73496AD573C0971E2A0C /* BabyBluetooth-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "BabyBluetooth-prefix.pch"; sourceTree = "<group>"; };
+		F11A6E6BE4838FB4823D0B6EA41E2598 /* BabySpeaker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BabySpeaker.h; path = Classes/objc/BabySpeaker.h; sourceTree = "<group>"; };
+		F2C32A1CC56D35948A3C392E70523D2D /* BabyCentralManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BabyCentralManager.h; path = Classes/objc/BabyCentralManager.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		025694188CB9A7D96CC58750018B4FFC /* Frameworks */ = {
+		1F846D1C3E33EFA1903A4F29844CC0A0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3FECFDE87253334FA356C4898AA1478D /* Foundation.framework in Frameworks */,
+				70A4D7579BFCCDF872DA30D65F4F6EA1 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,23 +120,60 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9D3C8F5BD9B98ECAADE029320CB7A7B3 /* Frameworks */ = {
+		86C6B8D133961FC5C5C8F1C1D7DFF0D7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B02751F04D94318510ADC66992DED2DC /* Foundation.framework in Frameworks */,
+				24EF7168E0DB3E8F25C4365B8E71BF05 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		042A672F3AFD33742460A84EB1B95DD7 /* BabyBluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				0A02DF6945BDC47D6719F9317DF9EBD4 /* BabyBluetooth.h */,
+				84186AAA0D99F8F7181522992575E1EF /* BabyBluetooth.m */,
+				53C1613C2D56F96D113C614DD5B6A083 /* BabyCallback.h */,
+				7354D4F830CD9ACE824B651872C7E74F /* BabyCallback.m */,
+				F2C32A1CC56D35948A3C392E70523D2D /* BabyCentralManager.h */,
+				5CD7F513F6A58B97B268E1F970C215EF /* BabyCentralManager.m */,
+				2D6BE9925C3A588172CC38EA63E15C82 /* BabyDefine.h */,
+				34460BBD04B09EB7F524F42ADD5D2D82 /* BabyDefine.m */,
+				0EC991BA2964C69EE825E454A418902C /* BabyOptions.h */,
+				E9C76822E5D9A961F41AB92ECB2D9CC9 /* BabyOptions.m */,
+				630DE884D7C3C3341FEEAA22B9E77092 /* BabyPeripheralManager.h */,
+				4299925C8425CAE38127ED891A13BD52 /* BabyPeripheralManager.m */,
+				684B2CC78ADE4BC6FCB06562A08FD3BC /* BabyRhythm.h */,
+				D23A2D443FBE5F7E6347FC2014B0FD2E /* BabyRhythm.m */,
+				F11A6E6BE4838FB4823D0B6EA41E2598 /* BabySpeaker.h */,
+				9B394E49171858278E142B107976B39E /* BabySpeaker.m */,
+				6244D2A558E3CD7DBACF932D443956AC /* BabyToy.h */,
+				C98EA6B8A532494EBDA3AC6DA2328A8B /* BabyToy.m */,
+				D4278CF99664C14DCD25422B30AD2EBF /* Support Files */,
+			);
+			name = BabyBluetooth;
+			path = BabyBluetooth;
+			sourceTree = "<group>";
+		};
 		122DA2E5084A4393C29BE363C764795C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				D6D888213905F34217EF1880BE2758BA /* iOS */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3A50E40B6E156400C67CB917A609BC24 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				286A894FCD4DEFAFD450E55A49055DBB /* libBabyBluetooth.a */,
+				3C1B221A62462C022A0E46B2860D9071 /* libCocoaAsyncSocket.a */,
+				DE8426BA96C68CDF19A8B813956583A9 /* libPods-AirWave.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		3FD3A5AF6016D57715B34A76D29BFADD /* Targets Support Files */ = {
@@ -133,34 +184,15 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		530F36C3D1E91B42FEE16F7C7A6F2052 /* Pods */ = {
+		6A31D9FEC217F65A752FE19D6AE08CA7 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				FD3474AFD3095E6716630DA6051A877D /* CocoaAsyncSocket */,
-				C0D30E59991912BFADBB9084D5974D1A /* FMDB */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		64C4F1AEF25B89780AC69FDB66129EBF /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				5B8EB253631FD4C0EA243822B9859E0E /* CocoaAsyncSocket.xcconfig */,
-				7219FAE21E01EDBD07421C3AE06FC763 /* CocoaAsyncSocket-dummy.m */,
-				D8B57F84907DFF577A87DE3EA536FAF5 /* CocoaAsyncSocket-prefix.pch */,
+				9E61F212C2996F2E6BB0D990A2112F7D /* CocoaAsyncSocket.xcconfig */,
+				36FA6E35046DFAAC716D75EE74984879 /* CocoaAsyncSocket-dummy.m */,
+				92939814C992429997900100BC68B72D /* CocoaAsyncSocket-prefix.pch */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/CocoaAsyncSocket";
-			sourceTree = "<group>";
-		};
-		778D98A9BD646E2DAA7F7EB4C51E0B88 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				8AA5FBA6589F3C882CA3E08AED3AB250 /* libCocoaAsyncSocket.a */,
-				8C3E9569418A0639DADD4AB25E48CAE4 /* libFMDB.a */,
-				C14A9B678EF6D225763AA4A3EB6ACD6B /* libPods-AirWave.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		7DB346D0F39D3F0E887471402A8071AB = {
@@ -168,8 +200,8 @@
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				122DA2E5084A4393C29BE363C764795C /* Frameworks */,
-				530F36C3D1E91B42FEE16F7C7A6F2052 /* Pods */,
-				778D98A9BD646E2DAA7F7EB4C51E0B88 /* Products */,
+				96DCF412DEC4B8D39FDDFC804F4E24E9 /* Pods */,
+				3A50E40B6E156400C67CB917A609BC24 /* Products */,
 				3FD3A5AF6016D57715B34A76D29BFADD /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
@@ -189,43 +221,37 @@
 			path = "Target Support Files/Pods-AirWave";
 			sourceTree = "<group>";
 		};
-		BF25E789C97C3A2A305DD2848606A995 /* Support Files */ = {
+		96DCF412DEC4B8D39FDDFC804F4E24E9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				9443C891C6230A739A6E987A55DFFE89 /* FMDB.xcconfig */,
-				B952CB517F849B39C83C64106BF27E4F /* FMDB-dummy.m */,
-				0BA21D7E8516ABA1484C6B21F59BB511 /* FMDB-prefix.pch */,
+				042A672F3AFD33742460A84EB1B95DD7 /* BabyBluetooth */,
+				AF3F9E870419A3A1DBA4A3CB3776BBC9 /* CocoaAsyncSocket */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		AF3F9E870419A3A1DBA4A3CB3776BBC9 /* CocoaAsyncSocket */ = {
+			isa = PBXGroup;
+			children = (
+				D33F2A028979D65E0F78282F400BA45B /* GCDAsyncSocket.h */,
+				69CA66FE961A0E47756C26CB6BD55A01 /* GCDAsyncSocket.m */,
+				2E5A4B3547C74703B3F0E2716F8E0A87 /* GCDAsyncUdpSocket.h */,
+				78F5AE82E4DEEDDA626185F70BAE5970 /* GCDAsyncUdpSocket.m */,
+				6A31D9FEC217F65A752FE19D6AE08CA7 /* Support Files */,
+			);
+			name = CocoaAsyncSocket;
+			path = CocoaAsyncSocket;
+			sourceTree = "<group>";
+		};
+		D4278CF99664C14DCD25422B30AD2EBF /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				7475A0CD506C7AE0BC087F4DBF43DFD1 /* BabyBluetooth.xcconfig */,
+				B25D5204E25A2ECFE3937B3CFC9C8CB1 /* BabyBluetooth-dummy.m */,
+				EF13E37B42DC73496AD573C0971E2A0C /* BabyBluetooth-prefix.pch */,
 			);
 			name = "Support Files";
-			path = "../Target Support Files/FMDB";
-			sourceTree = "<group>";
-		};
-		C0D30E59991912BFADBB9084D5974D1A /* FMDB */ = {
-			isa = PBXGroup;
-			children = (
-				C11F1F71E5686E7870739CC8872F2C9C /* standard */,
-				BF25E789C97C3A2A305DD2848606A995 /* Support Files */,
-			);
-			name = FMDB;
-			path = FMDB;
-			sourceTree = "<group>";
-		};
-		C11F1F71E5686E7870739CC8872F2C9C /* standard */ = {
-			isa = PBXGroup;
-			children = (
-				DE01E9CF7E2026FB7EA232D4AD7E1187 /* FMDatabase.h */,
-				C61EDAE18D1BB1E9C6F2AD14986B0C24 /* FMDatabase.m */,
-				8DA83232718BDCF0639D9A4FC182A941 /* FMDatabaseAdditions.h */,
-				F6FE732844507C42C2986D6AF40FEF29 /* FMDatabaseAdditions.m */,
-				15320453C746F6B1A8033E3373D3D6E1 /* FMDatabasePool.h */,
-				38CAEE6BE100EE628AB7F690930CCD93 /* FMDatabasePool.m */,
-				ABC44DB79A4609847F3D40E5E478D313 /* FMDatabaseQueue.h */,
-				2DC695DB1E25BF9CC6B05CCDB76852F6 /* FMDatabaseQueue.m */,
-				21FF3FE23913B69306BBA8DD9FDFA501 /* FMDB.h */,
-				5F26584D0A2E3EE3965F36CD519501DC /* FMResultSet.h */,
-				1C1158D5AAFC79405D0FB88DC5EF5315 /* FMResultSet.m */,
-			);
-			name = standard;
+			path = "../Target Support Files/BabyBluetooth";
 			sourceTree = "<group>";
 		};
 		D6D888213905F34217EF1880BE2758BA /* iOS */ = {
@@ -236,19 +262,6 @@
 				50F6DD994291AA39A94BEECAFAF0D785 /* Security.framework */,
 			);
 			name = iOS;
-			sourceTree = "<group>";
-		};
-		FD3474AFD3095E6716630DA6051A877D /* CocoaAsyncSocket */ = {
-			isa = PBXGroup;
-			children = (
-				F20CF9286C6025264CB7A9DA80D839C3 /* GCDAsyncSocket.h */,
-				8652BC344CECFDE3724CE609CE620093 /* GCDAsyncSocket.m */,
-				32D3D497A8E9574F5682D89EB0A5E88B /* GCDAsyncUdpSocket.h */,
-				8BB2FDE108FC38EBBC120144F5336EAF /* GCDAsyncUdpSocket.m */,
-				64C4F1AEF25B89780AC69FDB66129EBF /* Support Files */,
-			);
-			name = CocoaAsyncSocket;
-			path = CocoaAsyncSocket;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,16 +276,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A93D3ABB603D66C647446B37AA29FE64 /* Headers */ = {
+		B27DAB9B549685D8B6DDF5C08EC0390E /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D852415DFD46E85C293E0DDE01868EA2 /* FMDatabase.h in Headers */,
-				F00CCFAB93A4F18419CD91217B1D5F66 /* FMDatabaseAdditions.h in Headers */,
-				2012864C735C3DD88ECE425F6C981F6B /* FMDatabasePool.h in Headers */,
-				99714143FA44A34F87D1F2AA6D254177 /* FMDatabaseQueue.h in Headers */,
-				889D48A9B81ADF617C1D4E4E9473E3A9 /* FMDB.h in Headers */,
-				398A5C11EFB816892FD5E18AD24F03D4 /* FMResultSet.h in Headers */,
+				6E30295EEDAB51C6E626A80446C92C18 /* BabyBluetooth.h in Headers */,
+				C39EB7AB2744FF9826F3CBD1D85AD649 /* BabyCallback.h in Headers */,
+				E692A50B8E3E7B5B8C1A925A52592D86 /* BabyCentralManager.h in Headers */,
+				E5A4C7FDB4395B539F28307C74029C6A /* BabyDefine.h in Headers */,
+				F1F5EC682076627134D77BC79AC7B8D5 /* BabyOptions.h in Headers */,
+				DDFB9D8E0612A7F6151A240A805D17B7 /* BabyPeripheralManager.h in Headers */,
+				21F329E651E0B72A6E4AC9559C92A1E2 /* BabyRhythm.h in Headers */,
+				189089D2CF429C83EA04607BA6D8764B /* BabySpeaker.h in Headers */,
+				E7644BBE0B8D8C343874B904A90CA9B8 /* BabyToy.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,42 +309,42 @@
 			);
 			name = CocoaAsyncSocket;
 			productName = CocoaAsyncSocket;
-			productReference = 8AA5FBA6589F3C882CA3E08AED3AB250 /* libCocoaAsyncSocket.a */;
+			productReference = 3C1B221A62462C022A0E46B2860D9071 /* libCocoaAsyncSocket.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		8059F939F6DEE3BF6689C7AEA2DF2B81 /* Pods-AirWave */ = {
+		A3562ECF5C00E2D6D46635AF341CA29A /* Pods-AirWave */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F3A73B64CED86C3668C5045FF736FBE4 /* Build configuration list for PBXNativeTarget "Pods-AirWave" */;
+			buildConfigurationList = 2F03ED786B5EA85FC812B6315E1D2E2D /* Build configuration list for PBXNativeTarget "Pods-AirWave" */;
 			buildPhases = (
-				6E99328464F779FF80255575713E72A9 /* Sources */,
-				9D3C8F5BD9B98ECAADE029320CB7A7B3 /* Frameworks */,
+				7823CC3CD267B031A13EB9BFF8F8303E /* Sources */,
+				1F846D1C3E33EFA1903A4F29844CC0A0 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				8D2748FF430AD4187FA4C9CFFA4888E6 /* PBXTargetDependency */,
-				88CA705A8AFD8EAB6DD39440F015FF6E /* PBXTargetDependency */,
+				FF4BC3246404422F15B63F6709C7B77D /* PBXTargetDependency */,
+				05C5518B750A646337AE9936F1A9E3D6 /* PBXTargetDependency */,
 			);
 			name = "Pods-AirWave";
 			productName = "Pods-AirWave";
-			productReference = C14A9B678EF6D225763AA4A3EB6ACD6B /* libPods-AirWave.a */;
+			productReference = DE8426BA96C68CDF19A8B813956583A9 /* libPods-AirWave.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		8642CC820CE8C5B88C113D7F47AF4BC3 /* FMDB */ = {
+		B35CB295C1DF6B318D4EC0A99AD1982D /* BabyBluetooth */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1BA066B3D32C553BF37E3322F9113F02 /* Build configuration list for PBXNativeTarget "FMDB" */;
+			buildConfigurationList = 51CAAE0DC2EF7737A3295DF612FD5D8C /* Build configuration list for PBXNativeTarget "BabyBluetooth" */;
 			buildPhases = (
-				ADE36E87832B736E1FAF9E50036C1530 /* Sources */,
-				025694188CB9A7D96CC58750018B4FFC /* Frameworks */,
-				A93D3ABB603D66C647446B37AA29FE64 /* Headers */,
+				BA935CB5E8DAC3937E4D2C99779B50BB /* Sources */,
+				86C6B8D133961FC5C5C8F1C1D7DFF0D7 /* Frameworks */,
+				B27DAB9B549685D8B6DDF5C08EC0390E /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = FMDB;
-			productName = FMDB;
-			productReference = 8C3E9569418A0639DADD4AB25E48CAE4 /* libFMDB.a */;
+			name = BabyBluetooth;
+			productName = BabyBluetooth;
+			productReference = 286A894FCD4DEFAFD450E55A49055DBB /* libBabyBluetooth.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -348,13 +364,13 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 778D98A9BD646E2DAA7F7EB4C51E0B88 /* Products */;
+			productRefGroup = 3A50E40B6E156400C67CB917A609BC24 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				B35CB295C1DF6B318D4EC0A99AD1982D /* BabyBluetooth */,
 				23D7DA26C40DEA0CBB49A7825C7CD4F1 /* CocoaAsyncSocket */,
-				8642CC820CE8C5B88C113D7F47AF4BC3 /* FMDB */,
-				8059F939F6DEE3BF6689C7AEA2DF2B81 /* Pods-AirWave */,
+				A3562ECF5C00E2D6D46635AF341CA29A /* Pods-AirWave */,
 			);
 		};
 /* End PBXProject section */
@@ -370,41 +386,45 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6E99328464F779FF80255575713E72A9 /* Sources */ = {
+		7823CC3CD267B031A13EB9BFF8F8303E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DA009FA176B40644D5FE6B82832E9A3 /* Pods-AirWave-dummy.m in Sources */,
+				7E3F919B5FED4FEE5BFE97F58D758E90 /* Pods-AirWave-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		ADE36E87832B736E1FAF9E50036C1530 /* Sources */ = {
+		BA935CB5E8DAC3937E4D2C99779B50BB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6199817CB29DADBC9AB1D4C44E52F5BA /* FMDatabase.m in Sources */,
-				4DB541C1C41B1C597EC36CDAB5243D1A /* FMDatabaseAdditions.m in Sources */,
-				8021697A1557D425AC130472DA1317CC /* FMDatabasePool.m in Sources */,
-				98ABF277A45F1AB72A8D02D53FFE67BF /* FMDatabaseQueue.m in Sources */,
-				C40CFE1274D588CA1A9DF9394BF76EAE /* FMDB-dummy.m in Sources */,
-				4B3B2EABA01FE0065CA6693CEE33CA92 /* FMResultSet.m in Sources */,
+				68216322A1397D13C4672F5BFB6BAE2A /* BabyBluetooth-dummy.m in Sources */,
+				A2A2384846F2B0339E6C7E4ACCACDC0E /* BabyBluetooth.m in Sources */,
+				823DA3ACD9F2AA61FEB41205C435E016 /* BabyCallback.m in Sources */,
+				D9601A235C598AF2FC78F35D027DA95B /* BabyCentralManager.m in Sources */,
+				7681427B4B48831724D10EF4B8174927 /* BabyDefine.m in Sources */,
+				8FD4C75A0443F6B8EFBFD26B50079FA9 /* BabyOptions.m in Sources */,
+				0D5CF00AA1226E3E0E7DD1DD925F76BF /* BabyPeripheralManager.m in Sources */,
+				78B3B735F7459684CA85D44D31153FA1 /* BabyRhythm.m in Sources */,
+				CB46BDD2F505FD4C0BC3A3D212238A55 /* BabySpeaker.m in Sources */,
+				A357C49D39B2682FC57B9B4407BF605D /* BabyToy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		88CA705A8AFD8EAB6DD39440F015FF6E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = FMDB;
-			target = 8642CC820CE8C5B88C113D7F47AF4BC3 /* FMDB */;
-			targetProxy = 563085FC4906BBED22902AF5A8DCC906 /* PBXContainerItemProxy */;
-		};
-		8D2748FF430AD4187FA4C9CFFA4888E6 /* PBXTargetDependency */ = {
+		05C5518B750A646337AE9936F1A9E3D6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = CocoaAsyncSocket;
 			target = 23D7DA26C40DEA0CBB49A7825C7CD4F1 /* CocoaAsyncSocket */;
-			targetProxy = FAAD232B0C0E40FF2A0D365F00681B1A /* PBXContainerItemProxy */;
+			targetProxy = 2536A9BC0249D974ED831C08204B03C2 /* PBXContainerItemProxy */;
+		};
+		FF4BC3246404422F15B63F6709C7B77D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BabyBluetooth;
+			target = B35CB295C1DF6B318D4EC0A99AD1982D /* BabyBluetooth */;
+			targetProxy = 7C37127B72C0E4B7FE0BDEEDC097224F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -458,29 +478,6 @@
 			};
 			name = Debug;
 		};
-		25682F32C1E9797E96415ED852B12E7B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 873F497D0FECAD1B64B9198E9FC4FD53 /* Pods-AirWave.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACH_O_TYPE = staticlib;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
 		34FE9531DA9AF2820790339988D5FF41 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -525,7 +522,31 @@
 			};
 			name = Release;
 		};
-		3F9C8DDF017A65C10975432CD4BD6C77 /* Release */ = {
+		5996F688F40DB95828CB1F0DAEAF9C39 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7475A0CD506C7AE0BC087F4DBF43DFD1 /* BabyBluetooth.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/BabyBluetooth/BabyBluetooth-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+			};
+			name = Release;
+		};
+		7FE75CF612037B4FE06644DE930471C6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4970F4FE021F1DC3E4AB815A00D9039B /* Pods-AirWave.release.xcconfig */;
 			buildSettings = {
@@ -548,9 +569,9 @@
 			};
 			name = Release;
 		};
-		701F28110180849E30816B0EABFE9E13 /* Debug */ = {
+		8A87BD3F917EB0B610A3F8B7BDEB2221 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9443C891C6230A739A6E987A55DFFE89 /* FMDB.xcconfig */;
+			baseConfigurationReference = 7475A0CD506C7AE0BC087F4DBF43DFD1 /* BabyBluetooth.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -558,8 +579,8 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/FMDB/FMDB-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				GCC_PREFIX_HEADER = "Target Support Files/BabyBluetooth/BabyBluetooth-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -572,33 +593,32 @@
 			};
 			name = Debug;
 		};
-		8110EECF24C27AF36D63F39962FF3F53 /* Release */ = {
+		C570FB7BECFFC1CF5305F74CF2D626BF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9443C891C6230A739A6E987A55DFFE89 /* FMDB.xcconfig */;
+			baseConfigurationReference = 873F497D0FECAD1B64B9198E9FC4FD53 /* Pods-AirWave.debug.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/FMDB/FMDB-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				MTL_ENABLE_DEBUG_INFO = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 			};
-			name = Release;
+			name = Debug;
 		};
 		E9CAEB737D5994E72C58F3D77F335F6D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B8EB253631FD4C0EA243822B9859E0E /* CocoaAsyncSocket.xcconfig */;
+			baseConfigurationReference = 9E61F212C2996F2E6BB0D990A2112F7D /* CocoaAsyncSocket.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -622,7 +642,7 @@
 		};
 		F6145445984EE05E56611C0829E1C4D6 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B8EB253631FD4C0EA243822B9859E0E /* CocoaAsyncSocket.xcconfig */;
+			baseConfigurationReference = 9E61F212C2996F2E6BB0D990A2112F7D /* CocoaAsyncSocket.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -647,15 +667,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1BA066B3D32C553BF37E3322F9113F02 /* Build configuration list for PBXNativeTarget "FMDB" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				701F28110180849E30816B0EABFE9E13 /* Debug */,
-				8110EECF24C27AF36D63F39962FF3F53 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -665,20 +676,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		2F03ED786B5EA85FC812B6315E1D2E2D /* Build configuration list for PBXNativeTarget "Pods-AirWave" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C570FB7BECFFC1CF5305F74CF2D626BF /* Debug */,
+				7FE75CF612037B4FE06644DE930471C6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		51CAAE0DC2EF7737A3295DF612FD5D8C /* Build configuration list for PBXNativeTarget "BabyBluetooth" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A87BD3F917EB0B610A3F8B7BDEB2221 /* Debug */,
+				5996F688F40DB95828CB1F0DAEAF9C39 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		6E720E377F01A6230162E58B96EA78A5 /* Build configuration list for PBXNativeTarget "CocoaAsyncSocket" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F6145445984EE05E56611C0829E1C4D6 /* Debug */,
 				E9CAEB737D5994E72C58F3D77F335F6D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F3A73B64CED86C3668C5045FF736FBE4 /* Build configuration list for PBXNativeTarget "Pods-AirWave" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				25682F32C1E9797E96415ED852B12E7B /* Debug */,
-				3F9C8DDF017A65C10975432CD4BD6C77 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

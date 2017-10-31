@@ -127,4 +127,6 @@ typedef void(^NewByteBlock)(NSInteger,NSInteger);
     }
     return (Byte)(crc & 0xFF);
 }
+
+
 @end

@@ -62,7 +62,7 @@
         else
         {
             number = [userDefaults objectForKey:@"idString"];
-            self.idString =[NSString stringWithFormat:@"%ld",[number integerValue]+1];
+            self.idString =[NSString stringWithFormat:@"%d",[number integerValue]+1];
             [userDefaults setObject:self.idString forKey:@"idString"];
         }
     }
@@ -70,10 +70,14 @@
 }
 -(TreatRecord *)analyzeWithData:(NSData *)data
 {
-    
-    Byte *bytes = (Byte *)[data bytes];
+    //反转义
+    NSData *convertData = [self convertData:data];
+    Byte *bytes = (Byte *)[convertData bytes];
     
     self.treatMode = bytes[5];
+    self.treatWay = bytes[4];
+    Byte durationByte [] = { bytes[7],bytes[8],bytes[9],bytes[10] };
+    self.duration= [self lBytesToInt:durationByte withLength:4];
     if (self.treatWay)
     {
         switch (self.treatWay)
@@ -159,6 +163,30 @@
         height = height + 256 + byte[0];
     }
     return height;
+}
+-(NSData *)convertData:(NSData *)data
+{
+    Byte *dataBytes = (Byte *)[data bytes];
+    UInt8 lengthOfData = [data length];
+    uint8_t *ls = malloc(sizeof(*ls)*100);
+    UInt32 lengthOfLs = 1;
+    ls[0] = 0xaa;
+    for (int i = 1; i<lengthOfData-1; i++)
+    {
+        UInt8 curChar = dataBytes[i];
+        if (curChar == 0xcc)
+        {
+            ls[lengthOfLs++] = dataBytes[++i]-1;
+        }
+        else
+        {
+            ls[lengthOfLs++] = dataBytes[i];
+        }
+    }
+    ls[lengthOfLs] = 0x55;
+    lengthOfLs++;
+    NSData *convertData = [NSData dataWithBytes:ls length:lengthOfLs];
+    return convertData;
 }
 
 @end

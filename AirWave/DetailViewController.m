@@ -15,6 +15,7 @@
 #import "UIImage+Rotate.h"
 #import "MyLabel.h"
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
+NSString *const TYPE = @"7681";
 @interface DetailViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *imageResult;
 @property (strong, nonatomic)NSString *idString;
@@ -51,7 +52,6 @@
     CGFloat height=[UIScreen mainScreen].bounds.size.height;
     
     
-    
     if (self.record.imagePath>0)
     {
          self.scrollView.contentSize = CGSizeMake(width, 1100);
@@ -80,6 +80,7 @@
     [params setObject:timeSp forKey:@"Date"];
     [params setObject:[NSString stringWithFormat:@"%d",(unsigned int)self.record.duration] forKey:@"Treattime"];
     [params setObject:[NSString stringWithFormat:@"%d",self.record.treatWay] forKey:@"Mode"];
+    [params setObject:TYPE forKey:@"Type"];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [[HttpHelper instance] post:@"add"

@@ -13,9 +13,6 @@
 @interface AlertViewController ()<UIViewControllerTransitioningDelegate>
 
 @property (strong ,nonatomic) UIView *shadowView;
-@property (assign ,nonatomic) BOOL firstSelected;
-@property (assign ,nonatomic) BOOL secondSelected;
-@property (assign ,nonatomic) BOOL thirdSelected;
 @end
 
 @implementation AlertViewController
@@ -57,7 +54,7 @@
     button1.frame = CGRectMake(40, 66, 136, 18);
     [selectView addSubview:button1];
     [button1 addTarget:self action:@selector(tapOneOption:) forControlEvents:UIControlEventTouchUpInside];
-    self.firstSelected = YES;
+//    self.firstSelected = YES;
     [self updateViewWithButton:button1];
     
     
@@ -67,7 +64,7 @@
     button2.frame = CGRectMake(40, 96, 136, 18);
     [selectView addSubview:button2];
     [button2 addTarget:self action:@selector(tapOneOption:) forControlEvents:UIControlEventTouchUpInside];
-    self.secondSelected = YES;
+//    self.secondSelected = NO;
     [self updateViewWithButton:button2];
     
     UIButton *button3 = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -76,7 +73,7 @@
     button3.frame = CGRectMake(40, 126, 136, 18);
     [selectView addSubview:button3];
     [button3 addTarget:self action:@selector(tapOneOption:) forControlEvents:UIControlEventTouchUpInside];
-    self.thirdSelected = NO;
+//    self.thirdSelected = NO;
     [self updateViewWithButton:button3];
     
     
@@ -119,9 +116,6 @@
 {
     return [[MyPresentViewController alloc]initWithPresentedViewController:presented presentingViewController:presenting];
 }
-
-
-
 //返回按钮
 - (void)backAction
 {
@@ -137,10 +131,10 @@
     if (self.secondSelected)
     {
         bloodDevSelected = YES;
-    }else{
+    }else
+    {
         bloodDevSelected = NO;
     }
-    
     self.returnBlock(airWaveSelected,bloodDevSelected);
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -149,18 +143,16 @@
     if ([sender tag] == 1)
     {
        self.firstSelected = !self.firstSelected;
-       [self updateViewWithButton:sender];
     }
     else if([sender tag] == 2)
     {
         self.secondSelected = !self.secondSelected;
-        [self updateViewWithButton:sender];
     }
     else if([sender tag] == 3)
     {
         self.thirdSelected = !self.thirdSelected;
-        [self updateViewWithButton:sender];
     }
+    [self updateViewWithButton:sender];
 
 }
 -(void)updateViewWithButton:(UIButton *)button

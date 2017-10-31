@@ -10,6 +10,8 @@
 		0419A9CD1FA324560020A088 /* AlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0419A9CC1FA324560020A088 /* AlertViewController.m */; };
 		0419A9D31FA329620020A088 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0419A9D21FA329620020A088 /* HomeViewController.m */; };
 		0419A9D61FA329BE0020A088 /* MyPresentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0419A9D51FA329BE0020A088 /* MyPresentViewController.m */; };
+		041BD3141FA7289B0058D5C1 /* BloodDevController.m in Sources */ = {isa = PBXBuildFile; fileRef = 041BD3131FA7289B0058D5C1 /* BloodDevController.m */; };
+		041BD3171FA72DB20058D5C1 /* BloodDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 041BD3161FA72DB20058D5C1 /* BloodDetailViewController.m */; };
 		041FD7E51F58FDEA00522D64 /* SolutionTreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 041FD7E41F58FDEA00522D64 /* SolutionTreatViewController.m */; };
 		0424CF6A1F6794F1008D138E /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0424CF691F6794F1008D138E /* ProgressView.m */; };
 		044D54B81F4D159D002C1E35 /* StandardTreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D54B71F4D159D002C1E35 /* StandardTreatViewController.m */; };
@@ -77,6 +79,10 @@
 		0419A9D21FA329620020A088 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		0419A9D41FA329BE0020A088 /* MyPresentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPresentViewController.h; sourceTree = "<group>"; };
 		0419A9D51FA329BE0020A088 /* MyPresentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPresentViewController.m; sourceTree = "<group>"; };
+		041BD3121FA7289B0058D5C1 /* BloodDevController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BloodDevController.h; sourceTree = "<group>"; };
+		041BD3131FA7289B0058D5C1 /* BloodDevController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BloodDevController.m; sourceTree = "<group>"; };
+		041BD3151FA72DB20058D5C1 /* BloodDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BloodDetailViewController.h; sourceTree = "<group>"; };
+		041BD3161FA72DB20058D5C1 /* BloodDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BloodDetailViewController.m; sourceTree = "<group>"; };
 		041FD7E31F58FDEA00522D64 /* SolutionTreatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SolutionTreatViewController.h; sourceTree = "<group>"; };
 		041FD7E41F58FDEA00522D64 /* SolutionTreatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SolutionTreatViewController.m; sourceTree = "<group>"; };
 		0424CF681F6794F1008D138E /* ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressView.h; sourceTree = "<group>"; };
@@ -237,6 +243,10 @@
 				0419A9D51FA329BE0020A088 /* MyPresentViewController.m */,
 				0419A9CB1FA324560020A088 /* AlertViewController.h */,
 				0419A9CC1FA324560020A088 /* AlertViewController.m */,
+				041BD3121FA7289B0058D5C1 /* BloodDevController.h */,
+				041BD3131FA7289B0058D5C1 /* BloodDevController.m */,
+				041BD3151FA72DB20058D5C1 /* BloodDetailViewController.h */,
+				041BD3161FA72DB20058D5C1 /* BloodDetailViewController.m */,
 				046BA7A01F4817C8004D7E74 /* TreatViewController.h */,
 				046BA7A11F4817C8004D7E74 /* TreatViewController.m */,
 				044D54B61F4D159D002C1E35 /* StandardTreatViewController.h */,
@@ -560,12 +570,14 @@
 				04878A1D1FA2C738006EE4A9 /* ClickEffectImageView.m in Sources */,
 				04A420391F9D929C00A6C2E9 /* HttpHelper.m in Sources */,
 				04A420381F9D929C00A6C2E9 /* HttpError.m in Sources */,
+				041BD3171FA72DB20058D5C1 /* BloodDetailViewController.m in Sources */,
 				0451A1921F9EDEF400AF521C /* MyLabel.m in Sources */,
 				0419A9CD1FA324560020A088 /* AlertViewController.m in Sources */,
 				0476B6761F8DE5B30075B953 /* UIImage+Rotate.m in Sources */,
 				0419A9D61FA329BE0020A088 /* MyPresentViewController.m in Sources */,
 				046BA76D1F480DF2004D7E74 /* main.m in Sources */,
 				04A4203A1F9D929C00A6C2E9 /* HttpRequest.m in Sources */,
+				041BD3141FA7289B0058D5C1 /* BloodDevController.m in Sources */,
 				0419A9D31FA329620020A088 /* HomeViewController.m in Sources */,
 				044E4F521F60D63B009DD7E7 /* UIImage+ImageWithColor.m in Sources */,
 				044D54B81F4D159D002C1E35 /* StandardTreatViewController.m in Sources */,

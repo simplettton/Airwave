@@ -6,7 +6,6 @@
 //  Copyright © 2017年 Shenzhen Lifotronic Technology Co.,Ltd. All rights reserved.
 //
 #import <GCDAsyncSocket.h>
-
 #import "Pack.h"
 #import "BodyButton.h"
 #import "TreatViewController.h"
@@ -14,7 +13,6 @@
 #import "RunningInfomation.h"
 #import "WarnMessage.h"
 #import "TreatRecord.h"
-
 #import "UIImage+ImageWithColor.h"
 #import "ProgressView.h"
 
@@ -154,7 +152,6 @@ NSString *const PORT = @"8080";
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = item;
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
-    
     if (myDelegate.cclientSocket != nil)
     {
         self.clientSocket = myDelegate.cclientSocket;
@@ -263,8 +260,8 @@ NSString *const PORT = @"8080";
     {
         self.treatRecord = [[TreatRecord alloc]init];
         NSLog(@"------------------------------------------------");
-        self.treatRecord.treatWay = self.treatInformation.treatWay;
-        self.treatRecord.duration = self.runningInfomation.treatProcessTime;
+//        self.treatRecord.treatWay = self.treatInformation.treatWay;
+//        self.treatRecord.duration = self.runningInfomation.treatProcessTime;
         
         [self.treatRecord analyzeWithData:data];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -1196,7 +1193,11 @@ NSString *const PORT = @"8080";
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消"
                                                            style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * _Nonnull action) {
-                                                             [self saveRecord];
+                                                             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                                                 [self saveRecord];
+                                                             });
+                                                             
+
                                                          }];
     
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认"
@@ -1212,15 +1213,11 @@ NSString *const PORT = @"8080";
 {
     [self presentViewController:self.picker animated:YES completion:NULL];
 };
-
 //选择照片完成后回调
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
     //开一个线程保存
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        
-        
         //保存图片
         self.treatRecord.hasImage = YES;
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
@@ -1236,8 +1233,6 @@ NSString *const PORT = @"8080";
         //保存完将图片消除
         self.treatRecord.imagePath = nil;
     });
-    
-    
     [self.picker dismissViewControllerAnimated:YES completion:^{
              [self configureBodyView];
         }];
@@ -1418,23 +1413,10 @@ NSString *const PORT = @"8080";
 - (void)setupSwipe
 {
     
-    // 多加几个轻扫手势，便能够实现多个方向的轻扫。
-    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeLeft)];
-    
+    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight)];
     [self.view addGestureRecognizer:swipe];
-    // 修改轻扫的的方向
-    swipe.direction = UISwipeGestureRecognizerDirectionLeft;
-    
-    UISwipeGestureRecognizer *swipe1 = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight)];
-    
-    [self.view addGestureRecognizer:swipe1];
-    // 修改轻扫的的方向
-    swipe1.direction = UISwipeGestureRecognizerDirectionRight;
+    swipe.direction = UISwipeGestureRecognizerDirectionRight;
 
-}
-- (void)swipeLeft
-{
-    NSLog(@"%s",__func__);
 }
 - (void)swipeRight
 {

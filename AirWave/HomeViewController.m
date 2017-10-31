@@ -5,13 +5,14 @@
 //  Created by Macmini on 2017/10/27.
 //
 //
-
 #import "HomeViewController.h"
 #import "AlertViewController.h"
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 @interface HomeViewController ()<UIGestureRecognizerDelegate,UIViewControllerTransitioningDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imageView1;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView2;
+@property (assign ,nonatomic) BOOL airwaveSelected;
+@property (assign ,nonatomic) BOOL bloodDevSelected;
 
 - (IBAction)addNewDevice:(id)sender;
 @end
@@ -48,24 +49,44 @@
     UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem = barButton;
     
+    
     //touchEnable
     self.imageView1.userInteractionEnabled = YES;
     self.imageView2.userInteractionEnabled = YES;
-    UITapGestureRecognizer* firstTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBloodDev:)];
-    UITapGestureRecognizer* secondTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAirWave:)];
-    [self.imageView1 addGestureRecognizer:firstTapRecognizer];
-    [self.imageView2 addGestureRecognizer:secondTapRecognizer];
-
-    firstTapRecognizer.delegate = self;
-    secondTapRecognizer.delegate = self;
+    self.imageView1.image = [UIImage imageNamed:@"blood_dev"];
+    self.imageView2.image = [UIImage imageNamed:@"airwave"];
+    
+    [self.imageView1 addGestureRecognizer:[self bloodDevGesture]];
+    [self.imageView2 addGestureRecognizer:[self airwaveGesture]];
+    self.airwaveSelected = YES;
+    self.bloodDevSelected = YES;
 }
+//左上按钮
 -(void)leftBarButtonClicked:(UIButton *)button
 {
     
 }
+-(UITapGestureRecognizer *)airwaveGesture
+{
+    UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAirWave:)];
+    return gesture;
+}
+-(UITapGestureRecognizer *)bloodDevGesture
+{
+    UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBloodDev:)];
+    return gesture;
+}
+-(void)removeGestureRecognizerOf:(UIImageView *)view
+{
+    while (view.gestureRecognizers.count)
+    {
+        [view removeGestureRecognizer:[view.gestureRecognizers objectAtIndex:0]];
+    }
+}
 -(void)tapBloodDev:(UITapGestureRecognizer *)recognizer
 {
     NSLog(@"-----bloodDev");
+    [self performSegueWithIdentifier:@"ShowBloodDev" sender:nil];
     
 }
 -(void)tapAirWave:(UITapGestureRecognizer *)recognizer
@@ -80,15 +101,45 @@
     
     alert.returnBlock = ^(BOOL airWaveSelected,BOOL bloodDevSelected)
     {
+        [self removeGestureRecognizerOf:self.imageView1];
+        [self removeGestureRecognizerOf:self.imageView2];
+        
         if (airWaveSelected&&!bloodDevSelected)
         {
-            self.imageView2 = nil;
+            self.imageView2.image = [UIImage imageNamed:@"white"];
             self.imageView1.image = [UIImage imageNamed:@"airwave"];
+            [self.imageView1 addGestureRecognizer:[self airwaveGesture]];
+            self.airwaveSelected = YES;
+            self.bloodDevSelected =NO;
+        }else if(airWaveSelected&&bloodDevSelected)
+        {
+            self.imageView1.image = [UIImage imageNamed:@"blood_dev"];
+            [self.imageView1 addGestureRecognizer:[self bloodDevGesture]];
+            self.imageView2.image = [UIImage imageNamed:@"airwave"];
+            [self.imageView2 addGestureRecognizer:[self airwaveGesture]];
+            self.airwaveSelected = YES;
+            self.bloodDevSelected = YES;
+        }else if(!airWaveSelected&&bloodDevSelected)
+        {
+            self.imageView1.image = [UIImage imageNamed:@"blood_dev"];
+            [self.imageView1 addGestureRecognizer:[self bloodDevGesture]];
             
+            self.imageView2.image = [UIImage imageNamed:@"white"];
+            self.airwaveSelected = NO;
+            self.bloodDevSelected = YES;
+        }else if (!airWaveSelected&&!bloodDevSelected)
+        {
+            self.imageView1.image = [UIImage imageNamed:@"white"];
+            self.imageView2.image = [UIImage imageNamed:@"white"];
+            self.airwaveSelected = NO;
+            self.bloodDevSelected = NO;
         }
         self.shadowView.alpha = 0;
     };
+    
     alert.transitioningDelegate = self;
+    alert.firstSelected = self.airwaveSelected;
+    alert.secondSelected = self.bloodDevSelected;
     [self presentViewController:alert animated:YES completion:nil];
 }
 @end
