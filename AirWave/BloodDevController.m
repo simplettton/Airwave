@@ -7,8 +7,6 @@
 //
 
 #import "BloodDevController.h"
-#import <CoreBluetooth/CoreBluetooth.h>
-
 #define SERVICE_UUID        @"1b7e8251-2877-41c3-b46e-cf057c562023"
 #define CHARACTERISTIC_UUID @"5e9bf2a8-f93f-4481-a67e-3b2f4a07891a"
 
@@ -25,6 +23,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"血瘘治疗仪";
     NSString *key = @"1234abcd";
     NSData *data = [key dataUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"%s %s",[key UTF8String],data.bytes);

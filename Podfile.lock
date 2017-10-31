@@ -1,15 +1,18 @@
 PODS:
   - BabyBluetooth (0.7.0)
   - CocoaAsyncSocket (7.6.1)
+  - SVProgressHUD (2.1.2)
 
 DEPENDENCIES:
   - BabyBluetooth (~> 0.7.0)
   - CocoaAsyncSocket (~> 7.6.1)
+  - SVProgressHUD
 
 SPEC CHECKSUMS:
   BabyBluetooth: d50758aecf24d4a0ab9271d69f0f116d6bee51c9
   CocoaAsyncSocket: 7eadd3f59e1a6c84e2aefc93e9ff7b55156fe174
+  SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
 
-PODFILE CHECKSUM: 8aa74e44715e34d29db68978e4cd4e427e769bbb
+PODFILE CHECKSUM: a73eb07f7b23134160809c2c7f90910123dda70c
 
 COCOAPODS: 1.3.1

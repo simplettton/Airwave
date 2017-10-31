@@ -7,9 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface BloodDevController : UIViewController
-
+#import <CoreBluetooth/CoreBluetooth.h>
+#import "BabyBluetooth.h"
+@interface BloodDevController : UIViewController{
+    @public
+    BabyBluetooth *baby;
+}
+@property __block NSMutableArray *services;
+@property(strong,nonatomic)CBPeripheral *currPeripheral;
 - (IBAction)start:(id)sender;
 - (IBAction)stop:(id)sender;
 - (IBAction)pause:(id)sender;

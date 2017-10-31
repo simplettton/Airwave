@@ -14,6 +14,7 @@
 		041BD3171FA72DB20058D5C1 /* BloodDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 041BD3161FA72DB20058D5C1 /* BloodDetailViewController.m */; };
 		041FD7E51F58FDEA00522D64 /* SolutionTreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 041FD7E41F58FDEA00522D64 /* SolutionTreatViewController.m */; };
 		0424CF6A1F6794F1008D138E /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0424CF691F6794F1008D138E /* ProgressView.m */; };
+		042DAE921FA867D500B35579 /* SearchBLEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 042DAE911FA867D500B35579 /* SearchBLEViewController.m */; };
 		044D54B81F4D159D002C1E35 /* StandardTreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D54B71F4D159D002C1E35 /* StandardTreatViewController.m */; };
 		044D54BB1F4D15F7002C1E35 /* Pack.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D54BA1F4D15F7002C1E35 /* Pack.m */; };
 		044D54BE1F4D1A4C002C1E35 /* GradientTreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D54BD1F4D1A4C002C1E35 /* GradientTreatViewController.m */; };
@@ -87,6 +88,8 @@
 		041FD7E41F58FDEA00522D64 /* SolutionTreatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SolutionTreatViewController.m; sourceTree = "<group>"; };
 		0424CF681F6794F1008D138E /* ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressView.h; sourceTree = "<group>"; };
 		0424CF691F6794F1008D138E /* ProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressView.m; sourceTree = "<group>"; };
+		042DAE901FA867D500B35579 /* SearchBLEViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchBLEViewController.h; sourceTree = "<group>"; };
+		042DAE911FA867D500B35579 /* SearchBLEViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchBLEViewController.m; sourceTree = "<group>"; };
 		044D54B61F4D159D002C1E35 /* StandardTreatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StandardTreatViewController.h; sourceTree = "<group>"; };
 		044D54B71F4D159D002C1E35 /* StandardTreatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StandardTreatViewController.m; sourceTree = "<group>"; };
 		044D54B91F4D15F7002C1E35 /* Pack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pack.h; sourceTree = "<group>"; };
@@ -243,6 +246,8 @@
 				0419A9D51FA329BE0020A088 /* MyPresentViewController.m */,
 				0419A9CB1FA324560020A088 /* AlertViewController.h */,
 				0419A9CC1FA324560020A088 /* AlertViewController.m */,
+				042DAE901FA867D500B35579 /* SearchBLEViewController.h */,
+				042DAE911FA867D500B35579 /* SearchBLEViewController.m */,
 				041BD3121FA7289B0058D5C1 /* BloodDevController.h */,
 				041BD3131FA7289B0058D5C1 /* BloodDevController.m */,
 				041BD3151FA72DB20058D5C1 /* BloodDetailViewController.h */,
@@ -501,9 +506,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-AirWave/Pods-AirWave-resources.sh",
+				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -568,6 +576,7 @@
 				044D54BB1F4D15F7002C1E35 /* Pack.m in Sources */,
 				0424CF6A1F6794F1008D138E /* ProgressView.m in Sources */,
 				04878A1D1FA2C738006EE4A9 /* ClickEffectImageView.m in Sources */,
+				042DAE921FA867D500B35579 /* SearchBLEViewController.m in Sources */,
 				04A420391F9D929C00A6C2E9 /* HttpHelper.m in Sources */,
 				04A420381F9D929C00A6C2E9 /* HttpError.m in Sources */,
 				041BD3171FA72DB20058D5C1 /* BloodDetailViewController.m in Sources */,

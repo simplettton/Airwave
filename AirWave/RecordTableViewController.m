@@ -104,7 +104,7 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
         cell = [[RecordTableViewCell init]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     //序号
-    cell.numberLabel.text = [NSString stringWithFormat:@"%ld",indexPath.row +1];
+    cell.numberLabel.text = [NSString stringWithFormat:@"%d",indexPath.row +1];
     //取出record
     TreatRecord *record = (TreatRecord *)[mResult objectAtIndex:indexPath.row];
     //时间

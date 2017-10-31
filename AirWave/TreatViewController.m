@@ -75,7 +75,6 @@ NSString *const PORT = @"8080";
 @property (nonatomic, strong) TreatRecord *treatRecord;
 @property (nonatomic, strong) TreatInformation *treatInformation;
 @property (nonatomic, strong) RunningInfomation *runningInfomation;
-@property (nonatomic ,strong) FMDatabase *db;
 
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
 @property (weak, nonatomic) IBOutlet UILabel *pressLabel;

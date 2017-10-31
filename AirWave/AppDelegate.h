@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <GCDAsyncSocket.h>
-#import <FMDB.h>
 @interface AppDelegate : UIResponder
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic)GCDAsyncSocket *cclientSocket;
