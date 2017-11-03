@@ -2,31 +2,28 @@
 //  ViewController.m
 //  BabyBluetoothAppDemo
 //
-//  Created by 刘彦玮 on 15/8/1.
-//  Copyright (c) 2015年 刘彦玮. All rights reserved.
+//  Created by simplettton on 2017/7/31.
+//  Copyright © 2017年 Simplettton. All rights reserved.
 //
 
 #import "SearchBLEViewController.h"
 #import "SVProgressHUD.h"
-
-
-//screen width and height
 #define width [UIScreen mainScreen].bounds.size.width
 #define height [UIScreen mainScreen].bounds.size.height
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
-@interface SearchBLEViewController (){
+@interface SearchBLEViewController ()
+{
     NSMutableArray *peripheralDataArray;
     BabyBluetooth *baby;
 }
 - (IBAction)stopScan:(id)sender;
 - (IBAction)startScan:(id)sender;
 @property (strong, nonatomic)UIActivityIndicatorView *activityIndicatorView;
-
 @end
-
 @implementation SearchBLEViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.title = @"设备列表";
     self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
@@ -35,8 +32,6 @@
     self.navigationItem.leftBarButtonItem.tintColor = UIColorFromHex(0xffffff);
     [self setupSwipe];
     self.tableView.tableFooterView = [[UIView alloc]init];
-    
-
     //stopButton
     UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50 , 30)];
     [btn setTitle:@"stop" forState:UIControlStateNormal];
@@ -47,7 +42,7 @@
     self.activityIndicatorView = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(0, 0, 40, 30)];
     [self.activityIndicatorView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
     self.activityIndicatorView.hidesWhenStopped = YES;
-    [self.activityIndicatorView startAnimating];
+    //[self.activityIndicatorView startAnimating];
     UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithCustomView:self.activityIndicatorView];
     self.navigationItem.rightBarButtonItems = @[stopButton,barButton];
 
@@ -57,8 +52,8 @@
     baby = [BabyBluetooth shareBabyBluetooth];
     [self babyDelegate];
 }
-
--(void)viewDidAppear:(BOOL)animated{
+-(void)viewDidAppear:(BOOL)animated
+{
     NSLog(@"viewDidAppear");
     //停止之前的连接
     [baby cancelAllPeripheralsConnection];
@@ -67,26 +62,31 @@
     //baby.scanForPeripherals().begin().stop(10);
 }
 
--(void)viewWillDisappear:(BOOL)animated{
-    NSLog(@"viewWillDisappear");
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [baby cancelScan];
+    [self.activityIndicatorView stopAnimating];
 }
 
 #pragma mark -蓝牙配置和操作
 
 //蓝牙网关初始化和委托方法设置
--(void)babyDelegate{
+-(void)babyDelegate
+{
     
     __weak typeof(self) weakSelf = self;
     [baby setBlockOnCentralManagerDidUpdateState:^(CBCentralManager *central) {
-        if (central.state == CBCentralManagerStatePoweredOn) {
+        if (central.state == CBManagerStatePoweredOn) {
             [SVProgressHUD showInfoWithStatus:@"蓝牙打开成功，开始扫描设备"];
-        }else if(central.state == CBCentralManagerStatePoweredOff){
+            [weakSelf.activityIndicatorView startAnimating];
+        }else if(central.state == CBManagerStatePoweredOff){
             [SVProgressHUD showInfoWithStatus:@"请打开蓝牙以连接设备"];
         }
     }];
     
     //设置扫描到设备的委托
     [baby setBlockOnDiscoverToPeripherals:^(CBCentralManager *central, CBPeripheral *peripheral, NSDictionary *advertisementData, NSNumber *RSSI) {
+        [weakSelf.activityIndicatorView startAnimating];
         NSLog(@"搜索到了设备:%@",peripheral.name);
         [weakSelf insertTableView:peripheral advertisementData:advertisementData RSSI:RSSI];
     }];
@@ -140,21 +140,6 @@
     [baby setBlockOnCancelScanBlock:^(CBCentralManager *centralManager) {
         NSLog(@"setBlockOnCancelScanBlock");
     }];
-    
-    
-    /*设置babyOptions
-        
-        参数分别使用在下面这几个地方，若不使用参数则传nil
-        - [centralManager scanForPeripheralsWithServices:scanForPeripheralsWithServices options:scanForPeripheralsWithOptions];
-        - [centralManager connectPeripheral:peripheral options:connectPeripheralWithOptions];
-        - [peripheral discoverServices:discoverWithServices];
-        - [peripheral discoverCharacteristics:discoverWithCharacteristics forService:service];
-        
-        该方法支持channel版本:
-            [baby setBabyOptionsAtChannel:<#(NSString *)#> scanForPeripheralsWithOptions:<#(NSDictionary *)#> connectPeripheralWithOptions:<#(NSDictionary *)#> scanForPeripheralsWithServices:<#(NSArray *)#> discoverWithServices:<#(NSArray *)#> discoverWithCharacteristics:<#(NSArray *)#>]
-     */
-    
-    //示例:
     //扫描选项->CBCentralManagerScanOptionAllowDuplicatesKey:忽略同一个Peripheral端的多个发现事件被聚合成一个发现事件
     NSDictionary *scanForPeripheralsWithOptions = @{CBCentralManagerScanOptionAllowDuplicatesKey:@YES};
     //连接设备->
@@ -186,6 +171,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
      return peripheralDataArray.count;
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
@@ -212,7 +198,7 @@
     {
         peripheralName = [peripheral.identifier UUIDString];
     }
-    cell.textLabel.text = peripheralName;
+    cell.textLabel.text = [NSString stringWithFormat:@"%@---%@",peripheralName,peripheral];
     //信号和服务
     cell.detailTextLabel.text = [NSString stringWithFormat:@"RSSI:%@",RSSI];
     return cell;
@@ -234,10 +220,17 @@
     
     NSDictionary *item = [peripheralDataArray objectAtIndex:indexPath.row];
     CBPeripheral *peripheral = [item objectForKey:@"peripheral"];
-    vc.currPeripheral = peripheral;
-    vc->baby = self->baby;
-    [self.navigationController pushViewController:vc animated:YES];
     
+    if ([peripheral.name isEqualToString:@"ALX420"])
+    {
+        vc.currPeripheral = peripheral;
+        vc->baby = self->baby;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath{
+    return 60.0f;
 }
 
 - (IBAction)stopScan:(id)sender

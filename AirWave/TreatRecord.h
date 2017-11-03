@@ -16,6 +16,7 @@
 //@property (nonatomic,strong)NSString *address;
 
 @property (nonatomic,assign)NSString *idString;
+@property (nonatomic,assign)NSString *type;
 //治疗模式
 @property (nonatomic,assign)Byte treatWay;
 @property (nonatomic,strong)NSString *treatWayString;
@@ -30,7 +31,7 @@
 
 @property (nonatomic,assign)BOOL hasImage;
 @property (nonatomic,strong)NSString *imagePath;
-//@property (nonatomic,strong)NSData *imgData;
 
 -(TreatRecord *)analyzeWithData:(NSData*)data;
+-(void)changeDurationToString;
 @end

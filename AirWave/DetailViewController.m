@@ -15,6 +15,8 @@
 #import "UIImage+Rotate.h"
 #import "MyLabel.h"
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
+static NSString *AIRWAVETYPE = @"7681";
+static NSString *BLOODDEVTYPE = @"8888";
 NSString *const TYPE = @"7681";
 @interface DetailViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *imageResult;
@@ -24,6 +26,7 @@ NSString *const TYPE = @"7681";
 @property (weak, nonatomic) IBOutlet MyLabel *treatDateLabel;
 @property (weak, nonatomic) IBOutlet MyLabel *treatWayLabel;
 @property (weak, nonatomic) IBOutlet MyLabel *treatTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *modeOrLevelLabel;
 @end
 
 @implementation DetailViewController
@@ -37,6 +40,7 @@ NSString *const TYPE = @"7681";
     UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.rightBarButtonItem = barButton;
     self.title = @"治疗结果";
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSString *documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
         NSString *imagePath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",self.record.idString]];
@@ -50,8 +54,6 @@ NSString *const TYPE = @"7681";
    
     CGFloat width=[UIScreen mainScreen].bounds.size.width;
     CGFloat height=[UIScreen mainScreen].bounds.size.height;
-    
-    
     if (self.record.imagePath>0)
     {
          self.scrollView.contentSize = CGSizeMake(width, 1100);
@@ -61,7 +63,15 @@ NSString *const TYPE = @"7681";
         self.scrollView.contentSize = CGSizeMake(width, height);
     }
     self.treatDateLabel.text = [NSString stringWithFormat:@"  %@",self.record.dateString];
-    self.treatWayLabel.text = [NSString stringWithFormat:@"  %@",self.record.treatWayString];
+    
+    if ([self.record.type isEqualToString:BLOODDEVTYPE])
+    {
+        self.modeOrLevelLabel.text = @"治疗强度";
+        self.treatWayLabel.text = [NSString stringWithFormat:@"  %d",self.record.treatWay];
+    }else if([self.record.type isEqualToString:AIRWAVETYPE]){
+        self.treatWayLabel.text = [NSString stringWithFormat:@"  %@",self.record.treatWayString];
+    }
+
     self.treatTimeLabel.text = [NSString stringWithFormat:@"  %@",self.record.durationString];}
 -(void)rightBarButtonClicked:(UIButton *)button
 {
@@ -74,13 +84,14 @@ NSString *const TYPE = @"7681";
     [params setObject:@"7" forKey:@"Age"];
     [params setObject:@"18819467352" forKey:@"Phone"];
     [params setObject:@"address" forKey:@"Address"];
+    [params setObject:self.record.type forKey:@"Type"];
     
     NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[self.record.dateTime timeIntervalSince1970]];
 
     [params setObject:timeSp forKey:@"Date"];
     [params setObject:[NSString stringWithFormat:@"%d",(unsigned int)self.record.duration] forKey:@"Treattime"];
     [params setObject:[NSString stringWithFormat:@"%d",self.record.treatWay] forKey:@"Mode"];
-    [params setObject:TYPE forKey:@"Type"];
+
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [[HttpHelper instance] post:@"add"

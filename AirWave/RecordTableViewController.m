@@ -11,7 +11,10 @@
 #import "UIImage+Rotate.h"
 #import "DetailViewController.h"
 #import "TreatRecord.h"
+#import "ServerRecordTableViewController.h"
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
+static NSString *AIRWAVETYPE = @"7681";
+static NSString *BLOODDEVTYPE = @"8888";
 typedef NS_ENUM(NSUInteger,cellViewTag)
 {
     timeLabelTag = 55,imageTag = 555,treatWayLableTag = 666,numberLabelTag = 222
@@ -21,6 +24,7 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
     NSMutableArray *records;
     NSMutableArray *mResult;
 }
+- (IBAction)retrunButtonClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 - (IBAction)upload:(id)sender;
 @end
@@ -46,9 +50,18 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
             NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:resultdata];
             NSArray *savedArray = [unArchiver decodeObjectForKey:@"recordArray"];
             NSMutableArray *array = [NSMutableArray arrayWithArray:savedArray];
+
             //倒序
             records = [NSMutableArray arrayWithArray:[[array reverseObjectEnumerator] allObjects]];
-            mResult = records;
+            mResult = [[NSMutableArray alloc]init];
+            for(TreatRecord *record in records)
+            {
+                if ([record.type isEqualToString:self.type])
+                {
+                    [mResult addObject:record];
+                }
+            }
+//            mResult = records;
             if (!records)
             {
                 records = [NSMutableArray array];
@@ -61,6 +74,13 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if ([self.type isEqualToString:BLOODDEVTYPE])
+    {
+        self.title = @"血瘘治疗记录";
+    }else if ([self.type isEqualToString:AIRWAVETYPE])
+    {
+        self.title = @"空气波治疗记录";
+    }
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.tableView.tableFooterView = [[UIView alloc]init];
     //加载数据
@@ -103,29 +123,25 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
     {
         cell = [[RecordTableViewCell init]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    
     //序号
-    cell.numberLabel.text = [NSString stringWithFormat:@"%d",indexPath.row +1];
+    cell.numberLabel.text = [NSString stringWithFormat:@"%d",(int)indexPath.row +1];
     //取出record
     TreatRecord *record = (TreatRecord *)[mResult objectAtIndex:indexPath.row];
     //时间
     cell.timeLabel.text = record.dateString;
     
     //治疗方式
-    
-    cell.treatWayLabel.text = record.treatWayString;
+    if ([self.type isEqualToString:AIRWAVETYPE])
+    {
+        cell.treatWayLabel.text = record.treatWayString;
+    }else if([self.type isEqualToString:BLOODDEVTYPE]){
+        cell.treatWayLabel.text = [NSString stringWithFormat:@"治疗强度：%d",record.treatWay];
+    }
+
     //治疗时长
 //    cell.durationLabel.text = record.durationString;
     
-    
-    
-//    //图片
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        NSData *imageData =record.imgData;
-//        UIImage *image = [UIImage imageWithData:imageData];
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            cell.resultImageView.image = [[self imageCompressForSize:image targetSize:cell.resultImageView.frame.size]rotate:UIImageOrientationRight];
-//        });
-//    });
     return cell;
 }
 #pragma mark - table view delegate
@@ -182,6 +198,9 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
     {
         DetailViewController *controller = (DetailViewController* )segue.destinationViewController;
         controller.record = sender;
+    }else if ([segue.identifier isEqualToString:@"ShowServerRecords"]){
+        ServerRecordTableViewController *controller = (ServerRecordTableViewController *)segue.destinationViewController;
+        controller.type = self.type;
     }
 }
 #pragma mark - picture
@@ -316,6 +335,11 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
     }
     return image;
 }
+
+
+
+
+
 - (IBAction)upload:(id)sender
 {
 //    NSMutableDictionary *params = [NSMutableDictionary dictionary];
@@ -441,5 +465,15 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
 //        
 //    });
 
+}
+- (IBAction)retrunButtonClicked:(id)sender
+{
+    if ([self.type isEqualToString:AIRWAVETYPE])
+    {
+        [self performSegueWithIdentifier:@"ReturnToAirWave" sender:nil];
+    }else if([self.type isEqualToString:BLOODDEVTYPE])
+    {
+        [self performSegueWithIdentifier:@"BloodRecordReturnHome" sender:nil];
+    }
 }
 @end

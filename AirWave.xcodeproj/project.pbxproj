@@ -435,7 +435,7 @@
 					046BA7671F480DF2004D7E74 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = UUWZ3JRNLN;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					046BA7801F480DF2004D7E74 = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -752,14 +752,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: 515315183@qq.com (L33H2377CF)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 515315183@qq.com (L33H2377CF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = UUWZ3JRNLN;
 				INFOPLIST_FILE = AirWave/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Lifotronic.AirWave;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "cdb4c74e-d968-459a-82e3-73fb0a3009db";
-				PROVISIONING_PROFILE_SPECIFIER = simplettton;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -769,14 +769,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: 515315183@qq.com (L33H2377CF)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 515315183@qq.com (L33H2377CF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = UUWZ3JRNLN;
 				INFOPLIST_FILE = AirWave/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Lifotronic.AirWave;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "cdb4c74e-d968-459a-82e3-73fb0a3009db";
-				PROVISIONING_PROFILE_SPECIFIER = simplettton;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

@@ -7,11 +7,12 @@
 //
 
 #import "TreatRecord.h"
-
+static NSString *TYPE = @"7681";
 @implementation TreatRecord
 -(void)encodeWithCoder:(NSCoder *)aCoder
 {
     [aCoder encodeObject:self.idString forKey:@"idString"];
+    [aCoder encodeObject:self.type forKey:@"type"];
     [aCoder encodeInteger:self.treatWay forKey:@"treatWay"];
     [aCoder encodeObject:self.dateString forKey:@"dateString"];
     [aCoder encodeObject:self.durationString forKey:@"durationString"];
@@ -19,9 +20,7 @@
     [aCoder encodeObject:self.imagePath forKey:@"imagePath"];
 //    [aCoder encodeObject:self.imgData forKey:@"imgData"];
     [aCoder encodeBool:self.hasImage forKey:@"hasImage"];
-    
     [aCoder encodeObject:self.treatWayString forKey:@"treatWayString"];
-
     [aCoder encodeObject:self.dateTime forKey:@"dateTime"];
     [aCoder encodeInt:self.duration forKey:@"duration"];
     
@@ -31,6 +30,7 @@
     if (self = [super init])
     {
         self.idString = [aDecoder decodeObjectForKey:@"idString"];
+        self.type = [aDecoder decodeObjectForKey:@"type"];
         self.treatWay = [aDecoder decodeIntegerForKey:@"treatWay"];
         self.dateString = [aDecoder decodeObjectForKey:@"dateString"];
         self.durationString = [aDecoder decodeObjectForKey:@"durationString"];
@@ -62,9 +62,13 @@
         else
         {
             number = [userDefaults objectForKey:@"idString"];
-            self.idString =[NSString stringWithFormat:@"%d",[number integerValue]+1];
+            self.idString =[NSString stringWithFormat:@"%d",(int)[number integerValue]+1];
             [userDefaults setObject:self.idString forKey:@"idString"];
         }
+        self.dateTime = [NSDate date];
+        NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+        fmt.dateFormat = @"yyyy-MM-dd HH:mm";
+        self.dateString = [fmt stringFromDate:self.dateTime];
     }
     return self;
 }
@@ -73,11 +77,12 @@
     //反转义
     NSData *convertData = [self convertData:data];
     Byte *bytes = (Byte *)[convertData bytes];
-    
+    self.type = TYPE;
     self.treatMode = bytes[5];
     self.treatWay = bytes[4];
     Byte durationByte [] = { bytes[7],bytes[8],bytes[9],bytes[10] };
     self.duration= [self lBytesToInt:durationByte withLength:4];
+    [self changeDurationToString];
     if (self.treatWay)
     {
         switch (self.treatWay)
@@ -103,6 +108,10 @@
     {
         self.treatWayString = @"治疗方式";
     }
+    return self;
+}
+-(void)changeDurationToString
+{
     if (self.duration)
     {
         int hour = _duration / 3600;
@@ -126,18 +135,11 @@
         {
             self.durationString = [self.durationString stringByAppendingString:[NSString stringWithFormat:@"%@秒",secondString]];
         }
-        
-//        self.durationString = [NSString stringWithFormat:@"%@:%@:%@",hourString,minString,secondString];
     }
     else
     {
         self.durationString = [NSString stringWithFormat:@"00:00:00"];
     }
-    self.dateTime = [NSDate date];
-    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-    fmt.dateFormat = @"yyyy-MM-dd HH:mm";
-    self.dateString = [fmt stringFromDate:self.dateTime];
-    return self;
 }
 //Byte数组转成int类型
 -(int) lBytesToInt:(Byte[]) byte withLength:(int)length

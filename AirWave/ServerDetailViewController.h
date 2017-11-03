@@ -10,4 +10,5 @@
 
 @interface ServerDetailViewController : UIViewController
 @property (nonatomic,strong)NSDictionary *dic;
+@property (nonatomic,strong)NSString *type;
 @end

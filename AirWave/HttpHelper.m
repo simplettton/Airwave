@@ -21,7 +21,10 @@
 }
 
 static HttpHelper * _instance = nil;
-static NSString * BASE_URL = @"http://192.168.2.127/demo/index.php?";
+//static NSString * BASE_URL = @"http://192.168.2.127/demo/index.php?";
+
+static NSString * BASE_URL = @"http://218.17.22.131:3088/demo/index.php?";
+
 static NSString * TOKEN_KEY = @"GGCToken";
 static NSString * USERID_KEY = @"GGCUserId";
 

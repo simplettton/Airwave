@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ServerRecordTableViewController : UITableViewController
-
+@property (nonatomic,strong)NSString *type;
 @end

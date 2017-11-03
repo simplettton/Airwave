@@ -5,18 +5,17 @@
 //  Created by Macmini on 2017/10/19.
 //  Copyright © 2017年 Shenzhen Lifotronic Technology Co.,Ltd. All rights reserved.
 //
-
 #import "ServerRecordTableViewController.h"
 #import "ServerDetailViewController.h"
 #import "DetailViewController.h"
 #import "RecordTableViewCell.h"
+#import "RecordTableViewController.h"
 #import "HttpClient.h"
 #import "HttpRequest.h"
 #import "HttpResponse.h"
 #import "HttpError.h"
 #import "HttpHelper.h"
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
-NSString *const TYPE = @"7681";
 
 @interface ServerRecordTableViewController ()
 {
@@ -28,7 +27,6 @@ NSString *const TYPE = @"7681";
 - (IBAction)previousPage:(id)sender;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *upButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downButton;
-
 @end
 
 @implementation ServerRecordTableViewController
@@ -53,10 +51,10 @@ NSString *const TYPE = @"7681";
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     [params setObject:[NSString stringWithFormat:@"%ld",(long)currentPage] forKey:@"Page"];
-    [params setObject:TYPE forKey:TYPE];
+    [params setObject:self.type forKey:@"Type"];
     //获取总数
     [[HttpHelper instance] post:@"count"
-                         params:@{@"Type":TYPE}
+                         params:@{@"Type":self.type}
                        hasToken:NO
                      onResponse:^(HttpResponse *responseObject) {
                          NSDictionary* jsonDict = [responseObject jsonDist];
@@ -227,6 +225,12 @@ NSString *const TYPE = @"7681";
     {
         ServerDetailViewController *viewController = (ServerDetailViewController *)segue.destinationViewController;
         viewController.dic = sender;
+        viewController.type = self.type;
+    }else if ([segue.identifier isEqualToString:@"ServerRecordToRecord"])
+    {
+        UINavigationController *navi = (UINavigationController *)segue.destinationViewController;
+        RecordTableViewController *vc = (RecordTableViewController *)[navi topViewController];
+        vc.type = self.type;
     }
 }
 

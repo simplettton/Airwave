@@ -258,7 +258,7 @@
                     <navigationItem key="navigationItem" title="空气波治疗仪" id="0cT-Wo-4A6">
                         <barButtonItem key="leftBarButtonItem" title="记录" id="uzN-9B-Qno">
                             <connections>
-                                <segue destination="rce-2R-CQf" kind="presentation" animates="NO" id="Gnw-az-Cez"/>
+                                <segue destination="rce-2R-CQf" kind="presentation" identifier="ShowAirWaveRecord" animates="NO" id="Gnw-az-Cez"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="设置" id="K1o-XT-gzF">
@@ -1266,12 +1266,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="stZ-Bt-V3T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5618" y="-775"/>
+            <point key="canvasLocation" x="6556" y="-775.86206896551732"/>
         </scene>
         <!--本地治疗记录-->
         <scene sceneID="We0-jt-u4D">
             <objects>
-                <tableViewController id="Dc5-NS-ggL" customClass="RecordTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="RecordTableViewController" id="Dc5-NS-ggL" customClass="RecordTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="88" sectionHeaderHeight="28" sectionFooterHeight="28" id="b4C-j5-87m">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1349,7 +1349,7 @@
                     <navigationItem key="navigationItem" title="本地治疗记录" id="VaC-YA-hQp">
                         <barButtonItem key="leftBarButtonItem" title="返回" id="XXP-ZS-muP">
                             <connections>
-                                <segue destination="dGh-mk-HF3" kind="presentation" animates="NO" id="vVo-uy-3YT"/>
+                                <action selector="retrunButtonClicked:" destination="Dc5-NS-ggL" id="xFt-WV-aUn"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1358,6 +1358,8 @@
                         <outlet property="searchDisplayController" destination="8nM-vf-o5U" id="mse-28-RdJ"/>
                         <segue destination="fMg-JT-rIL" kind="show" identifier="ShowDetail" id="8bW-Os-5cG"/>
                         <segue destination="Kof-ux-81R" kind="show" identifier="ShowServerRecords" animates="NO" id="gW8-3R-J6f"/>
+                        <segue destination="dGh-mk-HF3" kind="show" identifier="ReturnToAirWave" animates="NO" id="uo0-2k-Gxf"/>
+                        <segue destination="Ybz-nf-prl" kind="show" identifier="BloodRecordReturnHome" animates="NO" id="Jaf-W6-m6D"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KJ0-lH-bD7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1370,7 +1372,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="7773.6000000000004" y="-738.08095952023996"/>
+            <point key="canvasLocation" x="8703" y="-725"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="Cuh-7b-fpt">
@@ -1551,6 +1553,7 @@
                     <navigationItem key="navigationItem" id="t0a-WL-6LZ"/>
                     <connections>
                         <outlet property="imageResult" destination="gt0-VD-SyO" id="ath-HS-M4v"/>
+                        <outlet property="modeOrLevelLabel" destination="pBz-Zh-xxS" id="AOm-Mp-Hcf"/>
                         <outlet property="nameLabel" destination="9o6-IE-hiK" id="TDH-e2-D9S"/>
                         <outlet property="scrollView" destination="8e1-2G-P4n" id="6hm-5i-NTP"/>
                         <outlet property="treatDateLabel" destination="ZVm-7b-70P" id="1Wm-YK-kpX"/>
@@ -1560,7 +1563,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QgA-iH-SW1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8506.3999999999996" y="-738.08095952023996"/>
+            <point key="canvasLocation" x="9445.6000000000004" y="-738.08095952023996"/>
         </scene>
         <!--参数治疗-->
         <scene sceneID="vPh-ZE-2xJ">
@@ -2155,66 +2158,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3JA-pw-3Wr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3680.8000000000002" y="14.842578710644679"/>
-        </scene>
-        <!--Alert View Controller-->
-        <scene sceneID="f9b-8C-QHp">
-            <objects>
-                <viewController id="uEM-zt-TGf" customClass="AlertViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="SYJ-Ju-wNh"/>
-                        <viewControllerLayoutGuide type="bottom" id="tbH-mW-HlL"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8ke-Id-vkR">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qdD-R9-arH">
-                                <rect key="frame" x="50" y="180" width="275" height="230"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="请选择要添加的设备" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fj3-nH-B1B">
-                                        <rect key="frame" x="15" y="25" width="210" height="25"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                        <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="abd-bl-2wq">
-                                        <rect key="frame" x="27" y="170" width="110" height="35"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="取消"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="22Q-Ns-wm7">
-                                        <rect key="frame" x="137" y="170" width="110" height="35"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="确认"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KnW-L1-4f6">
-                                        <rect key="frame" x="40" y="66" width="136" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="空气波治疗仪" image="airwave_selected"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="saT-aB-yXL">
-                                        <rect key="frame" x="40" y="126" width="136" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="便携式负压产品" image="bianxie_unselected"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1GJ-hB-HOn">
-                                        <rect key="frame" x="40" y="96" width="136" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="血瘘治疗仪" image="xuelou_unselected"/>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HyI-MX-w4e" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2007.2" y="876.61169415292363"/>
+            <point key="canvasLocation" x="3753" y="15"/>
         </scene>
         <!--标准navi-->
         <scene sceneID="4PP-6l-3Dy">
@@ -2251,7 +2195,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8vF-wq-6s3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4810.3999999999996" y="-774.96251874062978"/>
+            <point key="canvasLocation" x="5749.6000000000004" y="-774.96251874062978"/>
         </scene>
         <!--参数navi-->
         <scene sceneID="tfq-fK-Ajw">
@@ -2292,7 +2236,7 @@
         <!--服务器治疗记录-->
         <scene sceneID="5Kk-fg-KzX">
             <objects>
-                <tableViewController id="Kof-ux-81R" customClass="ServerRecordTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ServerRecordTableViewController" id="Kof-ux-81R" customClass="ServerRecordTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="92" sectionHeaderHeight="28" sectionFooterHeight="28" id="xYh-Bv-QIu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2352,7 +2296,7 @@
                         <barButtonItem key="leftBarButtonItem" title="返回" id="kCc-pk-BCX">
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <segue destination="rce-2R-CQf" kind="presentation" animates="NO" id="zc6-SB-WJ2"/>
+                                <segue destination="rce-2R-CQf" kind="presentation" identifier="ServerRecordToRecord" animates="NO" id="zc6-SB-WJ2"/>
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
@@ -2397,7 +2341,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hXP-jo-A6r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6834.3999999999996" y="-738.08095952023996"/>
+            <point key="canvasLocation" x="7773.6000000000004" y="-738.08095952023996"/>
         </scene>
         <!--Server Detail View Controller-->
         <scene sceneID="FJ1-5a-IrD">
@@ -2583,6 +2527,7 @@
                         <outlet property="date" destination="Ut8-VL-AaG" id="0Hh-MG-ZcG"/>
                         <outlet property="imageView" destination="8AI-0W-9T5" id="V6n-dY-V7u"/>
                         <outlet property="mode" destination="gc9-sD-mN1" id="4a6-f9-wnQ"/>
+                        <outlet property="modeOrLevelLabel" destination="pnv-1m-7Rn" id="oqI-7T-9Tp"/>
                         <outlet property="name" destination="8oy-35-47W" id="B4A-Gg-faV"/>
                         <outlet property="phone" destination="TpG-1M-7yI" id="Scj-ij-6Xb"/>
                         <outlet property="scrollView" destination="fa4-by-nMu" id="yhI-HA-scU"/>
@@ -2610,7 +2555,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xAI-HE-4Je" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2808.8000000000002" y="14.842578710644679"/>
+            <point key="canvasLocation" x="2986" y="15"/>
         </scene>
         <!--Blood Dev Controller-->
         <scene sceneID="dC9-v3-Kal">
@@ -2628,7 +2573,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="279"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="60:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iS2-Is-Vtm">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="20:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iS2-Is-Vtm">
                                         <rect key="frame" x="138" y="102" width="99" height="75"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="35"/>
@@ -2689,18 +2634,11 @@
                                 <color key="textColor" red="0.52312237019999996" green="0.6690714955" blue="0.89393049479999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="50" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bTL-r7-JmT">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bTL-r7-JmT">
                                 <rect key="frame" x="95" y="374" width="30" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <color key="textColor" red="0.76354771852493286" green="0.7641339898109436" blue="0.76363855600357056" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="23N-Xe-Kzl">
-                                <rect key="frame" x="103" y="422" width="15" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <color key="textColor" red="0.76354771850000003" green="0.76413398980000002" blue="0.76363855599999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="level" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M5Z-OU-3Fn">
@@ -2717,20 +2655,39 @@
                                 <color key="textColor" red="0.52312237019999996" green="0.6690714955" blue="0.89393049479999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="Bzf-Qb-Wgi">
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2" minimumValue="1" maximumValue="3" translatesAutoresizingMaskIntoConstraints="NO" id="Bzf-Qb-Wgi">
                                 <rect key="frame" x="255" y="422" width="94" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="0.52312237019999996" green="0.6690714955" blue="0.89393049479999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="levelChange:" destination="0sq-rO-BQ3" eventType="valueChanged" id="f7P-Pl-eBQ"/>
+                                </connections>
                             </stepper>
-                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="yWN-ta-Trd">
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="20" maximumValue="60" stepValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="yWN-ta-Trd">
                                 <rect key="frame" x="255" y="374" width="94" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="0.52312237019999996" green="0.6690714955" blue="0.89393049479999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="timeChange:" destination="0sq-rO-BQ3" eventType="valueChanged" id="wg1-su-04J"/>
+                                </connections>
                             </stepper>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="23N-Xe-Kzl">
+                                <rect key="frame" x="103" y="422" width="15" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <color key="textColor" red="0.76354771850000003" green="0.76413398980000002" blue="0.76363855599999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="EB0-Xq-V6G" userLabel="血瘘治疗仪">
-                        <barButtonItem key="leftBarButtonItem" title="记录" id="Ghj-RK-r3E">
+                        <barButtonItem key="leftBarButtonItem" title="主页" id="Ghj-RK-r3E">
                             <color key="tintColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="BloodDevReturnHome:" destination="0sq-rO-BQ3" id="PLI-eW-wj6"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="关于" id="Nqb-cM-5O3">
                             <color key="tintColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2740,12 +2697,20 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="Ybz-nf-prl" kind="presentation" identifier="BloodReturnHome" animates="NO" id="sTb-IM-J8Z"/>
+                        <outlet property="levelLabel" destination="23N-Xe-Kzl" id="2pf-QC-y7t"/>
+                        <outlet property="levelStepper" destination="Bzf-Qb-Wgi" id="mEN-5m-3ie"/>
+                        <outlet property="pauseButton" destination="bV1-oF-oTA" id="dPJ-8k-xCh"/>
+                        <outlet property="playButton" destination="gIN-kS-ZGB" id="Asi-vT-N2w"/>
+                        <outlet property="stopButton" destination="b6I-bj-TjD" id="J5b-Ms-Lc0"/>
+                        <outlet property="timeLabel" destination="bTL-r7-JmT" id="XVP-nZ-tHT"/>
+                        <outlet property="timeStepper" destination="yWN-ta-Trd" id="NAU-wP-AcL"/>
+                        <outlet property="timerLabel" destination="iS2-Is-Vtm" id="W8D-Vt-6RK"/>
+                        <segue destination="KzE-nr-6yZ" kind="show" identifier="BloodReturnHome" animates="NO" id="Qbl-9a-GUj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tYT-HV-pgv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2768.8000000000002" y="-721.88905547226398"/>
+            <point key="canvasLocation" x="3754" y="-723"/>
         </scene>
         <!--关于设备-->
         <scene sceneID="tEe-7g-trR">
@@ -2781,7 +2746,7 @@
                                         <rect key="frame" x="105" y="37" width="164" height="111"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="         深圳普门科技公司" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W2J-Kp-AdK">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="         深圳普门科技股份有限公司" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W2J-Kp-AdK">
                                         <rect key="frame" x="-11" y="283" width="397" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -2808,7 +2773,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aiI-ma-1oO" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3648.8000000000002" y="-722.78860569715152"/>
+            <point key="canvasLocation" x="4588" y="-722.78860569715152"/>
         </scene>
         <!--设备列表-->
         <scene sceneID="Nss-Xv-jaW">
@@ -2875,22 +2840,22 @@
             <point key="canvasLocation" x="1044" y="1"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="HUa-5S-UmJ">
+        <scene sceneID="Go1-hG-yD7">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Btj-Ic-y2s" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="s1y-Qf-whb" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="h1g-8u-Gyv">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Zj6-Oj-5Vs">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="0sq-rO-BQ3" kind="relationship" relationship="rootViewController" id="88C-bn-FsD"/>
+                        <segue destination="0sq-rO-BQ3" kind="relationship" relationship="rootViewController" id="zQM-R6-UJh"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="i63-Zt-NRI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="npr-Zp-2Db" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1829.5999999999999" y="-721.88905547226398"/>
+            <point key="canvasLocation" x="2770" y="-724"/>
         </scene>
     </scenes>
     <resources>
@@ -2905,8 +2870,6 @@
         <image name="A7" width="900" height="200"/>
         <image name="A8" width="900" height="200"/>
         <image name="A9" width="900" height="200"/>
-        <image name="airwave_selected" width="1177" height="163"/>
-        <image name="bianxie_unselected" width="1177" height="163"/>
         <image name="blood_dev" width="539" height="454"/>
         <image name="body626d91" width="2362" height="3365"/>
         <image name="date-3" width="85" height="85"/>
@@ -2946,16 +2909,16 @@
         <image name="treat_normal" width="580" height="200"/>
         <image name="treat_press" width="580" height="200"/>
         <image name="unselected" width="86" height="86"/>
-        <image name="xuelou_unselected" width="1177" height="163"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="bnI-Yd-YTo"/>
-        <segue reference="KYM-6d-kmt"/>
-        <segue reference="sTb-IM-J8Z"/>
-        <segue reference="YZz-rL-WdO"/>
+        <segue reference="zc6-SB-WJ2"/>
+        <segue reference="Jaf-W6-m6D"/>
+        <segue reference="uo0-2k-Gxf"/>
+        <segue reference="ZkJ-P9-ETF"/>
         <segue reference="hVw-wR-HqB"/>
         <segue reference="OYR-tj-I2R"/>
-        <segue reference="Gnw-az-Cez"/>
+        <segue reference="bnI-Yd-YTo"/>
+        <segue reference="YZz-rL-WdO"/>
         <segue reference="82N-be-2Ws"/>
         <segue reference="ygZ-wX-YXT"/>
     </inferredMetricsTieBreakers>

@@ -7,6 +7,9 @@
 //
 #import "HomeViewController.h"
 #import "AlertViewController.h"
+#import "RecordTableViewController.h"
+static NSString *AIRWAVETYPE = @"7681";
+static NSString *BLOODDEVTYPE = @"8888";
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 @interface HomeViewController ()<UIGestureRecognizerDelegate,UIViewControllerTransitioningDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imageView1;
@@ -64,7 +67,9 @@
 //左上按钮
 -(void)leftBarButtonClicked:(UIButton *)button
 {
-    
+    RecordTableViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RecordTableViewController"];
+    vc.type = BLOODDEVTYPE;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 -(UITapGestureRecognizer *)airwaveGesture
 {
@@ -85,7 +90,6 @@
 }
 -(void)tapBloodDev:(UITapGestureRecognizer *)recognizer
 {
-    NSLog(@"-----bloodDev");
     [self performSegueWithIdentifier:@"ShowBloodDev" sender:nil];
     
 }

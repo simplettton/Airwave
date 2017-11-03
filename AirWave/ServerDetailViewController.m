@@ -12,6 +12,8 @@
 #import "HttpResponse.h"
 #import "HttpError.h"
 #import "HttpHelper.h"
+static NSString *AIRWAVETYPE = @"7681";
+static NSString *BLOODDEVTYPE = @"8888";
 @interface ServerDetailViewController ()
 @property (weak, nonatomic) IBOutlet UIView *background;
 @property (weak, nonatomic) IBOutlet UILabel *name;
@@ -24,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *treatTime;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UILabel *modeOrLevelLabel;
 @end
 
 @implementation ServerDetailViewController
@@ -82,26 +85,35 @@
 
     
     NSString *treatWayString= @"";
-    switch ([[self.dic objectForKey:@"Mode"]intValue])
+    if ([[self.dic objectForKey:@"Type" ]isEqualToString:BLOODDEVTYPE])
     {
-        case 1:
-            treatWayString = @"标准治疗";
-            break;
-        case 2:
-            treatWayString = @"梯度治疗";
-            break;
-        case 3:
-            treatWayString = @"参数治疗";
-            break;
-        case 4:
-            treatWayString = @"方案治疗";
-            break;
-        default:
-            treatWayString = @"标准治疗";
-            break;
+        self.modeOrLevelLabel.text = @"治疗强度";
+        treatWayString = [NSString stringWithFormat:@"%d",[[self.dic objectForKey:@"Mode"]intValue]];
     }
-
+    else
+    {
+        switch ([[self.dic objectForKey:@"Mode"]intValue])
+        {
+            case 1:
+                treatWayString = @"标准治疗";
+                break;
+            case 2:
+                treatWayString = @"梯度治疗";
+                break;
+            case 3:
+                treatWayString = @"参数治疗";
+                break;
+            case 4:
+                treatWayString = @"方案治疗";
+                break;
+            default:
+                treatWayString = @"标准治疗";
+                break;
+        }
+    }
     self.mode.text = [NSString stringWithFormat:@"  %@",treatWayString];
+    
+    
     self.treatTime.text = [NSString stringWithFormat:@"  %@",[self.dic objectForKey:@"Treattime"]];
 }
 - (NSString *)timeWithTimeIntervalString:(NSString *)timeString

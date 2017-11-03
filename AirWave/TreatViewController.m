@@ -22,8 +22,10 @@
 #import "ParameterTreatViewController.h"
 #import "SolutionTreatViewController.h"
 #import "SettingViewController.h"
+#import "RecordTableViewController.h"
 
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
+static NSString *TYPE = @"7681";
 
 typedef NS_ENUM(NSUInteger,BodyButtonIndexs)
 {
@@ -75,7 +77,6 @@ NSString *const PORT = @"8080";
 @property (nonatomic, strong) TreatRecord *treatRecord;
 @property (nonatomic, strong) TreatInformation *treatInformation;
 @property (nonatomic, strong) RunningInfomation *runningInfomation;
-
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
 @property (weak, nonatomic) IBOutlet UILabel *pressLabel;
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
@@ -93,8 +94,6 @@ NSString *const PORT = @"8080";
 - (IBAction)tapPauseButton:(id)sender;
 - (IBAction)tapSettingButton:(id)sender;
 @end
-
-
 @implementation TreatViewController
 {
     BOOL isPlayButton;
@@ -302,19 +301,15 @@ NSString *const PORT = @"8080";
     //治疗记录按钮
 
     self.recordButton.tintColor = UIColorFromHex(0xFFFFFF);
-    
-    
-    
     CALayer *topBorder = [CALayer layer];
     topBorder.frame = CGRectMake(0.0f, 0.0f, self.buttonView.frame.size.width, 0.5f);
     topBorder.backgroundColor = UIColorFromHex(0xE4E4E4).CGColor;
     [self.buttonView.layer addSublayer:topBorder];
     
-    //配置播放按钮
+    //配置开始按钮
     [self configurePlayButton];
     
-    //配置进度条
-    //背景圈
+    //配置进度条背景圈
     self.progressBackground.circleColor = UIColorFromHex(0x65BBA9);
     self.progressBackground.lineWith = 8.0;
     [self.progressBackground drawProgress:1];
@@ -1072,10 +1067,6 @@ NSString *const PORT = @"8080";
     button.enabled = YES;
     [button addTarget:self action:@selector(lightupBodyButton:) forControlEvents:UIControlEventTouchUpInside];
 }
--(void)recordButtonClicked:(UIButton *)button
-{
-    
-}
 
 -(void)configurePlayButton
 {
@@ -1259,7 +1250,6 @@ NSString *const PORT = @"8080";
         {
             [fileManager createFileAtPath:documentPath contents:nil attributes:nil];
         }
-        
         NSArray *recordArray = [[NSArray alloc]init];
         //取出以前保存的record数组
         if ([fileManager fileExistsAtPath:documentPath])
@@ -1455,6 +1445,11 @@ NSString *const PORT = @"8080";
         Pack *pack = [[Pack alloc]init];
         [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                                    dataEnabled:YES data:[self dataWithValue:0xaf]] withTimeout:-1 tag:0];
+    }else if([segue.identifier isEqualToString:@"ShowAirWaveRecord"])
+    {
+        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
+        RecordTableViewController* controller = (RecordTableViewController *)navigationController.topViewController;
+        controller.type = TYPE;
     }
 }
 @end

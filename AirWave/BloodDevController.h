@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "BabyBluetooth.h"
+#import "SVProgressHUD.h"
 @interface BloodDevController : UIViewController{
     @public
     BabyBluetooth *baby;

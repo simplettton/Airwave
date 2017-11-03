@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface RecordTableViewController : UITableViewController<UISearchBarDelegate>
-
+@property (nonatomic,strong) NSString *type;
 @end
