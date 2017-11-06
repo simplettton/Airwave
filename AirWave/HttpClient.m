@@ -46,12 +46,15 @@ static HttpClient* _instance = nil;
         }
 
     }
+
     [req setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionTask *task = [session dataTaskWithRequest:req
                                         completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                            
+
+//                                            NSString *string = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+//                                            NSLog(@"----------string-----------%@",string);
                                             if(error != nil || data.length == 0) {
                                                 HttpError *httpError = [HttpError alloc];
                                                 errorBlock( httpError );

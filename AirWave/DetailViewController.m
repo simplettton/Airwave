@@ -41,22 +41,23 @@ NSString *const TYPE = @"7681";
     self.navigationItem.rightBarButtonItem = barButton;
     self.title = @"治疗结果";
 
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-        NSString *imagePath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",self.record.idString]];
-        self.record.imagePath = imagePath;
-        UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            _imageResult.contentMode = UIViewContentModeScaleAspectFit;
-            _imageResult.image = [image rotate:UIImageOrientationRight];
-        });
-    });
-   
     CGFloat width=[UIScreen mainScreen].bounds.size.width;
     CGFloat height=[UIScreen mainScreen].bounds.size.height;
+    
     if (self.record.imagePath>0)
     {
          self.scrollView.contentSize = CGSizeMake(width, 1100);
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            NSString *documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+            NSString *imagePath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",self.record.idString]];
+            self.record.imagePath = imagePath;
+            UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                _imageResult.contentMode = UIViewContentModeScaleAspectFit;
+                _imageResult.image = [image rotate:UIImageOrientationRight];
+            });
+        });
     }
     else
     {
@@ -72,12 +73,12 @@ NSString *const TYPE = @"7681";
         self.treatWayLabel.text = [NSString stringWithFormat:@"  %@",self.record.treatWayString];
     }
 
-    self.treatTimeLabel.text = [NSString stringWithFormat:@"  %@",self.record.durationString];}
+    self.treatTimeLabel.text = [NSString stringWithFormat:@"  %@",self.record.durationString];
+}
+
 -(void)rightBarButtonClicked:(UIButton *)button
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    
-    
     //上传数据
     [params setObject:@"jasper" forKey:@"Name"];
     [params setObject:@"男" forKey:@"Sex"];
@@ -107,6 +108,8 @@ NSString *const TYPE = @"7681";
                                  
                                  int state = [[jsonDict objectForKey:@"State"] intValue];
                                  self.idString = [jsonDict objectForKey:@"Id"];
+//                                 
+//                                 NSLog(@"imagePath = %@",self.record.imagePath);
                                  //上传照片
                                  if (self.record.imagePath!=nil)
                                  {
@@ -125,8 +128,7 @@ NSString *const TYPE = @"7681";
                                      NSString *imageString = [imageData base64EncodedStringWithOptions:0];
                                      [params1 setObject:imageString forKey:@"Img"];
                                      
-                                     
-                                     
+
                                      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                          [[HttpHelper instance] post:[NSString stringWithFormat:@"addimg&Id=%@",self.idString]
                                                               params:params1

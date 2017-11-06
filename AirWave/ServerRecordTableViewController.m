@@ -16,6 +16,8 @@
 #import "HttpError.h"
 #import "HttpHelper.h"
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
+static NSString *AIRWAVETYPE = @"7681";
+static NSString *BLOODDEVTYPE = @"8888";
 
 @interface ServerRecordTableViewController ()
 {
@@ -39,6 +41,7 @@
 {
     [super viewDidLoad];
     self.upButton.enabled = NO;
+
     self.tableView.tableFooterView = [[UIView alloc]init];
     //navigation
     self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
@@ -52,17 +55,26 @@
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     [params setObject:[NSString stringWithFormat:@"%ld",(long)currentPage] forKey:@"Page"];
     [params setObject:self.type forKey:@"Type"];
+    
     //获取总数
     [[HttpHelper instance] post:@"count"
                          params:@{@"Type":self.type}
                        hasToken:NO
                      onResponse:^(HttpResponse *responseObject) {
                          NSDictionary* jsonDict = [responseObject jsonDist];
+//                         NSLog(@"-----------receive--------%@",jsonDict);
                          if (jsonDict !=nil)
                          {
                              //记录总量
                              int Sum = [[jsonDict objectForKey:@"Sum"]intValue];
                              numberOfPages = (Sum+10-1)/10;
+                             if (numberOfPages == 1) {
+                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                         self.downButton.enabled = NO;
+                                 });
+                             }
+
+
 
                              dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                  //获取数据
@@ -71,6 +83,7 @@
                                                     hasToken:NO
                                                   onResponse:^(HttpResponse *responseObject) {
                                                       NSDictionary* jsonDict = [responseObject jsonDist];
+                                                      
                                                       if (jsonDict !=nil)
                                                       {
                                                           datas = [[NSMutableArray alloc]initWithCapacity:20];
@@ -94,6 +107,7 @@
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     [params setObject:[NSString stringWithFormat:@"%ld",(long)currentPage] forKey:@"Page"];
+    [params setObject:self.type forKey:@"Type"];
     //获取数据
     [[HttpHelper instance] post:@"get"
                          params:params
@@ -141,7 +155,7 @@
     }
     if ([datas count]>0)
     {
-        cell.numberLabel.text = [NSString stringWithFormat:@"%ld",indexPath.row +1];
+        cell.numberLabel.text = [NSString stringWithFormat:@"%d",indexPath.row +1];
         NSString *treatWayString= @"";
         switch ([[datas[indexPath.row]objectForKey:@"Mode"]intValue])
         {
@@ -161,10 +175,18 @@
                 treatWayString = @"标准治疗";
                 break;
         }
-        cell.treatWayLabel.text = [NSString stringWithFormat:@"%@",treatWayString];
-        NSString *str3 = [datas[indexPath.row]objectForKey:@"Name"];
-        NSString *str5 = [str3 stringByRemovingPercentEncoding];
-        cell.timeLabel.text = [NSString stringWithFormat:@"name : %@",str5];
+        //治疗方式
+        if ([self.type isEqualToString:AIRWAVETYPE])
+        {
+            cell.treatWayLabel.text = [NSString stringWithFormat:@"%@",treatWayString];
+        }else if([self.type isEqualToString:BLOODDEVTYPE]){
+            cell.treatWayLabel.text = [NSString stringWithFormat:@"治疗强度：%d",[[datas[indexPath.row]objectForKey:@"Mode"]intValue]];
+        }
+//        NSString *str3 = [datas[indexPath.row]objectForKey:@"Name"];
+//        NSString *str5 = [str3 stringByRemovingPercentEncoding];
+//        cell.timeLabel.text = [NSString stringWithFormat:@"name : %@",str5];
+        NSString *dateString = [datas[indexPath.row] objectForKey:@"Date"];
+         cell.timeLabel.text = [NSString stringWithFormat:@"  %@",[self timeWithTimeIntervalString:dateString]];
     }
 
     return cell;
@@ -232,6 +254,20 @@
         RecordTableViewController *vc = (RecordTableViewController *)[navi topViewController];
         vc.type = self.type;
     }
+}
+- (NSString *)timeWithTimeIntervalString:(NSString *)timeString
+{
+    // 格式化时间
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    [formatter setDateFormat:@"yyyy年MM月dd日 HH:mm"];
+    
+    // 毫秒值转化为秒
+    NSDate* date = [NSDate dateWithTimeIntervalSince1970:[timeString doubleValue]];
+    NSString* dateString = [formatter stringFromDate:date];
+    return dateString;
 }
 
 @end

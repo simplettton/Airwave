@@ -198,7 +198,7 @@
     {
         peripheralName = [peripheral.identifier UUIDString];
     }
-    cell.textLabel.text = [NSString stringWithFormat:@"%@---%@",peripheralName,peripheral];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@",peripheralName];
     //信号和服务
     cell.detailTextLabel.text = [NSString stringWithFormat:@"RSSI:%@",RSSI];
     return cell;

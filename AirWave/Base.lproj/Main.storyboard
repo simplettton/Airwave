@@ -1015,7 +1015,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="0kn-LS-pQG" kind="show" identifier="StandardToSolution" animates="NO" id="nwV-fw-Hh0"/>
+                                    <segue destination="WxD-3M-xOD" kind="presentation" identifier="StandardToSolution" animates="NO" id="wZz-Du-OCk"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eVy-dJ-dNN">
@@ -1320,22 +1320,16 @@
                                             <color key="textColor" red="0.52156862749999999" green="0.6705882353" blue="0.89411764709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VIE-4f-G3n">
-                                            <rect key="frame" x="294" y="51" width="73" height="30"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FQf-PA-Ibb">
+                                            <rect key="frame" x="317" y="19" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" red="0.52312237019999996" green="0.6690714955" blue="0.89393049479999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <state key="normal" title="上传数据">
-                                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="upload:" destination="Dc5-NS-ggL" eventType="touchUpInside" id="BhB-db-y0G"/>
-                                            </connections>
-                                        </button>
+                                        </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="durationLabel" destination="pjG-8g-uDo" id="n4Y-pa-4W8"/>
                                     <outlet property="numberLabel" destination="wTt-my-QaS" id="5kN-67-0Nk"/>
+                                    <outlet property="resultImageView" destination="FQf-PA-Ibb" id="mlN-uk-dQt"/>
                                     <outlet property="timeLabel" destination="DFb-8a-fHH" id="kJg-jN-COd"/>
                                     <outlet property="treatWayLabel" destination="faR-cj-BRm" id="Nod-9e-Y2k"/>
                                 </connections>
@@ -1372,7 +1366,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="8703" y="-725"/>
+            <point key="canvasLocation" x="8701.6000000000004" y="-725.48725637181417"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="Cuh-7b-fpt">
@@ -1704,7 +1698,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="0kn-LS-pQG" kind="show" identifier="ParameterToSolution" animates="NO" id="qKM-P1-yvi"/>
+                                    <segue destination="WxD-3M-xOD" kind="presentation" identifier="ParameterToSolution" animates="NO" id="gWd-j3-vRL"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZHe-Gf-TYD">
@@ -1763,7 +1757,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V2P-Z9-e5o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5471.2000000000007" y="1038.5307346326838"/>
+            <point key="canvasLocation" x="5618" y="1039"/>
         </scene>
         <!--方案治疗-->
         <scene sceneID="nCm-Qy-vWh">
@@ -2049,7 +2043,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Q0V-sl-QbH" kind="show" identifier="SolutionToStandard" animates="NO" id="Vh8-vL-iVQ"/>
+                                    <segue destination="jtX-Ho-uJp" kind="presentation" identifier="SolutionToStandard" animates="NO" id="EpI-wI-ddl"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WVD-vl-GzO">
@@ -2073,7 +2067,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Cbs-zK-ZPY" kind="show" identifier="SolutionToParameter" animates="NO" id="32F-K8-RkS"/>
+                                    <segue destination="XeN-yS-C2f" kind="presentation" identifier="SolutionToParameter" animates="NO" id="QO0-yR-oDw"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jRZ-B9-fCq">
@@ -2271,7 +2265,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="55" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="    2017/10/19 14：20" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fLL-d1-gVc">
-                                            <rect key="frame" x="90" y="52" width="181" height="28"/>
+                                            <rect key="frame" x="68" y="52" width="181" height="28"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2322,7 +2316,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yz5-J4-KrI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5896" y="-1432.0839580209897"/>
+            <point key="canvasLocation" x="5870" y="-1496"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Zxg-WV-dRI">
@@ -2537,7 +2531,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rZU-M0-4zY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6660.8000000000002" y="-1432.9835082458771"/>
+            <point key="canvasLocation" x="6662" y="-1496"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="kTc-Bl-tM2">
@@ -2911,15 +2905,14 @@
         <image name="unselected" width="86" height="86"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="bnI-Yd-YTo"/>
+        <segue reference="kTA-kc-yd1"/>
+        <segue reference="gEg-WG-Ynq"/>
+        <segue reference="YZz-rL-WdO"/>
+        <segue reference="O3A-EY-N0n"/>
+        <segue reference="wZz-Du-OCk"/>
         <segue reference="zc6-SB-WJ2"/>
         <segue reference="Jaf-W6-m6D"/>
-        <segue reference="uo0-2k-Gxf"/>
         <segue reference="ZkJ-P9-ETF"/>
-        <segue reference="hVw-wR-HqB"/>
-        <segue reference="OYR-tj-I2R"/>
-        <segue reference="bnI-Yd-YTo"/>
-        <segue reference="YZz-rL-WdO"/>
-        <segue reference="82N-be-2Ws"/>
-        <segue reference="ygZ-wX-YXT"/>
     </inferredMetricsTieBreakers>
 </document>

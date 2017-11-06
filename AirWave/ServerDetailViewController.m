@@ -47,14 +47,15 @@ static NSString *BLOODDEVTYPE = @"8888";
          CGFloat height=[UIScreen mainScreen].bounds.size.height;
          if (jsonDict !=nil)
          {
+             NSLog(@"json==%@",jsonDict);
              int state = [[jsonDict objectForKey:@"State"] intValue];
-
              if (state==1)//有图片
              {
-
                  NSString *imageString = [jsonDict objectForKey:@"Img"];
+                 NSLog(@"imageString---------------------------------- %@",imageString);
                  NSData *nsdataFromBase64String = [[NSData alloc]
                                                    initWithBase64EncodedString:imageString options:0];
+//                 NSLog(@"nsdatafrombasestring1--------------------------%@",nsdataFromBase64String);
                  dispatch_async(dispatch_get_main_queue(), ^{
                      self.scrollView.contentSize = CGSizeMake(width, 1100);
                      self.imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -112,9 +113,35 @@ static NSString *BLOODDEVTYPE = @"8888";
         }
     }
     self.mode.text = [NSString stringWithFormat:@"  %@",treatWayString];
+    self.treatTime.text = [NSString stringWithFormat:@"  %@",[self convertTimeWithSecond:[self.dic objectForKey:@"Treattime"]]];
+}
+- (NSString *)convertTimeWithSecond:(NSString *)string
+{
+
+    int duration = [string intValue];
+    int hour = duration / 3600;
+    int min = (duration / 60)%60;
+    int second = duration % 60;
     
-    
-    self.treatTime.text = [NSString stringWithFormat:@"  %@",[self.dic objectForKey:@"Treattime"]];
+    //治疗时间为两位数
+    NSString *hourString = [NSString stringWithFormat:hour>9?@"%d":@"0%d",hour];
+    NSString *minString = [NSString stringWithFormat:min>9?@"%d":@"0%d",min];
+    NSString *secondString = [NSString stringWithFormat:second>9?@"%d":@"0%d",second];
+    NSString *durationString = @"";
+    if (hour>0)
+    {
+        durationString = [durationString stringByAppendingString:[NSString stringWithFormat:@"%@小时",hourString]];
+    }
+    if (min>0)
+    {
+        durationString = [durationString stringByAppendingString:[NSString stringWithFormat:@"%@分钟",minString]];
+    }
+    if (second>0)
+    {
+        durationString = [durationString stringByAppendingString:[NSString stringWithFormat:@"%@秒",secondString]];
+    }
+
+    return durationString;
 }
 - (NSString *)timeWithTimeIntervalString:(NSString *)timeString
 {

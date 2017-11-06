@@ -99,16 +99,12 @@ typedef void(^NewByteBlock)(NSInteger,NSInteger);
 #pragma mark - Private Method
 -(Byte)getCRC8WithData:(NSData *)dataArray
 {
-    
     if (NULL==dataArray || [dataArray length] < 1)
     {
         return 0xFF;
     }
-    
     UInt16 crc,thisbyte,i,shift,lastbit;
-    
     crc = 0xFFFF;
-    
     Byte *byteArray = (Byte *)[dataArray bytes];
     
     for ( i=0 ; i<[dataArray length]; i++)

@@ -26,6 +26,7 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
 }
 - (IBAction)retrunButtonClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 - (IBAction)upload:(id)sender;
 @end
 
@@ -137,6 +138,11 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
         cell.treatWayLabel.text = record.treatWayString;
     }else if([self.type isEqualToString:BLOODDEVTYPE]){
         cell.treatWayLabel.text = [NSString stringWithFormat:@"治疗强度：%d",record.treatWay];
+    }
+    if (record.imagePath!=nil)
+    {
+        cell.resultImageView.contentMode = UIViewContentModeScaleAspectFit;
+        cell.resultImageView.image = [UIImage imageNamed:@"image"];
     }
 
     //治疗时长
