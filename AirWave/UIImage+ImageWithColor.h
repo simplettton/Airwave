@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface UIImage(ImageWithColor)
+/**
+ *  生成的图片的rect默认为100,100
+ */
++ (UIImage *)imageWithColor:(UIColor *)color;
 +(UIImage *)imageNamed:(NSString *)name withColor:(NSString *)color;
 @end

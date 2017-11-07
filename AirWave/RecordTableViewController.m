@@ -139,15 +139,14 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
     }else if([self.type isEqualToString:BLOODDEVTYPE]){
         cell.treatWayLabel.text = [NSString stringWithFormat:@"治疗强度：%d",record.treatWay];
     }
-    if (record.imagePath!=nil)
-    {
-        cell.resultImageView.contentMode = UIViewContentModeScaleAspectFit;
-        cell.resultImageView.image = [UIImage imageNamed:@"image"];
-    }
+//    if (record.imagePath!=nil)
+//    {
+//        cell.resultImageView.contentMode = UIViewContentModeScaleAspectFit;
+//        cell.resultImageView.image = [UIImage imageNamed:@"image"];
+//    }
 
     //治疗时长
 //    cell.durationLabel.text = record.durationString;
-    
     return cell;
 }
 #pragma mark - table view delegate

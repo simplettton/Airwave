@@ -47,14 +47,13 @@ static NSString *BLOODDEVTYPE = @"8888";
          CGFloat height=[UIScreen mainScreen].bounds.size.height;
          if (jsonDict !=nil)
          {
-             NSLog(@"json==%@",jsonDict);
              int state = [[jsonDict objectForKey:@"State"] intValue];
              if (state==1)//有图片
              {
                  NSString *imageString = [jsonDict objectForKey:@"Img"];
-                 NSLog(@"imageString---------------------------------- %@",imageString);
+//                 NSLog(@"imageString---------------------------------- %@",imageString);
                  NSData *nsdataFromBase64String = [[NSData alloc]
-                                                   initWithBase64EncodedString:imageString options:0];
+                                                   initWithBase64EncodedString:imageString options:NSDataBase64DecodingIgnoreUnknownCharacters];
 //                 NSLog(@"nsdatafrombasestring1--------------------------%@",nsdataFromBase64String);
                  dispatch_async(dispatch_get_main_queue(), ^{
                      self.scrollView.contentSize = CGSizeMake(width, 1100);
@@ -83,8 +82,6 @@ static NSString *BLOODDEVTYPE = @"8888";
     self.address.text = [NSString stringWithFormat:@"  %@",[self.dic objectForKey:@"Address"]];
     NSString *dateString = [self.dic objectForKey:@"Date"];
     self.date.text = [NSString stringWithFormat:@"  %@",[self timeWithTimeIntervalString:dateString]];
-
-    
     NSString *treatWayString= @"";
     if ([[self.dic objectForKey:@"Type" ]isEqualToString:BLOODDEVTYPE])
     {

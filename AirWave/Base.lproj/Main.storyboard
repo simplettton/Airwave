@@ -2536,7 +2536,7 @@
         <!--Navigation Controller-->
         <scene sceneID="kTc-Bl-tM2">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ybz-nf-prl" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="centerNav" automaticallyAdjustsScrollViewInsets="NO" id="Ybz-nf-prl" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ahN-NJ-Vp7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -2851,6 +2851,50 @@
             </objects>
             <point key="canvasLocation" x="2770" y="-724"/>
         </scene>
+        <!--Left Drawer View Controller-->
+        <scene sceneID="H0r-H2-mnF">
+            <objects>
+                <viewController storyboardIdentifier="menu" id="AnI-Zt-IgV" customClass="LeftDrawerViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="otK-GK-tO4"/>
+                        <viewControllerLayoutGuide type="bottom" id="Sp8-lz-H44"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fKQ-fA-6lD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Exr-I0-EeA" customClass="LeftTableView">
+                                <rect key="frame" x="0.0" y="0.0" width="260" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="leftDrawerCell" id="6h5-uo-qBi" customClass="leftDrawerTableViewCell">
+                                        <rect key="frame" x="0.0" y="22" width="260" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6h5-uo-qBi" id="G1P-YF-559">
+                                            <rect key="frame" x="0.0" y="0.0" width="227" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SJE-bc-iWQ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="227" height="36"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cGT-Fm-Opy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1887" y="873"/>
+        </scene>
     </scenes>
     <resources>
         <image name="A1" width="900" height="200"/>
@@ -2905,14 +2949,14 @@
         <image name="unselected" width="86" height="86"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="sSp-M8-T7F"/>
         <segue reference="bnI-Yd-YTo"/>
-        <segue reference="kTA-kc-yd1"/>
-        <segue reference="gEg-WG-Ynq"/>
+        <segue reference="Gnw-az-Cez"/>
+        <segue reference="ZBQ-e1-zdk"/>
+        <segue reference="OYR-tj-I2R"/>
+        <segue reference="7E7-TE-zOR"/>
         <segue reference="YZz-rL-WdO"/>
-        <segue reference="O3A-EY-N0n"/>
-        <segue reference="wZz-Du-OCk"/>
-        <segue reference="zc6-SB-WJ2"/>
-        <segue reference="Jaf-W6-m6D"/>
+        <segue reference="hVw-wR-HqB"/>
         <segue reference="ZkJ-P9-ETF"/>
     </inferredMetricsTieBreakers>
 </document>

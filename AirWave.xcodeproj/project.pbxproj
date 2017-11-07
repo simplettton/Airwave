@@ -24,6 +24,9 @@
 		0451A1921F9EDEF400AF521C /* MyLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0451A1911F9EDEF400AF521C /* MyLabel.m */; };
 		0451A1951F9F2A2100AF521C /* ServerRecordTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0451A1941F9F2A2100AF521C /* ServerRecordTableViewController.m */; };
 		0451A1981F9F3C3000AF521C /* ServerDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0451A1971F9F3C3000AF521C /* ServerDetailViewController.m */; };
+		045750441FB1861E00E3AD73 /* LeftDrawerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045750431FB1861E00E3AD73 /* LeftDrawerViewController.m */; };
+		045750471FB18E2D00E3AD73 /* LeftTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045750461FB18E2D00E3AD73 /* LeftTableView.m */; };
+		0457504A1FB18EB100E3AD73 /* LeftHeaderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045750491FB18EB100E3AD73 /* LeftHeaderTableView.m */; };
 		0457C63E1F5563EE0050C604 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0457C63C1F5563EE0050C604 /* Main.storyboard */; };
 		045BBC6E1F8F45AD000D767B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 045BBC6D1F8F45AD000D767B /* Assets.xcassets */; };
 		045D81B31F6295B400D4D998 /* RunningInfomation.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D81B21F6295B400D4D998 /* RunningInfomation.m */; };
@@ -108,6 +111,13 @@
 		0451A1941F9F2A2100AF521C /* ServerRecordTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerRecordTableViewController.m; sourceTree = "<group>"; };
 		0451A1961F9F3C3000AF521C /* ServerDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerDetailViewController.h; sourceTree = "<group>"; };
 		0451A1971F9F3C3000AF521C /* ServerDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerDetailViewController.m; sourceTree = "<group>"; };
+		045750421FB1861E00E3AD73 /* LeftDrawerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftDrawerViewController.h; sourceTree = "<group>"; };
+		045750431FB1861E00E3AD73 /* LeftDrawerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftDrawerViewController.m; sourceTree = "<group>"; };
+		045750451FB18E2D00E3AD73 /* LeftTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftTableView.h; sourceTree = "<group>"; };
+		045750461FB18E2D00E3AD73 /* LeftTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftTableView.m; sourceTree = "<group>"; };
+		045750481FB18EB100E3AD73 /* LeftHeaderTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftHeaderTableView.h; sourceTree = "<group>"; };
+		045750491FB18EB100E3AD73 /* LeftHeaderTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftHeaderTableView.m; sourceTree = "<group>"; };
+		0457504D1FB18FCA00E3AD73 /* BaseHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseHeader.h; sourceTree = "<group>"; };
 		0457C63D1F5563EE0050C604 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		045BBC6B1F8F3993000D767B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		045BBC6C1F8F3994000D767B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
@@ -195,6 +205,69 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		045750401FB151E100E3AD73 /* BloodDev */ = {
+			isa = PBXGroup;
+			children = (
+				042DAE901FA867D500B35579 /* SearchBLEViewController.h */,
+				042DAE911FA867D500B35579 /* SearchBLEViewController.m */,
+				041BD3121FA7289B0058D5C1 /* BloodDevController.h */,
+				041BD3131FA7289B0058D5C1 /* BloodDevController.m */,
+				041BD3151FA72DB20058D5C1 /* BloodDetailViewController.h */,
+				041BD3161FA72DB20058D5C1 /* BloodDetailViewController.m */,
+			);
+			name = BloodDev;
+			sourceTree = "<group>";
+		};
+		045750411FB151FB00E3AD73 /* AirWaveDev */ = {
+			isa = PBXGroup;
+			children = (
+				046BA7A01F4817C8004D7E74 /* TreatViewController.h */,
+				046BA7A11F4817C8004D7E74 /* TreatViewController.m */,
+				044D54B61F4D159D002C1E35 /* StandardTreatViewController.h */,
+				044D54B71F4D159D002C1E35 /* StandardTreatViewController.m */,
+				044D54BC1F4D1A4C002C1E35 /* GradientTreatViewController.h */,
+				044D54BD1F4D1A4C002C1E35 /* GradientTreatViewController.m */,
+				04B68F471F4EDAE200FD31E5 /* ParameterTreatViewController.h */,
+				04B68F481F4EDAE200FD31E5 /* ParameterTreatViewController.m */,
+				041FD7E31F58FDEA00522D64 /* SolutionTreatViewController.h */,
+				041FD7E41F58FDEA00522D64 /* SolutionTreatViewController.m */,
+				048A3B181F540DC500929C37 /* SettingViewController.h */,
+				048A3B191F540DC500929C37 /* SettingViewController.m */,
+				048A3B1B1F5411D700929C37 /* OtherSettingViewController.h */,
+				048A3B1C1F5411D700929C37 /* OtherSettingViewController.m */,
+			);
+			name = AirWaveDev;
+			sourceTree = "<group>";
+		};
+		0457504B1FB18EBA00E3AD73 /* LeftTableView */ = {
+			isa = PBXGroup;
+			children = (
+				045750451FB18E2D00E3AD73 /* LeftTableView.h */,
+				045750461FB18E2D00E3AD73 /* LeftTableView.m */,
+				045750481FB18EB100E3AD73 /* LeftHeaderTableView.h */,
+				045750491FB18EB100E3AD73 /* LeftHeaderTableView.m */,
+				0457504D1FB18FCA00E3AD73 /* BaseHeader.h */,
+			);
+			name = LeftTableView;
+			sourceTree = "<group>";
+		};
+		0457504E1FB191E000E3AD73 /* RecordController */ = {
+			isa = PBXGroup;
+			children = (
+				04608BE21F8CDD8C00995E12 /* RecordTableViewController.h */,
+				04608BE31F8CDD8C00995E12 /* RecordTableViewController.m */,
+				0476B66B1F8DAAF90075B953 /* RecordTableViewCell.h */,
+				0476B66C1F8DAAF90075B953 /* RecordTableViewCell.m */,
+				04CAE36D1F8DFA2500840AD6 /* DetailViewController.h */,
+				04CAE36E1F8DFA2500840AD6 /* DetailViewController.m */,
+				0451A1931F9F2A2100AF521C /* ServerRecordTableViewController.h */,
+				0451A1941F9F2A2100AF521C /* ServerRecordTableViewController.m */,
+				0451A1961F9F3C3000AF521C /* ServerDetailViewController.h */,
+				0451A1971F9F3C3000AF521C /* ServerDetailViewController.m */,
+			);
+			name = RecordController;
+			sourceTree = "<group>";
+		};
 		0462C8101F5D414700AEC2D6 /* dataAnalyze */ = {
 			isa = PBXGroup;
 			children = (
@@ -242,40 +315,16 @@
 				046BA76F1F480DF2004D7E74 /* AppDelegate.m */,
 				0419A9D11FA329620020A088 /* HomeViewController.h */,
 				0419A9D21FA329620020A088 /* HomeViewController.m */,
+				045750421FB1861E00E3AD73 /* LeftDrawerViewController.h */,
+				045750431FB1861E00E3AD73 /* LeftDrawerViewController.m */,
 				0419A9D41FA329BE0020A088 /* MyPresentViewController.h */,
 				0419A9D51FA329BE0020A088 /* MyPresentViewController.m */,
 				0419A9CB1FA324560020A088 /* AlertViewController.h */,
 				0419A9CC1FA324560020A088 /* AlertViewController.m */,
-				042DAE901FA867D500B35579 /* SearchBLEViewController.h */,
-				042DAE911FA867D500B35579 /* SearchBLEViewController.m */,
-				041BD3121FA7289B0058D5C1 /* BloodDevController.h */,
-				041BD3131FA7289B0058D5C1 /* BloodDevController.m */,
-				041BD3151FA72DB20058D5C1 /* BloodDetailViewController.h */,
-				041BD3161FA72DB20058D5C1 /* BloodDetailViewController.m */,
-				046BA7A01F4817C8004D7E74 /* TreatViewController.h */,
-				046BA7A11F4817C8004D7E74 /* TreatViewController.m */,
-				044D54B61F4D159D002C1E35 /* StandardTreatViewController.h */,
-				044D54B71F4D159D002C1E35 /* StandardTreatViewController.m */,
-				044D54BC1F4D1A4C002C1E35 /* GradientTreatViewController.h */,
-				044D54BD1F4D1A4C002C1E35 /* GradientTreatViewController.m */,
-				04B68F471F4EDAE200FD31E5 /* ParameterTreatViewController.h */,
-				04B68F481F4EDAE200FD31E5 /* ParameterTreatViewController.m */,
-				041FD7E31F58FDEA00522D64 /* SolutionTreatViewController.h */,
-				041FD7E41F58FDEA00522D64 /* SolutionTreatViewController.m */,
-				048A3B181F540DC500929C37 /* SettingViewController.h */,
-				048A3B191F540DC500929C37 /* SettingViewController.m */,
-				048A3B1B1F5411D700929C37 /* OtherSettingViewController.h */,
-				048A3B1C1F5411D700929C37 /* OtherSettingViewController.m */,
-				04608BE21F8CDD8C00995E12 /* RecordTableViewController.h */,
-				04608BE31F8CDD8C00995E12 /* RecordTableViewController.m */,
-				0476B66B1F8DAAF90075B953 /* RecordTableViewCell.h */,
-				0476B66C1F8DAAF90075B953 /* RecordTableViewCell.m */,
-				04CAE36D1F8DFA2500840AD6 /* DetailViewController.h */,
-				04CAE36E1F8DFA2500840AD6 /* DetailViewController.m */,
-				0451A1931F9F2A2100AF521C /* ServerRecordTableViewController.h */,
-				0451A1941F9F2A2100AF521C /* ServerRecordTableViewController.m */,
-				0451A1961F9F3C3000AF521C /* ServerDetailViewController.h */,
-				0451A1971F9F3C3000AF521C /* ServerDetailViewController.m */,
+				0457504B1FB18EBA00E3AD73 /* LeftTableView */,
+				045750401FB151E100E3AD73 /* BloodDev */,
+				045750411FB151FB00E3AD73 /* AirWaveDev */,
+				0457504E1FB191E000E3AD73 /* RecordController */,
 				045BBC6D1F8F45AD000D767B /* Assets.xcassets */,
 				0457C63C1F5563EE0050C604 /* Main.storyboard */,
 				046BA7791F480DF2004D7E74 /* LaunchScreen.storyboard */,
@@ -568,6 +617,7 @@
 				048A3B1D1F5411D700929C37 /* OtherSettingViewController.m in Sources */,
 				04A420371F9D929C00A6C2E9 /* HttpClient.m in Sources */,
 				048A3B141F53C54900929C37 /* UIColor+UIcolor_RGB.m in Sources */,
+				045750441FB1861E00E3AD73 /* LeftDrawerViewController.m in Sources */,
 				044D54BE1F4D1A4C002C1E35 /* GradientTreatViewController.m in Sources */,
 				046BA7701F480DF2004D7E74 /* AppDelegate.m in Sources */,
 				0462C8131F5D42CE00AEC2D6 /* TreatInformation.m in Sources */,
@@ -575,12 +625,14 @@
 				04CAE36F1F8DFA2500840AD6 /* DetailViewController.m in Sources */,
 				044D54BB1F4D15F7002C1E35 /* Pack.m in Sources */,
 				0424CF6A1F6794F1008D138E /* ProgressView.m in Sources */,
+				0457504A1FB18EB100E3AD73 /* LeftHeaderTableView.m in Sources */,
 				04878A1D1FA2C738006EE4A9 /* ClickEffectImageView.m in Sources */,
 				042DAE921FA867D500B35579 /* SearchBLEViewController.m in Sources */,
 				04A420391F9D929C00A6C2E9 /* HttpHelper.m in Sources */,
 				04A420381F9D929C00A6C2E9 /* HttpError.m in Sources */,
 				041BD3171FA72DB20058D5C1 /* BloodDetailViewController.m in Sources */,
 				0451A1921F9EDEF400AF521C /* MyLabel.m in Sources */,
+				045750471FB18E2D00E3AD73 /* LeftTableView.m in Sources */,
 				0419A9CD1FA324560020A088 /* AlertViewController.m in Sources */,
 				0476B6761F8DE5B30075B953 /* UIImage+Rotate.m in Sources */,
 				0419A9D61FA329BE0020A088 /* MyPresentViewController.m in Sources */,
@@ -754,6 +806,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: 515315183@qq.com (L33H2377CF)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = UUWZ3JRNLN;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = AirWave/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Lifotronic.AirWave;
@@ -771,6 +825,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: 515315183@qq.com (L33H2377CF)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = UUWZ3JRNLN;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = AirWave/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Lifotronic.AirWave;

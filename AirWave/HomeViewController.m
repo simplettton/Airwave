@@ -8,6 +8,11 @@
 #import "HomeViewController.h"
 #import "AlertViewController.h"
 #import "RecordTableViewController.h"
+#import "MMDrawerBarButtonItem.h"
+#import "UIViewController+MMDrawerController.h"
+#import "MMDrawerController.h"
+#import "MMdrawerVisualState.h"
+#import "AppDelegate.h"
 static NSString *AIRWAVETYPE = @"7681";
 static NSString *BLOODDEVTYPE = @"8888";
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
@@ -63,13 +68,30 @@ static NSString *BLOODDEVTYPE = @"8888";
     [self.imageView2 addGestureRecognizer:[self airwaveGesture]];
     self.airwaveSelected = YES;
     self.bloodDevSelected = YES;
+    
+    
 }
 //左上按钮
 -(void)leftBarButtonClicked:(UIButton *)button
 {
-    RecordTableViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RecordTableViewController"];
-    vc.type = BLOODDEVTYPE;
-    [self.navigationController pushViewController:vc animated:YES];
+//    RecordTableViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RecordTableViewController"];
+//    vc.type = BLOODDEVTYPE;
+//    [self.navigationController pushViewController:vc animated:YES];
+    
+    
+    AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
+//    [myDelegate.drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+    NSLog(@"self.mm_drawerController = %@",self.mm_drawerController);
+    NSLog(@"mydelegate.drawerController = %@",myDelegate.drawerController);
+    
+    
+    if (self.mm_drawerController ==nil)
+    {
+    }
+    else
+    {
+        [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+    }
 }
 -(UITapGestureRecognizer *)airwaveGesture
 {
