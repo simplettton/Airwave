@@ -76,6 +76,8 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath{
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+
     if ([self.clickDelegate respondsToSelector:@selector(tableView:clickedType:)]) {
         [self.clickDelegate tableView:self clickedType:indexPath.row + 4];
     }

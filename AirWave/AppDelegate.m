@@ -53,9 +53,9 @@ NSString *const POST1 = @"8080";
 {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UINavigationController *centralNavi = [mainStoryboard instantiateViewControllerWithIdentifier:@"centerNav"];
-//    UIViewController *leftViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"menu"];
+    UIViewController *leftViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"menu"];
     
-    UIViewController *leftViewController = [[LeftDrawerViewController alloc]init];
+//    UIViewController *leftViewController = [[LeftDrawerViewController alloc]init];
     [centralNavi setRestorationIdentifier:@"CentralNavigationControllerRestorationKey"];
     [leftViewController setRestorationIdentifier:@"LeftViewControllerRestorationKey"];
     self.drawerController = [[MMDrawerController alloc] initWithCenterViewController:centralNavi leftDrawerViewController:leftViewController];
