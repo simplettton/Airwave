@@ -103,15 +103,7 @@ NSString *const PORT = @"8080";
     NSMutableArray *bodyButtons;
     NSMutableArray *legButtons;
 }
-//设置状态栏颜色
-- (void)setStatusBarBackgroundColor:(UIColor *)color
-{
-    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
-    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)])
-    {
-        statusBar.backgroundColor = color;
-    }
-}
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
@@ -270,7 +262,8 @@ NSString *const PORT = @"8080";
 }
 -(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
 {
-    if (tag == 10000) {
+    if (tag == 10000)
+    {
         NSLog(@"发动成功");
     }
 }
@@ -293,6 +286,7 @@ NSString *const PORT = @"8080";
 -(void)configureView
 {
     //导航栏
+    self.title = @"空气波治疗仪";
     self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     
@@ -1409,7 +1403,8 @@ NSString *const PORT = @"8080";
 }
 - (void)swipeRight
 {
-    [self performSegueWithIdentifier:@"ReturnHome" sender:nil];
+//    [self performSegueWithIdentifier:@"ReturnHome" sender:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - segue

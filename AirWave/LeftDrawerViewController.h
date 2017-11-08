@@ -8,6 +8,5 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LeftDrawerViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
-
+@interface LeftDrawerViewController : UIViewController
 @end

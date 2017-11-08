@@ -16,9 +16,11 @@
 
 @implementation LeftTableView
 
--(instancetype)initWithFrame:(CGRect)frame{
+-(instancetype)initWithFrame:(CGRect)frame
+{
     self = [super initWithFrame:frame] ;
-    if (self) {
+    if (self)
+    {
         self.delegate = self;
         self.dataSource = self;
         self.backgroundColor  = [UIColor whiteColor];
@@ -27,14 +29,12 @@
     return self;
 }
 #pragma mark --加载View
--(void)addTableHeaderViewAndTableFooterView{
+-(void)addTableHeaderViewAndTableFooterView
+{
     LeftHeaderTableView * headerView = [[LeftHeaderTableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth - 75 , 444 * KScreenUnit)];
     [ headerView.myInformationButton addTarget:self action:@selector(buttonClickListener:) forControlEvents:UIControlEventTouchUpInside];
     self.tableHeaderView = headerView;
 }
-
-
-
 #pragma mark -- UITableViewDataSource
 -(NSInteger)numberOfRowsInSection:(NSInteger)section
 {
@@ -67,12 +67,11 @@
     }
     
     cell.backgroundColor=[UIColor clearColor];
-    cell.textLabel.textColor=[UIColor whiteColor];
-    cell.selectedBackgroundView = [[UIImageView alloc] init];
-    cell.selectedBackgroundView.backgroundColor = UIColorFromRGBAndAlpha(0xffffff, 0.3);
+    cell.textLabel.textColor=[UIColor blackColor];
+//    cell.selectedBackgroundView = [[UIImageView alloc] init];
+//    cell.selectedBackgroundView.backgroundColor = UIColorFromRGBAndAlpha(0xffffff, 0.3);
     //    点击cell时没有点击效果
     //    cell.selectionStyle=UITableViewCellSelectionStyleNone;
-    
     return cell;
 }
 

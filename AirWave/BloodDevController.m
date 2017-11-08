@@ -42,6 +42,7 @@ typedef NS_ENUM(NSUInteger,State)
 @property (nonatomic, strong) TreatRecord *treatRecord;
 @property (assign,nonatomic) NSInteger state;
 - (IBAction)showRecord:(id)sender;
+- (IBAction)returnHome:(id)sender;
 @end
 @implementation BloodDevController
 
@@ -74,6 +75,14 @@ typedef NS_ENUM(NSUInteger,State)
     }
     NSLog(@"peripheral= %@",self.currPeripheral);
     [self setupSwipe];
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:YES];
+
+     [super viewDidAppear:YES];
+
+    [baby cancelAllPeripheralsConnection];
 }
 //babyDelegate
 -(void)babyDelegate
@@ -487,4 +496,9 @@ typedef NS_ENUM(NSUInteger,State)
     [self swipeRight];
 }
 
+- (IBAction)returnHome:(id)sender
+{
+    NSInteger index=[[self.navigationController viewControllers]indexOfObject:self];
+    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:index-2]animated:YES];
+}
 @end

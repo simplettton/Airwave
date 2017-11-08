@@ -8,6 +8,7 @@
 
 #import "LeftDrawerViewController.h"
 #import "LeftTableView.h"
+#import "LeftHeaderTableView.h"
 #import "DetailViewController.h"
 #import "BaseHeader.h"
 
@@ -22,17 +23,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
     [self setBackground];
     [self addTableView];
 }
+
 -(void)addTableView
 {
     self.tableView = [[LeftTableView alloc] initWithFrame:CGRectMake(0, 0, 260,  [UIScreen mainScreen].bounds.size.height )];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.scrollEnabled = NO;
+    NSLog(@"self.tableView = %@",self.tableView);
     [self.view addSubview:self.tableView];
 }
 -(void)setBackground
@@ -44,7 +45,7 @@
     [self.view addSubview:mengban];
 
 }
-
+//
 //-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
 //    return 1;
 //}

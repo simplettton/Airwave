@@ -35,7 +35,7 @@
     [self addSubview:headerImageView];
     //加载昵称
     UILabel * nickNameLabel  = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(headerImageView.frame)+ 20 * KScreenUnit , 136 * KScreenUnit, 300 * KScreenUnit,30 * KScreenUnit)];
-    nickNameLabel.text = @"    🐱";
+    nickNameLabel.text = @"    游客";
     nickNameLabel.textColor = [UIColor blackColor];
     nickNameLabel.font   = [UIFont systemFontOfSize:28 * KScreenUnit];
     [self addSubview:nickNameLabel];

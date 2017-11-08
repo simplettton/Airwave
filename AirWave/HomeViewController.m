@@ -74,24 +74,7 @@ static NSString *BLOODDEVTYPE = @"8888";
 //左上按钮
 -(void)leftBarButtonClicked:(UIButton *)button
 {
-//    RecordTableViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RecordTableViewController"];
-//    vc.type = BLOODDEVTYPE;
-//    [self.navigationController pushViewController:vc animated:YES];
-    
-    
-    AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
-//    [myDelegate.drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
-    NSLog(@"self.mm_drawerController = %@",self.mm_drawerController);
-    NSLog(@"mydelegate.drawerController = %@",myDelegate.drawerController);
-    
-    
-    if (self.mm_drawerController ==nil)
-    {
-    }
-    else
-    {
-        [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
-    }
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 -(UITapGestureRecognizer *)airwaveGesture
 {

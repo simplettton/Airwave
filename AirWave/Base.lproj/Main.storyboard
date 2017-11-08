@@ -2146,8 +2146,8 @@
                     <connections>
                         <outlet property="imageView1" destination="cm8-pH-Cbd" id="z5Y-HK-v2c"/>
                         <outlet property="imageView2" destination="pCT-ZD-YqO" id="lfQ-G4-g3R"/>
-                        <segue destination="dGh-mk-HF3" kind="presentation" identifier="ShowAirWave" animates="NO" id="KYM-6d-kmt"/>
-                        <segue destination="xPk-9L-mX0" kind="presentation" identifier="ShowBloodDev" animates="NO" id="ctp-ob-Dxm"/>
+                        <segue destination="49W-s7-z4E" kind="show" identifier="ShowAirWave" animates="NO" id="Lnw-ff-L4K"/>
+                        <segue destination="QhI-xE-ejb" kind="show" identifier="ShowBloodDev" animates="NO" id="CJ4-wD-h4T"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3JA-pw-3Wr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2680,7 +2680,7 @@
                         <barButtonItem key="leftBarButtonItem" title="主页" id="Ghj-RK-r3E">
                             <color key="tintColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <action selector="BloodDevReturnHome:" destination="0sq-rO-BQ3" id="PLI-eW-wj6"/>
+                                <action selector="returnHome:" destination="0sq-rO-BQ3" id="Btg-Pd-c5Y"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="关于" id="Nqb-cM-5O3">
@@ -2699,7 +2699,6 @@
                         <outlet property="timeLabel" destination="bTL-r7-JmT" id="XVP-nZ-tHT"/>
                         <outlet property="timeStepper" destination="yWN-ta-Trd" id="NAU-wP-AcL"/>
                         <outlet property="timerLabel" destination="iS2-Is-Vtm" id="W8D-Vt-6RK"/>
-                        <segue destination="KzE-nr-6yZ" kind="show" identifier="BloodReturnHome" animates="NO" id="Qbl-9a-GUj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tYT-HV-pgv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2816,24 +2815,6 @@
             <point key="canvasLocation" x="1887.2" y="1.3493253373313345"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="Q5h-ix-WDh">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xPk-9L-mX0" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="481-1B-Xat">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="QhI-xE-ejb" kind="relationship" relationship="rootViewController" id="Y5R-jT-J9t"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Yf1-Mp-5PT" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1044" y="1"/>
-        </scene>
-        <!--Navigation Controller-->
         <scene sceneID="Go1-hG-yD7">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="s1y-Qf-whb" sceneMemberID="viewController">
@@ -2862,38 +2843,12 @@
                     <view key="view" contentMode="scaleToFill" id="fKQ-fA-6lD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Exr-I0-EeA" customClass="LeftTableView">
-                                <rect key="frame" x="0.0" y="0.0" width="260" height="568"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="leftDrawerCell" id="6h5-uo-qBi" customClass="leftDrawerTableViewCell">
-                                        <rect key="frame" x="0.0" y="22" width="260" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6h5-uo-qBi" id="G1P-YF-559">
-                                            <rect key="frame" x="0.0" y="0.0" width="227" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SJE-bc-iWQ">
-                                                    <rect key="frame" x="0.0" y="0.0" width="227" height="36"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cGT-Fm-Opy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1887" y="873"/>
+            <point key="canvasLocation" x="1885.5999999999999" y="872.11394302848578"/>
         </scene>
     </scenes>
     <resources>
@@ -2949,14 +2904,14 @@
         <image name="unselected" width="86" height="86"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="sSp-M8-T7F"/>
-        <segue reference="bnI-Yd-YTo"/>
-        <segue reference="Gnw-az-Cez"/>
-        <segue reference="ZBQ-e1-zdk"/>
-        <segue reference="OYR-tj-I2R"/>
-        <segue reference="7E7-TE-zOR"/>
         <segue reference="YZz-rL-WdO"/>
+        <segue reference="Lnw-ff-L4K"/>
+        <segue reference="7E7-TE-zOR"/>
+        <segue reference="Gnw-az-Cez"/>
+        <segue reference="OYR-tj-I2R"/>
+        <segue reference="bnI-Yd-YTo"/>
+        <segue reference="ZBQ-e1-zdk"/>
         <segue reference="hVw-wR-HqB"/>
-        <segue reference="ZkJ-P9-ETF"/>
+        <segue reference="sSp-M8-T7F"/>
     </inferredMetricsTieBreakers>
 </document>

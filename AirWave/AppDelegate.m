@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "MMDrawerController.h"
 #import "MMdrawerVisualState.h"
+#import "LeftDrawerViewController.h"
 #import "Pack.h"
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 NSString *const HOST1 = @"10.10.100.254";
@@ -52,8 +53,9 @@ NSString *const POST1 = @"8080";
 {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UINavigationController *centralNavi = [mainStoryboard instantiateViewControllerWithIdentifier:@"centerNav"];
+//    UIViewController *leftViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"menu"];
     
-    UIViewController *leftViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"menu"];
+    UIViewController *leftViewController = [[LeftDrawerViewController alloc]init];
     [centralNavi setRestorationIdentifier:@"CentralNavigationControllerRestorationKey"];
     [leftViewController setRestorationIdentifier:@"LeftViewControllerRestorationKey"];
     self.drawerController = [[MMDrawerController alloc] initWithCenterViewController:centralNavi leftDrawerViewController:leftViewController];
@@ -63,7 +65,6 @@ NSString *const POST1 = @"8080";
     [self.drawerController setDrawerVisualStateBlock:[MMDrawerVisualState slideAndScaleVisualStateBlock]];
     [self.drawerController setMaximumLeftDrawerWidth:260.0];
     [self.drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModePanningNavigationBar];
-
     [self.drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     [self.window makeKeyAndVisible];

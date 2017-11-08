@@ -54,11 +54,12 @@
 }
 -(void)viewDidAppear:(BOOL)animated
 {
-    NSLog(@"viewDidAppear");
+    [super viewDidAppear:YES];
     //停止之前的连接
     [baby cancelAllPeripheralsConnection];
     //设置委托后直接可以使用，无需等待CBCentralManagerStatePoweredOn状态。
     baby.scanForPeripherals().begin();
+    [self.activityIndicatorView startAnimating];
     //baby.scanForPeripherals().begin().stop(10);
 }
 
@@ -66,8 +67,8 @@
 {
     [baby cancelScan];
     [self.activityIndicatorView stopAnimating];
-}
 
+}
 #pragma mark -蓝牙配置和操作
 
 //蓝牙网关初始化和委托方法设置
@@ -86,7 +87,7 @@
     
     //设置扫描到设备的委托
     [baby setBlockOnDiscoverToPeripherals:^(CBCentralManager *central, CBPeripheral *peripheral, NSDictionary *advertisementData, NSNumber *RSSI) {
-        [weakSelf.activityIndicatorView startAnimating];
+//        [weakSelf.activityIndicatorView startAnimating];
         NSLog(@"搜索到了设备:%@",peripheral.name);
         [weakSelf insertTableView:peripheral advertisementData:advertisementData RSSI:RSSI];
     }];
@@ -263,6 +264,7 @@
 }
 - (void)swipeRight
 {
-    [self performSegueWithIdentifier:@"SearchBLEReturnHome" sender:nil];
+//    [self performSegueWithIdentifier:@"SearchBLEReturnHome" sender:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 @end
