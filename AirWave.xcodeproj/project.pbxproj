@@ -25,7 +25,6 @@
 		0451A1951F9F2A2100AF521C /* ServerRecordTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0451A1941F9F2A2100AF521C /* ServerRecordTableViewController.m */; };
 		0451A1981F9F3C3000AF521C /* ServerDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0451A1971F9F3C3000AF521C /* ServerDetailViewController.m */; };
 		045750441FB1861E00E3AD73 /* LeftDrawerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045750431FB1861E00E3AD73 /* LeftDrawerViewController.m */; };
-		045750471FB18E2D00E3AD73 /* LeftTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045750461FB18E2D00E3AD73 /* LeftTableView.m */; };
 		0457504A1FB18EB100E3AD73 /* LeftHeaderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045750491FB18EB100E3AD73 /* LeftHeaderTableView.m */; };
 		0457C63E1F5563EE0050C604 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0457C63C1F5563EE0050C604 /* Main.storyboard */; };
 		045BBC6E1F8F45AD000D767B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 045BBC6D1F8F45AD000D767B /* Assets.xcassets */; };
@@ -113,8 +112,6 @@
 		0451A1971F9F3C3000AF521C /* ServerDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerDetailViewController.m; sourceTree = "<group>"; };
 		045750421FB1861E00E3AD73 /* LeftDrawerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftDrawerViewController.h; sourceTree = "<group>"; };
 		045750431FB1861E00E3AD73 /* LeftDrawerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftDrawerViewController.m; sourceTree = "<group>"; };
-		045750451FB18E2D00E3AD73 /* LeftTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftTableView.h; sourceTree = "<group>"; };
-		045750461FB18E2D00E3AD73 /* LeftTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftTableView.m; sourceTree = "<group>"; };
 		045750481FB18EB100E3AD73 /* LeftHeaderTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftHeaderTableView.h; sourceTree = "<group>"; };
 		045750491FB18EB100E3AD73 /* LeftHeaderTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftHeaderTableView.m; sourceTree = "<group>"; };
 		0457504D1FB18FCA00E3AD73 /* BaseHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseHeader.h; sourceTree = "<group>"; };
@@ -242,8 +239,6 @@
 		0457504B1FB18EBA00E3AD73 /* LeftTableView */ = {
 			isa = PBXGroup;
 			children = (
-				045750451FB18E2D00E3AD73 /* LeftTableView.h */,
-				045750461FB18E2D00E3AD73 /* LeftTableView.m */,
 				045750481FB18EB100E3AD73 /* LeftHeaderTableView.h */,
 				045750491FB18EB100E3AD73 /* LeftHeaderTableView.m */,
 				0457504D1FB18FCA00E3AD73 /* BaseHeader.h */,
@@ -632,7 +627,6 @@
 				04A420381F9D929C00A6C2E9 /* HttpError.m in Sources */,
 				041BD3171FA72DB20058D5C1 /* BloodDetailViewController.m in Sources */,
 				0451A1921F9EDEF400AF521C /* MyLabel.m in Sources */,
-				045750471FB18E2D00E3AD73 /* LeftTableView.m in Sources */,
 				0419A9CD1FA324560020A088 /* AlertViewController.m in Sources */,
 				0476B6761F8DE5B30075B953 /* UIImage+Rotate.m in Sources */,
 				0419A9D61FA329BE0020A088 /* MyPresentViewController.m in Sources */,

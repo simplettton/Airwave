@@ -84,12 +84,10 @@ NSString *const PORT = @"8080";
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UILabel *warnningLabel;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *settingButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *recordButton;
-
 @property (weak, nonatomic) IBOutlet ProgressView *progressView;
 @property (weak, nonatomic) IBOutlet ProgressView *progressBackground;
 
-
+- (IBAction)returnHome:(id)sender;
 - (IBAction)tapPlayButton:(id)sender;
 - (IBAction)tapPauseButton:(id)sender;
 - (IBAction)tapSettingButton:(id)sender;
@@ -107,6 +105,20 @@ NSString *const PORT = @"8080";
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    //导航栏
+    self.navigationController.navigationBar.hidden = NO;
+    self.title = @"空气波治疗仪";
+    self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    [[self.navigationController navigationBar]setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColorFromHex(0XFFFFFF)}];
+    self.navigationItem.rightBarButtonItem.tintColor = UIColorFromHex(0xFFFFFF);
+    self.navigationItem.leftBarButtonItem.tintColor = UIColorFromHex(0xFFFFFF);
+    //在前一个界面设置下个界面的返回按钮:self.navigationItem.backBarButtonItem
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
+    
+    self.navigationItem.backBarButtonItem = item;
+
+    
     if (!self.connected )
     {
         self.clientSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
@@ -138,9 +150,7 @@ NSString *const PORT = @"8080";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //在前一个界面设置下个界面的返回按钮:self.navigationItem.backBarButtonItem
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.navigationItem.backBarButtonItem = item;
+
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     if (myDelegate.cclientSocket != nil)
     {
@@ -285,21 +295,13 @@ NSString *const PORT = @"8080";
 #pragma mark - configureViews
 -(void)configureView
 {
-    //导航栏
-    self.title = @"空气波治疗仪";
-    self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-    
-    self.settingButton.tintColor = UIColorFromHex(0xFFFFFF);
-
-    //治疗记录按钮
-
-    self.recordButton.tintColor = UIColorFromHex(0xFFFFFF);
+    //tap样式
     CALayer *topBorder = [CALayer layer];
     topBorder.frame = CGRectMake(0.0f, 0.0f, self.buttonView.frame.size.width, 0.5f);
     topBorder.backgroundColor = UIColorFromHex(0xE4E4E4).CGColor;
     [self.buttonView.layer addSublayer:topBorder];
     
+
     //配置开始按钮
     [self configurePlayButton];
     
@@ -1111,8 +1113,6 @@ NSString *const PORT = @"8080";
     Byte dataBytes[2] = {0,0x10};
     [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                                dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:0];
-    
-    
 }
 -(void)pause
 {
@@ -1294,6 +1294,11 @@ NSString *const PORT = @"8080";
     [self.view endEditing:YES];
 }
 
+- (IBAction)returnHome:(id)sender
+{
+    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0]animated:YES];
+}
+
 - (IBAction)tapPlayButton:(id)sender
 {
     [self start];
@@ -1403,8 +1408,8 @@ NSString *const PORT = @"8080";
 }
 - (void)swipeRight
 {
-//    [self performSegueWithIdentifier:@"ReturnHome" sender:nil];
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0]animated:YES];
 }
 
 #pragma mark - segue
@@ -1413,8 +1418,10 @@ NSString *const PORT = @"8080";
     [self askForTreatInfomation];
     if ([segue.identifier isEqualToString:@"MainToStandard"])
     {
-        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
-        StandardTreatViewController *controller = (StandardTreatViewController *)navigationController.topViewController;
+//        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
+//        StandardTreatViewController *controller = (StandardTreatViewController *)navigationController.topViewController;
+        
+        StandardTreatViewController *controller = (StandardTreatViewController *)segue.destinationViewController;
         controller.treatInfomation = self.treatInformation;
     }
     else if([segue.identifier isEqualToString:@"MainToGradient"])
@@ -1440,11 +1447,12 @@ NSString *const PORT = @"8080";
         Pack *pack = [[Pack alloc]init];
         [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                                    dataEnabled:YES data:[self dataWithValue:0xaf]] withTimeout:-1 tag:0];
-    }else if([segue.identifier isEqualToString:@"ShowAirWaveRecord"])
-    {
-        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
-        RecordTableViewController* controller = (RecordTableViewController *)navigationController.topViewController;
-        controller.type = TYPE;
     }
+//    }else if([segue.identifier isEqualToString:@"ShowAirWaveRecord"])
+//    {
+//        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
+//        RecordTableViewController* controller = (RecordTableViewController *)navigationController.topViewController;
+//        controller.type = TYPE;
+//    }
 }
 @end

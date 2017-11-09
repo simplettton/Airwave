@@ -7,14 +7,12 @@
 //
 
 #import "LeftDrawerViewController.h"
-#import "LeftTableView.h"
 #import "LeftHeaderTableView.h"
 #import "DetailViewController.h"
 #import "BaseHeader.h"
 
 @interface LeftDrawerViewController ()
-//@property (weak, nonatomic) IBOutlet LeftTableView *tableView;
-@property (strong,nonatomic)LeftTableView *tableView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property(assign , nonatomic) int homePageIndex;
 @end
 
@@ -23,107 +21,78 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setBackground];
-    [self addTableView];
-}
-
--(void)addTableView
-{
-    self.tableView = [[LeftTableView alloc] initWithFrame:CGRectMake(0, 0, 260,  [UIScreen mainScreen].bounds.size.height )];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.scrollEnabled = NO;
-    NSLog(@"self.tableView = %@",self.tableView);
-    [self.view addSubview:self.tableView];
+    [self addTableHeaderViewAndTableFooterView];
 }
--(void)setBackground
+#pragma mark --加载View
+-(void)addTableHeaderViewAndTableFooterView
 {
-    self.view.backgroundColor =  [UIColor whiteColor];
-    UIImageView * mengban = [[UIImageView alloc] initWithFrame:self.view.frame];
-    mengban.backgroundColor = UIColorFromRGBAndAlpha(0x000000, 1);
-    mengban.alpha = 0.25;
-    [self.view addSubview:mengban];
+    LeftHeaderTableView * headerView = [[LeftHeaderTableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth - 75 , 444 * KScreenUnit)];
+    [ headerView.myInformationButton addTarget:self action:@selector(buttonClickListener:) forControlEvents:UIControlEventTouchUpInside];
+    self.tableView.tableHeaderView = headerView;
+}
+#pragma mark -- UITableViewDataSource
+-(NSInteger)numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 7;
+}
+- (void)tableView: (UITableView*)tableView willDisplayCell: (UITableViewCell*)cell forRowAtIndexPath: (NSIndexPath*)indexPath
+{
+//    cell.backgroundColor = [UIColor blackColor];
+//    cell.textLabel.backgroundColor = [UIColor redColor];
+//    cell.detailTextLabel.backgroundColor = [UIColor blueColor];
+    
+    if (indexPath.row==6)
+    {
+        cell.textLabel.textColor = UIColorFromHex(0X65BBA9);
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+    }
 
 }
-//
-//-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-//    return 1;
-//}
-////
-//-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-//    return 2;
-//}
-//-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"leftDrawerCell" forIndexPath:indexPath];
-//    UILabel *label = [cell viewWithTag:1000];
-//    label.text = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
-//    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-//    return cell;
-//}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    if (indexPath.row==0){
+        cell.imageView.image=[UIImage imageNamed:@"sidebar_business"];
+        cell.textLabel.text=@"空气波治疗记录";
+    }else if (indexPath.row==1){
+        cell.imageView.image=[UIImage imageNamed:@"sidebar_purse"];
+        cell.textLabel.text=@"血瘘治疗仪治疗记录";
+    }else if (indexPath.row==2){
+        cell.imageView.image=[UIImage imageNamed:@"sidebar_decoration"];
+        cell.textLabel.text=@"我的服务器IP地址";
+    }else if (indexPath.row==3){
+        cell.imageView.image=[UIImage imageNamed:@"sidebar_favorit"];
+        cell.textLabel.text=@"我的收藏";
+    }else if (indexPath.row==4){
+        cell.imageView.image=[UIImage imageNamed:@"sidebar_album"];
+        cell.textLabel.text=@"我的相册";
+    }else if (indexPath.row==6){
+        cell.imageView.image=[UIImage imageNamed:@"sidebar_file"];
+        cell.textLabel.textColor = [UIColor redColor];
+        cell.textLabel.text=@"退出登录";
 
-
-//#pragma mark -- LeftTableViewClickDelegate
-//-(void)tableView:(UITableView *)tableView clickedType:(ELeftClickType)clickType{
-//    UIViewController * viewController;
-//    switch (clickType) {
-//        case KMyInformation:
-//            viewController = [[DetailViewController alloc] init];
-//            break;
-//        case KQRCode:
-//            viewController = [[DetailViewController alloc] init];
-//            break;
-//        case KPersonalSignature:
-//            viewController = [[DetailViewController alloc] init];
-//            break;
-//        case KMyQQVip:
-//            viewController = [[DetailViewController alloc] init];
-//            break;
-//        case KQQWalte:
-//            viewController = [[DetailViewController alloc] init];
-//            break;
-////        case KPersonalDressing:
-////            viewController = [[OtherViewController alloc] init];
-////            break;
-////        case KMyLike:
-////            viewController = [[OtherViewController alloc] init];
-////            break;
-////        case KMyAlbum:
-////            viewController = [[OtherViewController alloc] init];
-////            break;
-////        case KMyFile:
-////            viewController = [[OtherViewController alloc] init];
-////            break;
-//        case KAppSeting:
-//            
-//            break;
-//        case KNightStyle:
-//            
-//            break;
-//        case KWeather:
-//            
-//            break;
-//        default:
-//            break;
-//    }
-//    [self notificationHomePagePushViewController:viewController];
-//}
-//#pragma mark -- 点击事件跳转
-//-(void)notificationHomePagePushViewController:(UIViewController *) viewController{
-//    
-//    //[appDelegate.mainTabBarViewController.messageViewController.navigationController pushViewController:otherViewController animated:YES];
-//    //    3. 抽屉栏点击事件后需要跳转页面，关闭抽屉， 通过HomePage+index+push名通知主页push，内容需要push的vc。
-//    if (viewController)
-//    {
-//        NSString * postName = [NSString stringWithFormat:@"HomePage%dPush",self.homePageIndex];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:postName object:nil userInfo:@{@"pushViewController":viewController}];
-//    }
-//    
-//}
-//#pragma make -- MainTabChanged通知事件
-//-(void)mainTabChanged:(NSNotification *) notification{
-//    NSDictionary * dict = notification.userInfo;
-//    self.homePageIndex = [dict[@"selectedIndex"] intValue];
-//}
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+    }
+    
+    cell.backgroundColor=[UIColor clearColor];
+    cell.textLabel.textColor=[UIColor blackColor];
+    //    cell.selectedBackgroundView = [[UIImageView alloc] init];
+    //    cell.selectedBackgroundView.backgroundColor = UIColorFromRGBAndAlpha(0xffffff, 0.3);
+    //    点击cell时没有点击效果
+    //    cell.selectionStyle=UITableViewCellSelectionStyleNone;
+    return cell;
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 
 @end

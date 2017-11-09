@@ -37,6 +37,7 @@
 - (IBAction)chooseCustomTime:(id)sender;
 - (IBAction)save:(id)sender;
 - (IBAction)cancel:(id)sender;
+- (IBAction)returnToMain:(id)sender;
 
 @end
 
@@ -55,6 +56,7 @@
     self.minutePicker.dataSource = self;
     self.pressPicker.dataSource = self;
     
+
 
     if (self.treatInfomation == nil)
     {
@@ -88,6 +90,13 @@
     [self configureView];
     
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBar.barTintColor = UIColorFromHex(0xffffff);
+    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+    self.navigationItem.hidesBackButton = YES;
+    [[self.navigationController navigationBar]setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColorFromHex(0X626d91)}];
+}
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
@@ -99,9 +108,8 @@
 }
 -(void)configureView
 {
-    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setShadowImage:[[UIImage alloc]init]];
-    [[self.navigationController navigationBar]setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColorFromHex(0X626d91)}];
+
+
     
 
     //设置单边圆角
@@ -230,8 +238,12 @@
     [self.modePicker selectRow:0 inComponent:0 animated:NO];
     customTimeSelected = YES;
     [self configureTimeSelectButton];
-
     [self save:sender];
+}
+
+- (IBAction)returnToMain:(id)sender
+{
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1]animated:NO];
 }
 - (IBAction)save:(id)sender
 {
@@ -367,10 +379,7 @@
         }
     }
 }
--(void)returnToMain
-{
-    [self performSegueWithIdentifier:@"StandardToMain" sender:nil];
-}
+
 #pragma mark - socketDelegate
 -(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
@@ -431,7 +440,7 @@
     button.backgroundColor = UIColorFromHex(0x65BBA9);
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button setTitle:[NSString stringWithFormat:@"重新连接"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(returnToMain) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(returnToMain:) forControlEvents:UIControlEventTouchUpInside];
     [disconnectView addSubview:label];
     [disconnectView addSubview:button];
     [self.view addSubview:disconnectView];

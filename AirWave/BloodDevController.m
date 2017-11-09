@@ -41,7 +41,6 @@ typedef NS_ENUM(NSUInteger,State)
 @property (weak, nonatomic) IBOutlet UILabel *levelLabel;
 @property (nonatomic, strong) TreatRecord *treatRecord;
 @property (assign,nonatomic) NSInteger state;
-- (IBAction)showRecord:(id)sender;
 - (IBAction)returnHome:(id)sender;
 @end
 @implementation BloodDevController
@@ -79,9 +78,6 @@ typedef NS_ENUM(NSUInteger,State)
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:YES];
-
-     [super viewDidAppear:YES];
-
     [baby cancelAllPeripheralsConnection];
 }
 //babyDelegate
@@ -291,7 +287,6 @@ typedef NS_ENUM(NSUInteger,State)
     [baby notify:weakSelf.currPeripheral
   characteristic:characteristic
            block:^(CBPeripheral *peripheral, CBCharacteristic *characteristics, NSError *error) {
-//               NSLog(@"new value %@",characteristics.value);
                NSData *data = characteristic.value;
                Byte *bytes = (Byte *)[data bytes];
                if (bytes[0] == 0x34)

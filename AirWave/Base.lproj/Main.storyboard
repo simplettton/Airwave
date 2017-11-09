@@ -256,14 +256,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="空气波治疗仪" id="0cT-Wo-4A6">
-                        <barButtonItem key="leftBarButtonItem" title="记录" id="uzN-9B-Qno">
+                        <barButtonItem key="leftBarButtonItem" title="主页" id="IDE-9E-luE">
                             <connections>
-                                <segue destination="rce-2R-CQf" kind="presentation" identifier="ShowAirWaveRecord" animates="NO" id="Gnw-az-Cez"/>
+                                <action selector="returnHome:" destination="49W-s7-z4E" id="g7S-6t-OzW"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="设置" id="K1o-XT-gzF">
                             <connections>
-                                <segue destination="s5j-zE-Ka8" kind="presentation" identifier="MainToSetting" animates="NO" id="bnI-Yd-YTo"/>
+                                <segue destination="s5j-zE-Ka8" kind="show" identifier="MainToSetting" animates="NO" id="bnI-Yd-YTo"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -275,15 +275,13 @@
                         <outlet property="pressLabel" destination="MSC-Lt-fwX" id="5VR-lP-PUz"/>
                         <outlet property="progressBackground" destination="c22-cR-Zlm" id="Mgz-uv-Aa0"/>
                         <outlet property="progressView" destination="RSK-jT-3vG" id="tzY-gY-M26"/>
-                        <outlet property="recordButton" destination="uzN-9B-Qno" id="Mgw-VV-SvG"/>
                         <outlet property="settingButton" destination="K1o-XT-gzF" id="XhF-14-xfn"/>
                         <outlet property="warnningLabel" destination="4SW-Ss-zX8" id="Q2s-Y1-qPD"/>
-                        <segue destination="Cbs-zK-ZPY" kind="show" identifier="" animates="NO" id="YZz-rL-WdO"/>
-                        <segue destination="T0J-Xi-qbF" kind="presentation" identifier="MainToGradient" animates="NO" id="uTN-JD-TTD"/>
-                        <segue destination="XeN-yS-C2f" kind="presentation" identifier="MainToParameter" animates="NO" id="OYR-tj-I2R"/>
-                        <segue destination="WxD-3M-xOD" kind="presentation" identifier="MainToSolution" animates="NO" id="ZBQ-e1-zdk"/>
-                        <segue destination="jtX-Ho-uJp" kind="presentation" identifier="MainToStandard" animates="NO" id="hVw-wR-HqB"/>
+                        <segue destination="Cbs-zK-ZPY" kind="show" identifier="MainToParameter" animates="NO" id="YZz-rL-WdO"/>
                         <segue destination="Ybz-nf-prl" kind="presentation" identifier="ReturnHome" animates="NO" id="7E7-TE-zOR"/>
+                        <segue destination="Q0V-sl-QbH" kind="show" identifier="MainToStandard" animates="NO" id="bco-oh-nlz"/>
+                        <segue destination="0kn-LS-pQG" kind="show" identifier="MainToSolution" animates="NO" id="8ar-qs-djD"/>
+                        <segue destination="wRB-BT-R2V" kind="show" identifier="MainToGradient" animates="NO" id="amz-Oj-AoW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5yB-9V-2Dd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -404,17 +402,17 @@
                                             <action selector="save:" destination="s5j-zE-Ka8" eventType="touchUpInside" id="iJd-ma-JDn"/>
                                         </connections>
                                     </button>
-                                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minimumValue="1" maximumValue="12" translatesAutoresizingMaskIntoConstraints="NO" id="O6d-MG-S7o">
+                                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minimumValue="1" maximumValue="12" translatesAutoresizingMaskIntoConstraints="NO" id="O6d-MG-S7o">
                                         <rect key="frame" x="254" y="76" width="94" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="tintColor" red="0.20641797780990601" green="0.36595645546913147" blue="0.59889894723892212" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </stepper>
-                                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minimumValue="1" maximumValue="60" translatesAutoresizingMaskIntoConstraints="NO" id="lxQ-zt-VEe">
+                                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="20" minimumValue="1" maximumValue="60" translatesAutoresizingMaskIntoConstraints="NO" id="lxQ-zt-VEe">
                                         <rect key="frame" x="255" y="126" width="94" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="tintColor" red="0.16862745100000001" green="0.33725490200000002" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </stepper>
-                                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minimumValue="1" maximumValue="6" translatesAutoresizingMaskIntoConstraints="NO" id="a47-qS-QDC">
+                                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="6" minimumValue="1" maximumValue="6" translatesAutoresizingMaskIntoConstraints="NO" id="a47-qS-QDC">
                                         <rect key="frame" x="255" y="221" width="94" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="tintColor" red="0.16862745100000001" green="0.33725490200000002" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -456,7 +454,7 @@
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="dGh-mk-HF3" kind="presentation" identifier="SettingToMain" animates="NO" id="sSp-M8-T7F"/>
+                                            <action selector="returnToMain:" destination="s5j-zE-Ka8" eventType="touchUpInside" id="MCu-45-2RY"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6RL-9X-OjO">
@@ -475,7 +473,7 @@
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="6CV-bu-DSe" kind="presentation" identifier="SettingToOtherSetting" animates="NO" id="BLE-xO-stn"/>
+                                            <segue destination="6CV-bu-DSe" kind="show" identifier="SettingToOtherSetting" animates="NO" id="Iro-jk-ZrY"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qxt-Ia-Y49">
@@ -501,7 +499,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A8B-E2-Zwi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6495.1999999999998" y="52.623688155922046"/>
+            <point key="canvasLocation" x="6505" y="75"/>
         </scene>
         <!--Other Setting View Controller-->
         <scene sceneID="KVb-lR-xCA">
@@ -527,7 +525,7 @@
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="dGh-mk-HF3" kind="presentation" identifier="OtherSettingToMain" animates="NO" id="YjL-T0-1N7"/>
+                                            <action selector="returnToMain:" destination="6CV-bu-DSe" eventType="touchUpInside" id="ENO-qU-glg"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PWf-uU-jc2">
@@ -538,7 +536,7 @@
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="s5j-zE-Ka8" kind="presentation" identifier="OtherSettingToSetting" animates="NO" id="bkz-JL-cM5"/>
+                                            <segue destination="s5j-zE-Ka8" kind="show" identifier="OtherSettingToSetting" animates="NO" id="bkz-JL-cM5"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hF8-Rc-kNV">
@@ -974,7 +972,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j9D-nS-in8">
-                                <rect key="frame" x="16" y="70" width="85" height="66"/>
+                                <rect key="frame" x="16" y="64" width="85" height="66"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.72792661190032959" green="0.81701904535293579" blue="0.94889253377914429" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -983,7 +981,7 @@
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PcB-d5-q4P">
-                                <rect key="frame" x="102" y="70" width="85" height="66"/>
+                                <rect key="frame" x="102" y="64" width="85" height="66"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.52312237019999996" green="0.6690714955" blue="0.89393049479999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -995,7 +993,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XQ4-h4-xWc">
-                                <rect key="frame" x="188" y="70" width="85" height="66"/>
+                                <rect key="frame" x="188" y="64" width="85" height="66"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.52312237019999996" green="0.6690714955" blue="0.89393049479999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1003,19 +1001,19 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="XeN-yS-C2f" kind="presentation" identifier="StandardToParameter" animates="NO" id="O3A-EY-N0n"/>
+                                    <segue destination="Cbs-zK-ZPY" kind="show" identifier="StandardToParameter" animates="NO" id="o6F-yy-f3A"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="REX-4z-lfH">
-                                <rect key="frame" x="274" y="70" width="85" height="66"/>
+                                <rect key="frame" x="274" y="64" width="85" height="66"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.52312237024307251" green="0.6690714955329895" blue="0.89393049478530884" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.52156862749999999" green="0.6705882353" blue="0.89411764709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
                                 <state key="normal" title="方案治疗">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="WxD-3M-xOD" kind="presentation" identifier="StandardToSolution" animates="NO" id="wZz-Du-OCk"/>
+                                    <segue destination="0kn-LS-pQG" kind="show" identifier="StandardToSolution" animates="NO" id="S8x-tP-cJv"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eVy-dJ-dNN">
@@ -1033,7 +1031,7 @@
                                     <color key="titleColor" red="0.89365547895431519" green="0.89433497190475464" blue="0.89376074075698853" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="dGh-mk-HF3" kind="presentation" identifier="StandardToMain" animates="NO" id="kTA-kc-yd1"/>
+                                    <action selector="returnToMain:" destination="Q0V-sl-QbH" eventType="touchUpInside" id="MSe-2W-P5t"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1055,7 +1053,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ff-oZ-VTZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3740" y="1020.5397301349326"/>
+            <point key="canvasLocation" x="4810" y="1039"/>
         </scene>
         <!--梯度治疗-->
         <scene sceneID="vHg-Ca-iTk">
@@ -1240,7 +1238,7 @@
                                     <color key="titleColor" red="0.21176470589999999" green="0.3921568627" blue="0.56477864580000003" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="dGh-mk-HF3" kind="presentation" identifier="GradientToMain" animates="NO" id="aEa-fh-ynZ"/>
+                                    <action selector="returnToMain:" destination="wRB-BT-R2V" eventType="touchUpInside" id="U9L-by-eez"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PKp-y5-OUT">
@@ -1266,7 +1264,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="stZ-Bt-V3T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6556" y="-775.86206896551732"/>
+            <point key="canvasLocation" x="5617" y="-723"/>
         </scene>
         <!--本地治疗记录-->
         <scene sceneID="We0-jt-u4D">
@@ -1366,7 +1364,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="8701.6000000000004" y="-725.48725637181417"/>
+            <point key="canvasLocation" x="7628" y="-723"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="Cuh-7b-fpt">
@@ -1557,7 +1555,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QgA-iH-SW1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9445.6000000000004" y="-738.08095952023996"/>
+            <point key="canvasLocation" x="8570" y="-725"/>
         </scene>
         <!--参数治疗-->
         <scene sceneID="vPh-ZE-2xJ">
@@ -1657,19 +1655,19 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YAA-ph-au2">
-                                <rect key="frame" x="16" y="70" width="85" height="66"/>
+                                <rect key="frame" x="16" y="64" width="85" height="66"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.52312237019999996" green="0.6690714955" blue="0.89393049479999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.52156862745098043" green="0.6705882352941176" blue="0.89411764705882346" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="标准治疗">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="jtX-Ho-uJp" kind="presentation" identifier="ParameterToStandard" animates="NO" id="gEg-WG-Ynq"/>
+                                    <segue destination="Q0V-sl-QbH" kind="show" identifier="ParameterToStandard" animates="NO" id="Ll3-uf-iwB"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2xW-9S-2E1">
-                                <rect key="frame" x="102" y="70" width="85" height="66"/>
+                                <rect key="frame" x="102" y="64" width="85" height="66"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.52312237019999996" green="0.6690714955" blue="0.89393049479999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1681,7 +1679,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bw8-Lb-09k">
-                                <rect key="frame" x="188" y="70" width="85" height="66"/>
+                                <rect key="frame" x="188" y="64" width="85" height="66"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.80640369653701782" green="0.85930782556533813" blue="0.94201391935348511" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1690,7 +1688,7 @@
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WbB-j3-YdC">
-                                <rect key="frame" x="274" y="70" width="85" height="66"/>
+                                <rect key="frame" x="274" y="64" width="85" height="66"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.52312237019999996" green="0.6690714955" blue="0.89393049479999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
@@ -1698,7 +1696,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="WxD-3M-xOD" kind="presentation" identifier="ParameterToSolution" animates="NO" id="gWd-j3-vRL"/>
+                                    <segue destination="0kn-LS-pQG" kind="show" identifier="ParameterToSolution" animates="NO" id="xWp-r4-SpQ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZHe-Gf-TYD">
@@ -1731,7 +1729,7 @@
                                     <color key="titleColor" red="0.21176470589999999" green="0.3921568627" blue="0.56477864580000003" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="dGh-mk-HF3" kind="presentation" identifier="ParameterToMain" animates="NO" id="9v8-UG-YI2"/>
+                                    <action selector="returnToMain:" destination="Cbs-zK-ZPY" eventType="touchUpInside" id="GMt-QF-dmY"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iiU-cs-Gmr">
@@ -2035,7 +2033,7 @@
                                 <color key="backgroundColor" red="0.97931915520000001" green="0.9800599217" blue="0.9794338346" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="osS-Md-paI">
-                                <rect key="frame" x="16" y="70" width="85" height="66"/>
+                                <rect key="frame" x="16" y="64" width="85" height="66"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.52312237019999996" green="0.6690714955" blue="0.89393049479999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -2043,11 +2041,11 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="jtX-Ho-uJp" kind="presentation" identifier="SolutionToStandard" animates="NO" id="EpI-wI-ddl"/>
+                                    <segue destination="Q0V-sl-QbH" kind="show" identifier="SolutionToStandard" animates="NO" id="S8o-Gi-Maw"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WVD-vl-GzO">
-                                <rect key="frame" x="102" y="70" width="85" height="66"/>
+                                <rect key="frame" x="102" y="64" width="85" height="66"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.52312237019999996" green="0.6690714955" blue="0.89393049479999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -2059,7 +2057,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AR8-6r-17n">
-                                <rect key="frame" x="188" y="70" width="85" height="66"/>
+                                <rect key="frame" x="188" y="64" width="85" height="66"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.52312237019999996" green="0.6690714955" blue="0.89393049479999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -2067,11 +2065,11 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="XeN-yS-C2f" kind="presentation" identifier="SolutionToParameter" animates="NO" id="QO0-yR-oDw"/>
+                                    <segue destination="Cbs-zK-ZPY" kind="show" identifier="SolutionToParameter" animates="NO" id="xsr-RJ-1Y9"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jRZ-B9-fCq">
-                                <rect key="frame" x="274" y="70" width="85" height="66"/>
+                                <rect key="frame" x="274" y="64" width="85" height="66"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.80640369649999999" green="0.85930782559999996" blue="0.94201391940000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
@@ -2087,7 +2085,7 @@
                                     <color key="titleColor" red="0.21176470589999999" green="0.3921568627" blue="0.56477864580000003" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="dGh-mk-HF3" kind="presentation" identifier="SolutionToMain" animates="NO" id="gP2-f7-lrR"/>
+                                    <action selector="returnToMain:" destination="0kn-LS-pQG" eventType="touchUpInside" id="bDB-6L-cwl"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XPQ-i4-UKl">
@@ -2109,7 +2107,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RAN-k8-iR6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7320.8000000000002" y="1038.5307346326838"/>
+            <point key="canvasLocation" x="6556" y="1039"/>
         </scene>
         <!--普门家庭+-->
         <scene sceneID="rKw-He-tXP">
@@ -2153,79 +2151,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3JA-pw-3Wr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3753" y="15"/>
-        </scene>
-        <!--标准navi-->
-        <scene sceneID="4PP-6l-3Dy">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jtX-Ho-uJp" userLabel="标准navi" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="模式" id="SwQ-Qu-75D"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tyP-YV-UUf">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Q0V-sl-QbH" kind="relationship" relationship="rootViewController" id="82N-be-2Ws"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ms3-cd-zHE" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2932" y="1020.5397301349326"/>
-        </scene>
-        <!--梯度navi-->
-        <scene sceneID="DcF-zH-mVZ">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="T0J-Xi-qbF" userLabel="梯度navi" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="X9N-1h-kvJ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="wRB-BT-R2V" kind="relationship" relationship="rootViewController" id="XNs-41-bHg"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8vF-wq-6s3" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5749.6000000000004" y="-774.96251874062978"/>
-        </scene>
-        <!--参数navi-->
-        <scene sceneID="tfq-fK-Ajw">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XeN-yS-C2f" userLabel="参数navi" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bZp-Gk-UsM">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Cbs-zK-ZPY" kind="relationship" relationship="rootViewController" id="N9k-yP-8gs"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="UvT-1D-DHm" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4704.8000000000002" y="1020.5397301349326"/>
-        </scene>
-        <!--方案navi-->
-        <scene sceneID="ttl-8W-KEO">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="WxD-3M-xOD" userLabel="方案navi" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hzY-yu-x7I">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="0kn-LS-pQG" kind="relationship" relationship="rootViewController" id="ygZ-wX-YXT"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="yZb-G7-lPM" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="6484" y="1038.5307346326838"/>
         </scene>
         <!--服务器治疗记录-->
         <scene sceneID="5Kk-fg-KzX">
@@ -2335,7 +2260,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hXP-jo-A6r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7773.6000000000004" y="-738.08095952023996"/>
+            <point key="canvasLocation" x="6662" y="-723"/>
         </scene>
         <!--Server Detail View Controller-->
         <scene sceneID="FJ1-5a-IrD">
@@ -2914,14 +2839,11 @@
         <image name="unselected" width="86" height="86"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ZBQ-e1-zdk"/>
-        <segue reference="Lnw-ff-L4K"/>
-        <segue reference="Jaf-W6-m6D"/>
-        <segue reference="Gnw-az-Cez"/>
-        <segue reference="uo0-2k-Gxf"/>
-        <segue reference="OYR-tj-I2R"/>
-        <segue reference="bnI-Yd-YTo"/>
+        <segue reference="aZE-iu-HeG"/>
         <segue reference="YZz-rL-WdO"/>
-        <segue reference="hVw-wR-HqB"/>
+        <segue reference="7E7-TE-zOR"/>
+        <segue reference="Ll3-uf-iwB"/>
+        <segue reference="S8x-tP-cJv"/>
+        <segue reference="bkz-JL-cM5"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -29,7 +29,7 @@ typedef NS_ENUM(NSUInteger,typeTags)
 - (IBAction)onclickBport:(id)sender;
 - (IBAction)save:(id)sender;
 - (IBAction)cancelSave:(id)sender;
-
+- (IBAction)returnToMain:(id)sender;
 @end
 
 @implementation OtherSettingViewController
@@ -37,25 +37,24 @@ typedef NS_ENUM(NSUInteger,typeTags)
     NSArray *typeNames;
     NSArray *typeDics;
 }
-//- (UIStatusBarStyle)preferredStatusBarStyle
-//{
-//    return UIStatusBarStyleLightContent;//白色
-//}
 
-//设置状态栏颜色
-- (void)setStatusBarBackgroundColor:(UIColor *)color
-{
-    
-    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
-    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
-        statusBar.backgroundColor = color;
-    }
-}
+////设置状态栏颜色
+//- (void)setStatusBarBackgroundColor:(UIColor *)color
+//{
+//    
+//    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
+//    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
+//        statusBar.backgroundColor = color;
+//    }
+//}
 -(void)viewWillAppear:(BOOL)animated
 {
-//    [self preferredStatusBarStyle];
-//    [self setStatusBarBackgroundColor:UIColorFromHex(0xB5D2F0)];
+    [super viewWillAppear:YES];
+    self.navigationController.navigationBar.hidden = YES;
+    self.navigationItem.hidesBackButton = YES;
+//        self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -167,7 +166,9 @@ typedef NS_ENUM(NSUInteger,typeTags)
                                                               handler:^(UIAlertAction * _Nonnull action)
                                         {
                                             dispatch_async(dispatch_get_main_queue(), ^{
-                                                [self performSegueWithIdentifier:@"OtherSettingToMain" sender:nil];}  );
+//                                                [self performSegueWithIdentifier:@"OtherSettingToMain" sender:nil];
+                                                [self returnToMain:nil];
+                                            }  );
                                         }];
         [alert addAction:defaultAction];
         [self presentViewController:alert animated:YES completion:nil];
@@ -336,8 +337,21 @@ typedef NS_ENUM(NSUInteger,typeTags)
     Pack *pack = [[Pack alloc]init];
     [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xba]] withTimeout:-1 tag:0];
     [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xae]] withTimeout:-1 tag:0];
-    [self performSegueWithIdentifier:@"OtherSettingToMain" sender:nil];
+//    [self performSegueWithIdentifier:@"OtherSettingToMain" sender:nil];
+    [self returnToMain:nil];
 }
+
+- (IBAction)returnToMain:(id)sender
+{
+    [self askForTreatInfomation];
+    Pack *pack = [[Pack alloc]init];
+    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+    //设置更改生效 返回主界面
+    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0x230f] dataEnabled:YES data:[self dataWithValue:0xf1]] withTimeout:-1 tag:0];
+    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]    dataEnabled:YES data:[self dataWithValue:0Xae]] withTimeout:-1 tag:0];
+}
+
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     //返回标准设置界面
@@ -350,11 +364,12 @@ typedef NS_ENUM(NSUInteger,typeTags)
                          withTimeout:-1   tag:0];
 
 
-    }else if ([segue.identifier isEqualToString:@"OtherSettingToMain"])
-    {
-        //设置更改生效 返回主界面
-        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0x230f] dataEnabled:YES data:[self dataWithValue:0xf1]] withTimeout:-1 tag:0];
-        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]    dataEnabled:YES data:[self dataWithValue:0Xae]] withTimeout:-1 tag:0];
     }
+//    else if ([segue.identifier isEqualToString:@"OtherSettingToMain"])
+//    {
+//        //设置更改生效 返回主界面
+//        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0x230f] dataEnabled:YES data:[self dataWithValue:0xf1]] withTimeout:-1 tag:0];
+//        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]    dataEnabled:YES data:[self dataWithValue:0Xae]] withTimeout:-1 tag:0];
+//    }
 }
 @end

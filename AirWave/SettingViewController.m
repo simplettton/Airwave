@@ -29,15 +29,11 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
 - (IBAction)save:(id)sender;
 - (IBAction)cancelChange:(id)sender;
 - (IBAction)restoreFactorySetting:(id)sender;
+- (IBAction)returnToMain:(id)sender;
 
 @end
 
 @implementation SettingViewController
-//设置字体颜色
-//- (UIStatusBarStyle)preferredStatusBarStyle
-//{
-//    return UIStatusBarStyleLightContent;//白色
-//}
 
 //设置状态栏颜色
 - (void)setStatusBarBackgroundColor:(UIColor *)color
@@ -50,8 +46,10 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-//    [self preferredStatusBarStyle];
-//    [self setStatusBarBackgroundColor:UIColorFromHex(0xB5D2F0)];
+    [super viewWillAppear:YES];
+    self.navigationController.navigationBar.hidden = YES;
+    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+    self.navigationItem.hidesBackButton = YES;
 }
 
 - (void)viewDidLoad
@@ -62,7 +60,7 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
     {
         self.treatInfomation = [[TreatInformation alloc]init];
     }
-    
+//    [self updateView];
     
     //设置边框
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.keepTimeLabel.bounds byRoundingCorners:UIRectCornerTopRight|UIRectCornerBottomRight|UIRectCornerTopLeft|UIRectCornerBottomLeft cornerRadii:CGSizeMake(5.0, 5.0)];
@@ -93,6 +91,10 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
     maskLayer2.fillColor = [UIColor clearColor].CGColor;
     [self.chargeSpeedLabel.layer addSublayer:maskLayer2];
     
+    [self.keepTimeStepper addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.intervalTimeStepper addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.chargeSpeedStepper addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+    
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -107,15 +109,15 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
 {
     self.keepTimeLabel.text =[NSString stringWithFormat:@"%d",self.treatInfomation.keepTime];
     self.keepTimeStepper.value = self.treatInfomation.keepTime;
-    [self.keepTimeStepper addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+
     
     self.intervalTimeLabel.text = [NSString stringWithFormat:@"%d",self.treatInfomation.treatInterval];
     self.intervalTimeStepper.value = self.treatInfomation.treatInterval;
-    [self.intervalTimeStepper addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+
     
     self.chargeSpeedLabel.text = [NSString stringWithFormat:@"%d",self.treatInfomation.chargeSpeed];
     self.chargeSpeedStepper.value = self.treatInfomation.chargeSpeed;
-    [self.chargeSpeedStepper addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+
 }
 -(void)valueChanged:(id)sender
 {
@@ -212,7 +214,8 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
     Pack *pack = [[Pack alloc]init];
     [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xba]] withTimeout:-1 tag:0];
     [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xae]] withTimeout:-1 tag:0];
-    [self performSegueWithIdentifier:@"SettingToMain" sender:nil];
+//    [self performSegueWithIdentifier:@"SettingToMain" sender:nil];
+    [self returnToMain:sender];
 }
 
 - (IBAction)restoreFactorySetting:(id)sender
@@ -263,12 +266,13 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     [self askForTreatInfomation];
     Pack *pack = [[Pack alloc]init];
-    if ([segue.identifier isEqualToString:@"SettingToMain"])
-    {
-        Byte addr[]={0x23,0x06};
-        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addr] dataEnabled:YES data:[self dataWithValue:0xf1]] withTimeout:-1 tag:0];
-        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]    dataEnabled:YES data:[self dataWithValue:0XAE]] withTimeout:-1 tag:0];
-    }else if ([segue.identifier isEqualToString:@"SettingToOtherSetting"])
+//    if ([segue.identifier isEqualToString:@"SettingToMain"])
+//    {
+//        Byte addr[]={0x23,0x06};
+//        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addr] dataEnabled:YES data:[self dataWithValue:0xf1]] withTimeout:-1 tag:0];
+//        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]    dataEnabled:YES data:[self dataWithValue:0XAE]] withTimeout:-1 tag:0];
+//    }
+    if ([segue.identifier isEqualToString:@"SettingToOtherSetting"])
     {
         OtherSettingViewController *controller = (OtherSettingViewController *)segue.destinationViewController;
         controller.treatInfomation = self.treatInfomation;
@@ -276,4 +280,13 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
     }
 }
 
+- (IBAction)returnToMain:(id)sender
+{
+    [self askForTreatInfomation];
+    Pack *pack = [[Pack alloc]init];
+    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+    Byte addr[]={0x23,0x06};
+    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addr] dataEnabled:YES data:[self dataWithValue:0xf1]] withTimeout:-1 tag:0];
+    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]    dataEnabled:YES data:[self dataWithValue:0XAE]] withTimeout:-1 tag:0];
+}
 @end

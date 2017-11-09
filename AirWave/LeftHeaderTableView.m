@@ -17,10 +17,12 @@
 @end
 
 @implementation LeftHeaderTableView
--(instancetype)initWithFrame:(CGRect)frame{
+-(instancetype)initWithFrame:(CGRect)frame
+{
     self = [super initWithFrame:frame] ;
     if (self) {
         [self addView];
+        self.backgroundColor = UIColorFromHex(0X65BBA9);
     }
     return self;
 }
@@ -34,10 +36,11 @@
     headerImageView.image = [UIImage imageNamed:@"smile"];
     [self addSubview:headerImageView];
     //加载昵称
-    UILabel * nickNameLabel  = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(headerImageView.frame)+ 20 * KScreenUnit , 136 * KScreenUnit, 300 * KScreenUnit,30 * KScreenUnit)];
+    UILabel * nickNameLabel  = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(headerImageView.frame)+ 20 * KScreenUnit , 150 * KScreenUnit, 300 * KScreenUnit,30 * KScreenUnit)];
     nickNameLabel.text = @"    游客";
-    nickNameLabel.textColor = [UIColor blackColor];
-    nickNameLabel.font   = [UIFont systemFontOfSize:28 * KScreenUnit];
+    nickNameLabel.textColor = [UIColor whiteColor];
+//    nickNameLabel.font   = [UIFont systemFontOfSize:28 * KScreenUnit];
+    nickNameLabel.font = [UIFont systemFontOfSize:35*KScreenUnit];
     [self addSubview:nickNameLabel];
     
     //添加点击button

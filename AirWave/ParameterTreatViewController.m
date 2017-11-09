@@ -31,6 +31,7 @@
 - (IBAction)chooseCustomTime:(id)sender;
 - (IBAction)save:(id)sender;
 - (IBAction)cancel:(id)sender;
+- (IBAction)returnToMain:(id)sender;
 @end
 
 @implementation ParameterTreatViewController
@@ -86,9 +87,12 @@
 -(void)configureView
 {
 
-    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setShadowImage:[[UIImage alloc]init]];
+//    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
+//    [self.navigationController.navigationBar setShadowImage:[[UIImage alloc]init]];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColorFromHex(0x626d91)}];
+    self.navigationController.navigationBar.barTintColor = UIColorFromHex(0xffffff);
+    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+    self.navigationItem.hidesBackButton = YES;
 
     
     CALayer *topBorder = [CALayer layer];
@@ -257,6 +261,11 @@
     [self configureTimeSelectButton];
     [self save:sender];
 }
+
+- (IBAction)returnToMain:(id)sender
+{
+      [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1]animated:NO];
+}
 -(void)askForTreatInfomation
 {
     Pack *pack = [[Pack alloc]init];
@@ -326,7 +335,7 @@
     button.backgroundColor = UIColorFromHex(0x65BBA9);
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button setTitle:[NSString stringWithFormat:@"重新连接"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(returnToMain) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(returnToMain:) forControlEvents:UIControlEventTouchUpInside];
     [disconnectView addSubview:label];
     [disconnectView addSubview:button];
     [self.view addSubview:disconnectView];
@@ -418,10 +427,7 @@
         [self.clientSocket writeData:sendata withTimeout:-1 tag:0];
     }
 }
--(void)returnToMain
-{
-    [self performSegueWithIdentifier:@"ParameterToMain" sender:nil];
-}
+
 #pragma mark - private method
 -(CABasicAnimation *)warningMessageAnimation:(float)time
 {

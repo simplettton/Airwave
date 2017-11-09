@@ -33,6 +33,7 @@
 - (IBAction)chooseCustomTime:(id)sender;
 - (IBAction)save:(id)sender;
 - (IBAction)cancel:(id)sender;
+- (IBAction)returnToMain:(id)sender;
 
 @end
 
@@ -82,10 +83,11 @@
 }
 -(void)configureView
 {
-    //configure navigationcontroller
-    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setShadowImage:[[UIImage alloc]init]];
+
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColorFromHex(0x626d91)}];
+    self.navigationController.navigationBar.barTintColor = UIColorFromHex(0xffffff);
+    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+    self.navigationItem.hidesBackButton = YES;
     CALayer *topBorder = [CALayer layer];
     topBorder.frame = CGRectMake(0.0f, 0.0f, self.buttonView.frame.size.width, 0.5f);
     topBorder.backgroundColor = UIColorFromHex(0xE4E4E4).CGColor;
@@ -250,6 +252,11 @@
     [self save:sender];
 }
 
+- (IBAction)returnToMain:(id)sender
+{
+    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:NO];
+}
+
 #pragma mark - socketDelegate
 -(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
 {
@@ -317,17 +324,11 @@
     button.backgroundColor = UIColorFromHex(0x65BBA9);
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button setTitle:[NSString stringWithFormat:@"重新连接"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(returnToMain) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(returnToMain:) forControlEvents:UIControlEventTouchUpInside];
     [disconnectView addSubview:label];
     [disconnectView addSubview:button];
     [self.view addSubview:disconnectView];
 }
--(void)returnToMain
-{
-    [self performSegueWithIdentifier:@"GradientToMain" sender:nil];
-}
-
-
 #pragma mark - pickerViewDelegate
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
