@@ -344,11 +344,12 @@ typedef NS_ENUM(NSUInteger,State)
 //            }
 //        }
 //    }
-//    //设备识别
-//    if (bytes[0]==0xFA)
-//    {
-//        
-//    }
+    //设备识别
+    if (bytes[0]==0xFA)
+    {
+        NSLog(@"mmmmm");
+        
+    }
 
     
 }

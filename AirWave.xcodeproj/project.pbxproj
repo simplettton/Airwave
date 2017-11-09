@@ -821,6 +821,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: 515315183@qq.com (L33H2377CF)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = UUWZ3JRNLN;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = AirWave/Info.plist;
