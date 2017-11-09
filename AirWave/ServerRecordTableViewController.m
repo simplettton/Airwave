@@ -25,6 +25,7 @@ static NSString *BLOODDEVTYPE = @"8888";
     NSInteger currentPage;
     NSInteger numberOfPages;
 }
+
 - (IBAction)nextPage:(id)sender;
 - (IBAction)previousPage:(id)sender;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *upButton;
@@ -197,6 +198,9 @@ static NSString *BLOODDEVTYPE = @"8888";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self performSegueWithIdentifier:@"ShowServerDetail" sender:datas[indexPath.row]];
 }
+- (IBAction)return:(id)sender {
+}
+
 - (IBAction)nextPage:(id)sender
 {
     if (currentPage != numberOfPages -1)
@@ -250,8 +254,7 @@ static NSString *BLOODDEVTYPE = @"8888";
         viewController.type = self.type;
     }else if ([segue.identifier isEqualToString:@"ServerRecordToRecord"])
     {
-        UINavigationController *navi = (UINavigationController *)segue.destinationViewController;
-        RecordTableViewController *vc = (RecordTableViewController *)[navi topViewController];
+        RecordTableViewController *vc = (RecordTableViewController *)segue.destinationViewController;
         vc.type = self.type;
     }
 }

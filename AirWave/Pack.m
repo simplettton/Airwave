@@ -24,16 +24,7 @@ typedef void(^NewByteBlock)(NSInteger,NSInteger);
 
 //
 
-//NewByteBlock newByteBlock = ^(NSInteger param1,NSInteger param2)
-//{
-//    Byte addrBytes [2] = {param1 , param1};
-//    NSData *data = [NSData dataWithBytes:addrBytes length:2];
-//    return data;
-//};
-
-
-
--(NSData *)packetWithCmdid:(Byte)cmdid addressEnabled:(BOOL)addrEnabled addr:(NSData *)paddr dataEnabled:(BOOL)dataEnabled data:(NSData *)pdata
++(NSData *)packetWithCmdid:(Byte)cmdid addressEnabled:(BOOL)addrEnabled addr:(NSData *)paddr dataEnabled:(BOOL)dataEnabled data:(NSData *)pdata
 {
 
     Byte *data = (Byte *)[pdata bytes];
@@ -97,7 +88,7 @@ typedef void(^NewByteBlock)(NSInteger,NSInteger);
     
 }
 #pragma mark - Private Method
--(Byte)getCRC8WithData:(NSData *)dataArray
++(Byte)getCRC8WithData:(NSData *)dataArray
 {
     if (NULL==dataArray || [dataArray length] < 1)
     {

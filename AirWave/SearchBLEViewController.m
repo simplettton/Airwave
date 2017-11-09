@@ -243,13 +243,7 @@
 
 - (IBAction)startScan:(id)sender
 {
-//    self.activityIndicatorView=[[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(0,0,100,100)];
-//
-//    self.activityIndicatorView.center = CGPointMake(100, 228);
-//    [self.activityIndicatorView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
-//    //    [self.activityIndicatorView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
-//    //    [self.activityIndicatorView setBackgroundColor:[UIColor lightGrayColor]];
-//    [self.view addSubview:self.activityIndicatorView];
+
     [self.activityIndicatorView startAnimating];
     baby.scanForPeripherals().begin();
 

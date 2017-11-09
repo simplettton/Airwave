@@ -24,7 +24,8 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
     NSMutableArray *records;
     NSMutableArray *mResult;
 }
-- (IBAction)retrunButtonClicked:(id)sender;
+- (IBAction)returnButtonClicked:(id)sender;
+
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 - (IBAction)upload:(id)sender;
@@ -139,11 +140,6 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
     }else if([self.type isEqualToString:BLOODDEVTYPE]){
         cell.treatWayLabel.text = [NSString stringWithFormat:@"治疗强度：%d",record.treatWay];
     }
-//    if (record.imagePath!=nil)
-//    {
-//        cell.resultImageView.contentMode = UIViewContentModeScaleAspectFit;
-//        cell.resultImageView.image = [UIImage imageNamed:@"image"];
-//    }
 
     //治疗时长
 //    cell.durationLabel.text = record.durationString;
@@ -471,14 +467,18 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
 //    });
 
 }
-- (IBAction)retrunButtonClicked:(id)sender
+//- (IBAction)retrunButtonClicked:(id)sender
+//{
+//    if ([self.type isEqualToString:AIRWAVETYPE])
+//    {
+//        [self performSegueWithIdentifier:@"ReturnToAirWave" sender:nil];
+//    }else if([self.type isEqualToString:BLOODDEVTYPE])
+//    {
+//        [self performSegueWithIdentifier:@"BloodRecordReturnHome" sender:nil];
+//    }
+//}
+- (IBAction)returnButtonClicked:(id)sender
 {
-    if ([self.type isEqualToString:AIRWAVETYPE])
-    {
-        [self performSegueWithIdentifier:@"ReturnToAirWave" sender:nil];
-    }else if([self.type isEqualToString:BLOODDEVTYPE])
-    {
-        [self performSegueWithIdentifier:@"BloodRecordReturnHome" sender:nil];
-    }
+    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
 }
 @end

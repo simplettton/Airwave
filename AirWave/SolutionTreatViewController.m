@@ -214,23 +214,21 @@
                                    @{@"tag":@"8",   @"commit":[NSNumber numberWithUnsignedInteger:0xc0]},
                                    @{@"tag":@"9",   @"commit":[NSNumber numberWithUnsignedInteger:0xc1]},
                                    @{@"tag":@"10",  @"commit":[NSNumber numberWithUnsignedInteger:0xc2]}    ];
-    
-    Pack *pack = [[Pack alloc]init];
     for(NSDictionary *dic in modeSettingDics)
     {
         if (self.selectedModeTag == [[dic objectForKey:@"tag"]integerValue])
         {
             NSInteger commit = [[dic objectForKey:@"commit"]unsignedIntegerValue];
-            NSData *dataToSend = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:commit]];
+            NSData *dataToSend = [Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:commit]];
             [self.clientSocket writeData:dataToSend withTimeout:-1 tag:1];
-            NSData *saveCommand = [pack packetWithCmdid:0X90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xbb]];
+            NSData *saveCommand = [Pack packetWithCmdid:0X90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xbb]];
             [self.clientSocket writeData:saveCommand withTimeout:-1 tag:1];
         }
     }
     //设置治疗压力
     Byte addrByte2[2] = {80,0};
     NSInteger press= [self.pressTextField.text integerValue];
-    NSData *sendData = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrByte2]
+    NSData *sendData = [Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrByte2]
                                   dataEnabled:YES data:[self dataWithValue:press]];
     [self.clientSocket writeData:sendData withTimeout:-1 tag:1];
 }
@@ -306,10 +304,9 @@
 }
 -(void)askForTreatInfomation
 {
-    Pack *pack = [[Pack alloc]init];
     Byte addrBytes[2] = {0,0};
     Byte dataBytes[2] = {1,0x62};
-    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
                                                                dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:1000];
 }
 #pragma mark - segue
@@ -317,18 +314,18 @@
 {
     if (segue.identifier != nil)
     {
-        Pack *pack = [[Pack alloc]init];
+
         NSData *sendata;
         if ([segue.identifier isEqualToString: @"SolutionToStandard"])
         {
-            sendata = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+            sendata = [Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                 dataEnabled:YES data:[self dataWithValue:0x0d]];
         }
         else if ([segue.identifier isEqualToString:@"SolutionToParameter"])
         {
-            [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+            [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                    dataEnabled:YES data:[self dataWithValue:0x0f]] withTimeout:-1 tag:0];
-            sendata = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+            sendata = [Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                 dataEnabled:YES data:[self dataWithValue:0X82]];
         }
         [self.clientSocket writeData:sendata withTimeout:-1 tag:0];

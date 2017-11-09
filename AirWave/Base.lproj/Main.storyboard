@@ -1053,7 +1053,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ff-oZ-VTZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4810" y="1039"/>
+            <point key="canvasLocation" x="4810" y="883"/>
         </scene>
         <!--梯度治疗-->
         <scene sceneID="vHg-Ca-iTk">
@@ -1341,7 +1341,7 @@
                     <navigationItem key="navigationItem" title="本地治疗记录" id="VaC-YA-hQp">
                         <barButtonItem key="leftBarButtonItem" title="返回" id="XXP-ZS-muP">
                             <connections>
-                                <action selector="retrunButtonClicked:" destination="Dc5-NS-ggL" id="xFt-WV-aUn"/>
+                                <action selector="returnButtonClicked:" destination="Dc5-NS-ggL" id="Frj-j4-Qgk"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1349,9 +1349,7 @@
                         <outlet property="searchBar" destination="KQ6-TE-93X" id="az1-R5-ppv"/>
                         <outlet property="searchDisplayController" destination="8nM-vf-o5U" id="mse-28-RdJ"/>
                         <segue destination="fMg-JT-rIL" kind="show" identifier="ShowDetail" id="8bW-Os-5cG"/>
-                        <segue destination="Kof-ux-81R" kind="show" identifier="ShowServerRecords" animates="NO" id="gW8-3R-J6f"/>
-                        <segue destination="dGh-mk-HF3" kind="show" identifier="ReturnToAirWave" animates="NO" id="uo0-2k-Gxf"/>
-                        <segue destination="Ybz-nf-prl" kind="show" identifier="BloodRecordReturnHome" animates="NO" id="Jaf-W6-m6D"/>
+                        <segue destination="Kof-ux-81R" kind="show" identifier="ShowServerRecords" id="gW8-3R-J6f"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KJ0-lH-bD7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1755,7 +1753,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V2P-Z9-e5o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5618" y="1039"/>
+            <point key="canvasLocation" x="5618" y="883"/>
         </scene>
         <!--方案治疗-->
         <scene sceneID="nCm-Qy-vWh">
@@ -2107,7 +2105,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RAN-k8-iR6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6556" y="1039"/>
+            <point key="canvasLocation" x="6558" y="883"/>
         </scene>
         <!--普门家庭+-->
         <scene sceneID="rKw-He-tXP">
@@ -2215,7 +2213,7 @@
                         <barButtonItem key="leftBarButtonItem" title="返回" id="kCc-pk-BCX">
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <segue destination="rce-2R-CQf" kind="presentation" identifier="ServerRecordToRecord" animates="NO" id="zc6-SB-WJ2"/>
+                                <segue destination="Dc5-NS-ggL" kind="show" identifier="ServerRecordToRecord" animates="NO" id="rsJ-Me-eG7"/>
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
@@ -2235,7 +2233,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="downButton" destination="UH2-wf-xFg" id="KVX-FO-Sh4"/>
-                        <outlet property="upButton" destination="U9E-Eh-kcA" id="IBS-Tv-5vP"/>
+                        <outlet property="upButton" destination="U9E-Eh-kcA" id="jWj-yx-1Bl"/>
                         <segue destination="8rB-kL-RBF" kind="show" identifier="ShowServerDetail" animates="NO" id="fBT-2x-bBA"/>
                     </connections>
                 </tableViewController>
@@ -2783,7 +2781,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cGT-Fm-Opy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1885.5999999999999" y="981.85907046476768"/>
+            <point key="canvasLocation" x="2985" y="817"/>
         </scene>
     </scenes>
     <resources>
@@ -2839,11 +2837,12 @@
         <image name="unselected" width="86" height="86"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="aZE-iu-HeG"/>
-        <segue reference="YZz-rL-WdO"/>
-        <segue reference="7E7-TE-zOR"/>
-        <segue reference="Ll3-uf-iwB"/>
-        <segue reference="S8x-tP-cJv"/>
+        <segue reference="rsJ-Me-eG7"/>
         <segue reference="bkz-JL-cM5"/>
+        <segue reference="bco-oh-nlz"/>
+        <segue reference="aZE-iu-HeG"/>
+        <segue reference="xsr-RJ-1Y9"/>
+        <segue reference="xWp-r4-SpQ"/>
+        <segue reference="DIr-Rm-dyK"/>
     </inferredMetricsTieBreakers>
 </document>

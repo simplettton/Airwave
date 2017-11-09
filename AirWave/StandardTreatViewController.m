@@ -108,10 +108,6 @@
 }
 -(void)configureView
 {
-
-
-    
-
     //设置单边圆角
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.saveButton.bounds byRoundingCorners:UIRectCornerTopRight|UIRectCornerBottomRight cornerRadii:CGSizeMake(10.0, 10.0)];
     CAShapeLayer *maskLayer = [CAShapeLayer layer];
@@ -267,22 +263,21 @@
         if ([sender isEqual:self.cancelButton]){ tag = 0; }
         
         //设置治疗时间
-        Pack *pack = [[Pack alloc]init];
         Byte addrBytes[2] = {80,4};
-        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
+        [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
                                                                    dataEnabled:YES data:[self dataWithValue:minutes]] withTimeout:-1 tag:tag];
         
         //设置治疗方案
         Byte addrBytes1[2] = {80,3};
         NSInteger mode = [self.modePicker selectedRowInComponent:0];
-        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes1]
+        [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes1]
                                                                    dataEnabled:YES data:[self dataWithValue:(mode+1)]] withTimeout:-1 tag:tag];
         
         //设置治疗压力
         Byte addrByte2[2] = {80,0};
         NSInteger press= [self.pressPicker selectedRowInComponent:0];
 
-        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrByte2]
+        [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrByte2]
                                                                    dataEnabled:YES data:[self dataWithValue:press]] withTimeout:-1 tag:tag];
         
     }
@@ -293,9 +288,8 @@
 }
 -(void)askForTreatInfomation
 {
-    Pack *pack = [[Pack alloc]init];
     Byte dataBytes[2] = {1,0x62};
-    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                                dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:1000];
 }
 #pragma mark -pickerViewDelegate
@@ -358,21 +352,21 @@
 {
     if (segue.identifier !=nil)
     {
-        Pack *pack = [[Pack alloc]init];
+
         NSData *sendata;
         if ([segue.identifier isEqualToString:@"StandardToParameter"]||[segue.identifier isEqualToString:@"StandardToSolution"])
         {
-            [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+            [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                                        dataEnabled:YES data:[self dataWithValue:0x0f]] withTimeout:-1 tag:0];
             if ([segue.identifier isEqualToString: @"StandardToParameter"])
             {
-                sendata = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                sendata = [Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                         dataEnabled:YES data:[self dataWithValue:0x82]];
                 
             }
             else if ([segue.identifier isEqualToString:@"StandardToSolution"])
             {
-                sendata = [pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                sendata = [Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                         dataEnabled:YES data:[self dataWithValue:0X81]];
             }
             [self.clientSocket writeData:sendata withTimeout:-1 tag:0];

@@ -45,7 +45,6 @@
 		048A3B1A1F540DC500929C37 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A3B191F540DC500929C37 /* SettingViewController.m */; };
 		048A3B1D1F5411D700929C37 /* OtherSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A3B1C1F5411D700929C37 /* OtherSettingViewController.m */; };
 		0496EFC31F8B856C0098C7BE /* TreatRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 0496EFC21F8B856C0098C7BE /* TreatRecord.m */; };
-		04A4202B1F9D91CD00A6C2E9 /* Http in Resources */ = {isa = PBXBuildFile; fileRef = 04A4202A1F9D91CD00A6C2E9 /* Http */; };
 		04A420371F9D929C00A6C2E9 /* HttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A4202E1F9D929C00A6C2E9 /* HttpClient.m */; };
 		04A420381F9D929C00A6C2E9 /* HttpError.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A420301F9D929C00A6C2E9 /* HttpError.m */; };
 		04A420391F9D929C00A6C2E9 /* HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A420321F9D929C00A6C2E9 /* HttpHelper.m */; };
@@ -54,6 +53,7 @@
 		04B68F491F4EDAE200FD31E5 /* ParameterTreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B68F481F4EDAE200FD31E5 /* ParameterTreatViewController.m */; };
 		04CAE36F1F8DFA2500840AD6 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CAE36E1F8DFA2500840AD6 /* DetailViewController.m */; };
 		04D73DF11FA03E81009DC929 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D73DF01FA03E81009DC929 /* libsqlite3.0.tbd */; };
+		04E808F91FB44BFB0015CF19 /* Unpack.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E808F81FB44BFB0015CF19 /* Unpack.m */; };
 		80238F6720C2423CFD5B8E71 /* libPods-AirWave.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98F75C0AC4207A763C4E062D /* libPods-AirWave.a */; };
 /* End PBXBuildFile section */
 
@@ -155,7 +155,6 @@
 		048A3B1C1F5411D700929C37 /* OtherSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherSettingViewController.m; sourceTree = "<group>"; };
 		0496EFC11F8B856C0098C7BE /* TreatRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreatRecord.h; sourceTree = "<group>"; };
 		0496EFC21F8B856C0098C7BE /* TreatRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreatRecord.m; sourceTree = "<group>"; };
-		04A4202A1F9D91CD00A6C2E9 /* Http */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Http; sourceTree = "<group>"; };
 		04A4202D1F9D929C00A6C2E9 /* HttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClient.h; sourceTree = "<group>"; };
 		04A4202E1F9D929C00A6C2E9 /* HttpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpClient.m; sourceTree = "<group>"; };
 		04A4202F1F9D929C00A6C2E9 /* HttpError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpError.h; sourceTree = "<group>"; };
@@ -171,6 +170,8 @@
 		04CAE36D1F8DFA2500840AD6 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		04CAE36E1F8DFA2500840AD6 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		04D73DF01FA03E81009DC929 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		04E808F71FB44BFB0015CF19 /* Unpack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Unpack.h; sourceTree = "<group>"; };
+		04E808F81FB44BFB0015CF19 /* Unpack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Unpack.m; sourceTree = "<group>"; };
 		98F75C0AC4207A763C4E062D /* libPods-AirWave.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AirWave.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D1B39FA922AAA28BEDFF4EA /* Pods-AirWave.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirWave.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AirWave/Pods-AirWave.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -266,9 +267,10 @@
 		0462C8101F5D414700AEC2D6 /* dataAnalyze */ = {
 			isa = PBXGroup;
 			children = (
-				04A4202A1F9D91CD00A6C2E9 /* Http */,
 				044D54B91F4D15F7002C1E35 /* Pack.h */,
 				044D54BA1F4D15F7002C1E35 /* Pack.m */,
+				04E808F71FB44BFB0015CF19 /* Unpack.h */,
+				04E808F81FB44BFB0015CF19 /* Unpack.m */,
 				0462C8111F5D42CE00AEC2D6 /* TreatInformation.h */,
 				0462C8121F5D42CE00AEC2D6 /* TreatInformation.m */,
 				045D81B11F6295B400D4D998 /* RunningInfomation.h */,
@@ -320,13 +322,13 @@
 				045750401FB151E100E3AD73 /* BloodDev */,
 				045750411FB151FB00E3AD73 /* AirWaveDev */,
 				0457504E1FB191E000E3AD73 /* RecordController */,
+				0462C8101F5D414700AEC2D6 /* dataAnalyze */,
+				04A4203C1F9D92A900A6C2E9 /* Http */,
+				046BA76B1F480DF2004D7E74 /* Supporting Files */,
 				045BBC6D1F8F45AD000D767B /* Assets.xcassets */,
 				0457C63C1F5563EE0050C604 /* Main.storyboard */,
 				046BA7791F480DF2004D7E74 /* LaunchScreen.storyboard */,
 				046BA77C1F480DF2004D7E74 /* Info.plist */,
-				04A4203C1F9D92A900A6C2E9 /* Http */,
-				0462C8101F5D414700AEC2D6 /* dataAnalyze */,
-				046BA76B1F480DF2004D7E74 /* Supporting Files */,
 			);
 			path = AirWave;
 			sourceTree = "<group>";
@@ -520,7 +522,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04A4202B1F9D91CD00A6C2E9 /* Http in Resources */,
 				046BA77B1F480DF2004D7E74 /* LaunchScreen.storyboard in Resources */,
 				045BBC6E1F8F45AD000D767B /* Assets.xcassets in Resources */,
 				0457C63E1F5563EE0050C604 /* Main.storyboard in Resources */,
@@ -637,6 +638,7 @@
 				044E4F521F60D63B009DD7E7 /* UIImage+ImageWithColor.m in Sources */,
 				044D54B81F4D159D002C1E35 /* StandardTreatViewController.m in Sources */,
 				048A3B1A1F540DC500929C37 /* SettingViewController.m in Sources */,
+				04E808F91FB44BFB0015CF19 /* Unpack.m in Sources */,
 				0476B66D1F8DAAF90075B953 /* RecordTableViewCell.m in Sources */,
 				041FD7E51F58FDEA00522D64 /* SolutionTreatViewController.m in Sources */,
 				046BA7A21F4817C8004D7E74 /* TreatViewController.m in Sources */,

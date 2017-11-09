@@ -9,8 +9,11 @@
 #import "LeftDrawerViewController.h"
 #import "LeftHeaderTableView.h"
 #import "DetailViewController.h"
+#import "RecordTableViewController.h"
+#import "UIViewController+MMDrawerController.h"
 #import "BaseHeader.h"
-
+static NSString *AIRWAVETYPE = @"7681";
+static NSString *BLOODDEVTYPE = @"8888";
 @interface LeftDrawerViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property(assign , nonatomic) int homePageIndex;
@@ -46,10 +49,6 @@
 }
 - (void)tableView: (UITableView*)tableView willDisplayCell: (UITableViewCell*)cell forRowAtIndexPath: (NSIndexPath*)indexPath
 {
-//    cell.backgroundColor = [UIColor blackColor];
-//    cell.textLabel.backgroundColor = [UIColor redColor];
-//    cell.detailTextLabel.backgroundColor = [UIColor blueColor];
-    
     if (indexPath.row==6)
     {
         cell.textLabel.textColor = UIColorFromHex(0X65BBA9);
@@ -93,6 +92,25 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    UIStoryboard *mainStoryborad = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *showVC;
+    RecordTableViewController *recordVC =(RecordTableViewController *)[mainStoryborad instantiateViewControllerWithIdentifier:@"RecordTableViewController"];
+    if (indexPath.row == 0)
+    {
+        recordVC.type = AIRWAVETYPE;
+        showVC = recordVC;
+    }else if (indexPath.row==1)
+    {
+        recordVC.type = BLOODDEVTYPE;
+        showVC = recordVC;
+    }
+    
+    UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
+    [nav pushViewController:showVC animated:NO];
+    [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
+        [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
+    }];
+
 }
 
 @end

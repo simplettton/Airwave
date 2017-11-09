@@ -1109,33 +1109,29 @@ NSString *const PORT = @"8080";
 #pragma mark - commit
 - (void)start
 {
-    Pack *pack = [[Pack alloc]init];
     Byte dataBytes[2] = {0,0x10};
-    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                                dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:0];
 }
 -(void)pause
 {
-    Pack *pack = [[Pack alloc]init];
     Byte dataBytes[2] = {0,0x11};
-    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                                dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:0];
     
 }
 -(void)askForTreatInfomation
 {
-    Pack *pack = [[Pack alloc]init];
     Byte dataBytes[2] = {1,0x62};
-    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                                dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:1000];
 }
 -(void)lightupBodyButton:(BodyButton *)button
 {
     [button changeGreyColor];
-    Pack *pack = [[Pack alloc]init];
     NSNumber *commitNumber = [button.multiParamDic objectForKey:@"commit"];
     Byte dataBytes[2] = {0,[commitNumber unsignedIntegerValue]};
-    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                                dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:0];
 }
 //添加计时器
@@ -1154,8 +1150,7 @@ NSString *const PORT = @"8080";
 // 心跳连接
 - (void)longConnectToSocket
 {
-    Pack *pack =[[Pack alloc]init];
-    [self.clientSocket writeData:[pack packetWithCmdid:0x93 addressEnabled:NO addr:nil
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x93 addressEnabled:NO addr:nil
                                                                dataEnabled:NO data:nil] withTimeout:- 1 tag:2];
 }
 #pragma mark - Take Photo
@@ -1355,7 +1350,6 @@ NSString *const PORT = @"8080";
 }
 -(NSData*) dataWithValue:(NSInteger)value
 {
-    
     Byte src[2]={0,0};
     src[0] =  (Byte) ((value>>8) & 0xFF);
     src[1] =  (Byte) (value & 0xFF);
@@ -1365,7 +1359,6 @@ NSString *const PORT = @"8080";
 
 -(NSData*) dataWithBytes:(Byte[])bytes
 {
-    
     NSData *data = [NSData dataWithBytes:bytes length:2];
     return data;
 }
@@ -1418,41 +1411,28 @@ NSString *const PORT = @"8080";
     [self askForTreatInfomation];
     if ([segue.identifier isEqualToString:@"MainToStandard"])
     {
-//        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
-//        StandardTreatViewController *controller = (StandardTreatViewController *)navigationController.topViewController;
-        
         StandardTreatViewController *controller = (StandardTreatViewController *)segue.destinationViewController;
         controller.treatInfomation = self.treatInformation;
     }
     else if([segue.identifier isEqualToString:@"MainToGradient"])
     {
-        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
-        GradientTreatViewController *controller = (GradientTreatViewController *)navigationController.topViewController;
+        GradientTreatViewController *controller = (GradientTreatViewController *)segue.destinationViewController;
         controller.treatInfomation = self.treatInformation;
     }
     else if([segue.identifier isEqualToString:@"MainToParameter"])
     {
-        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
-        ParameterTreatViewController  *controller = (ParameterTreatViewController *)navigationController.topViewController;
+        ParameterTreatViewController  *controller = (ParameterTreatViewController *)segue.destinationViewController;
         controller.treatInfomation = self.treatInformation;
     }else if([segue.identifier isEqualToString:@"MainToSolution"])
     {
-        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
-        SolutionTreatViewController *controller = (SolutionTreatViewController *)navigationController.topViewController;
+        SolutionTreatViewController *controller = (SolutionTreatViewController *)segue.destinationViewController;
         controller.treatInfomation = self.treatInformation;
     }else if ([segue.identifier isEqualToString:@"MainToSetting"])
     {
         SettingViewController *controller = (SettingViewController *)segue.destinationViewController;
         controller.treatInfomation = self.treatInformation;
-        Pack *pack = [[Pack alloc]init];
-        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+        [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                                    dataEnabled:YES data:[self dataWithValue:0xaf]] withTimeout:-1 tag:0];
     }
-//    }else if([segue.identifier isEqualToString:@"ShowAirWaveRecord"])
-//    {
-//        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
-//        RecordTableViewController* controller = (RecordTableViewController *)navigationController.topViewController;
-//        controller.type = TYPE;
-//    }
 }
 @end

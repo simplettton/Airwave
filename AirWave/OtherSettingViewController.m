@@ -124,9 +124,8 @@ typedef NS_ENUM(NSUInteger,typeTags)
 }
 -(void)askForTreatInfomation
 {
-    Pack *pack = [[Pack alloc]init];
     Byte dataBytes[2] = {1,0x62};
-    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                                dataEnabled:YES data:[self dataWithBytes:dataBytes]]
                                                                withTimeout:-1 tag:0];
 }
@@ -308,7 +307,6 @@ typedef NS_ENUM(NSUInteger,typeTags)
 {
     NSNumber *commitA;
     NSNumber *commitB;
-    Pack *pack = [[Pack alloc]init];
     for(NSDictionary *dic in typeDics)
     {
         for(NSString *key in dic)
@@ -324,19 +322,18 @@ typedef NS_ENUM(NSUInteger,typeTags)
             }
         }
     }
-    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                                dataEnabled:YES data:[self dataWithValue:[commitA integerValue]]]
                                                                withTimeout:-1   tag:1];
-    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                                dataEnabled:YES data:[self dataWithValue:[commitB integerValue]]]
                                                                withTimeout:-1   tag:1];
 }
 
 - (IBAction)cancelSave:(id)sender
 {
-    Pack *pack = [[Pack alloc]init];
-    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xba]] withTimeout:-1 tag:0];
-    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xae]] withTimeout:-1 tag:0];
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xba]] withTimeout:-1 tag:0];
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xae]] withTimeout:-1 tag:0];
 //    [self performSegueWithIdentifier:@"OtherSettingToMain" sender:nil];
     [self returnToMain:nil];
 }
@@ -344,11 +341,10 @@ typedef NS_ENUM(NSUInteger,typeTags)
 - (IBAction)returnToMain:(id)sender
 {
     [self askForTreatInfomation];
-    Pack *pack = [[Pack alloc]init];
     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
     //设置更改生效 返回主界面
-    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0x230f] dataEnabled:YES data:[self dataWithValue:0xf1]] withTimeout:-1 tag:0];
-    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]    dataEnabled:YES data:[self dataWithValue:0Xae]] withTimeout:-1 tag:0];
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0x230f] dataEnabled:YES data:[self dataWithValue:0xf1]] withTimeout:-1 tag:0];
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]    dataEnabled:YES data:[self dataWithValue:0Xae]] withTimeout:-1 tag:0];
 }
 
 
@@ -356,10 +352,9 @@ typedef NS_ENUM(NSUInteger,typeTags)
 {
     //返回标准设置界面
     [self askForTreatInfomation];
-    Pack *pack = [[Pack alloc]init];
     if ([segue.identifier isEqualToString:@"OtherSettingToSetting"])
     {
-        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+        [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                dataEnabled:YES data:[self dataWithValue:0Xaf]]
                          withTimeout:-1   tag:0];
 

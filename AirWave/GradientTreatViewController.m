@@ -228,17 +228,16 @@
             minutes = 601;
         }
 
-        Pack *pack = [[Pack alloc]init];
         int tag = 1;
         if ([sender isEqual:self.cancelButton]){ tag = 0; }
         //压力等级
         Byte addrBytes2[2] = {80,16};
         NSInteger pressValue = [self.pressGradePicker selectedRowInComponent:0];
-        [self.clientSocket writeData:[pack packetWithCmdid:0X90 addressEnabled:YES addr:[self dataWithBytes:addrBytes2]dataEnabled:YES data:[self dataWithValue:pressValue]] withTimeout:-1 tag:tag];
+        [self.clientSocket writeData:[Pack packetWithCmdid:0X90 addressEnabled:YES addr:[self dataWithBytes:addrBytes2]dataEnabled:YES data:[self dataWithValue:pressValue]] withTimeout:-1 tag:tag];
         
         //持续时间
         Byte addrBytes1[2] = {80,4};
-        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes1] dataEnabled:YES data:[self dataWithValue:minutes]] withTimeout:-1 tag:tag];
+        [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes1] dataEnabled:YES data:[self dataWithValue:minutes]] withTimeout:-1 tag:tag];
     }
 }
 - (IBAction)cancel:(id)sender
@@ -307,9 +306,8 @@
 }
 -(void)askForTreatInfomation
 {
-    Pack *pack = [[Pack alloc]init];
     Byte dataBytes[2] = {1,0x62};
-    [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                            dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:1000];
 }
 -(void)presentDisconnectAlert
