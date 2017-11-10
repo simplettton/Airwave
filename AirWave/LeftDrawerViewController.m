@@ -7,11 +7,12 @@
 //
 
 #import "LeftDrawerViewController.h"
-#import "LeftHeaderTableView.h"
+#import "LeftHeaderView.h"
 #import "DetailViewController.h"
 #import "RecordTableViewController.h"
 #import "UIViewController+MMDrawerController.h"
 #import "BaseHeader.h"
+#import "PersonalInfomationViewController.h"
 static NSString *AIRWAVETYPE = @"7681";
 static NSString *BLOODDEVTYPE = @"8888";
 @interface LeftDrawerViewController ()
@@ -34,7 +35,7 @@ static NSString *BLOODDEVTYPE = @"8888";
 #pragma mark --加载View
 -(void)addTableHeaderViewAndTableFooterView
 {
-    LeftHeaderTableView * headerView = [[LeftHeaderTableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth - 75 , 444 * KScreenUnit)];
+    LeftHeaderView * headerView = [[LeftHeaderView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth - 75 , 444 * KScreenUnit)];
     [ headerView.myInformationButton addTarget:self action:@selector(buttonClickListener:) forControlEvents:UIControlEventTouchUpInside];
     self.tableView.tableHeaderView = headerView;
 }
@@ -73,11 +74,12 @@ static NSString *BLOODDEVTYPE = @"8888";
     }else if (indexPath.row==4){
         cell.imageView.image=[UIImage imageNamed:@"sidebar_album"];
         cell.textLabel.text=@"我的相册";
+    }else if (indexPath.row == 5){
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }else if (indexPath.row==6){
         cell.imageView.image=[UIImage imageNamed:@"sidebar_file"];
         cell.textLabel.textColor = [UIColor redColor];
         cell.textLabel.text=@"退出登录";
-
         cell.textLabel.textAlignment = NSTextAlignmentCenter;
     }
     
@@ -111,6 +113,17 @@ static NSString *BLOODDEVTYPE = @"8888";
         [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
     }];
 
+}
+-(void)buttonClickListener:(UIButton *)sender
+{
+    UIStoryboard *mainStoryborad = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    PersonalInfomationViewController *showVC = [mainStoryborad instantiateViewControllerWithIdentifier:@"PersonalInfomationViewController"];
+    
+    UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
+    [nav pushViewController:showVC animated:NO];
+    [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
+        [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
+    }];
 }
 
 @end

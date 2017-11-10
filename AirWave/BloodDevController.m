@@ -48,8 +48,6 @@ typedef NS_ENUM(NSUInteger,State)
 - (IBAction)returnHome:(id)sender;
 @end
 
-
-
 @implementation BloodDevController
 
 
@@ -83,13 +81,14 @@ typedef NS_ENUM(NSUInteger,State)
     {
          [SVProgressHUD showInfoWithStatus:@"准备连接设备"];
     }
-    NSLog(@"peripheral= %@",self.currPeripheral);
     [self setupSwipe];
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:YES];
+    [baby cancelNotify:self.currPeripheral characteristic:self.receiveCharacteristic];
     [baby cancelAllPeripheralsConnection];
+
 }
 //babyDelegate
 -(void)babyDelegate
@@ -120,7 +119,6 @@ typedef NS_ENUM(NSUInteger,State)
     //设置发现设service的Characteristics的委托
     [baby setBlockOnDiscoverCharacteristicsAtChannel:channelOnCharacteristicView block:^(CBPeripheral *peripheral, CBService *service, NSError *error)
      {
-        
         if ([service.UUID isEqual:[CBUUID UUIDWithString:SERVICE_UUID]])
         {
             for(CBCharacteristic *characteristic in service.characteristics)
@@ -129,11 +127,6 @@ typedef NS_ENUM(NSUInteger,State)
                 {
                     weakSelf.sendCharacteristic = characteristic;
                 }
-                else if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:RX_CHARACTERISTIC_UUID]])
-                {
-                    weakSelf.receiveCharacteristic = characteristic;
-                    [weakSelf setNotifiy:characteristic];
-                }
             }
         }
     }];
@@ -141,19 +134,32 @@ typedef NS_ENUM(NSUInteger,State)
 
     //设置读取characteristics的委托
     [baby setBlockOnReadValueForCharacteristicAtChannel:channelOnCharacteristicView block:^(CBPeripheral *peripheral, CBCharacteristic *characteristics, NSError *error) {
-//        NSLog(@"characteristic name:%@ value is:%@",characteristics.UUID,characteristics.value);
+        
+            if ([characteristics.UUID isEqual:[CBUUID UUIDWithString:RX_CHARACTERISTIC_UUID]])
+            {
+                weakSelf.receiveCharacteristic = characteristics;
 
+                if (![characteristics isNotifying])
+                {
+                     [weakSelf setNotifiy:characteristics];
+                }
+//                //询问设备识别码
+//                NSData *matchCommand = [Pack packetWithCmdid:0xFA addressEnabled:NO addr:nil dataEnabled:NO data:nil];
+//                [weakSelf.currPeripheral writeValue:matchCommand
+//                                  forCharacteristic:weakSelf.sendCharacteristic
+//                                               type:CBCharacteristicWriteWithResponse];
+                
+                NSData *askCommand = [Pack packetWithCmdid:0x91 addressEnabled:NO addr:nil dataEnabled:NO data:nil];
+                [weakSelf.currPeripheral writeValue:askCommand
+                                  forCharacteristic:weakSelf.sendCharacteristic
+                                               type:CBCharacteristicWriteWithResponse];
+            }
     }];
    
     
     [baby setBlockOnDidUpdateNotificationStateForCharacteristicAtChannel:channelOnCharacteristicView block:^(CBCharacteristic *characteristic, NSError *error) {
         NSLog(@"didUpdata");
-        //询问设备识别码
-        NSData *matchCommand = [Pack packetWithCmdid:0xFA addressEnabled:NO addr:nil dataEnabled:NO data:nil];
-        [weakSelf.currPeripheral writeValue:matchCommand
-                          forCharacteristic:weakSelf.sendCharacteristic
-                                       type:CBCharacteristicWriteWithResponse];
-        
+
     }];
 
     NSDictionary *scanForPeripheralsWithOptions = @{CBCentralManagerScanOptionAllowDuplicatesKey:@YES};
@@ -163,6 +169,99 @@ typedef NS_ENUM(NSUInteger,State)
     
     [baby setBabyOptionsAtChannel:channelOnCharacteristicView scanForPeripheralsWithOptions:scanForPeripheralsWithOptions connectPeripheralWithOptions:connectOptions scanForPeripheralsWithServices:nil discoverWithServices:nil discoverWithCharacteristics:nil];
 }
+-(void)setNotifiy:(CBCharacteristic *)characteristic
+{
+    __weak typeof(self)weakSelf = self;
+    [weakSelf.currPeripheral setNotifyValue:YES forCharacteristic:characteristic];
+    [baby notify:weakSelf.currPeripheral
+  characteristic:characteristic
+           block:^(CBPeripheral *peripheral, CBCharacteristic *characteristics, NSError *error) {
+               NSLog(@"----------------------------------------------");
+               NSData *data = characteristic.value;
+               [weakSelf analyzeReceivedData:data];
+
+           }];
+}
+-(void)analyzeReceivedData:(NSData *)receivedData
+{
+    __weak typeof(self)weakSelf = self;
+    NSData *data = [Unpack unpackData:receivedData];
+    Byte *bytes = (Byte *)[data bytes];
+    for (int i = 0; i<[data length]; i++)
+    {
+        NSLog(@"bytes[%d] = %x",i,bytes[i]);
+    }
+    Byte cmdID = bytes[0];
+
+    // 设备识别
+    if (cmdID == 0xFA)
+    {
+        if ((bytes[1]==0x1f) && (bytes[2]==0xdf))
+        {
+            NSData *askCommand = [Pack packetWithCmdid:0x91 addressEnabled:NO addr:nil dataEnabled:NO data:nil];
+            [weakSelf.currPeripheral writeValue:askCommand
+                              forCharacteristic:weakSelf.sendCharacteristic
+                                       type:CBCharacteristicWriteWithResponse];
+        }
+    }
+    //实时数据
+    if(bytes[0]==0x91)
+    {
+        //仪器结束治疗
+        if (bytes [1]==0x20)
+        {
+            if (self.state != STOP)
+            {
+                [self stopTimer];
+                
+            }
+            [self stop:nil];
+            self.treatRecord = [[TreatRecord alloc]init];
+            self.treatRecord.treatWay = self.levelStepper.value;
+            self.treatRecord.duration = (UInt32)duration;
+            [self.treatRecord changeDurationToString];
+            self.treatRecord.type = TYPE;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self takePhotoAlert];
+            });
+
+        }
+        //工作
+        else if (bytes [1]==0x12){
+            if (self.state == PAUSE)
+            {
+                [self resumeTimer];
+            }else if (self.state == STOP)
+            {
+                [self startGCDTimer];
+            }
+        }
+        //暂停
+        else if (bytes [1]==0x13){
+            if(self.state != PAUSE)
+            {
+                [self pauseTimer];
+            }
+        }
+        //空闲
+        else if (bytes[1]==0x11)
+        {
+            Byte min = bytes[2];
+            Byte level = bytes[4];
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                    self.timerLabel.text = [NSString stringWithFormat:min<10?@"0%d:00":@"%d:00",(int)min];
+                    self.timeLabel.text = [NSString stringWithFormat:min<10?@"0%d":@"%d",(int)min];
+
+                self.levelLabel.text = [NSString stringWithFormat:@"%d",(int)level];
+                
+            });
+        }
+    }
+
+}
+
 -(void)loadData
 {
     if (baby)
@@ -177,15 +276,16 @@ typedef NS_ENUM(NSUInteger,State)
     {
         if(self.state != RUNNING)
         {
-            Byte bytes[3] = {0x09,self.timeStepper.value,self.levelStepper.value};
-            NSData *data = [NSData dataWithBytes:bytes length:3];
-            NSData * startCommand = [Pack packetWithCmdid:0x90 addressEnabled:NO addr:nil dataEnabled:YES data:data];
-            [self writeData:startCommand];
+
             if (self.state == PAUSE)
             {
                 [self resumeTimer];
             }else if (self.state == STOP)
             {
+                Byte bytes[3] = {0x09,self.timeStepper.value,self.levelStepper.value};
+                NSData *data = [NSData dataWithBytes:bytes length:3];
+                NSData * startCommand = [Pack packetWithCmdid:0x90 addressEnabled:NO addr:nil dataEnabled:YES data:data];
+                [self writeData:startCommand];
                 [self startGCDTimer];
             }
         }
@@ -285,74 +385,6 @@ typedef NS_ENUM(NSUInteger,State)
     self.state = RUNNING;
 }
 
--(void)setNotifiy:(CBCharacteristic *)characteristic
-{
-    __weak typeof(self)weakSelf = self;
-    [weakSelf.currPeripheral setNotifyValue:YES forCharacteristic:characteristic];
-    [baby notify:weakSelf.currPeripheral
-  characteristic:characteristic
-           block:^(CBPeripheral *peripheral, CBCharacteristic *characteristics, NSError *error) {
-               NSLog(@"-----------------------------------------");
-               NSData *data = characteristic.value;
-               [self analyzeReceivedData:data];
-           }];
-}
--(void)analyzeReceivedData:(NSData *)receivedData
-{
-    NSData *data = [Unpack unpackData:receivedData];
-    Byte *bytes = (Byte *)[data bytes];
-    for (int i = 0; i<[data length]; i++)
-    {
-        NSLog(@"bytes[%d] = %x",i,bytes[i]);
-    }
-//    //实时数据
-//    if(bytes[0]==0x91)
-//    {
-//        //仪器状态空闲
-//        if (bytes [1]==0x11)
-//        {
-//            if (self.state != STOP)
-//            {
-//                [self stopTimer];
-//            }
-//            [self stop:nil];
-//            self.treatRecord = [[TreatRecord alloc]init];
-//            self.treatRecord.treatWay = self.levelStepper.value;
-//            self.treatRecord.duration = (UInt32)duration;
-//            [self.treatRecord changeDurationToString];
-//            self.treatRecord.type = TYPE;
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                [self takePhotoAlert];
-//            });
-//
-//        }
-//        //工作
-//        else if (bytes [1]==0x12){
-//            if (self.state == PAUSE)
-//            {
-//                [self resumeTimer];
-//            }else if (self.state == STOP)
-//            {
-//                [self startGCDTimer];
-//            }
-//        }
-//        //暂停
-//        else if (bytes [1]==0x13){
-//            if(self.state != PAUSE)
-//            {
-//                [self pauseTimer];
-//            }
-//        }
-//    }
-    //设备识别
-    if (bytes[0]==0xFA)
-    {
-        NSLog(@"mmmmm");
-        
-    }
-
-    
-}
 //选择照片完成后回调
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
@@ -485,29 +517,29 @@ typedef NS_ENUM(NSUInteger,State)
 }
 - (void)swipeRight
 {
-    [self performSegueWithIdentifier:@"BloodReturnHome" sender:nil];
+    [self returnHome:nil];
 }
 
 - (IBAction)levelChange:(id)sender
 {
     self.levelLabel.text = [NSString stringWithFormat:@"%d",(int)self.levelStepper.value];
     
-    if (self.levelStepper.value > self.levelValue)
-    {
-        NSData *levelUpCommand = [Pack packetWithCmdid:0x90 addressEnabled:NO addr:nil dataEnabled:YES data:[self dataWithValue:0X07]];
-        [self writeData:levelUpCommand];
-    }
-    else if (self.levelStepper.value < self.levelValue)
-    {
-        NSData *levelDownCommand = [Pack packetWithCmdid:0x90 addressEnabled:NO addr:nil dataEnabled:YES data:[self dataWithValue:0X08]];
-        [self writeData:levelDownCommand];
-    }
+//    //增加减少强度写入设备命令
+//    if (self.levelStepper.value > self.levelValue)
+//    {
+//        NSData *levelUpCommand = [Pack packetWithCmdid:0x90 addressEnabled:NO addr:nil dataEnabled:YES data:[self dataWithValue:0X07]];
+//        [self writeData:levelUpCommand];
+//    }
+//    else if (self.levelStepper.value < self.levelValue)
+//    {
+//        NSData *levelDownCommand = [Pack packetWithCmdid:0x90 addressEnabled:NO addr:nil dataEnabled:YES data:[self dataWithValue:0X08]];
+//        [self writeData:levelDownCommand];
+//    }
     
     self.levelValue = self.levelStepper.value;
 }
 - (IBAction)timeChange:(id)sender
 {
-    self.timeLabel.text = [NSString stringWithFormat:@"%d",(int)self.timeStepper.value];
     timeLine = self.timeStepper.value*60;
     if (self.timeStepper.value <10 )
     {
@@ -518,30 +550,20 @@ typedef NS_ENUM(NSUInteger,State)
         self.timerLabel.text = [NSString stringWithFormat:@"%d:00",(int)self.timeStepper.value];
     }
     
-    if (self.timeStepper.value > self.timeValue)
-    {
-        NSData *timeUpCommand = [Pack packetWithCmdid:0x90 addressEnabled:NO addr:nil dataEnabled:YES data:[self dataWithValue:0X05]];
-        [self writeData:timeUpCommand];
-    }
-    else if (self.timeStepper.value < self.timeValue)
-    {
-        NSData *timeDownCommand = [Pack packetWithCmdid:0x90 addressEnabled:NO addr:nil dataEnabled:YES data:[self dataWithValue:0X06]];
-        [self writeData:timeDownCommand];
-    }
-    
+//    //增加减少时间写入设备命令
+//    if (self.timeStepper.value > self.timeValue)
+//    {
+//        NSData *timeUpCommand = [Pack packetWithCmdid:0x90 addressEnabled:NO addr:nil dataEnabled:YES data:[self dataWithValue:0X05]];
+//        [self writeData:timeUpCommand];
+//    }
+//    else if (self.timeStepper.value < self.timeValue)
+//    {
+//        NSData *timeDownCommand = [Pack packetWithCmdid:0x90 addressEnabled:NO addr:nil dataEnabled:YES data:[self dataWithValue:0X06]];
+//        [self writeData:timeDownCommand];
+//    }
     self.timeValue = self.timeStepper.value;
 }
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"BloodReturnHome"])
-    {
-        [baby cancelAllPeripheralsConnection];
-    }
-}
-- (IBAction)BloodDevReturnHome:(id)sender
-{
-    [self swipeRight];
-}
+
 - (IBAction)returnHome:(id)sender
 {
     NSInteger index=[[self.navigationController viewControllers]indexOfObject:self];

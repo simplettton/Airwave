@@ -1,22 +1,22 @@
 //
-//  LeftHeaderTableView.m
+//  LeftHeaderView.m
 //  AirWave
 //
 //  Created by Macmini on 2017/11/7.
 //  Copyright © 2017年 Shenzhen Lifotronic Technology Co.,Ltd. All rights reserved.
 //
 
-#import "LeftHeaderTableView.h"
+#import "LeftHeaderView.h"
 #import "UIImage+ImageWithColor.h"
 #import "BaseHeader.h"
 
 #define tableViewWidth  KScreenWidth - KMainPageDistance
 
-@interface LeftHeaderTableView()
+@interface LeftHeaderView()
 
 @end
 
-@implementation LeftHeaderTableView
+@implementation LeftHeaderView
 -(instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame] ;
@@ -36,15 +36,15 @@
     headerImageView.image = [UIImage imageNamed:@"smile"];
     [self addSubview:headerImageView];
     //加载昵称
-    UILabel * nickNameLabel  = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(headerImageView.frame)+ 20 * KScreenUnit , 150 * KScreenUnit, 300 * KScreenUnit,30 * KScreenUnit)];
-    nickNameLabel.text = @"    游客";
+    UILabel * nickNameLabel  = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(headerImageView.frame)+ 20 * KScreenUnit , 150 * KScreenUnit, 300 * KScreenUnit,40 * KScreenUnit)];
+    nickNameLabel.text = @"    jasper";
     nickNameLabel.textColor = [UIColor whiteColor];
 //    nickNameLabel.font   = [UIFont systemFontOfSize:28 * KScreenUnit];
     nickNameLabel.font = [UIFont systemFontOfSize:35*KScreenUnit];
     [self addSubview:nickNameLabel];
     
     //添加点击button
-    self.myInformationButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, tableViewWidth, 230 * KScreenUnit)];
+    self.myInformationButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 44, tableViewWidth, 230 * KScreenUnit)];
     self.myInformationButton.tag = 1;
     self.myInformationButton.backgroundColor = [UIColor clearColor];
     [self.myInformationButton setBackgroundImage:[UIImage imageWithColor:UIColorFromRGBAndAlpha(0Xffffff, 0.3)] forState:UIControlStateHighlighted];

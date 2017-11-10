@@ -138,7 +138,7 @@ static NSString *TYPE = @"7681";
     }
     else
     {
-        self.durationString = [NSString stringWithFormat:@"00:00:00"];
+        self.durationString = [NSString stringWithFormat:@"0秒"];
     }
 }
 //Byte数组转成int类型

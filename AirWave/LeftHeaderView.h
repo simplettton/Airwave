@@ -1,5 +1,5 @@
 //
-//  LeftHeaderTableView.h
+//  LeftHeaderView.h
 //  AirWave
 //
 //  Created by Macmini on 2017/11/7.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LeftHeaderTableView : UIView
+@interface LeftHeaderView : UIView
 @property(nonatomic,strong) UIButton * myInformationButton;
 @property(nonatomic,strong)  UIButton * personalSignatureButton;
 @property(nonatomic,strong) UIButton * QRCodeButton;
