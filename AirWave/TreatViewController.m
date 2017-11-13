@@ -231,6 +231,10 @@ NSString *const PORT = @"8080";
     Byte *bytes = (Byte *)[data bytes];
     
     text = [NSString stringWithFormat:@"%d",bytes[2]];
+    for (int i = 0; i<[data length]; i++)
+    {
+        NSLog(@"bytes[%d]=%d",i,bytes[i]);
+    }
     //治疗信息
     if (bytes[2]==0x90)
     {
@@ -1109,20 +1113,20 @@ NSString *const PORT = @"8080";
 #pragma mark - commit
 - (void)start
 {
-    Byte dataBytes[2] = {0,0x10};
+    Byte dataBytes[2] = {0x10,0};
     [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                                dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:0];
 }
 -(void)pause
 {
-    Byte dataBytes[2] = {0,0x11};
+    Byte dataBytes[2] = {0x11,0};
     [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                                dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:0];
     
 }
 -(void)askForTreatInfomation
 {
-    Byte dataBytes[2] = {1,0x62};
+    Byte dataBytes[2] = {0x62,1};
     [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                                dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:1000];
 }
@@ -1130,7 +1134,7 @@ NSString *const PORT = @"8080";
 {
     [button changeGreyColor];
     NSNumber *commitNumber = [button.multiParamDic objectForKey:@"commit"];
-    Byte dataBytes[2] = {0,[commitNumber unsignedIntegerValue]};
+    Byte dataBytes[2] = {[commitNumber unsignedIntegerValue],0};
     [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                                dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:0];
 }
@@ -1431,8 +1435,9 @@ NSString *const PORT = @"8080";
     {
         SettingViewController *controller = (SettingViewController *)segue.destinationViewController;
         controller.treatInfomation = self.treatInformation;
+        Byte dataBytes[2] = {0xaf,0};
         [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                                                   dataEnabled:YES data:[self dataWithValue:0xaf]] withTimeout:-1 tag:0];
+                                                                   dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:0];
     }
 }
 @end

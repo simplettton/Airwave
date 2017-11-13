@@ -124,7 +124,7 @@ typedef NS_ENUM(NSUInteger,typeTags)
 }
 -(void)askForTreatInfomation
 {
-    Byte dataBytes[2] = {1,0x62};
+    Byte dataBytes[2] = {0x62,1};
     [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                                dataEnabled:YES data:[self dataWithBytes:dataBytes]]
                                                                withTimeout:-1 tag:0];
@@ -322,18 +322,21 @@ typedef NS_ENUM(NSUInteger,typeTags)
             }
         }
     }
+    Byte dataBytesA [2] = {[commitA integerValue],0};
     [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                                               dataEnabled:YES data:[self dataWithValue:[commitA integerValue]]]
+                                                               dataEnabled:YES data:[self dataWithBytes:dataBytesA]]
                                                                withTimeout:-1   tag:1];
+    Byte dataBytesB [2] = {[commitB integerValue],0};
     [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                                               dataEnabled:YES data:[self dataWithValue:[commitB integerValue]]]
+                                                               dataEnabled:YES data:[self dataWithBytes:dataBytesB]]
                                                                withTimeout:-1   tag:1];
 }
-
 - (IBAction)cancelSave:(id)sender
 {
-    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xba]] withTimeout:-1 tag:0];
-    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xae]] withTimeout:-1 tag:0];
+    Byte dataBytes1 [2] = {0xba,0};
+    Byte dataBytes2 [2] = {0xae,0};
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithBytes:dataBytes1]] withTimeout:-1 tag:0];
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithBytes:dataBytes2]] withTimeout:-1 tag:0];
 //    [self performSegueWithIdentifier:@"OtherSettingToMain" sender:nil];
     [self returnToMain:nil];
 }
@@ -343,8 +346,11 @@ typedef NS_ENUM(NSUInteger,typeTags)
     [self askForTreatInfomation];
     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
     //设置更改生效 返回主界面
-    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0x230f] dataEnabled:YES data:[self dataWithValue:0xf1]] withTimeout:-1 tag:0];
-    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]    dataEnabled:YES data:[self dataWithValue:0Xae]] withTimeout:-1 tag:0];
+    Byte dataBytes1 [2] = {0xf1,0};
+    Byte dataBytes2 [2] = {0xae,0};
+    Byte addrBytes [2] = {0x06,0x23};
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes] dataEnabled:YES data:[self dataWithBytes:dataBytes1]] withTimeout:-1 tag:0];
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]    dataEnabled:YES data:[self dataWithBytes:dataBytes2]] withTimeout:-1 tag:0];
 }
 
 
@@ -354,17 +360,12 @@ typedef NS_ENUM(NSUInteger,typeTags)
     [self askForTreatInfomation];
     if ([segue.identifier isEqualToString:@"OtherSettingToSetting"])
     {
+        Byte dataBytes [2] = {0xaf,0};
         [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                               dataEnabled:YES data:[self dataWithValue:0Xaf]]
+                                               dataEnabled:YES data:[self dataWithBytes:dataBytes]]
                          withTimeout:-1   tag:0];
 
 
     }
-//    else if ([segue.identifier isEqualToString:@"OtherSettingToMain"])
-//    {
-//        //设置更改生效 返回主界面
-//        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0x230f] dataEnabled:YES data:[self dataWithValue:0xf1]] withTimeout:-1 tag:0];
-//        [self.clientSocket writeData:[pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]    dataEnabled:YES data:[self dataWithValue:0Xae]] withTimeout:-1 tag:0];
-//    }
 }
 @end

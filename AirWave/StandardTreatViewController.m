@@ -263,23 +263,25 @@
         if ([sender isEqual:self.cancelButton]){ tag = 0; }
         
         //设置治疗时间
-        Byte addrBytes[2] = {80,4};
+        Byte addrBytes[2] = {4,80};
+        Byte dataBytes[2] = {minutes,0};
         [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
-                                                                   dataEnabled:YES data:[self dataWithValue:minutes]] withTimeout:-1 tag:tag];
-        
+                                                                   dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:tag];
+
         //设置治疗方案
-        Byte addrBytes1[2] = {80,3};
         NSInteger mode = [self.modePicker selectedRowInComponent:0];
+        Byte addrBytes1[2] = {3,80};
+        Byte dataBytes1[2] = {mode+1,0};
+
         [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes1]
-                                                                   dataEnabled:YES data:[self dataWithValue:(mode+1)]] withTimeout:-1 tag:tag];
+                                                                   dataEnabled:YES data:[self dataWithBytes:dataBytes1]] withTimeout:-1 tag:tag];
         
         //设置治疗压力
-        Byte addrByte2[2] = {80,0};
         NSInteger press= [self.pressPicker selectedRowInComponent:0];
-
-        [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrByte2]
-                                                                   dataEnabled:YES data:[self dataWithValue:press]] withTimeout:-1 tag:tag];
-        
+        Byte addrBytes2[2] = {0,80};
+        Byte dataBytes2[2] = {press,0};
+        [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes2]
+                                                                   dataEnabled:YES data:[self dataWithBytes:dataBytes2]] withTimeout:-1 tag:tag];
     }
     else
     {
@@ -356,18 +358,22 @@
         NSData *sendata;
         if ([segue.identifier isEqualToString:@"StandardToParameter"]||[segue.identifier isEqualToString:@"StandardToSolution"])
         {
+
+            Byte dataBytes[2] = {0x0f,0};
             [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                                                       dataEnabled:YES data:[self dataWithValue:0x0f]] withTimeout:-1 tag:0];
+                                                                       dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:0];
             if ([segue.identifier isEqualToString: @"StandardToParameter"])
             {
+                Byte dataBytes[2] = {0x82,0};
                 sendata = [Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                                        dataEnabled:YES data:[self dataWithValue:0x82]];
+                                                        dataEnabled:YES data:[self dataWithBytes:dataBytes]];
                 
             }
             else if ([segue.identifier isEqualToString:@"StandardToSolution"])
             {
+                Byte dataBytes[2] = {0x81,0};
                 sendata = [Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                                        dataEnabled:YES data:[self dataWithValue:0X81]];
+                                                        dataEnabled:YES data:[self dataWithBytes:dataBytes]];
             }
             [self.clientSocket writeData:sendata withTimeout:-1 tag:0];
         }

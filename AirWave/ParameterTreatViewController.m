@@ -241,13 +241,15 @@
             tag =0;
         }
         //设置时间
-        Byte addrBytes1[2] = {80,4};
-        [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes1] dataEnabled:YES data:[self dataWithValue:minutes]] withTimeout:-1 tag:tag];
+        Byte addrBytes1[2] = {4,80};
+        Byte dataBytes1[2] = {minutes,0};
+        [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes1] dataEnabled:YES data:[self dataWithBytes:dataBytes1]] withTimeout:-1 tag:tag];
         
         //设置治疗方案
-        Byte addrBytes2[2] = {80,3};
         NSInteger mode = [self.modePicker selectedRowInComponent:0];
-        [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes2]dataEnabled:YES data:[self dataWithValue:(mode+1)]] withTimeout:-1 tag:tag];
+        Byte addrBytes2[2] = {3,80};
+        Byte dataBytes2[2] = {mode+1,0};
+        [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes2]dataEnabled:YES data:[self dataWithBytes:dataBytes2]] withTimeout:-1 tag:tag];
     }
 }
 - (IBAction)cancel:(id)sender
@@ -267,7 +269,7 @@
 }
 -(void)askForTreatInfomation
 {
-    Byte dataBytes[2] = {1,0x62};
+    Byte dataBytes[2] = {0x62,1};
     [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                                dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:1000];
 }
@@ -408,18 +410,22 @@
     if (segue.identifier !=nil)
     {
         NSData *sendata;
+        Byte dataBytes [2] = {0,0};
         if ([segue.identifier isEqualToString: @"ParameterToStandard"])
         {
+            dataBytes[0] = 0x0d;
             sendata = [Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                dataEnabled:YES data:[self dataWithValue:0x0d]];
+                                dataEnabled:YES data:[self dataWithBytes:dataBytes]];
             
         }
         else if ([segue.identifier isEqualToString:@"ParameterToSolution"])
         {
+            Byte bytes [2] = {0x0f,0};
             [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                                                       dataEnabled:YES data:[self dataWithValue:0x0f]] withTimeout:-1 tag:0];
+                                                                       dataEnabled:YES data:[self dataWithBytes:bytes]] withTimeout:-1 tag:0];
+            dataBytes[0] = 0x81;
             sendata = [Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                dataEnabled:YES data:[self dataWithValue:0X81]];
+                                dataEnabled:YES data:[self dataWithBytes:dataBytes]];
         }
         [self.clientSocket writeData:sendata withTimeout:-1 tag:0];
     }
