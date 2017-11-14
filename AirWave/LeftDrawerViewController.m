@@ -10,11 +10,18 @@
 #import "LeftHeaderView.h"
 #import "DetailViewController.h"
 #import "RecordTableViewController.h"
+#import "ServerIPViewController.h"
+#import "LoginViewController.h"
 #import "UIViewController+MMDrawerController.h"
 #import "BaseHeader.h"
 #import "PersonalInfomationViewController.h"
-static NSString *AIRWAVETYPE = @"7681";
-static NSString *BLOODDEVTYPE = @"8888";
+
+static NSString * AIRWAVETYPE = @"7681";
+static NSString * BLOODDEVTYPE = @"8888";
+
+
+static NSString * SERVERIP_KEY = @"ServerIp";
+static NSString * SERVER_IP = @"http://218.17.22.131:3088";
 @interface LeftDrawerViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property(assign , nonatomic) int homePageIndex;
@@ -31,6 +38,14 @@ static NSString *BLOODDEVTYPE = @"8888";
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.scrollEnabled = NO;
     [self addTableHeaderViewAndTableFooterView];
+    
+    
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    if (![userDefault objectForKey:SERVER_IP])
+    {
+        [userDefault setObject:SERVER_IP forKey:SERVERIP_KEY];
+    }
+    [userDefault synchronize];
 }
 #pragma mark --加载View
 -(void)addTableHeaderViewAndTableFooterView
@@ -50,37 +65,44 @@ static NSString *BLOODDEVTYPE = @"8888";
 }
 - (void)tableView: (UITableView*)tableView willDisplayCell: (UITableViewCell*)cell forRowAtIndexPath: (NSIndexPath*)indexPath
 {
+
+    UILabel *textLabel = [cell viewWithTag:2];
     if (indexPath.row==6)
     {
-        cell.textLabel.textColor = UIColorFromHex(0X65BBA9);
-        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        textLabel.textColor = UIColorFromHex(0X65BBA9);
+        textLabel.textAlignment = NSTextAlignmentCenter;
     }
-
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+//    UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    if(!cell){
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+    }
+    
+    UIImageView *imageView = [cell viewWithTag:1];
+    UILabel *textLabel = [cell viewWithTag:2];
     if (indexPath.row==0){
-        cell.imageView.image=[UIImage imageNamed:@"sidebar_business"];
-        cell.textLabel.text=@"空气波治疗记录";
+        imageView.image = [UIImage imageNamed:@"form1"];
+        textLabel.text = @"空气波治疗记录";
     }else if (indexPath.row==1){
-        cell.imageView.image=[UIImage imageNamed:@"sidebar_purse"];
-        cell.textLabel.text=@"血瘘治疗仪治疗记录";
+        imageView.image = [UIImage imageNamed:@"form"];
+        textLabel.text = @"血瘘治疗仪治疗记录";
     }else if (indexPath.row==2){
-        cell.imageView.image=[UIImage imageNamed:@"sidebar_decoration"];
-        cell.textLabel.text=@"我的服务器IP地址";
+        imageView.image=[UIImage imageNamed:@"ip"];
+        textLabel.text=@"我的服务器IP地址";
     }else if (indexPath.row==3){
-        cell.imageView.image=[UIImage imageNamed:@"sidebar_favorit"];
-        cell.textLabel.text=@"我的收藏";
+        imageView.image=[UIImage imageNamed:@"favorite"];
+        textLabel.text=@"我的收藏";
     }else if (indexPath.row==4){
-        cell.imageView.image=[UIImage imageNamed:@"sidebar_album"];
-        cell.textLabel.text=@"我的相册";
+        imageView.image=[UIImage imageNamed:@"pic"];
+        textLabel.text=@"我的相册";
     }else if (indexPath.row == 5){
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }else if (indexPath.row==6){
-        cell.imageView.image=[UIImage imageNamed:@"sidebar_file"];
-        cell.textLabel.textColor = [UIColor redColor];
-        cell.textLabel.text=@"退出登录";
-        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        imageView.image=[UIImage imageNamed:@"sidebar_file"];
+        textLabel.text=@"退出登录";
+        textLabel.textAlignment = NSTextAlignmentCenter;
     }
     
     cell.backgroundColor=[UIColor clearColor];
@@ -97,14 +119,24 @@ static NSString *BLOODDEVTYPE = @"8888";
     UIStoryboard *mainStoryborad = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UIViewController *showVC;
     RecordTableViewController *recordVC =(RecordTableViewController *)[mainStoryborad instantiateViewControllerWithIdentifier:@"RecordTableViewController"];
+
     if (indexPath.row == 0)
     {
         recordVC.type = AIRWAVETYPE;
         showVC = recordVC;
-    }else if (indexPath.row==1)
+    }else if (indexPath.row == 1)
     {
         recordVC.type = BLOODDEVTYPE;
         showVC = recordVC;
+    }else if (indexPath.row == 2)
+    {
+        ServerIPViewController *serverVC = (ServerIPViewController *)[mainStoryborad instantiateViewControllerWithIdentifier:@"ServerIPViewController"];
+        showVC = serverVC;
+    }else if (indexPath.row == 6)
+    {
+        LoginViewController *loginVC = (LoginViewController *)[mainStoryborad instantiateViewControllerWithIdentifier:@"LoginViewController"];
+//        [self presentViewController:loginVC animated:YES completion:nil];
+        showVC = loginVC;
     }
     
     UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;

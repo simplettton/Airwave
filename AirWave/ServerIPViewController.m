@@ -1,70 +1,48 @@
 //
-//  PersonalInfomationViewController.m
+//  ServerIPViewController.m
 //  AirWave
 //
-//  Created by Macmini on 2017/11/10.
+//  Created by Macmini on 2017/11/14.
 //  Copyright © 2017年 Shenzhen Lifotronic Technology Co.,Ltd. All rights reserved.
 //
 
-#import "PersonalInfomationViewController.h"
-#import "BaseHeader.h"
-@interface PersonalInfomationViewController ()
-
+#import "ServerIPViewController.h"
+#import "SVProgressHUD.h"
+static NSString * SERVERIP_KEY = @"ServerIp";
+@interface ServerIPViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *textField;
+- (IBAction)save:(id)sender;
 @end
 
-@implementation PersonalInfomationViewController
+@implementation ServerIPViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView.tableFooterView = [[UIView alloc]init];
-    //tableview group样式 section之间的高度调整
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    NSString *serverIp = [userDefault objectForKey:SERVERIP_KEY];
+    self.textField.text = serverIp;
     self.tableView.sectionHeaderHeight  = 0;
     self.tableView.sectionFooterHeight = 20;
     self.tableView.contentInset = UIEdgeInsetsMake(20 - 35, 0, 0, 0);
 }
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    //导航栏
-    self.navigationController.navigationBar.hidden = NO;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    self.title = @"个人信息";
-    
-    self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-    [[self.navigationController navigationBar]setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColorFromHex(0XFFFFFF)}];
-    self.navigationItem.rightBarButtonItem.tintColor = UIColorFromHex(0xFFFFFF);
-    self.navigationItem.leftBarButtonItem.tintColor = UIColorFromHex(0xFFFFFF);
+    self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
 }
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Table view data source
 
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-//{
-//    return 2;
-//}
-//
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-//{
-//    if (section == 0)
-//    {
-//        return 5;
-//    }
-//    else if(section == 1)
-//    {
-//        return 1;
-//    }
-//    else
-//    {
-//        return 0;
-//    }
-//}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+}
 
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -110,12 +88,6 @@
 }
 */
 
-
-#pragma mark - Table view delegate
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
 /*
 #pragma mark - Navigation
 
@@ -126,4 +98,12 @@
 }
 */
 
+- (IBAction)save:(id)sender
+{
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    [userDefault setObject:self.textField.text forKey:SERVERIP_KEY];
+    [userDefault synchronize];
+    [SVProgressHUD showSuccessWithStatus:@"保存成功"];
+    [SVProgressHUD dismissWithDelay:0.9];
+}
 @end

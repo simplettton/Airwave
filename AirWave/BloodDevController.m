@@ -229,8 +229,6 @@ typedef NS_ENUM(NSUInteger,State)
     //实时数据
     if(cmdID==0x91)
     {
-
-        static dispatch_once_t onceToken;
         NSInteger setMin = 0;
         NSInteger setSecond = 0;
         NSInteger min = 0;
@@ -322,13 +320,12 @@ typedef NS_ENUM(NSUInteger,State)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.timeStepper.value = setMin;
+                self.levelStepper.value = setLevel;
                 timeLine = self.timeStepper.value*60;
                 self.timerLabel.text = [NSString stringWithFormat:setMin<10?@"0%d:00":@"%d:00",(int)setMin];
-                
             });
             self.state = STOP;
         }
-        
     }
 }
 #pragma mark - buttonAction

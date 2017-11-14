@@ -60,7 +60,6 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
     {
         self.treatInfomation = [[TreatInformation alloc]init];
     }
-//    [self updateView];
     
     //设置边框
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.keepTimeLabel.bounds byRoundingCorners:UIRectCornerTopRight|UIRectCornerBottomRight|UIRectCornerTopLeft|UIRectCornerBottomLeft cornerRadii:CGSizeMake(5.0, 5.0)];
@@ -114,7 +113,6 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
     self.intervalTimeLabel.text = [NSString stringWithFormat:@"%d",self.treatInfomation.treatInterval];
     self.intervalTimeStepper.value = self.treatInfomation.treatInterval;
 
-    
     self.chargeSpeedLabel.text = [NSString stringWithFormat:@"%d",self.treatInfomation.chargeSpeed];
     self.chargeSpeedStepper.value = self.treatInfomation.chargeSpeed;
 

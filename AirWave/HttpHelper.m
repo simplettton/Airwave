@@ -13,7 +13,7 @@
 #import "HttpRequest.h"
 #import "HttpResponse.h"
 #import "HttpError.h"
-
+static NSString * SERVERIP_KEY = @"ServerIp";
 @implementation HttpHelper
 {
     NSString *_token;
@@ -22,9 +22,7 @@
 
 static HttpHelper * _instance = nil;
 //static NSString * BASE_URL = @"http://192.168.2.127/demo/index.php?";
-
-static NSString * BASE_URL = @"http://218.17.22.131:3088/demo/index.php?";
-
+//static NSString * BASE_URL = @"http://218.17.22.131:3088/demo/index.php?";
 static NSString * TOKEN_KEY = @"GGCToken";
 static NSString * USERID_KEY = @"GGCUserId";
 
@@ -78,7 +76,6 @@ static NSString * USERID_KEY = @"GGCUserId";
             [userDefault setObject:_userid forKey:USERID_KEY];
             [userDefault synchronize];
         }
-        
         responseBlock(responseObject);
     }
        onError:^(HttpError *responseError) {
@@ -111,8 +108,10 @@ static NSString * USERID_KEY = @"GGCUserId";
         [params setValue:ts forKey:@"timestamp"];
         [params setValue:token forKey:@"token"];
     }
-    
-    NSString *url = [NSString stringWithFormat:@"%@action=%@", BASE_URL, apiName];
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    NSString *serverIp = [userDefault objectForKey:SERVERIP_KEY];
+    NSString *baseUrl = [NSString stringWithFormat:@"%@/demo/index.php?",serverIp];
+    NSString *url = [NSString stringWithFormat:@"%@action=%@", baseUrl, apiName];
     [request setUrl:url];
     [request setParams:params];
     
@@ -121,7 +120,7 @@ static NSString * USERID_KEY = @"GGCUserId";
                          responseBlock(responseObject);
                      }
                         onError:^(HttpError *responseError) {
-//                            errorBlock(responseError);
+                            errorBlock(responseError);
                         }];
 }
 

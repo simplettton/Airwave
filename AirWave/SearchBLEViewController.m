@@ -79,9 +79,11 @@
     [baby setBlockOnCentralManagerDidUpdateState:^(CBCentralManager *central) {
         if (central.state == CBManagerStatePoweredOn) {
             [SVProgressHUD showInfoWithStatus:@"蓝牙打开成功，开始扫描设备"];
+            [SVProgressHUD dismissWithDelay:0.9];
             [weakSelf.activityIndicatorView startAnimating];
         }else if(central.state == CBManagerStatePoweredOff){
             [SVProgressHUD showInfoWithStatus:@"请打开蓝牙以连接设备"];
+            [SVProgressHUD dismissWithDelay:0.9];
         }
     }];
     
@@ -205,11 +207,6 @@
     return cell;
 }
 
-//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    
-//}
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //停止扫描
@@ -238,15 +235,12 @@
 {
     [baby cancelScan];
     [self.activityIndicatorView stopAnimating];
-
 }
 
 - (IBAction)startScan:(id)sender
 {
-
     [self.activityIndicatorView startAnimating];
     baby.scanForPeripherals().begin();
-
 }
 #pragma mark - swipe
 

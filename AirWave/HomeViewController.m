@@ -35,6 +35,11 @@ static NSString *BLOODDEVTYPE = @"8888";
     }
     return self;
 }
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];

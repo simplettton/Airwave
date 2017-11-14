@@ -14,6 +14,7 @@
 #import "HttpHelper.h"
 #import "UIImage+Rotate.h"
 #import "MyLabel.h"
+#import "SVProgressHUD.h"
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 static NSString *AIRWAVETYPE = @"7681";
 static NSString *BLOODDEVTYPE = @"8888";
@@ -75,7 +76,12 @@ NSString *const TYPE = @"7681";
 
     self.treatTimeLabel.text = [NSString stringWithFormat:@"  %@",self.record.durationString];
 }
-
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    self.navigationController.navigationBar.hidden = NO;
+    self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+}
 -(void)rightBarButtonClicked:(UIButton *)button
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
@@ -105,11 +111,8 @@ NSString *const TYPE = @"7681";
                              
                              if(jsonDict != nil)
                              {
-                                 
                                  int state = [[jsonDict objectForKey:@"State"] intValue];
                                  self.idString = [jsonDict objectForKey:@"Id"];
-//                                 
-//                                 NSLog(@"imagePath = %@",self.record.imagePath);
                                  //上传照片
                                  if (self.record.imagePath!=nil)
                                  {
@@ -134,65 +137,50 @@ NSString *const TYPE = @"7681";
                                                               params:params1
                                                             hasToken:NO
                                                           onResponse:^(HttpResponse *responseObject) {
-                                                              
                                                               NSDictionary* jsonDict = [responseObject jsonDist];
+                                                              
                                                               if(jsonDict != nil)
                                                               {
                                                                   int state = [[jsonDict objectForKey:@"State"] intValue];
                                                                   
                                                                   if (state == 1)
                                                                   {
-                                                                      NSString *title = @"上传成功";
-                                                                      UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
-                                                                                                                                     message:nil
-                                                                                                                              preferredStyle:UIAlertControllerStyleAlert];
-                                                                      //修改提示标题的颜色和大小
-                                                                      NSMutableAttributedString *titleAtt = [[NSMutableAttributedString alloc] initWithString:title];
-                                                                      [titleAtt addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16] range:NSMakeRange(0, title.length)];
-                                                                      [titleAtt addAttribute:NSForegroundColorAttributeName value:[UIColor darkGrayColor] range:NSMakeRange(0, title.length)];
-                                                                      [alert setValue:titleAtt forKey:@"attributedTitle"];
-                                                                      
-                                                                      UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认"
-                                                                                                                              style:UIAlertActionStyleDefault
-                                                                                                                            handler:nil];
-                                                                      [alert addAction:defaultAction];
                                                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                                                          [self presentViewController:alert animated:YES completion:nil];
+                                                                          [SVProgressHUD showSuccessWithStatus:@"上传成功"];
+                                                                          [SVProgressHUD dismissWithDelay:0.9];
                                                                       });
+
                                                                   }
                                                               }
+                                                              else
+                                                              {
+                                                                  dispatch_async(dispatch_get_main_queue(), ^{
+                                                                      [SVProgressHUD showErrorWithStatus:@"上传失败"];
+                                                                      [SVProgressHUD dismissWithDelay:0.9];
+                                                                  });
+                                                              }
+
                                                           }
                                                              onError:^(HttpError *responseError) {
                                                              }];
-                                         
-                                         
                                      });
                                  }
                                  if (state == 1)
                                  {
-                                     NSString *title = @"上传成功";
-                                     
-                                     UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
-                                                                                                    message:nil
-                                                                                             preferredStyle:UIAlertControllerStyleAlert];
-                                     //修改提示标题的颜色和大小
-                                     NSMutableAttributedString *titleAtt = [[NSMutableAttributedString alloc] initWithString:title];
-                                     [titleAtt addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16] range:NSMakeRange(0, title.length)];
-                                     [titleAtt addAttribute:NSForegroundColorAttributeName value:[UIColor darkGrayColor] range:NSMakeRange(0, title.length)];
-                                     [alert setValue:titleAtt forKey:@"attributedTitle"];
-                                     
-                                     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认"
-                                                                                             style:UIAlertActionStyleDefault
-                                                                                           handler:nil];
-                                     [alert addAction:defaultAction];
-                                     
                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                         [self presentViewController:alert animated:YES completion:nil];
+                                         [SVProgressHUD showSuccessWithStatus:@"上传成功"];
+                                         [SVProgressHUD dismissWithDelay:0.9];
                                      });
                                  }
                              }
                          }
                             onError:^(HttpError *responseError) {
+                                
+                                NSLog(@"error");
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    [SVProgressHUD showErrorWithStatus:@"上传失败"];
+                                    [SVProgressHUD dismissWithDelay:0.9];
+                                });
                             }];
     });
 }
