@@ -34,6 +34,7 @@
 		045E8FF31FBADF66006DFFC8 /* RecordReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045E8FF21FBADF66006DFFC8 /* RecordReportViewController.m */; };
 		045E8FF61FBAE420006DFFC8 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045E8FF51FBAE420006DFFC8 /* LoginViewController.m */; };
 		04608BE41F8CDD8C00995E12 /* RecordTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04608BE31F8CDD8C00995E12 /* RecordTableViewController.m */; };
+		0461D95D1FBBF58700200331 /* ReportLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0461D95C1FBBF58700200331 /* ReportLabel.m */; };
 		0462C8131F5D42CE00AEC2D6 /* TreatInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0462C8121F5D42CE00AEC2D6 /* TreatInformation.m */; };
 		046BA76D1F480DF2004D7E74 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BA76C1F480DF2004D7E74 /* main.m */; };
 		046BA7701F480DF2004D7E74 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BA76F1F480DF2004D7E74 /* AppDelegate.m */; };
@@ -135,6 +136,8 @@
 		045E8FF51FBAE420006DFFC8 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		04608BE21F8CDD8C00995E12 /* RecordTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordTableViewController.h; sourceTree = "<group>"; };
 		04608BE31F8CDD8C00995E12 /* RecordTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordTableViewController.m; sourceTree = "<group>"; };
+		0461D95B1FBBF58700200331 /* ReportLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportLabel.h; sourceTree = "<group>"; };
+		0461D95C1FBBF58700200331 /* ReportLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportLabel.m; sourceTree = "<group>"; };
 		0462C8111F5D42CE00AEC2D6 /* TreatInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreatInformation.h; sourceTree = "<group>"; };
 		0462C8121F5D42CE00AEC2D6 /* TreatInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreatInformation.m; sourceTree = "<group>"; };
 		046BA7681F480DF2004D7E74 /* AirWave.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirWave.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -358,6 +361,8 @@
 			children = (
 				0451A1901F9EDEF400AF521C /* MyLabel.h */,
 				0451A1911F9EDEF400AF521C /* MyLabel.m */,
+				0461D95B1FBBF58700200331 /* ReportLabel.h */,
+				0461D95C1FBBF58700200331 /* ReportLabel.m */,
 				046FCF261F7E321200B8CBF6 /* Constants.h */,
 				046FCF241F7E31FB00B8CBF6 /* Constants.m */,
 				04878A1B1FA2C738006EE4A9 /* ClickEffectImageView.h */,
@@ -631,6 +636,7 @@
 				0496EFC31F8B856C0098C7BE /* TreatRecord.m in Sources */,
 				0451A1981F9F3C3000AF521C /* ServerDetailViewController.m in Sources */,
 				048A3B1D1F5411D700929C37 /* OtherSettingViewController.m in Sources */,
+				0461D95D1FBBF58700200331 /* ReportLabel.m in Sources */,
 				04A420371F9D929C00A6C2E9 /* HttpClient.m in Sources */,
 				048A3B141F53C54900929C37 /* UIColor+UIcolor_RGB.m in Sources */,
 				045750441FB1861E00E3AD73 /* LeftDrawerViewController.m in Sources */,

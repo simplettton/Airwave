@@ -43,7 +43,6 @@ static NSString *BLOODDEVTYPE = @"8888";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     //presentview的蒙版
     self.shadowView = [[UIView alloc] initWithFrame:self.view.bounds];
     self.shadowView.backgroundColor = [UIColor grayColor];
