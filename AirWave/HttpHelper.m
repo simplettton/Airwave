@@ -120,7 +120,7 @@ static NSString * USERID_KEY = @"GGCUserId";
                          responseBlock(responseObject);
                      }
                         onError:^(HttpError *responseError) {
-                            errorBlock(responseError);
+//                            errorBlock(responseError);
                         }];
 }
 

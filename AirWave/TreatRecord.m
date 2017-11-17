@@ -18,11 +18,16 @@ static NSString *TYPE = @"7681";
     [aCoder encodeObject:self.durationString forKey:@"durationString"];
     
     [aCoder encodeObject:self.imagePath forKey:@"imagePath"];
-//    [aCoder encodeObject:self.imgData forKey:@"imgData"];
     [aCoder encodeBool:self.hasImage forKey:@"hasImage"];
     [aCoder encodeObject:self.treatWayString forKey:@"treatWayString"];
     [aCoder encodeObject:self.dateTime forKey:@"dateTime"];
     [aCoder encodeInt:self.duration forKey:@"duration"];
+    
+    [aCoder encodeObject:self.name forKey:@"name"];
+    [aCoder encodeObject:self.sex forKey:@"sex"];
+    [aCoder encodeObject:self.age forKey:@"age"];
+    [aCoder encodeObject:self.phoneNumber forKey:@"phoneNumber"];
+    [aCoder encodeObject:self.address forKey:@"address"];
     
 }
 -(instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -43,6 +48,12 @@ static NSString *TYPE = @"7681";
         
         self.dateTime = [aDecoder decodeObjectForKey:@"dateTime"];
         self.duration = [aDecoder decodeIntForKey:@"duration"];
+        
+        self.name = [aDecoder decodeObjectForKey:@"name"];
+        self.sex = [aDecoder decodeObjectForKey:@"sex"];
+        self.age = [aDecoder decodeObjectForKey:@"age"];
+        self.phoneNumber = [aDecoder decodeObjectForKey:@"phoneNumber"];
+        self.address = [aDecoder decodeObjectForKey:@"address"];
     }
     return self;
 }

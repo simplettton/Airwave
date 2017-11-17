@@ -35,7 +35,8 @@ static NSString *BLOODDEVTYPE = @"8888";
     }
     return self;
 }
--(void)viewWillAppear:(BOOL)animated{
+-(void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:YES];
     self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
@@ -72,6 +73,22 @@ static NSString *BLOODDEVTYPE = @"8888";
     [self.imageView2 addGestureRecognizer:[self airwaveGesture]];
     self.airwaveSelected = YES;
     self.bloodDevSelected = YES;
+    
+    
+    //保存默认病人信息
+    NSArray *keys = [NSArray arrayWithObjects:@"headPhoto",@"name",@"sex",@"age",@"phoneNumber",@"address", nil];
+    NSArray *values = [NSArray arrayWithObjects:@"",@"游客",@"--",@"0",@"--",@"--", nil];
+    
+    for (int i = 0;i<[keys count];i++)
+    {
+        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+//        NSLog(@"%@",[userDefault objectForKey:keys[i]]);
+        if (![userDefault objectForKey:keys[i]])
+        {
+            [userDefault setObject:values[i] forKey:keys[i]];
+            [userDefault synchronize];
+        }
+    }
     
     
 }

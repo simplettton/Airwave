@@ -10,5 +10,4 @@
 #import "TreatRecord.h"
 @interface DetailViewController : UIViewController
 @property (nonatomic,strong)TreatRecord *record;
-@property (nonatomic,strong)NSDictionary *dic;
 @end

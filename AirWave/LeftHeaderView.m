@@ -37,7 +37,12 @@
     [self addSubview:headerImageView];
     //加载昵称
     UILabel * nickNameLabel  = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(headerImageView.frame)+ 20 * KScreenUnit , 150 * KScreenUnit, 300 * KScreenUnit,40 * KScreenUnit)];
-    nickNameLabel.text = @"    jasper";
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    if ([userDefault objectForKey:@"name"]) {
+        nickNameLabel.text = [NSString stringWithFormat:@"    %@",[userDefault objectForKey:@"name"]];
+    }else{
+            nickNameLabel.text = @"    jasper";
+    }
     nickNameLabel.textColor = [UIColor whiteColor];
 //    nickNameLabel.font   = [UIFont systemFontOfSize:28 * KScreenUnit];
     nickNameLabel.font = [UIFont systemFontOfSize:35*KScreenUnit];

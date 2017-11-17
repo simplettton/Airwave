@@ -7,8 +7,13 @@
 //
 
 #import "PersonalInfomationViewController.h"
+#import "EditTableViewController.h"
 #import "BaseHeader.h"
 @interface PersonalInfomationViewController ()
+{
+    NSArray *keys;
+}
+@property (strong,nonatomic) IBOutletCollection(UITableViewCell)NSArray *cells;
 
 @end
 
@@ -22,6 +27,19 @@
     self.tableView.sectionHeaderHeight  = 0;
     self.tableView.sectionFooterHeight = 20;
     self.tableView.contentInset = UIEdgeInsetsMake(20 - 35, 0, 0, 0);
+    keys = [NSArray arrayWithObjects:@"headPhoto",@"name",@"sex",@"age",@"phoneNumber",@"address", nil];
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    for (int i = 0;i<[keys count];i++)
+    {
+        UITableViewCell *cell = [self.cells objectAtIndex:i];
+        UIView * valueView = [cell viewWithTag:2];
+        if([valueView isKindOfClass:[UILabel class]])
+        {
+            UILabel *label = (UILabel *)valueView;
+
+            label.text = [userDefault objectForKey:keys[i]];
+        }
+    }
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -37,93 +55,77 @@
     self.navigationItem.rightBarButtonItem.tintColor = UIColorFromHex(0xFFFFFF);
     self.navigationItem.leftBarButtonItem.tintColor = UIColorFromHex(0xFFFFFF);
 }
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Table view data source
 
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-//{
-//    return 2;
-//}
-//
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-//{
-//    if (section == 0)
-//    {
-//        return 5;
-//    }
-//    else if(section == 1)
-//    {
-//        return 1;
-//    }
-//    else
-//    {
-//        return 0;
-//    }
-//}
-
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 0)
+    {
+        return 5;
+    }
+    else if(section == 1)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 
 #pragma mark - Table view delegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (( indexPath.section == 0 &&indexPath.row != 0)||(indexPath.section == 1))
+    {
+         [self performSegueWithIdentifier:@"EditInfomation" sender:indexPath];
+    }
+
 }
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"EditInfomation"])
+    {
+        EditTableViewController *vc = (EditTableViewController *)segue.destinationViewController;
+        
+        NSIndexPath *index = (NSIndexPath *)sender;
+        UITableViewCell *cell;
+        if (index.section ==1)
+        {
+            cell = [self.cells objectAtIndex:index.row+index.section *5];
+        }else
+        {
+            cell = [self.cells objectAtIndex:index.row];
+        }
+
+        UILabel *keyLabel = [cell viewWithTag:1];
+        UILabel *valueLabel = [cell viewWithTag:2];
+        vc.editKey =keyLabel.text;
+        vc.editValue = valueLabel.text;
+        vc.selectedRow = index.section *5 + index.row;
+        vc.returnBlock = ^(NSInteger changedRow,NSString *newValue)
+        {
+            UITableViewCell *cell = [self.cells objectAtIndex:changedRow];
+            UIView * valueView = [cell viewWithTag:2];
+            if([valueView isKindOfClass:[UILabel class]])
+            {
+                UILabel *label = (UILabel *)valueView;
+
+                label.text = newValue;
+            }
+        };
+    }
 }
-*/
+
 
 @end

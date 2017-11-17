@@ -1,0 +1,44 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "383A96E3FD2B375D7497F2AA3EEEC64889DBE1D5",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "2F522EDBD00095B2E51F1915A2654896EFD51B2C" : 9223372036854775807,
+    "18D4F73C85F3068E3F78751F98308D0B4F01C0F9" : 9223372036854775807,
+    "383A96E3FD2B375D7497F2AA3EEEC64889DBE1D5" : 9223372036854775807,
+    "7F302C0321AB0A45DA74274E151958F359C1379E" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "F3728BC8-B615-4643-B422-E1D96A525604",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "2F522EDBD00095B2E51F1915A2654896EFD51B2C" : "AirWave\/AirWave\/GitHub\/BYSocketServerDemo\/",
+    "18D4F73C85F3068E3F78751F98308D0B4F01C0F9" : "AirWave\/AirWave\/GitHub\/BabyBluetooth\/",
+    "383A96E3FD2B375D7497F2AA3EEEC64889DBE1D5" : "AirWave\/",
+    "7F302C0321AB0A45DA74274E151958F359C1379E" : "AirWave\/AirWave\/GitHub\/BYSocketClientTestDemo\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "AirWave",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "AirWave.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/coolnameismy\/BabyBluetooth.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "18D4F73C85F3068E3F78751F98308D0B4F01C0F9"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/CherishJoyBy\/BYSocketServerDemo.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2F522EDBD00095B2E51F1915A2654896EFD51B2C"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:simplettton\/Airwave.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "383A96E3FD2B375D7497F2AA3EEEC64889DBE1D5"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/CherishJoyBy\/BYSocketClientTestDemo.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7F302C0321AB0A45DA74274E151958F359C1379E"
+    }
+  ]
+}

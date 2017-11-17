@@ -28,7 +28,6 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
-- (IBAction)upload:(id)sender;
 @end
 
 @implementation RecordTableViewController
@@ -132,6 +131,8 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
     TreatRecord *record = (TreatRecord *)[mResult objectAtIndex:indexPath.row];
     //时间
     cell.timeLabel.text = record.dateString;
+    //名字
+    cell.nameLabel.text = record.name;
     
     //治疗方式
     if ([self.type isEqualToString:AIRWAVETYPE])
@@ -199,61 +200,11 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
     {
         DetailViewController *controller = (DetailViewController* )segue.destinationViewController;
         controller.record = sender;
-    }else if ([segue.identifier isEqualToString:@"ShowServerRecords"]){
+    }else if ([segue.identifier isEqualToString:@"ShowServerRecords"])
+    {
         ServerRecordTableViewController *controller = (ServerRecordTableViewController *)segue.destinationViewController;
         controller.type = self.type;
     }
-}
-#pragma mark - picture
-//等比例压缩
--(UIImage *) imageCompressForSize:(UIImage *)sourceImage targetSize:(CGSize)size
-{
-    UIImage *newImage = nil;
-    CGSize imageSize = sourceImage.size;
-    CGFloat width = imageSize.width;
-    CGFloat height = imageSize.height;
-    CGFloat targetWidth = size.width;
-    CGFloat targetHeight = size.height;
-    CGFloat scaleFactor = 0.0;
-    CGFloat scaledWidth = targetWidth;
-    CGFloat scaledHeight = targetHeight;
-    CGPoint thumbnailPoint = CGPointMake(0.0, 0.0);
-    if(CGSizeEqualToSize(imageSize, size) == NO)
-    {
-        CGFloat widthFactor = targetWidth / width;
-        CGFloat heightFactor = targetHeight / height;
-        if(widthFactor > heightFactor){
-            scaleFactor = widthFactor;
-        }
-        else{
-            scaleFactor = heightFactor;
-        }
-        scaledWidth = width * scaleFactor;
-        scaledHeight = height * scaleFactor;
-        if(widthFactor > heightFactor){
-            thumbnailPoint.y = (targetHeight - scaledHeight) * 0.5;
-        }else if(widthFactor < heightFactor){
-            thumbnailPoint.x = (targetWidth - scaledWidth) * 0.5;
-        }
-    }
-    
-    UIGraphicsBeginImageContext(size);
-    
-    CGRect thumbnailRect = CGRectZero;
-    thumbnailRect.origin = thumbnailPoint;
-    thumbnailRect.size.width = scaledWidth;
-    thumbnailRect.size.height = scaledHeight;
-    [sourceImage drawInRect:thumbnailRect];
-    newImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-    if(newImage == nil){
-        NSLog(@"scale image fail");
-    }
-    
-    UIGraphicsEndImageContext();
-    
-    return newImage;
-    
 }
 
 #pragma mark - private method

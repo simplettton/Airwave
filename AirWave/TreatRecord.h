@@ -10,10 +10,11 @@
 
 @interface TreatRecord : NSObject<NSCoding>
 
-//@property (nonatomic,strong)NSString *name;
-//@property (nonatomic,strong)NSString *sex;
-//@property (nonatomic,strong)NSString *phone;
-//@property (nonatomic,strong)NSString *address;
+@property (nonatomic,strong)NSString *name;
+@property (nonatomic,strong)NSString *sex;
+@property (nonatomic,strong)NSString *age;
+@property (nonatomic,strong)NSString *phoneNumber;
+@property (nonatomic,strong)NSString *address;
 
 @property (nonatomic,assign)NSString *idString;
 @property (nonatomic,assign)NSString *type;

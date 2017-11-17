@@ -36,6 +36,11 @@ static NSString *BLOODDEVTYPE = @"8888";
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+
+    self.navigationController.navigationBar.barTintColor = UIColorFromHex(0x65BBA9);
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+    [[self.navigationController navigationBar]setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColorFromHex(0XFFFFFF)}];
     [self startRequest];
 }
 - (void)viewDidLoad
@@ -156,7 +161,7 @@ static NSString *BLOODDEVTYPE = @"8888";
     }
     if ([datas count]>0)
     {
-        cell.numberLabel.text = [NSString stringWithFormat:@"%d",indexPath.row +1];
+        cell.numberLabel.text = [NSString stringWithFormat:@"%ld",indexPath.row +1];
         NSString *treatWayString= @"";
         switch ([[datas[indexPath.row]objectForKey:@"Mode"]intValue])
         {
@@ -188,6 +193,7 @@ static NSString *BLOODDEVTYPE = @"8888";
 //        cell.timeLabel.text = [NSString stringWithFormat:@"name : %@",str5];
         NSString *dateString = [datas[indexPath.row] objectForKey:@"Date"];
          cell.timeLabel.text = [NSString stringWithFormat:@"  %@",[self timeWithTimeIntervalString:dateString]];
+        cell.nameLabel.text = [datas[indexPath.row] objectForKey:@"Name"];
     }
 
     return cell;
@@ -265,7 +271,7 @@ static NSString *BLOODDEVTYPE = @"8888";
     formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
     [formatter setDateStyle:NSDateFormatterMediumStyle];
     [formatter setTimeStyle:NSDateFormatterShortStyle];
-    [formatter setDateFormat:@"yyyy年MM月dd日 HH:mm"];
+    [formatter setDateFormat:@"yyyy/MM/dd HH:mm"];
     
     // 毫秒值转化为秒
     NSDate* date = [NSDate dateWithTimeIntervalSince1970:[timeString doubleValue]];

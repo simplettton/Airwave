@@ -265,6 +265,13 @@ typedef NS_ENUM(NSUInteger,State)
             self.treatRecord.duration = (UInt32)duration;
             [self.treatRecord changeDurationToString];
             self.treatRecord.type = TYPE;
+            NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+            
+            self.treatRecord.name = [userDefault objectForKey:@"name"];
+            self.treatRecord.sex = [userDefault objectForKey:@"sex"];
+            self.treatRecord.age = [userDefault objectForKey:@"age"];
+            self.treatRecord.phoneNumber = [userDefault objectForKey:@"phoneNumber"];
+            self.treatRecord.address = [userDefault objectForKey:@"address"];
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.timerLabel.text = [NSString stringWithFormat:self.timeValue<10?@"0%d:00":@"%d:00",(int)self.timeValue];
                 self.timeLabel.text = [NSString stringWithFormat:self.timeValue<10?@"0%d":@"%d",(int)self.timeValue];

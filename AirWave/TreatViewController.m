@@ -268,6 +268,14 @@ NSString *const PORT = @"8080";
 //        self.treatRecord.duration = self.runningInfomation.treatProcessTime;
         
         [self.treatRecord analyzeWithData:data];
+        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+        
+        self.treatRecord.name = [userDefault objectForKey:@"name"];
+        self.treatRecord.sex = [userDefault objectForKey:@"sex"];
+        self.treatRecord.age = [userDefault objectForKey:@"age"];
+        self.treatRecord.phoneNumber = [userDefault objectForKey:@"phoneNumber"];
+        self.treatRecord.address = [userDefault objectForKey:@"address"];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
         [self takePhotoAlert];
         });

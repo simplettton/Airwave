@@ -29,6 +29,8 @@
     UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(closeSelf:)];
     self.navigationItem.leftBarButtonItem = barButton;
     self.navigationItem.leftBarButtonItem.tintColor = UIColorFromHex(0x65BBA9);
+    
+    
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -48,6 +50,8 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+
 - (IBAction)login:(id)sender
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];

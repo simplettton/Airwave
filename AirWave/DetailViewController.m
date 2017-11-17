@@ -7,6 +7,7 @@
 //
 
 #import "DetailViewController.h"
+#import "RecordReportViewController.h"
 #import "HttpClient.h"
 #import "HttpRequest.h"
 #import "HttpResponse.h"
@@ -23,7 +24,13 @@ NSString *const TYPE = @"7681";
 @property (weak, nonatomic) IBOutlet UIImageView *imageResult;
 @property (strong, nonatomic)NSString *idString;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sexLabel;
+@property (weak, nonatomic) IBOutlet UILabel *ageLabel;
+@property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
+@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
+
 @property (weak, nonatomic) IBOutlet MyLabel *treatDateLabel;
 @property (weak, nonatomic) IBOutlet MyLabel *treatWayLabel;
 @property (weak, nonatomic) IBOutlet MyLabel *treatTimeLabel;
@@ -44,7 +51,6 @@ NSString *const TYPE = @"7681";
 
     CGFloat width=[UIScreen mainScreen].bounds.size.width;
     CGFloat height=[UIScreen mainScreen].bounds.size.height;
-    
     if (self.record.imagePath>0)
     {
          self.scrollView.contentSize = CGSizeMake(width, 1100);
@@ -73,8 +79,12 @@ NSString *const TYPE = @"7681";
     }else if([self.record.type isEqualToString:AIRWAVETYPE]){
         self.treatWayLabel.text = [NSString stringWithFormat:@"  %@",self.record.treatWayString];
     }
-
     self.treatTimeLabel.text = [NSString stringWithFormat:@"  %@",self.record.durationString];
+    self.nameLabel.text = [NSString stringWithFormat:@"  %@",self.record.name];
+    self.sexLabel.text = [NSString stringWithFormat:@"  %@",self.record.sex];
+    self.ageLabel.text = [NSString stringWithFormat:@"  %@",self.record.age];
+    self.phoneLabel.text = [NSString stringWithFormat:@"  %@",self.record.phoneNumber];
+    self.addressLabel.text = [NSString stringWithFormat:@"  %@",self.record.address];
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
@@ -184,22 +194,7 @@ NSString *const TYPE = @"7681";
                             }];
     });
 }
-/**
- *  等比缩放成自定长宽的图片
- *
- *  @param image      源图片
- *  @param targetSize 自定义目标图片的size
- *
- *  @return 处理后图片
- */
-- (UIImage *)scaleImage:(UIImage *)image toSize:(CGSize)targetSize
-{
-    UIGraphicsBeginImageContext(CGSizeMake(targetSize.width, targetSize.height));
-    [image drawInRect:CGRectMake(0, 0, targetSize.width, targetSize.height)];
-    UIImage *targetSizeImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return targetSizeImage;
-}
+
 
 /**
  *  按图片最大边成比例缩放图片
@@ -237,6 +232,13 @@ NSString *const TYPE = @"7681";
         return scaledImage;
     }
     return image;
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"CreateReport"])
+    {
+        RecordReportViewController *vc = (RecordReportViewController *)segue.destinationViewController;
+        vc.record = self.record;
+    }
 }
 
 

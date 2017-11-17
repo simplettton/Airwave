@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "TreatRecord.h"
 @interface RecordReportViewController : UIViewController
-
+@property (nonatomic,strong)TreatRecord *record;
+@property (nonatomic,strong)NSDictionary *dic;
 @end

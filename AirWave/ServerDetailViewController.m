@@ -7,6 +7,7 @@
 //
 
 #import "ServerDetailViewController.h"
+#import "ServerReportViewController.h"
 #import "HttpClient.h"
 #import "HttpRequest.h"
 #import "HttpResponse.h"
@@ -14,6 +15,7 @@
 #import "HttpHelper.h"
 static NSString *AIRWAVETYPE = @"7681";
 static NSString *BLOODDEVTYPE = @"8888";
+#define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 @interface ServerDetailViewController ()
 @property (weak, nonatomic) IBOutlet UIView *background;
 @property (weak, nonatomic) IBOutlet UILabel *name;
@@ -28,12 +30,15 @@ static NSString *BLOODDEVTYPE = @"8888";
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UILabel *modeOrLevelLabel;
 @end
-
 @implementation ServerDetailViewController
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    self.navigationController.navigationBar.barTintColor = UIColorFromHex(0x65BBA9);
+    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+    
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     [params setObject:[self.dic objectForKey:@"Id"] forKey:@"Id"];
     
@@ -51,10 +56,8 @@ static NSString *BLOODDEVTYPE = @"8888";
              if (state==1)//有图片
              {
                  NSString *imageString = [jsonDict objectForKey:@"Img"];
-//                 NSLog(@"imageString---------------------------------- %@",imageString);
                  NSData *nsdataFromBase64String = [[NSData alloc]
                                                    initWithBase64EncodedString:imageString options:NSDataBase64DecodingIgnoreUnknownCharacters];
-//                 NSLog(@"nsdatafrombasestring1--------------------------%@",nsdataFromBase64String);
                  dispatch_async(dispatch_get_main_queue(), ^{
                      self.scrollView.contentSize = CGSizeMake(width, 1100);
                      self.imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -75,6 +78,7 @@ static NSString *BLOODDEVTYPE = @"8888";
 {
     [super viewDidLoad];
     self.title = @"";
+
     self.name.text = [NSString stringWithFormat:@"  %@",[self.dic objectForKey:@"Name"]];
     self.sex.text = [NSString stringWithFormat:@"  %@",[self.dic objectForKey:@"Sex"]];
     self.age.text = [NSString stringWithFormat:@"  %@",[self.dic objectForKey:@"Age"]];
@@ -111,7 +115,12 @@ static NSString *BLOODDEVTYPE = @"8888";
     }
     self.mode.text = [NSString stringWithFormat:@"  %@",treatWayString];
     self.treatTime.text = [NSString stringWithFormat:@"  %@",[self convertTimeWithSecond:[self.dic objectForKey:@"Treattime"]]];
+    
+    //查看报告按钮
+    self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
+
 }
+#pragma mark - private method
 - (NSString *)convertTimeWithSecond:(NSString *)string
 {
 
@@ -147,12 +156,20 @@ static NSString *BLOODDEVTYPE = @"8888";
     formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
     [formatter setDateStyle:NSDateFormatterMediumStyle];
     [formatter setTimeStyle:NSDateFormatterShortStyle];
-    [formatter setDateFormat:@"yyyy年MM月dd日 HH:mm"];
+    [formatter setDateFormat:@"yyyy年MM月dd日 HH分mm秒"];
     
     // 毫秒值转化为秒
     NSDate* date = [NSDate dateWithTimeIntervalSince1970:[timeString doubleValue]];
     NSString* dateString = [formatter stringFromDate:date];
     return dateString;
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"ShowServerReport"])
+    {
+        ServerReportViewController *vc = (ServerReportViewController *)segue.destinationViewController;
+        vc.dic = self.dic;
+        vc.type = self.type;
+    }
 }
 
 @end
