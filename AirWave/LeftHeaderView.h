@@ -10,6 +10,7 @@
 
 @interface LeftHeaderView : UIView
 @property(nonatomic,strong) UIButton * myInformationButton;
-@property(nonatomic,strong)  UIButton * personalSignatureButton;
+@property(nonatomic,strong) UIButton * personalSignatureButton;
 @property(nonatomic,strong) UIButton * QRCodeButton;
+@property(nonatomic,strong) UILabel *nickNameLabel;
 @end

@@ -42,11 +42,7 @@ NSString *const TYPE = @"7681";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30 , 30)];
-    [btn setBackgroundImage:[UIImage imageNamed:@"upload_white"] forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(rightBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithCustomView:btn];
-    self.navigationItem.rightBarButtonItem = barButton;
+
     self.title = @"治疗结果";
 
     CGFloat width=[UIScreen mainScreen].bounds.size.width;
@@ -91,108 +87,6 @@ NSString *const TYPE = @"7681";
     self.navigationController.navigationBar.hidden = NO;
     self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-}
--(void)rightBarButtonClicked:(UIButton *)button
-{
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    //上传数据
-    [params setObject:@"jasper" forKey:@"Name"];
-    [params setObject:@"男" forKey:@"Sex"];
-    [params setObject:@"7" forKey:@"Age"];
-    [params setObject:@"18819467352" forKey:@"Phone"];
-    [params setObject:@"address" forKey:@"Address"];
-    [params setObject:self.record.type forKey:@"Type"];
-    
-    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[self.record.dateTime timeIntervalSince1970]];
-
-    [params setObject:timeSp forKey:@"Date"];
-    [params setObject:[NSString stringWithFormat:@"%d",(unsigned int)self.record.duration] forKey:@"Treattime"];
-    [params setObject:[NSString stringWithFormat:@"%d",self.record.treatWay] forKey:@"Mode"];
-
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[HttpHelper instance] post:@"add"
-                             params:params
-                           hasToken:NO
-                         onResponse:^(HttpResponse *responseObject) {
-                             
-                             NSDictionary* jsonDict = [responseObject jsonDist];
-                             NSLog(@"AddReturnJson = %@",jsonDict);
-                             
-                             if(jsonDict != nil)
-                             {
-                                 int state = [[jsonDict objectForKey:@"State"] intValue];
-                                 self.idString = [jsonDict objectForKey:@"Id"];
-                                 //上传照片
-                                 if (self.record.imagePath!=nil)
-                                 {
-                                     NSMutableDictionary *params1 = [NSMutableDictionary dictionary];
-                                     UIImage *imageBefore = [[UIImage imageWithContentsOfFile:self.record.imagePath]rotate:UIImageOrientationRight];
-                                     UIImage *image = [self scaleImage:imageBefore maxSize:1000];
-                                     NSData *imageData;
-                                     if (UIImagePNGRepresentation(image) == nil)
-                                     {
-                                         imageData = UIImageJPEGRepresentation(image, 1);
-                                     }
-                                     else
-                                     {
-                                         imageData = UIImageJPEGRepresentation(image, 0.8);
-                                     }
-                                     NSString *imageString = [imageData base64EncodedStringWithOptions:0];
-                                     [params1 setObject:imageString forKey:@"Img"];
-                                     
-
-                                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                                         [[HttpHelper instance] post:[NSString stringWithFormat:@"addimg&Id=%@",self.idString]
-                                                              params:params1
-                                                            hasToken:NO
-                                                          onResponse:^(HttpResponse *responseObject) {
-                                                              NSDictionary* jsonDict = [responseObject jsonDist];
-                                                              
-                                                              if(jsonDict != nil)
-                                                              {
-                                                                  int state = [[jsonDict objectForKey:@"State"] intValue];
-                                                                  
-                                                                  if (state == 1)
-                                                                  {
-                                                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                                                          [SVProgressHUD showSuccessWithStatus:@"上传成功"];
-                                                                          [SVProgressHUD dismissWithDelay:0.9];
-                                                                      });
-
-                                                                  }
-                                                              }
-                                                              else
-                                                              {
-                                                                  dispatch_async(dispatch_get_main_queue(), ^{
-                                                                      [SVProgressHUD showErrorWithStatus:@"上传失败"];
-                                                                      [SVProgressHUD dismissWithDelay:0.9];
-                                                                  });
-                                                              }
-
-                                                          }
-                                                             onError:^(HttpError *responseError) {
-                                                             }];
-                                     });
-                                 }
-                                 if (state == 1)
-                                 {
-                                     dispatch_async(dispatch_get_main_queue(), ^{
-                                         [SVProgressHUD showSuccessWithStatus:@"上传成功"];
-                                         [SVProgressHUD dismissWithDelay:0.9];
-                                     });
-                                 }
-                             }
-                         }
-                            onError:^(HttpError *responseError) {
-                                
-                                NSLog(@"error");
-                                dispatch_async(dispatch_get_main_queue(), ^{
-                                    [SVProgressHUD showErrorWithStatus:@"上传失败"];
-                                    [SVProgressHUD dismissWithDelay:0.9];
-                                });
-                            }];
-    });
 }
 
 

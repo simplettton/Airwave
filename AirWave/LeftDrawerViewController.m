@@ -7,7 +7,6 @@
 //
 
 #import "LeftDrawerViewController.h"
-#import "LeftHeaderView.h"
 #import "DetailViewController.h"
 #import "RecordTableViewController.h"
 #import "ServerIPViewController.h"
@@ -24,6 +23,7 @@ static NSString * SERVERIP_KEY = @"ServerIp";
 static NSString * SERVER_IP = @"http://218.17.22.131:3088";
 @interface LeftDrawerViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
 @property(assign , nonatomic) int homePageIndex;
 @end
 
@@ -37,7 +37,7 @@ static NSString * SERVER_IP = @"http://218.17.22.131:3088";
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.scrollEnabled = NO;
-    [self addTableHeaderViewAndTableFooterView];
+//    [self addTableHeaderViewAndTableFooterView];
     
     
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
@@ -46,14 +46,10 @@ static NSString * SERVER_IP = @"http://218.17.22.131:3088";
         [userDefault setObject:SERVER_IP forKey:SERVERIP_KEY];
     }
     [userDefault synchronize];
+    
+    [ self.headerView.myInformationButton addTarget:self action:@selector(buttonClickListener:) forControlEvents:UIControlEventTouchUpInside];
 }
-#pragma mark --加载View
--(void)addTableHeaderViewAndTableFooterView
-{
-    LeftHeaderView * headerView = [[LeftHeaderView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth - 75 , 444 * KScreenUnit)];
-    [ headerView.myInformationButton addTarget:self action:@selector(buttonClickListener:) forControlEvents:UIControlEventTouchUpInside];
-    self.tableView.tableHeaderView = headerView;
-}
+
 #pragma mark -- UITableViewDataSource
 -(NSInteger)numberOfRowsInSection:(NSInteger)section
 {
@@ -141,7 +137,8 @@ static NSString * SERVER_IP = @"http://218.17.22.131:3088";
     
     UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
     [nav pushViewController:showVC animated:NO];
-    [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
+    [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished)
+    {
         [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
     }];
 
@@ -153,7 +150,8 @@ static NSString * SERVER_IP = @"http://218.17.22.131:3088";
     
     UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
     [nav pushViewController:showVC animated:NO];
-    [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
+    [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished)
+    {
         [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
     }];
 }

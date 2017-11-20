@@ -34,6 +34,12 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    //导航栏
+    self.navigationController.navigationBar.hidden = NO;
+    self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    self.navigationItem.rightBarButtonItem.tintColor = UIColorFromHex(0xffffff);
+    self.navigationItem.leftBarButtonItem.tintColor = UIColorFromHex(0xffffff);
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         //文件名
@@ -85,11 +91,11 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.tableView.tableFooterView = [[UIView alloc]init];
     //加载数据
-    //导航栏
-    self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-    self.navigationItem.rightBarButtonItem.tintColor = UIColorFromHex(0xffffff);
-    self.navigationItem.leftBarButtonItem.tintColor = UIColorFromHex(0xffffff);
+
+//    self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
+//    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+//    self.navigationItem.rightBarButtonItem.tintColor = UIColorFromHex(0xffffff);
+//    self.navigationItem.leftBarButtonItem.tintColor = UIColorFromHex(0xffffff);
     
     //右上角按钮
     UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30 , 30)];

@@ -12,6 +12,7 @@
 #import "UIViewController+MMDrawerController.h"
 #import "MMDrawerController.h"
 #import "MMdrawerVisualState.h"
+#import "LeftDrawerViewController.h"
 #import "AppDelegate.h"
 static NSString *AIRWAVETYPE = @"7681";
 static NSString *BLOODDEVTYPE = @"8888";
@@ -78,11 +79,10 @@ static NSString *BLOODDEVTYPE = @"8888";
     //保存默认病人信息
     NSArray *keys = [NSArray arrayWithObjects:@"headPhoto",@"name",@"sex",@"age",@"phoneNumber",@"address", nil];
     NSArray *values = [NSArray arrayWithObjects:@"",@"游客",@"--",@"0",@"--",@"--", nil];
-    
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     for (int i = 0;i<[keys count];i++)
     {
-        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-//        NSLog(@"%@",[userDefault objectForKey:keys[i]]);
+
         if (![userDefault objectForKey:keys[i]])
         {
             [userDefault setObject:values[i] forKey:keys[i]];
@@ -90,12 +90,15 @@ static NSString *BLOODDEVTYPE = @"8888";
         }
     }
     
-    
 }
 //左上按钮
 -(void)leftBarButtonClicked:(UIButton *)button
 {
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    LeftDrawerViewController *vc = (LeftDrawerViewController  *)self.mm_drawerController.leftDrawerViewController;
+    vc.headerView.nickNameLabel.text =[NSString stringWithFormat:@"    %@",[userDefault objectForKey:@"name"]];
+
 }
 -(UITapGestureRecognizer *)airwaveGesture
 {

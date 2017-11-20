@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ServerRecordTableViewController : UITableViewController
+@interface ServerRecordTableViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)NSString *type;
 @end

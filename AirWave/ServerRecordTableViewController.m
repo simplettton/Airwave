@@ -24,12 +24,17 @@ static NSString *BLOODDEVTYPE = @"8888";
     NSMutableArray *datas;
     NSInteger currentPage;
     NSInteger numberOfPages;
+    NSInteger sum;
 }
 
 - (IBAction)nextPage:(id)sender;
 - (IBAction)previousPage:(id)sender;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *upButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downButton;
+@property (strong,nonatomic)UIView *pageView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UILabel *currentPageLabel;
+@property (weak, nonatomic) IBOutlet UILabel *numberOfPagesLabel;
 @end
 
 @implementation ServerRecordTableViewController
@@ -47,13 +52,16 @@ static NSString *BLOODDEVTYPE = @"8888";
 {
     [super viewDidLoad];
     self.upButton.enabled = NO;
-
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    self.numberOfPagesLabel.text = [NSString stringWithFormat:@"%ld",(long)numberOfPages];
     self.tableView.tableFooterView = [[UIView alloc]init];
     //navigation
     self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     self.navigationItem.rightBarButtonItem.tintColor = UIColorFromHex(0xffffff);
     self.navigationItem.leftBarButtonItem.tintColor = UIColorFromHex(0xffffff);
+    
 }
 
 -(void)startRequest
@@ -68,12 +76,11 @@ static NSString *BLOODDEVTYPE = @"8888";
                        hasToken:NO
                      onResponse:^(HttpResponse *responseObject) {
                          NSDictionary* jsonDict = [responseObject jsonDist];
-//                         NSLog(@"-----------receive--------%@",jsonDict);
                          if (jsonDict !=nil)
                          {
                              //记录总量
-                             int Sum = [[jsonDict objectForKey:@"Sum"]intValue];
-                             numberOfPages = (Sum+10-1)/10;
+                             sum = [[jsonDict objectForKey:@"Sum"]intValue];
+                             numberOfPages = (sum+10-1)/10;
                              if (numberOfPages == 1) {
                                  dispatch_async(dispatch_get_main_queue(), ^{
                                          self.downButton.enabled = NO;
@@ -99,6 +106,7 @@ static NSString *BLOODDEVTYPE = @"8888";
                                                           }
                                                           dispatch_async(dispatch_get_main_queue(), ^{
                                                               [self.tableView reloadData];
+                                                                  self.numberOfPagesLabel.text = [NSString stringWithFormat:@"%ld",(long)numberOfPages];
                                                           });
                                                       }
                                                   }
@@ -130,6 +138,7 @@ static NSString *BLOODDEVTYPE = @"8888";
                              }
                              dispatch_async(dispatch_get_main_queue(), ^{
                                  [self.tableView reloadData];
+                                 self.currentPageLabel.text = [NSString stringWithFormat:@"%ld",currentPage +1];
                              });
                              
                              
@@ -150,7 +159,10 @@ static NSString *BLOODDEVTYPE = @"8888";
 
     return [datas count];
 }
-
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 87.5;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
@@ -204,7 +216,8 @@ static NSString *BLOODDEVTYPE = @"8888";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self performSegueWithIdentifier:@"ShowServerDetail" sender:datas[indexPath.row]];
 }
-- (IBAction)return:(id)sender {
+- (IBAction)return:(id)sender
+{
 }
 
 - (IBAction)nextPage:(id)sender

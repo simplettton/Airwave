@@ -120,7 +120,6 @@ static NSString *BLOODDEVTYPE = @"8888";
          if (jsonDict !=nil)
          {
              int state = [[jsonDict objectForKey:@"State"] intValue];
-             NSLog(@"state = %d",state);
              if (state==1)//签名
              {
                  //签名

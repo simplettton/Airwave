@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LeftHeaderView.h"
 
 @interface LeftDrawerViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet LeftHeaderView *headerView;
 @end

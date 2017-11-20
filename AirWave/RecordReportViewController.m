@@ -43,6 +43,7 @@ static NSString *BLOODDEVTYPE = @"8888";
 @property (weak, nonatomic) IBOutlet UIImageView *signImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *resultImageView;
 @property (strong ,nonatomic) UIImage *signImage;
+@property (weak, nonatomic) IBOutlet UIButton *suggestButton;
 
 @property (weak, nonatomic) IBOutlet UIView *photoView;
 
@@ -163,11 +164,13 @@ static NSString *BLOODDEVTYPE = @"8888";
     [super viewWillDisappear:YES];
     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:nil];
-
 }
 - (void)closeSelf:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
+//    NSInteger index=[[self.navigationController viewControllers]indexOfObject:self];
+//    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:index-2]animated:YES];
+
 }
 -(void)upload:(id)sender
 {
@@ -231,14 +234,14 @@ static NSString *BLOODDEVTYPE = @"8888";
                                                               {
                                                                   int state = [[jsonDict objectForKey:@"State"] intValue];
                                                                   
-                                                                  if (state == 1)
+                                                                  if (state == 0)
                                                                   {
-                                                                      [self showSuccessAlert];
+                                                                      [self showFailureAlertWithTitle:@"上传照片失败"];
                                                                   }
                                                               }
                                                               else
                                                               {
-                                                                  [self showFailureAlert];
+                                                                  [self showFailureAlertWithTitle:@"上传照片失败"];
                                                               }
                                                               
                                                           }
@@ -262,10 +265,9 @@ static NSString *BLOODDEVTYPE = @"8888";
                                                                   {
                                                                       int state = [[jsonDict objectForKey:@"State"] intValue];
                                                                       
-                                                                      if (state == 1)
+                                                                      if (state == 0)
                                                                       {
-                                                                          [self showSuccessAlert];
-                                                                          
+                                                                          [self showFailureAlertWithTitle:@"上传签名失败"];
                                                                       }
                                                                   }
                                                               }
@@ -287,9 +289,9 @@ static NSString *BLOODDEVTYPE = @"8888";
                                                                   {
                                                                       int state = [[jsonDict objectForKey:@"State"] intValue];
                                                                       
-                                                                      if (state == 1)
+                                                                      if (state == 0)
                                                                       {
-                                                                          [self showSuccessAlert];
+                                                                          [self showFailureAlertWithTitle:@"上传建议失败"];
                                                                       }
                                                                   }
                                                               }
@@ -302,27 +304,27 @@ static NSString *BLOODDEVTYPE = @"8888";
                                  
                                  if (state == 1)
                                  {
-                                     [self showSuccessAlert];
+                                     [self showSuccessAlertWithTitle:@"上传记录成功"];
                                  }
                              }
                          }
                             onError:^(HttpError *responseError) {
-                                [self showFailureAlert];
+                                [self showFailureAlertWithTitle:@"上传记录失败"];
                                 NSLog(@"error");
                             }];
     });
 }
--(void)showSuccessAlert
+-(void)showSuccessAlertWithTitle:(NSString *)title
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [SVProgressHUD showSuccessWithStatus:@"上传成功"];
+        [SVProgressHUD showSuccessWithStatus:title];
         [SVProgressHUD dismissWithDelay:0.9];
     });
 }
--(void)showFailureAlert
+-(void)showFailureAlertWithTitle:(NSString *)title
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [SVProgressHUD showErrorWithStatus:@"上传失败"];
+        [SVProgressHUD showErrorWithStatus:title];
         [SVProgressHUD dismissWithDelay:0.9];
     });
 }
@@ -408,12 +410,14 @@ static NSString *BLOODDEVTYPE = @"8888";
     [self.drawView clearDrawBoard];
 }
 #pragma -mark textViewDelegate
-- (void)textViewDidEndEditing:(UITextView *)textView{
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
     //输入框编辑完成,视图恢复到原始状态
     self.view.frame = CGRectMake(0, 0, ScreenW, ScreenH);
 }
--(void)textViewDidBeginEditing:(UITextView *)textView{
-    
+-(void)textViewDidBeginEditing:(UITextView *)textView
+{
+    [self.suggestButton removeFromSuperview];
     CGRect frame = textView.frame;
     
     //（加上了输入中文选择文字的view高度）依据自己需求而定
@@ -428,6 +432,7 @@ static NSString *BLOODDEVTYPE = @"8888";
         self.view.frame = CGRectMake(0.0f, -offset, ScreenW, ScreenH);
     }
     [UIView commitAnimations];
+    
 }
 //回车时退出键盘
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text

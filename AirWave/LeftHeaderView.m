@@ -26,7 +26,17 @@
     }
     return self;
 }
-
+//storyboard中加载
+-(instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self)
+    {
+        [self addView];
+        self.backgroundColor = UIColorFromHex(0X65BBA9);
+    }
+    return self;
+}
 -(void)addView
 {
     //加载头像
@@ -36,17 +46,19 @@
     headerImageView.image = [UIImage imageNamed:@"bear"];
     [self addSubview:headerImageView];
     //加载昵称
-    UILabel * nickNameLabel  = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(headerImageView.frame)+ 20 * KScreenUnit , 150 * KScreenUnit, 300 * KScreenUnit,40 * KScreenUnit)];
+    self.nickNameLabel  = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(headerImageView.frame)+ 20 * KScreenUnit , 150 * KScreenUnit, 300 * KScreenUnit,40 * KScreenUnit)];
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     if ([userDefault objectForKey:@"name"]) {
-        nickNameLabel.text = [NSString stringWithFormat:@"    %@",[userDefault objectForKey:@"name"]];
-    }else{
-            nickNameLabel.text = @"    jasper";
+        self.nickNameLabel.text = [NSString stringWithFormat:@"    %@",[userDefault objectForKey:@"name"]];
+    }else
+    {
+        self.nickNameLabel.text = @"    游客";
     }
-    nickNameLabel.textColor = [UIColor whiteColor];
+    self.nickNameLabel.textColor = [UIColor whiteColor];
 //    nickNameLabel.font   = [UIFont systemFontOfSize:28 * KScreenUnit];
-    nickNameLabel.font = [UIFont systemFontOfSize:35*KScreenUnit];
-    [self addSubview:nickNameLabel];
+    self.nickNameLabel.font = [UIFont systemFontOfSize:35*KScreenUnit];
+    [self addSubview:self.nickNameLabel];
+    
     
     //添加点击button
     self.myInformationButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 44, tableViewWidth, 230 * KScreenUnit)];
@@ -81,8 +93,7 @@
     self.personalSignatureButton.backgroundColor = [UIColor clearColor];
     [self.personalSignatureButton setBackgroundImage:[UIImage imageWithColor:UIColorFromRGBAndAlpha(0xffffff, 0.3)] forState:UIControlStateHighlighted];
     [self addSubview:self.personalSignatureButton];
-    
-}
 
+}
 
 @end
