@@ -75,8 +75,6 @@ static HttpClient* _instance = nil;
                                                 {
                                                     HttpResponse* httpResponse = [HttpResponse alloc];
                                                     [httpResponse setImageData:data];
-//                                                    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-//                                                    NSLog(@"----imagdict= %@",dict);
                                                     responseBlock(httpResponse);
                                                 }
                                             }

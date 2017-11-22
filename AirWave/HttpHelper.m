@@ -103,7 +103,6 @@ static NSString * USERID_KEY = @"GGCUserId";
     {
         NSString *ts = [NSString stringWithFormat:@"%ld", time(NULL)];
         NSString *token = [self md5:[NSString stringWithFormat:@"%@%@%@", _token, _userid, ts]];
-        
         [params setValue:_userid forKey:@"userid"];
         [params setValue:ts forKey:@"timestamp"];
         [params setValue:token forKey:@"token"];

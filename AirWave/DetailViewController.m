@@ -42,14 +42,13 @@ NSString *const TYPE = @"7681";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     self.title = @"治疗结果";
 
     CGFloat width=[UIScreen mainScreen].bounds.size.width;
     CGFloat height=[UIScreen mainScreen].bounds.size.height;
     if (self.record.imagePath>0)
     {
-         self.scrollView.contentSize = CGSizeMake(width, 1100);
+         self.scrollView.contentSize = CGSizeMake(width, 900);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
             NSString *documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
@@ -127,7 +126,8 @@ NSString *const TYPE = @"7681";
     }
     return image;
 }
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
     if ([segue.identifier isEqualToString:@"CreateReport"])
     {
         RecordReportViewController *vc = (RecordReportViewController *)segue.destinationViewController;
