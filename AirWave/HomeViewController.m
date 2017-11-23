@@ -50,19 +50,21 @@ static NSString *BLOODDEVTYPE = @"8888";
     self.shadowView.backgroundColor = [UIColor grayColor];
     [self.view addSubview:self.shadowView];
     self.shadowView.alpha = 0;
-
-
+    
     self.view.layer.cornerRadius = 10;
     //navigation
     self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     //leftBarButton
+    
     UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30 , 30)];
-    [btn setBackgroundImage:[UIImage imageNamed:@"menu-2"] forState:UIControlStateNormal];
+
+    [btn setBackgroundImage:[UIImage imageNamed:@"home_menu"] forState:UIControlStateNormal];
+
     [btn addTarget:self action:@selector(leftBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithCustomView:btn];
+//    UIBarButtonItem *barItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"home_menu"] style:UIBarButtonItemStylePlain target:self action:@selector(leftBarButtonClicked:)];
     self.navigationItem.leftBarButtonItem = barButton;
-    
     
     //touchEnable
     self.imageView1.userInteractionEnabled = YES;
@@ -74,7 +76,6 @@ static NSString *BLOODDEVTYPE = @"8888";
     [self.imageView2 addGestureRecognizer:[self airwaveGesture]];
     self.airwaveSelected = YES;
     self.bloodDevSelected = YES;
-    
     
     //保存默认病人信息
     NSArray *keys = [NSArray arrayWithObjects:@"headPhoto",@"name",@"sex",@"age",@"phoneNumber",@"address", nil];

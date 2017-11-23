@@ -231,9 +231,19 @@ NSString *const PORT = @"8080";
     Byte *bytes = (Byte *)[data bytes];
     
     text = [NSString stringWithFormat:@"%d",bytes[2]];
+    if (bytes[2]!=147)
+    {
+        NSLog(@"------------");
+    }
+
     for (int i = 0; i<[data length]; i++)
     {
-        NSLog(@"bytes[%d]=%d",i,bytes[i]);
+
+        if (bytes[2]!=147)
+        {
+             NSLog(@"bytes[%d]=%d",i,bytes[i]);
+        }
+
     }
     //治疗信息
     if (bytes[2]==0x90)
@@ -264,8 +274,6 @@ NSString *const PORT = @"8080";
     {
         self.treatRecord = [[TreatRecord alloc]init];
         NSLog(@"------------------------------------------------");
-//        self.treatRecord.treatWay = self.treatInformation.treatWay;
-//        self.treatRecord.duration = self.runningInfomation.treatProcessTime;
         
         [self.treatRecord analyzeWithData:data];
         NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
@@ -284,7 +292,7 @@ NSString *const PORT = @"8080";
 }
 -(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
 {
-    if (tag == 10000)
+    if (tag == 1000)
     {
         NSLog(@"发动成功");
     }
