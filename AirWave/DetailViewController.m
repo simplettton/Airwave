@@ -16,6 +16,7 @@
 #import "UIImage+Rotate.h"
 #import "MyLabel.h"
 #import "SVProgressHUD.h"
+#import "XWScanImage.h"
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 static NSString *AIRWAVETYPE = @"7681";
 static NSString *BLOODDEVTYPE = @"8888";
@@ -23,8 +24,6 @@ NSString *const TYPE = @"7681";
 @interface DetailViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *imageResult;
 @property (strong, nonatomic)NSString *idString;
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sexLabel;
 @property (weak, nonatomic) IBOutlet UILabel *ageLabel;
@@ -48,7 +47,6 @@ NSString *const TYPE = @"7681";
     CGFloat height=[UIScreen mainScreen].bounds.size.height;
     if (self.record.imagePath>0)
     {
-         self.scrollView.contentSize = CGSizeMake(width, 900);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
             NSString *documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
@@ -56,14 +54,24 @@ NSString *const TYPE = @"7681";
             self.record.imagePath = imagePath;
             UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
             dispatch_async(dispatch_get_main_queue(), ^{
-                _imageResult.contentMode = UIViewContentModeScaleAspectFit;
                 _imageResult.image = [image rotate:UIImageOrientationRight];
+                
+                //设置图片居中显示
+                [self.imageResult setContentScaleFactor:[[UIScreen mainScreen] scale]];
+//                self.imageResult.contentMode =  UIViewContentModeScaleAspectFit;
+                self.imageResult.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+                self.imageResult.clipsToBounds  = YES;
+                //图片添加点击放大手势
+                UITapGestureRecognizer *tapGestureRecognizer1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scanBigImageClick1:)];
+                [self.imageResult addGestureRecognizer:tapGestureRecognizer1];
+                //让UIImageView和它的父类开启用户交互属性
+                [self.imageResult setUserInteractionEnabled:YES];
             });
         });
     }
     else
     {
-        self.scrollView.contentSize = CGSizeMake(width, height);
+        _imageResult.image = nil;
     }
     self.treatDateLabel.text = [NSString stringWithFormat:@"  %@",self.record.dateString];
     
@@ -134,6 +142,11 @@ NSString *const TYPE = @"7681";
         vc.record = self.record;
     }
 }
-
-
+#pragma mark - 放大图片
+-(void)scanBigImageClick1:(UITapGestureRecognizer *)tap
+{
+    
+    UIImageView *clickedImageView = (UIImageView *)tap.view;
+    [XWScanImage scanBigImageWithImageView:clickedImageView];
+}
 @end

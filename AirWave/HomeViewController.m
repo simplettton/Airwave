@@ -22,6 +22,7 @@ static NSString *BLOODDEVTYPE = @"8888";
 @property (weak, nonatomic) IBOutlet UIImageView *imageView2;
 @property (assign ,nonatomic) BOOL airwaveSelected;
 @property (assign ,nonatomic) BOOL bloodDevSelected;
+- (IBAction)leftBarButtonClicked:(id)sender;
 
 - (IBAction)addNewDevice:(id)sender;
 @end
@@ -57,14 +58,10 @@ static NSString *BLOODDEVTYPE = @"8888";
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     //leftBarButton
     
-    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30 , 30)];
-
-    [btn setBackgroundImage:[UIImage imageNamed:@"home_menu"] forState:UIControlStateNormal];
-
+    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0,30, 33)];
+    [btn setBackgroundImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(leftBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithCustomView:btn];
-//    UIBarButtonItem *barItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"home_menu"] style:UIBarButtonItemStylePlain target:self action:@selector(leftBarButtonClicked:)];
-    self.navigationItem.leftBarButtonItem = barButton;
+    [self createNavigationLeftBarButtonItemWithCustomView:btn];
     
     //touchEnable
     self.imageView1.userInteractionEnabled = YES;
@@ -81,25 +78,23 @@ static NSString *BLOODDEVTYPE = @"8888";
     NSArray *keys = [NSArray arrayWithObjects:@"headPhoto",@"name",@"sex",@"age",@"phoneNumber",@"address", nil];
     NSArray *values = [NSArray arrayWithObjects:@"",@"游客",@"--",@"0",@"--",@"--", nil];
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    
     for (int i = 0;i<[keys count];i++)
     {
-
         if (![userDefault objectForKey:keys[i]])
         {
             [userDefault setObject:values[i] forKey:keys[i]];
             [userDefault synchronize];
         }
     }
-    
 }
 //左上按钮
--(void)leftBarButtonClicked:(UIButton *)button
+- (IBAction)leftBarButtonClicked:(id)sender
 {
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     LeftDrawerViewController *vc = (LeftDrawerViewController  *)self.mm_drawerController.leftDrawerViewController;
     vc.headerView.nickNameLabel.text =[NSString stringWithFormat:@"    %@",[userDefault objectForKey:@"name"]];
-
 }
 -(UITapGestureRecognizer *)airwaveGesture
 {
@@ -128,6 +123,8 @@ static NSString *BLOODDEVTYPE = @"8888";
     
     [self performSegueWithIdentifier:@"ShowAirWave" sender:nil];
 }
+
+
 - (IBAction)addNewDevice:(id)sender
 {
     self.shadowView .alpha = 0.5;
@@ -175,5 +172,30 @@ static NSString *BLOODDEVTYPE = @"8888";
     alert.firstSelected = self.airwaveSelected;
     alert.secondSelected = self.bloodDevSelected;
     [self presentViewController:alert animated:YES completion:nil];
+}
+- (void)createNavigationLeftBarButtonItemWithCustomView:(UIButton *)button
+
+{
+    
+    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    NSString *version = [UIDevice currentDevice].systemVersion;
+    
+    NSLog(@"version = %d",[version intValue]);
+//    if ([[[UIDevice currentDevice] systemVersion] intValue]>=7)
+//    {
+//
+//        UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+//
+//        negativeSpacer.width = -5;
+//
+//        self.navigationItem.leftBarButtonItems = @[negativeSpacer, buttonItem];
+//    }
+//    else
+    {
+        
+        self.navigationItem.leftBarButtonItem = buttonItem;
+        
+    }
+    
 }
 @end

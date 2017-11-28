@@ -98,8 +98,8 @@ typedef NS_ENUM(NSUInteger,cellViewTag)
 //    self.navigationItem.leftBarButtonItem.tintColor = UIColorFromHex(0xffffff);
     
     //右上角按钮
-    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30 , 30)];
-    [btn setBackgroundImage:[UIImage imageNamed:@"list-2"] forState:UIControlStateNormal];
+    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30, 25)];
+    [btn setBackgroundImage:[UIImage imageNamed:@"serverRecord"] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(rightBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.rightBarButtonItem = barButton;

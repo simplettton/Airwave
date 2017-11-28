@@ -24,6 +24,8 @@
 #import "SettingViewController.h"
 #import "RecordTableViewController.h"
 
+#import "SVProgressHUD.h"
+
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 static NSString *TYPE = @"7681";
 
@@ -199,7 +201,7 @@ NSString *const PORT = @"8080";
         self.picker = [[UIImagePickerController alloc]init];
     }
     self.picker.delegate = self;
-    self.picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+//    self.picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     [self configureView];
     //添加扫动手势
     [self setupSwipe];
@@ -209,7 +211,8 @@ NSString *const PORT = @"8080";
 #pragma mark - GCDAsyncSocketDelegate
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port
 {
-    NSLog(@"连接成功");
+    [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"连接成功"]];
+    [SVProgressHUD dismissWithDelay:0.9];
     [self configureBodyView];
     if ([self.view viewWithTag:disconnectViewtag])
     {
@@ -285,7 +288,7 @@ NSString *const PORT = @"8080";
         self.treatRecord.address = [userDefault objectForKey:@"address"];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-        [self takePhotoAlert];
+//        [self takePhotoAlert];
         });
     }
     [sock readDataWithTimeout:- 1 tag:0];
@@ -300,6 +303,8 @@ NSString *const PORT = @"8080";
 -(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
     NSLog(@"断开连接 error:%@",err);
+    [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"断开连接"]];
+    [SVProgressHUD dismissWithDelay:0.9];
     if (![self.view viewWithTag:disconnectViewtag])
     {
         [self presentDisconnectAlert];
@@ -316,10 +321,10 @@ NSString *const PORT = @"8080";
 -(void)configureView
 {
     //tap样式
-    CALayer *topBorder = [CALayer layer];
-    topBorder.frame = CGRectMake(0.0f, 0.0f, self.buttonView.frame.size.width, 0.5f);
-    topBorder.backgroundColor = UIColorFromHex(0xE4E4E4).CGColor;
-    [self.buttonView.layer addSublayer:topBorder];
+    CALayer *tapBorder = [CALayer layer];
+    tapBorder.frame = CGRectMake(0.0f, 0.0f, self.buttonView.frame.size.width, 0.5f);
+    tapBorder.backgroundColor = UIColorFromHex(0xE4E4E4).CGColor;
+    [self.buttonView.layer addSublayer:tapBorder];
     
 
     //配置开始按钮

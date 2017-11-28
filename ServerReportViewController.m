@@ -85,13 +85,14 @@ static NSString *BLOODDEVTYPE = @"8888";
              {
                  NSString *imageString = [jsonDict objectForKey:@"Img"];
                  
-                 //图片添加点击放大手势
-                 UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scanBigImageClick:)];
-                 [self.resultImageView addGestureRecognizer:tapGestureRecognizer];
-                 [self.resultImageView setUserInteractionEnabled:YES];
+
                  NSData *nsdataFromBase64String = [[NSData alloc]
                                                    initWithBase64EncodedString:imageString options:NSDataBase64DecodingIgnoreUnknownCharacters];
                  dispatch_async(dispatch_get_main_queue(), ^{
+                     //图片添加点击放大手势
+                     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scanBigImageClick:)];
+                     [self.resultImageView addGestureRecognizer:tapGestureRecognizer];
+                     [self.resultImageView setUserInteractionEnabled:YES];
                      self.resultImageView.image = [[UIImage alloc]initWithData:nsdataFromBase64String];
                  });
              }

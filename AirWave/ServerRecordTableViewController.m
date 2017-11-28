@@ -6,7 +6,8 @@
 //  Copyright © 2017年 Shenzhen Lifotronic Technology Co.,Ltd. All rights reserved.
 //
 #import "ServerRecordTableViewController.h"
-#import "ServerDetailViewController.h"
+#import "ServerReportViewController.h"
+//#import "ServerDetailViewController.h"
 #import "DetailViewController.h"
 #import "RecordTableViewCell.h"
 #import "RecordTableViewController.h"
@@ -204,7 +205,7 @@ static NSString *BLOODDEVTYPE = @"8888";
 //        NSString *str5 = [str3 stringByRemovingPercentEncoding];
 //        cell.timeLabel.text = [NSString stringWithFormat:@"name : %@",str5];
         NSString *dateString = [datas[indexPath.row] objectForKey:@"Date"];
-         cell.timeLabel.text = [NSString stringWithFormat:@"  %@",[self timeWithTimeIntervalString:dateString]];
+         cell.timeLabel.text = [NSString stringWithFormat:@"%@",[self timeWithTimeIntervalString:dateString]];
         cell.nameLabel.text = [datas[indexPath.row] objectForKey:@"Name"];
     }
 
@@ -214,7 +215,8 @@ static NSString *BLOODDEVTYPE = @"8888";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self performSegueWithIdentifier:@"ShowServerDetail" sender:datas[indexPath.row]];
+//    [self performSegueWithIdentifier:@"ShowServerDetail" sender:datas[indexPath.row]];
+    [self performSegueWithIdentifier:@"ShowServerReport" sender:datas[indexPath.row]];
 }
 - (IBAction)return:(id)sender
 {
@@ -266,12 +268,19 @@ static NSString *BLOODDEVTYPE = @"8888";
 }
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"ShowServerDetail"])
+//    if ([segue.identifier isEqualToString:@"ShowServerDetail"])
+//    {
+//        ServerDetailViewController *viewController = (ServerDetailViewController *)segue.destinationViewController;
+//        viewController.dic = sender;
+//        viewController.type = self.type;
+//    }
+    if ([segue.identifier isEqualToString:@"ShowServerReport"])
     {
-        ServerDetailViewController *viewController = (ServerDetailViewController *)segue.destinationViewController;
-        viewController.dic = sender;
-        viewController.type = self.type;
-    }else if ([segue.identifier isEqualToString:@"ServerRecordToRecord"])
+        ServerReportViewController *vc = (ServerReportViewController *)segue.destinationViewController;
+        vc.dic = sender;
+        vc.type = sender;
+    }
+    else if ([segue.identifier isEqualToString:@"ServerRecordToRecord"])
     {
         RecordTableViewController *vc = (RecordTableViewController *)segue.destinationViewController;
         vc.type = self.type;
