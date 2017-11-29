@@ -125,6 +125,7 @@ typedef NS_ENUM(NSUInteger,State)
         NSLog(@"设备：%@--断开连接",peripheral.name);
 //        [baby.centralManager connectPeripheral:peripheral options:nil];
         [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"设备：%@--断开连接",peripheral.name]];
+        [SVProgressHUD dismissWithDelay:0.9];
     }];
     //设置发现设备的Services的委托
     [baby setBlockOnDiscoverServicesAtChannel:channelOnCharacteristicView block:^(CBPeripheral *peripheral, NSError *error) {
@@ -166,6 +167,7 @@ typedef NS_ENUM(NSUInteger,State)
                                                type:CBCharacteristicWriteWithResponse];
                 
                 [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"设备：%@--连接成功",peripheral.name]];
+                [SVProgressHUD dismissWithDelay:0.9];
                 isConnected = YES;
             }
     }];
@@ -600,7 +602,10 @@ typedef NS_ENUM(NSUInteger,State)
     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:index-2]animated:YES];
     if (baby)
     {
-        [baby cancelNotify:self.currPeripheral characteristic:self.receiveCharacteristic];
+        if(self.receiveCharacteristic)
+        {
+            [baby cancelNotify:self.currPeripheral characteristic:self.receiveCharacteristic];
+        }
         [baby cancelAllPeripheralsConnection];
     }
 }

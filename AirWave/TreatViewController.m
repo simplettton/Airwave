@@ -129,6 +129,11 @@ NSString *const PORT = @"8080";
     }
     [self askForTreatInfomation];
 }
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+    [self configureView];
+}
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:YES];
@@ -170,6 +175,7 @@ NSString *const PORT = @"8080";
         if (self.connected)
         {
             NSLog(@"客户端尝试连接");
+//            [SVProgressHUD showInfoWithStatus:@"正在连接设备…"];
         }
         else
         {
@@ -181,6 +187,8 @@ NSString *const PORT = @"8080";
     {
         NSLog(@"与服务器连接已建立 %@",self.clientSocket);
     }
+    
+    
     isPlayButton = YES;
     isPauseButton = NO;
     bodyNames= [NSArray arrayWithObjects:@"leftup1",@"leftup2",@"leftup3",@"lefthand",@"leftdown1",@"leftdown2",@"leftdown3",@"leftfoot",
@@ -202,12 +210,15 @@ NSString *const PORT = @"8080";
     }
     self.picker.delegate = self;
 //    self.picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    [self configureView];
+//    [self configureView];
     //添加扫动手势
     [self setupSwipe];
-    
-  
 }
+//-(void)viewDidLayoutSubviews
+//{
+//    [super viewDidLayoutSubviews];
+//    [self configureView];
+//}
 #pragma mark - GCDAsyncSocketDelegate
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port
 {
@@ -307,7 +318,7 @@ NSString *const PORT = @"8080";
     [SVProgressHUD dismissWithDelay:0.9];
     if (![self.view viewWithTag:disconnectViewtag])
     {
-        [self presentDisconnectAlert];
+//        [self presentDisconnectAlert];
     }
     
     self.connected = NO;
@@ -1399,7 +1410,7 @@ NSString *const PORT = @"8080";
 }
 -(void)presentDisconnectAlert
 {
-    UIView *disconnectView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, 375, 557)];
+    UIView *disconnectView = [[UIView alloc]initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - 51)];
     disconnectView.backgroundColor = [UIColor whiteColor];
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(93, 150, 190, 30)];
     label.text = [NSString stringWithFormat:@"ohno！网络连接断开了~"];
@@ -1410,6 +1421,7 @@ NSString *const PORT = @"8080";
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button setTitle:[NSString stringWithFormat:@"重新连接"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(reconnect:) forControlEvents:UIControlEventTouchUpInside];
+
     [disconnectView addSubview:label];
     [disconnectView addSubview:button];
     [disconnectView setTag:disconnectViewtag];

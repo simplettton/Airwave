@@ -35,15 +35,7 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
 
 @implementation SettingViewController
 
-//设置状态栏颜色
-- (void)setStatusBarBackgroundColor:(UIColor *)color
-{
-    
-    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
-    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
-        statusBar.backgroundColor = color;
-    }
-}
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];

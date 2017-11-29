@@ -553,7 +553,8 @@
     
     return ^(CBPeripheral *peripheral,CBCharacteristic *characteristic) {
         //判断连接状态
-        if (peripheral.state == CBPeripheralStateConnected) {
+        if (peripheral.state == CBPeripheralStateConnected)
+        {
             self->babyCentralManager->oneReadValueForDescriptors = YES;
             [peripheral readValueForCharacteristic:characteristic];
             [peripheral discoverDescriptorsForCharacteristic:characteristic];
@@ -575,13 +576,15 @@ characteristic:(CBCharacteristic *)characteristic
 }
 
 - (void)cancelNotify:(CBPeripheral *)peripheral
-     characteristic:(CBCharacteristic *)characteristic {
+     characteristic:(CBCharacteristic *)characteristic
+{
     [peripheral setNotifyValue:NO forCharacteristic:characteristic];
     [babySpeaker removeNotifyCallback:characteristic];
 }
 
 //获取当前连接的peripherals
-- (NSArray *)findConnectedPeripherals {
+- (NSArray *)findConnectedPeripherals
+{
      return [babyCentralManager findConnectedPeripherals];
 }
 
