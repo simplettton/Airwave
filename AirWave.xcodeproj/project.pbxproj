@@ -24,7 +24,6 @@
 		04519EBB1FB53DF50052A93C /* PersonalInfomationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04519EBA1FB53DF50052A93C /* PersonalInfomationViewController.m */; };
 		0451A1921F9EDEF400AF521C /* MyLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0451A1911F9EDEF400AF521C /* MyLabel.m */; };
 		0451A1951F9F2A2100AF521C /* ServerRecordTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0451A1941F9F2A2100AF521C /* ServerRecordTableViewController.m */; };
-		0451A1981F9F3C3000AF521C /* ServerDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0451A1971F9F3C3000AF521C /* ServerDetailViewController.m */; };
 		0451D8041FBE8AAD00D4E8D6 /* EditTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0451D8031FBE8AAD00D4E8D6 /* EditTableViewController.m */; };
 		045750441FB1861E00E3AD73 /* LeftDrawerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045750431FB1861E00E3AD73 /* LeftDrawerViewController.m */; };
 		0457504A1FB18EB100E3AD73 /* LeftHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045750491FB18EB100E3AD73 /* LeftHeaderView.m */; };
@@ -120,8 +119,6 @@
 		0451A1911F9EDEF400AF521C /* MyLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLabel.m; sourceTree = "<group>"; };
 		0451A1931F9F2A2100AF521C /* ServerRecordTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerRecordTableViewController.h; sourceTree = "<group>"; };
 		0451A1941F9F2A2100AF521C /* ServerRecordTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerRecordTableViewController.m; sourceTree = "<group>"; };
-		0451A1961F9F3C3000AF521C /* ServerDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerDetailViewController.h; sourceTree = "<group>"; };
-		0451A1971F9F3C3000AF521C /* ServerDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerDetailViewController.m; sourceTree = "<group>"; };
 		0451D8021FBE8AAD00D4E8D6 /* EditTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTableViewController.h; sourceTree = "<group>"; };
 		0451D8031FBE8AAD00D4E8D6 /* EditTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTableViewController.m; sourceTree = "<group>"; };
 		045750421FB1861E00E3AD73 /* LeftDrawerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftDrawerViewController.h; sourceTree = "<group>"; };
@@ -290,8 +287,6 @@
 				045E8FF21FBADF66006DFFC8 /* RecordReportViewController.m */,
 				0451A1931F9F2A2100AF521C /* ServerRecordTableViewController.h */,
 				0451A1941F9F2A2100AF521C /* ServerRecordTableViewController.m */,
-				0451A1961F9F3C3000AF521C /* ServerDetailViewController.h */,
-				0451A1971F9F3C3000AF521C /* ServerDetailViewController.m */,
 				049B75491FBDB34F00662074 /* ServerReportViewController.h */,
 				049B754A1FBDB34F00662074 /* ServerReportViewController.m */,
 			);
@@ -659,7 +654,6 @@
 				04B68F491F4EDAE200FD31E5 /* ParameterTreatViewController.m in Sources */,
 				04A4203B1F9D929C00A6C2E9 /* HttpResponse.m in Sources */,
 				0496EFC31F8B856C0098C7BE /* TreatRecord.m in Sources */,
-				0451A1981F9F3C3000AF521C /* ServerDetailViewController.m in Sources */,
 				048A3B1D1F5411D700929C37 /* OtherSettingViewController.m in Sources */,
 				0461D95D1FBBF58700200331 /* ReportLabel.m in Sources */,
 				049B754B1FBDB34F00662074 /* ServerReportViewController.m in Sources */,

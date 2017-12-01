@@ -17,7 +17,7 @@
 @property (nonatomic,strong) GCDAsyncSocket *clientSocket;
 @property (nonatomic,  weak) IBOutlet UIView *buttonView;
 @property (nonatomic,  weak) IBOutlet UIStepper *stepper;
-@property (nonatomic,  weak) IBOutlet UIView *backgroudView;
+@property (nonatomic,  weak) IBOutlet UIView *backgroundView;
 @property (nonatomic,  weak) IBOutlet UITextField *pressTextField;
 @property (nonatomic,) NSInteger selectedModeTag;
 - (IBAction)onClick:(id)sender;
@@ -39,12 +39,13 @@
     self.stepper.minimumValue = 0;
     self.stepper.maximumValue = 240.0;
     self.stepper.tintColor = UIColorFromHex(0x65BBA9);
-    [self configureView];
+
     [self updateView];
 }
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
+    [self configureView];
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     self.clientSocket = myDelegate.cclientSocket;
     self.clientSocket.delegate = self;
@@ -54,8 +55,7 @@
 -(void)configureView
 {
     //导航栏
-//    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
-//    [self.navigationController.navigationBar setShadowImage:[[UIImage alloc]init]];
+
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColorFromHex(0x626d91)}];
     self.navigationController.navigationBar.barTintColor = UIColorFromHex(0xffffff);
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
@@ -66,16 +66,8 @@
     topBorder.backgroundColor = UIColorFromHex(0xE4E4E4).CGColor;
     [self.buttonView.layer addSublayer:topBorder];
     
-    //save button
-    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.saveButton.bounds byRoundingCorners:UIRectCornerTopRight|UIRectCornerBottomRight|UIRectCornerTopLeft|UIRectCornerBottomLeft cornerRadii:CGSizeMake(10.0, 10.0)];
-    CAShapeLayer *maskLayer = [CAShapeLayer layer];
-    maskLayer.frame = self.saveButton.bounds;
-    maskLayer.path = maskPath.CGPath;
-    maskLayer.lineWidth = 1.0;
-    maskLayer.strokeColor = UIColorFromHex(0x85ABE4).CGColor;
-    maskLayer.fillColor = UIColorFromHex(0x85ABE4).CGColor;
-    [self.saveButton.layer addSublayer:maskLayer];
-    self.saveButton.titleLabel.textColor = [UIColor whiteColor];
+    self.saveButton.layer.borderWidth = 0.8;
+    self.saveButton.layer.borderColor = UIColorFromHex(0x85ABE4).CGColor;
     
 }
 -(void)updateView
@@ -93,8 +85,8 @@
     //select button
     for (int i = 1; i<11; i++)
     {
-        [self.backgroudView viewWithTag:i].layer.borderColor = UIColorFromHex(0X65BBA9).CGColor;
-        [self.backgroudView viewWithTag:i].layer.borderWidth = 1.5;
+        [self.backgroundView viewWithTag:i].layer.borderColor = UIColorFromHex(0X65BBA9).CGColor;
+        [self.backgroundView viewWithTag:i].layer.borderWidth = 1.5;
         //处理不可按的按钮
         NSString *aport = self.treatInfomation.aPort;
         NSString *bport = self.treatInfomation.bPort;
@@ -105,7 +97,7 @@
             for (NSString *tag in unableBtnTag )
             {
                 
-                button =(UIButton *)[self.backgroudView viewWithTag:[tag integerValue]];
+                button =(UIButton *)[self.backgroundView viewWithTag:[tag integerValue]];
                 button.layer.borderColor = UIColorFromHex(0xDDE4EE).CGColor;
                 button.layer.backgroundColor = UIColorFromHex(0xDDE4EE).CGColor;
                 button.layer.borderWidth = 1.5;
@@ -115,7 +107,7 @@
             {
                 for (int i =1; i<4; i++)
                 {
-                    button = (UIButton*)[self.backgroudView viewWithTag:i];
+                    button = (UIButton*)[self.backgroundView viewWithTag:i];
                     button.layer.borderColor = UIColorFromHex(0xDDE4EE).CGColor;
                     button.layer.backgroundColor = UIColorFromHex(0xDDE4EE).CGColor;
                     button.layer.borderWidth = 1.5;
@@ -132,19 +124,46 @@
 
 - (IBAction)tapGradientTreat:(id)sender
 {
-    UILabel *warningLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 509, 135, 35)];
-    // warningLabel.backgroundColor = UIColorFromHex(0xF7F8F8);
+    UILabel *warningLabel = [[UILabel alloc]init];
     warningLabel.textAlignment = NSTextAlignmentLeft;
     warningLabel.text = @"气囊类型不合适";
     warningLabel.textColor = UIColorFromHex(0xFF8247);
-    
-    UIImageView *warningImageView = [[UIImageView alloc]initWithFrame:CGRectMake(34, 509, 35, 35)];
+    UIImageView *warningImageView = [[UIImageView alloc]init];
     warningImageView.image = [UIImage imageNamed:@"warning"];
-    [[self.view viewWithTag:1000] addSubview:warningImageView];
-    [[self.view viewWithTag:1000] addSubview:warningLabel];
+    [self.backgroundView addSubview:warningImageView];
+    [self.backgroundView addSubview:warningLabel];
+    
+    warningLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    warningImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    //--------------------------------------warningLabel---------------------------------------
+    //width约束
+    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:warningLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0 constant:135];
+    //height约束
+    NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:warningLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0 constant:35];
+    [warningLabel addConstraints:@[widthConstraint,heightConstraint]];
+    
+    //添加centerX约束
+    NSLayoutConstraint *centerXConstraint =[NSLayoutConstraint constraintWithItem:warningLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.backgroundView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
+    //添加button约束
+    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:warningLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.backgroundView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
+    [self.backgroundView addConstraints:@[centerXConstraint,bottomConstraint]];
+    //--------------------------------------warningImageView-------------------------------------
+    //width约束
+    NSLayoutConstraint *widthConstraint1 = [NSLayoutConstraint constraintWithItem:warningImageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0 constant:35];
+    //height约束
+    NSLayoutConstraint *heightConstraint1 = [NSLayoutConstraint constraintWithItem:warningImageView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0 constant:35];
+    [warningImageView addConstraints:@[widthConstraint1,heightConstraint1]];
+    //centerY约束
+    NSLayoutConstraint *centerYConstraint = [NSLayoutConstraint constraintWithItem:warningImageView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:warningLabel attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
+    //left约束
+    NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:warningImageView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:warningLabel attribute:NSLayoutAttributeLeft multiplier:1.0 constant:6];
+    [self.backgroundView addConstraints:@[centerYConstraint,rightConstraint]];
+    
+    //增加闪动动画
     [warningImageView.layer addAnimation:[self warningMessageAnimation:0.5] forKey:nil];
     [warningLabel.layer addAnimation:[self warningMessageAnimation:0.5] forKey:nil];
-    // 延迟2s后警告消失
+    // 延迟后警告消失
     int64_t delayInSeconds = 2;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -184,7 +203,7 @@
     self.selectedModeTag = [(UIButton *)sender tag];
     for (int i = 1; i<11; i++)
     {
-        UIButton *btn = (UIButton *)[self.backgroudView viewWithTag:i];
+        UIButton *btn = (UIButton *)[self.backgroundView viewWithTag:i];
         if (btn.tag == [(UIButton *)sender tag])
         {
             btn.backgroundColor = UIColorFromHex(0X65BBA9);

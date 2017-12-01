@@ -210,7 +210,6 @@ NSString *const PORT = @"8080";
     }
     self.picker.delegate = self;
 //    self.picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-//    [self configureView];
     //添加扫动手势
     [self setupSwipe];
 }
@@ -1124,14 +1123,35 @@ NSString *const PORT = @"8080";
 }
 -(void)showWarningMessage:(NSString *)message
 {
-    UILabel *warningLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 520, 135, 35)];
+//    UILabel *warningLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 520, 135, 35)];
+    UILabel *warningLabel = [[UILabel alloc]init];
     warningLabel.textAlignment = NSTextAlignmentLeft;
     warningLabel.text = message;
     warningLabel.textColor = UIColorFromHex(0xFF8247);
-    UIImageView *warningImageView = [[UIImageView alloc]initWithFrame:CGRectMake(34, 520, 35, 35)];
+//    UIImageView *warningImageView = [[UIImageView alloc]initWithFrame:CGRectMake(34, 520, 35, 35)];
+    UIImageView *warningImageView = [[UIImageView alloc]init];
     warningImageView.image = [UIImage imageNamed:@"warning"];
     [[self.view viewWithTag:1000] addSubview:warningImageView];
     [[self.view viewWithTag:1000] addSubview:warningLabel];
+    
+    //添加约束
+    
+    //width约束
+    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:warningLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0 constant:135];
+    //height约束
+    NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:warningLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0 constant:35];
+    [warningLabel addConstraints:@[widthConstraint,heightConstraint]];
+    
+    //添加centerX约束
+    NSLayoutConstraint *centerXConstraint =[NSLayoutConstraint constraintWithItem:warningLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.backgroundView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
+    //添加button约束
+    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:warningLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.backgroundView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
+    [self.backgroundView addConstraints:@[centerXConstraint,bottomConstraint]];
+    
+    
+    
+    
+    
     [warningImageView.layer addAnimation:[self warningMessageAnimation:0.5] forKey:nil];
     [warningLabel.layer addAnimation:[self warningMessageAnimation:0.5] forKey:nil];
     // 延迟的时间

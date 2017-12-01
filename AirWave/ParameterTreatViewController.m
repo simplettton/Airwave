@@ -71,12 +71,13 @@
     [self.modePicker selectRow:0 inComponent:0 animated:NO];
     customTimeSelected = YES;
     [self configureTimeSelectButton];
-    [self configureView];
+
     
 }
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
+    [self configureView];
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     self.clientSocket = myDelegate.cclientSocket;
     self.clientSocket.delegate = self;
@@ -100,26 +101,11 @@
     topBorder.backgroundColor = UIColorFromHex(0xE4E4E4).CGColor;
     [self.buttonView.layer addSublayer:topBorder];
     
-    
-    //设置单边圆角
-    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.saveButton.bounds byRoundingCorners:UIRectCornerTopRight|UIRectCornerBottomRight cornerRadii:CGSizeMake(10.0, 10.0)];
-    CAShapeLayer *maskLayer = [CAShapeLayer layer];
-    maskLayer.frame = self.saveButton.bounds;
-    maskLayer.path = maskPath.CGPath;
-    maskLayer.lineWidth = 1.0;
-    maskLayer.strokeColor = UIColorFromHex(0x85ABE4).CGColor;
-    maskLayer.fillColor = UIColorFromHex(0x85ABE4).CGColor;
-    [self.saveButton.layer addSublayer:maskLayer];
-    
-    
-    UIBezierPath *maskPath1 = [UIBezierPath bezierPathWithRoundedRect:self.cancelButton.bounds byRoundingCorners:UIRectCornerTopLeft|UIRectCornerBottomLeft cornerRadii:CGSizeMake(10.0, 10.0)];
-    CAShapeLayer *maskLayer1 = [CAShapeLayer layer];
-    maskLayer1.frame = self.cancelButton.bounds;
-    maskLayer1.path = maskPath1.CGPath;
-    maskLayer1.lineWidth = 1.0;
-    maskLayer1.strokeColor = UIColorFromHex(0x85ABE4).CGColor;
-    maskLayer1.fillColor = nil;
-    [self.cancelButton.layer addSublayer:maskLayer1];
+    self.saveButton.layer.borderWidth = 0.8;
+    self.saveButton.layer.borderColor = UIColorFromHex(0x85ABE4).CGColor;
+    self.cancelButton.layer.borderWidth = 0.8;
+    self.cancelButton.layer.borderColor = UIColorFromHex(0x85ABE4).CGColor;
+
 }
 -(void)updateView
 {
@@ -183,19 +169,46 @@
 
 -(IBAction)tapGradientTreat:(id)sender
 {
-    UILabel *warningLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 509, 135, 35)];
-    // warningLabel.backgroundColor = UIColorFromHex(0xF7F8F8);
+    UILabel *warningLabel = [[UILabel alloc]init];
     warningLabel.textAlignment = NSTextAlignmentLeft;
     warningLabel.text = @"气囊类型不合适";
     warningLabel.textColor = UIColorFromHex(0xFF8247);
-    
-    UIImageView *warningImageView = [[UIImageView alloc]initWithFrame:CGRectMake(34, 509, 35, 35)];
+    UIImageView *warningImageView = [[UIImageView alloc]init];
     warningImageView.image = [UIImage imageNamed:@"warning"];
-    [[self.view viewWithTag:1000] addSubview:warningImageView];
-    [[self.view viewWithTag:1000] addSubview:warningLabel];
+    [self.backgroundView addSubview:warningImageView];
+    [self.backgroundView addSubview:warningLabel];
+    
+    warningLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    warningImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    //--------------------------------------warningLabel---------------------------------------
+    //width约束
+    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:warningLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0 constant:135];
+    //height约束
+    NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:warningLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0 constant:35];
+    [warningLabel addConstraints:@[widthConstraint,heightConstraint]];
+    
+    //添加centerX约束
+    NSLayoutConstraint *centerXConstraint =[NSLayoutConstraint constraintWithItem:warningLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.backgroundView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
+    //添加button约束
+    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:warningLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.backgroundView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
+    [self.backgroundView addConstraints:@[centerXConstraint,bottomConstraint]];
+    //--------------------------------------warningImageView-------------------------------------
+    //width约束
+    NSLayoutConstraint *widthConstraint1 = [NSLayoutConstraint constraintWithItem:warningImageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0 constant:35];
+    //height约束
+    NSLayoutConstraint *heightConstraint1 = [NSLayoutConstraint constraintWithItem:warningImageView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0 constant:35];
+    [warningImageView addConstraints:@[widthConstraint1,heightConstraint1]];
+    //centerY约束
+    NSLayoutConstraint *centerYConstraint = [NSLayoutConstraint constraintWithItem:warningImageView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:warningLabel attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
+    //left约束
+    NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:warningImageView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:warningLabel attribute:NSLayoutAttributeLeft multiplier:1.0 constant:6];
+    [self.backgroundView addConstraints:@[centerYConstraint,rightConstraint]];
+    
+    //增加闪动动画
     [warningImageView.layer addAnimation:[self warningMessageAnimation:0.5] forKey:nil];
     [warningLabel.layer addAnimation:[self warningMessageAnimation:0.5] forKey:nil];
-    // 延迟2s后警告消失
+    // 延迟后警告消失
     int64_t delayInSeconds = 2;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){

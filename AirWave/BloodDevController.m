@@ -30,6 +30,7 @@ typedef NS_ENUM(NSUInteger,State)
     NSInteger duration;
 }
 @property (nonatomic, strong) UIImagePickerController *picker;
+@property (weak, nonatomic) IBOutlet UIView *timerBackground;
 @property (nonatomic,strong)CBCharacteristic *sendCharacteristic;
 @property (nonatomic,strong)CBCharacteristic *receiveCharacteristic;
 @property (weak, nonatomic) IBOutlet UIButton *pauseButton;
@@ -83,6 +84,8 @@ typedef NS_ENUM(NSUInteger,State)
          [SVProgressHUD showInfoWithStatus:@"准备连接设备"];
     }
     [self setupSwipe];
+    
+
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
