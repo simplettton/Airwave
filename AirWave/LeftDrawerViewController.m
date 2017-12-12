@@ -113,7 +113,7 @@ static NSString * SERVER_IP = @"http://218.17.22.131:3088";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UIStoryboard *mainStoryborad = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *showVC;
+    __block UIViewController *showVC;
     RecordTableViewController *recordVC =(RecordTableViewController *)[mainStoryborad instantiateViewControllerWithIdentifier:@"RecordTableViewController"];
 
     if (indexPath.row == 0)
@@ -130,17 +130,43 @@ static NSString * SERVER_IP = @"http://218.17.22.131:3088";
         showVC = serverVC;
     }else if (indexPath.row == 6)
     {
-        LoginViewController *loginVC = (LoginViewController *)[mainStoryborad instantiateViewControllerWithIdentifier:@"LoginViewController"];
-//        [self presentViewController:loginVC animated:YES completion:nil];
-        showVC = loginVC;
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"您确定要退出登录吗？"
+                                                                       message:nil
+                                                                preferredStyle:UIAlertControllerStyleActionSheet];
+        
+        UIAlertAction* logoutAction = [UIAlertAction actionWithTitle:@"立即退出"
+                                                               style:UIAlertActionStyleDestructive
+                                                             handler:^(UIAlertAction * _Nonnull action) {
+            LoginViewController *loginVC = (LoginViewController *)[mainStoryborad instantiateViewControllerWithIdentifier:@"LoginViewController"];
+            showVC = loginVC;
+                                                                 
+            UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
+            [nav pushViewController:showVC animated:YES];
+            [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished)
+            {
+              [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
+            }];
+              
+            
+        }];
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"取消"
+                                                                style:UIAlertActionStyleCancel
+                                                              handler:^(UIAlertAction * action) {}];
+        
+        [alert addAction:defaultAction];
+        [alert addAction:logoutAction];
+        [self presentViewController:alert animated:YES completion:nil];
     }
-    
-    UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
-    [nav pushViewController:showVC animated:NO];
-    [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished)
+    if (showVC)
     {
-        [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
-    }];
+        UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
+        [nav pushViewController:showVC animated:NO];
+        [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished)
+         {
+             [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
+         }];
+    }
+
 
 }
 -(void)buttonClickListener:(UIButton *)sender

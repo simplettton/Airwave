@@ -85,7 +85,6 @@ typedef void(^NewByteBlock)(NSInteger,NSInteger);
     lengthOfLs++;
     NSData * packData = [NSData dataWithBytes:ls length:lengthOfLs];
     return packData;
-    
 }
 #pragma mark - Private Method
 +(Byte)getCRC8WithData:(NSData *)dataArray

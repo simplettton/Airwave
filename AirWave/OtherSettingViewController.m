@@ -10,6 +10,7 @@
 #import "UIImage+ImageWithColor.h"
 #import "AppDelegate.h"
 #import "Pack.h"
+#import <SVProgressHUD.h>
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 typedef NS_ENUM(NSUInteger,typeTags)
 {
@@ -52,7 +53,7 @@ typedef NS_ENUM(NSUInteger,typeTags)
     [super viewWillAppear:YES];
     self.navigationController.navigationBar.hidden = YES;
     self.navigationItem.hidesBackButton = YES;
-//        self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+
 }
 
 - (void)viewDidLoad
@@ -124,9 +125,8 @@ typedef NS_ENUM(NSUInteger,typeTags)
 }
 -(void)askForTreatInfomation
 {
-    Byte dataBytes[2] = {0x62,1};
     [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                                               dataEnabled:YES data:[self dataWithBytes:dataBytes]]
+                                                               dataEnabled:YES data:[self dataWithValue:0x162]]
                                                                withTimeout:-1 tag:0];
 }
 #pragma mark - socketDelegate
@@ -174,20 +174,31 @@ typedef NS_ENUM(NSUInteger,typeTags)
 
     }
 }
+-(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
+{
+    NSLog(@"断开连接 error:%@",err);
+    AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
+    myDelegate.cconnected = NO;
+    NSString *wifiName = myDelegate.wifiName;
+    myDelegate.cclientSocket=nil;
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"断开连接 %@",wifiName!=nil?wifiName:@"空气波"]];
+    [SVProgressHUD dismissWithDelay:0.9];
+}
 #pragma mark - private method
 -(NSData*) dataWithValue:(NSInteger)value
 {
     Byte src[2]={0,0};
-    src[0] =  (Byte) ((value>>8) & 0xFF);
-    src[1] =  (Byte) (value & 0xFF);
+//    src[0] =  (Byte) ((value>>8) & 0xFF);
+//    src[1] =  (Byte) (value & 0xFF); 大端模式
+    
+    //小端模式
+    src[1] = (Byte)((value>>8) & 0xFF);
+    src[0] = (Byte)(value & 0xFF);
     NSData *data = [NSData dataWithBytes:src length:2];
     return data;
 }
--(NSData*) dataWithBytes:(Byte[])bytes
-{
-    NSData *data = [NSData dataWithBytes:bytes length:2];
-    return data;
-}
+
 - (IBAction)onclickAport:(id)sender
 {
     self.selectedATag = [sender tag];
@@ -322,50 +333,36 @@ typedef NS_ENUM(NSUInteger,typeTags)
             }
         }
     }
-    Byte dataBytesA [2] = {[commitA integerValue],0};
     [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                                               dataEnabled:YES data:[self dataWithBytes:dataBytesA]]
-                                                               withTimeout:-1   tag:1];
-    Byte dataBytesB [2] = {[commitB integerValue],0};
+                                           dataEnabled:YES data:[self dataWithValue:[commitA integerValue]]]
+                     withTimeout:-1   tag:1];
     [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                                               dataEnabled:YES data:[self dataWithBytes:dataBytesB]]
+                                                               dataEnabled:YES data:[self dataWithValue:[commitB integerValue]]]
                                                                withTimeout:-1   tag:1];
 }
 - (IBAction)cancelSave:(id)sender
 {
-    Byte dataBytes1 [2] = {0xba,0};
-    Byte dataBytes2 [2] = {0xae,0};
-    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithBytes:dataBytes1]] withTimeout:-1 tag:0];
-    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithBytes:dataBytes2]] withTimeout:-1 tag:0];
-//    [self performSegueWithIdentifier:@"OtherSettingToMain" sender:nil];
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xba]] withTimeout:-1 tag:0];
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xae]] withTimeout:-1 tag:0];
     [self returnToMain:nil];
 }
 
 - (IBAction)returnToMain:(id)sender
 {
-    [self askForTreatInfomation];
+
     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
     //设置更改生效 返回主界面
-    Byte dataBytes1 [2] = {0xf1,0};
-    Byte dataBytes2 [2] = {0xae,0};
-    Byte addrBytes [2] = {0x06,0x23};
-    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes] dataEnabled:YES data:[self dataWithBytes:dataBytes1]] withTimeout:-1 tag:0];
-    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]    dataEnabled:YES data:[self dataWithBytes:dataBytes2]] withTimeout:-1 tag:0];
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0x230f] dataEnabled:YES data:[self dataWithValue:0xf1]] withTimeout:-1 tag:0];
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]    dataEnabled:YES data:[self dataWithValue:0xae]] withTimeout:-1 tag:0];
 }
-
-
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     //返回标准设置界面
-    [self askForTreatInfomation];
     if ([segue.identifier isEqualToString:@"OtherSettingToSetting"])
     {
-        Byte dataBytes [2] = {0xaf,0};
         [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                               dataEnabled:YES data:[self dataWithBytes:dataBytes]]
+                                               dataEnabled:YES data:[self dataWithValue:0xaf]]
                          withTimeout:-1   tag:0];
-
-
     }
 }
 @end

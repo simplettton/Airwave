@@ -12,7 +12,8 @@
 @interface AppDelegate : UIResponder
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic)GCDAsyncSocket *cclientSocket;
+@property (strong, nonatomic) NSString *wifiName;
 @property (nonatomic, assign) BOOL cconnected;
-@property(nonatomic,strong) MMDrawerController * drawerController;
+@property (nonatomic, strong) MMDrawerController * drawerController;
 @end
 

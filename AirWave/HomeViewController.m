@@ -43,6 +43,14 @@ static NSString *BLOODDEVTYPE = @"8888";
     self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
 }
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+    //navigationController
+    self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    [[self.navigationController navigationBar]setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColorFromHex(0XFFFFFF)}];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -53,9 +61,6 @@ static NSString *BLOODDEVTYPE = @"8888";
     self.shadowView.alpha = 0;
     
     self.view.layer.cornerRadius = 10;
-    //navigation
-    self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X65BBA9);
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     //leftBarButton
     
     UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0,30, 33)];

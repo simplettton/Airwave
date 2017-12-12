@@ -10,7 +10,6 @@
 #import "TreatRecord.h"
 #import "Pack.h"
 #import "Unpack.h"
-//#import "RecordTableViewController.h"
 static NSString *TYPE = @"8888";
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 #define SERVICE_UUID        @"1b7e8251-2877-41c3-b46e-cf057c562023"
@@ -209,7 +208,7 @@ typedef NS_ENUM(NSUInteger,State)
 }
 -(void)analyzeReceivedData:(NSData *)receivedData
 {
-    __weak typeof(self)weakSelf = self;
+//    __weak typeof(self)weakSelf = self;
     NSData *data = [Unpack unpackData:receivedData];
     Byte *bytes = (Byte *)[data bytes];
     for (int i = 0; i<[data length]; i++)
@@ -231,6 +230,7 @@ typedef NS_ENUM(NSUInteger,State)
 //            [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"设备：%@--连接成功",self.currPeripheral.name]];
 //        }
 //    }
+    
     //实时数据
     if(cmdID==0x91)
     {

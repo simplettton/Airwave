@@ -43,8 +43,7 @@ NSString *const TYPE = @"7681";
     [super viewDidLoad];
     self.title = @"治疗结果";
 
-    CGFloat width=[UIScreen mainScreen].bounds.size.width;
-    CGFloat height=[UIScreen mainScreen].bounds.size.height;
+
     if (self.record.imagePath>0)
     {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -58,7 +57,6 @@ NSString *const TYPE = @"7681";
                 
                 //设置图片居中显示
                 [self.imageResult setContentScaleFactor:[[UIScreen mainScreen] scale]];
-//                self.imageResult.contentMode =  UIViewContentModeScaleAspectFit;
                 self.imageResult.autoresizingMask = UIViewAutoresizingFlexibleHeight;
                 self.imageResult.clipsToBounds  = YES;
                 //图片添加点击放大手势

@@ -6,6 +6,8 @@
 //  Copyright © 2017年 Shenzhen Lifotronic Technology Co.,Ltd. All rights reserved.
 //
 #import <GCDAsyncSocket.h>
+//获取连接wifi名字的框架
+#import <SystemConfiguration/CaptiveNetwork.h>
 #import "Pack.h"
 #import "BodyButton.h"
 #import "TreatViewController.h"
@@ -15,6 +17,8 @@
 #import "TreatRecord.h"
 #import "UIImage+ImageWithColor.h"
 #import "ProgressView.h"
+
+#import "EnumValue.h"
 
 #import "AppDelegate.h"
 #import "StandardTreatViewController.h"
@@ -28,44 +32,6 @@
 
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 static NSString *TYPE = @"7681";
-
-typedef NS_ENUM(NSUInteger,BodyButtonIndexs)
-{
-    leftup1index,leftup2index,leftup3index,lefthandindex,leftdown1index,leftdown2index,leftdown3index,leftfootindex,
-    rightup1index,rightup2index,rightup3index,righthandindex,rightdown1index,rightdown2index,rightdown3index,rightfootindex,
-    middle1index,middle2index,middle3index,middle4index
-};
-typedef NS_ENUM(NSUInteger,LegButtonIndexs)
-{
-    leftleg1index,leftleg2index,leftleg3index,leftleg4index,leftleg5index,leftleg6index,leftleg7index
-};
-typedef NS_ENUM(NSUInteger,TreatState)
-{   Running,Stop,Pause,Unconnecte   };
-typedef NS_ENUM(NSUInteger,CellState)
-{
-    UnWorking,Working,KeepingAir
-};
-typedef NS_ENUM(NSUInteger,TreatWay)
-{
-    Standart = 1,Gradient,Parameter,Solution
-};
-typedef NS_ENUM(NSUInteger,BodyTags)
-{
-    leftup1tag   =17,leftup2tag   =16,leftup3tag   =15,lefthandtag  =14,leftdown1tag =13,leftdown2tag =12,leftdown3tag =11,
-    leftfoottag  =10,rightup1tag  =27,rightup2tag  =26,rightup3tag  =25,righthandtag =24,rightdown1tag=23,rightdown2tag=22,
-    rightdown3tag=21,rightfoottag =20,middle1tag   =33,middle2tag   =32,middle3tag   =31,middle4tag   =30,
-    
-    rightleg1tag =47,rightleg2tag =46,rightleg3tag =45,rightleg4tag =44,rightleg5tag =43,rightleg6tag =42,rightleg7tag =41,
-    leftleg1tag  =57,leftleg2tag  =56,leftleg3tag  =55,leftleg4tag  =54,leftleg5tag  =53,leftleg6tag  =52,leftleg7tag  =51, disconnectViewtag = 999
-    
-};
-static int bodyPartTags[] = {   leftup1tag , leftup2tag , leftup3tag , lefthandtag , leftdown1tag , leftdown2tag , leftdown3tag , leftfoottag ,
-                                rightup1tag, rightup2tag, rightup3tag, righthandtag, rightdown1tag, rightdown2tag, rightdown3tag, rightfoottag,
-                                 middle1tag, middle2tag , middle3tag , middle4tag    };
-
-static int legTags[] = {    leftleg1tag , leftleg2tag , leftleg3tag , leftleg4tag , leftleg5tag , leftleg6tag , leftleg7tag , leftfoottag,
-                            rightleg1tag, rightleg2tag, rightleg3tag, rightleg4tag, rightleg5tag, rightleg6tag, rightleg7tag, rightfoottag    };
-
 NSString *const HOST = @"10.10.100.254";
 NSString *const PORT = @"8080";
 
@@ -127,13 +93,20 @@ NSString *const PORT = @"8080";
         NSError *error = nil;
         self.connected = [self.clientSocket connectToHost:HOST onPort:[PORT integerValue] viaInterface:nil withTimeout:-1 error:&error];
     }
-    [self askForTreatInfomation];
 }
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
+    AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
+    if (myDelegate.cclientSocket != nil)
+    {
+        self.clientSocket = myDelegate.cclientSocket;
+        self.clientSocket.delegate = self;
+        self.connected = myDelegate.cconnected;
+    }
     [self configureView];
 }
+
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:YES];
@@ -157,38 +130,9 @@ NSString *const PORT = @"8080";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self connectToHost];
+    
 
-    AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
-    if (myDelegate.cclientSocket != nil)
-    {
-        self.clientSocket = myDelegate.cclientSocket;
-        self.clientSocket.delegate = self;
-        self.connected = myDelegate.cconnected;
-    }
-    //连接服务器
-    if (!self.connected )
-    {
-        self.clientSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-        NSLog(@"开始连接%@",self.clientSocket);
-        NSError *error = nil;
-        self.connected = [self.clientSocket connectToHost:HOST onPort:[PORT integerValue] viaInterface:nil withTimeout:-1 error:&error];
-        if (self.connected)
-        {
-            NSLog(@"客户端尝试连接");
-//            [SVProgressHUD showInfoWithStatus:@"正在连接设备…"];
-        }
-        else
-        {
-            self.connected = NO;
-            NSLog(@"客户端未创建连接");
-        }
-    }
-    else
-    {
-        NSLog(@"与服务器连接已建立 %@",self.clientSocket);
-    }
-    
-    
     isPlayButton = YES;
     isPauseButton = NO;
     bodyNames= [NSArray arrayWithObjects:@"leftup1",@"leftup2",@"leftup3",@"lefthand",@"leftdown1",@"leftdown2",@"leftdown3",@"leftfoot",
@@ -209,21 +153,81 @@ NSString *const PORT = @"8080";
         self.picker = [[UIImagePickerController alloc]init];
     }
     self.picker.delegate = self;
-//    self.picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    self.picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     //添加扫动手势
     [self setupSwipe];
+    
+    
+//    // 监测网络环境
+//    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
+//    
+//    /*
+//     status
+//     AFNetworkReachabilityStatusUnknown          = -1, 不知道监测的是什么
+//     AFNetworkReachabilityStatusNotReachable     = 0,  没有检测到网络
+//     AFNetworkReachabilityStatusReachableViaWWAN = 1,  蜂窝网
+//     AFNetworkReachabilityStatusReachableViaWiFi = 2,  WIFI
+//     */
+//    [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+//        NSLog(@"%zd",status);
+//    }];
+//    
+//    [manager startMonitoring];
+    
+
+
 }
-//-(void)viewDidLayoutSubviews
-//{
-//    [super viewDidLayoutSubviews];
-//    [self configureView];
-//}
+-(void)connectToHost
+{
+    AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
+    if (myDelegate.cclientSocket != nil)
+    {
+        self.clientSocket = myDelegate.cclientSocket;
+        self.clientSocket.delegate = self;
+        self.connected = myDelegate.cconnected;
+    }
+    //连接服务器
+    if (!self.connected )
+    {
+        self.clientSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+        NSLog(@"开始连接%@",self.clientSocket);
+        NSError *error = nil;
+        self.connected = [self.clientSocket connectToHost:HOST onPort:[PORT integerValue] viaInterface:nil withTimeout:-1 error:&error];
+        if (self.connected)
+        {
+            NSLog(@"客户端尝试连接");
+            [SVProgressHUD showWithStatus:@"正在连接设备"];
+        }
+        else
+        {
+            self.connected = NO;
+            NSLog(@"客户端未创建连接");
+        }
+    }
+    else
+    {
+        NSLog(@"与服务器连接已建立 %@",self.clientSocket);
+    }
+}
 #pragma mark - GCDAsyncSocketDelegate
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port
 {
-    [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"连接成功"]];
+    //提示成功
+    NSLog(@"连接成功");
+    //获取连接的wifi名字
+    id info = nil;
+    NSString *wifiName;
+    NSArray *ifs = (__bridge_transfer id)CNCopySupportedInterfaces();
+    for (NSString *ifnam in ifs)
+    {
+        info = (__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)ifnam);
+        wifiName = info[@"SSID"];
+    }
+    [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"成功连接 %@",wifiName]];
     [SVProgressHUD dismissWithDelay:0.9];
-    [self configureBodyView];
+    
+    
+    [self askForTreatInfomation];
     if ([self.view viewWithTag:disconnectViewtag])
     {
         [[self.view viewWithTag:disconnectViewtag]removeFromSuperview];
@@ -235,29 +239,14 @@ NSString *const PORT = @"8080";
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     myDelegate.cclientSocket=self.clientSocket;
     myDelegate.cconnected = YES;
+    myDelegate.wifiName = wifiName;
     self.connected = YES;
 }
 
 -(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
-    NSString *text;
+
     Byte *bytes = (Byte *)[data bytes];
-    
-    text = [NSString stringWithFormat:@"%d",bytes[2]];
-    if (bytes[2]!=147)
-    {
-        NSLog(@"------------");
-    }
-
-    for (int i = 0; i<[data length]; i++)
-    {
-
-        if (bytes[2]!=147)
-        {
-             NSLog(@"bytes[%d]=%d",i,bytes[i]);
-        }
-
-    }
     //治疗信息
     if (bytes[2]==0x90)
     {
@@ -298,7 +287,7 @@ NSString *const PORT = @"8080";
         self.treatRecord.address = [userDefault objectForKey:@"address"];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-//        [self takePhotoAlert];
+        [self takePhotoAlert];
         });
     }
     [sock readDataWithTimeout:- 1 tag:0];
@@ -307,25 +296,33 @@ NSString *const PORT = @"8080";
 {
     if (tag == 1000)
     {
-        NSLog(@"发动成功");
+        NSLog(@"发送成功");
     }
+    [sock readDataWithTimeout:- 1 tag:0];
 }
 -(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
-    NSLog(@"断开连接 error:%@",err);
-    [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"断开连接"]];
-    [SVProgressHUD dismissWithDelay:0.9];
-    if (![self.view viewWithTag:disconnectViewtag])
+
+    AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
+    NSString *wifiName = myDelegate.wifiName;
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    if (self.connected)
     {
-//        [self presentDisconnectAlert];
+        [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"断开连接 %@",wifiName!=nil?wifiName:@"空气波"]];
+        [SVProgressHUD dismissWithDelay:0.9];
+    }else
+    {
+        [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"无法连接设备，请检查您的网络设置"]];
+        [SVProgressHUD dismissWithDelay:0.9];
     }
     
+    NSLog(@"断开连接 error:%@",err);
     self.connected = NO;
-    AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     myDelegate.cconnected = NO;
-
+    myDelegate.cclientSocket=nil;
     [self.connectTimer invalidate];
     self.connectTimer = nil;
+
 }
 #pragma mark - configureViews
 -(void)configureView
@@ -351,17 +348,23 @@ NSString *const PORT = @"8080";
     self.progressView.label.text = [NSString stringWithFormat:@"100%%"];
     
     [self configureBodyView];
-
 }
 -(void)configureBodyView
 {
     
     NSString *aport = self.treatInformation.aPort;
-    
     //腿部八腔和六腔
     if ([aport isEqualToString:@"LEGA006"]||[aport isEqualToString:@"LEGA008"])
     {
 
+        for (int i = 0; i<6; i++)
+        {
+            //设置腿部的背景块为背景色
+            int legTags[] = {leftdown1tag,leftdown2tag,leftdown3tag,rightdown1tag,rightdown2tag,rightdown3tag};
+            int legIndex[]={leftdown1index,leftdown2index,leftdown3index,rightdown1index,rightdown2index,rightdown3index};
+            UIImageView *imgView = [self.backgroundView viewWithTag:legTags[i]];
+            [imgView setImage:[UIImage imageNamed:bodyNames[legIndex[i]] withColor:@"white"]];
+        }
 
         //去除其他按钮
         if ([bodyButtons count]>0)
@@ -369,20 +372,10 @@ NSString *const PORT = @"8080";
             for (int i = 0; i<[bodyButtons count]; i++)
             {
                 [bodyButtons[i] removeFromSuperview];
-                
             }
             bodyButtons = [[NSMutableArray alloc]initWithCapacity:20];
-            
-            //设置腿部的背景块为背景色
-            int legTags[] = {leftdown1tag,leftdown2tag,leftdown3tag,rightdown1tag,rightdown2tag,rightdown3tag};
-            int legIndex[]={leftdown1index,leftdown2index,leftdown3index,rightdown1index,rightdown2index,rightdown3index};
-            for (int i = 0; i<6; i++)
-            {
-                UIImageView *imgView = [self.backgroundView viewWithTag:legTags[i]];
-                [imgView setImage:[UIImage imageNamed:bodyNames[legIndex[i]] withColor:@"white"]];
-            }
         }
-        
+
         //没有加载过按钮则加载
         if ([legButtons count] == 0)
         {
@@ -401,10 +394,14 @@ NSString *const PORT = @"8080";
                 //设置背景块颜色
                 UIImageView *imgView = [self.backgroundView viewWithTag:tag];
                 [imgView setImage:[UIImage imageNamed:legNames[i] withColor:@"grey"]];
-                
+
                 BodyButton *button = [self bodyButtonReturnWithTag:tag];
                 button.enabled = NO;
                 [button setImage:[UIImage imageNamed:legNames[i] withColor:@"grey"] forState:UIControlStateNormal];
+                if (tag == rightfoottag)
+                {
+                    button.multiParamDic = [@{@"position":@"rightfoot", @"commit":[NSNumber numberWithUnsignedInteger:0x25]} copy];
+                }
                 //左腿八腔附带点亮模块的命令参数
                 if (i<8)
                 {
@@ -429,24 +426,39 @@ NSString *const PORT = @"8080";
             }
         }
     }
-    else
+    else if (aport !=nil)
     {
-
-        //去除腿部八腔按钮
-        if ([legButtons count] >0)
+        
+        for (int i = 0; i<[legNames count]; i++)
         {
-            for (int i = 0; i<[legButtons count]; i++)
+            int tag = legTags[i];
+            //设置腿部七块背景块颜色
+            if (tag !=leftfoottag || tag != rightfoottag)
             {
-                [legButtons[i] removeFromSuperview];
-            }
-             legButtons = [[NSMutableArray alloc]initWithCapacity:20];
-            for (int i = 0; i<[legNames count]; i++)
-            {
-                int tag = legTags[i];
-                //设置背景块颜色
                 UIImageView *imgView = [self.backgroundView viewWithTag:tag];
                 [imgView setImage:nil];
             }
+        }
+        
+        //去除腿部八腔按钮
+        if ([legButtons count] >0)
+        {
+//            for (int i = 0; i<[legButtons count]; i++)
+//            {
+//                BodyButton *button = legButtons[i];
+//
+//                [legButtons[i] removeFromSuperview];
+//            }
+            for (BodyButton *button in legButtons)
+            {
+                NSString *positionName = [button.multiParamDic objectForKey:@"positon"];
+                if (!([positionName isEqualToString: @"leftfoot"]||[positionName isEqualToString:@"rightfoot"]))
+                {
+                    [button removeFromSuperview];
+                }
+                
+            }
+             legButtons = [[NSMutableArray alloc]initWithCapacity:20];
         }
         
         //没加载过身体部位则加载
@@ -480,7 +492,7 @@ NSString *const PORT = @"8080";
                 //加载背景颜色块 否则button unable颜色变浅
                 UIImageView *imgView = [self.backgroundView viewWithTag:tag];
                 [imgView setImage:[UIImage imageNamed:bodyNames[i] withColor:@"grey"]];
-                
+
                 BodyButton *button = [self bodyButtonReturnWithTag:tag];
                 button.enabled = NO;
                 [button setImage:[UIImage imageNamed:bodyNames[i] withColor:@"grey"] forState:UIControlStateNormal];
@@ -1071,11 +1083,6 @@ NSString *const PORT = @"8080";
         }
     }
 }
--(void)updateBodyButton
-{
-    [self askForTreatInfomation];
-}
-
 -(BodyButton *)bodyButtonReturnWithTag:(NSInteger)tag
 {
     BodyButton *button = [[BodyButton alloc]init];
@@ -1231,8 +1238,6 @@ NSString *const PORT = @"8080";
                                                              dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                                                  [self saveRecord];
                                                              });
-                                                             
-
                                                          }];
     
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确认"
@@ -1329,7 +1334,15 @@ NSString *const PORT = @"8080";
         [fileManager createFileAtPath:imagePath contents:nil attributes:nil];
     }
     self.treatRecord.imagePath = imagePath;
-    [UIImagePNGRepresentation(image) writeToFile:imagePath atomically:YES];
+    BOOL success = [UIImagePNGRepresentation(image) writeToFile:imagePath atomically:YES];
+    if (success)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD showSuccessWithStatus:@"保存成功"];
+            [SVProgressHUD dismissWithDelay:0.9];
+        });
+
+    }
 }
 #pragma mark - Private Method
 - (NSString *)getCurrentTime
@@ -1347,7 +1360,8 @@ NSString *const PORT = @"8080";
 
 - (IBAction)returnHome:(id)sender
 {
-    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0]animated:YES];
+//    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.clientSocket disconnect];
 }
 
 - (IBAction)tapPlayButton:(id)sender
@@ -1428,25 +1442,7 @@ NSString *const PORT = @"8080";
     
     return [reSizeImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 }
--(void)presentDisconnectAlert
-{
-    UIView *disconnectView = [[UIView alloc]initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - 51)];
-    disconnectView.backgroundColor = [UIColor whiteColor];
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(93, 150, 190, 30)];
-    label.text = [NSString stringWithFormat:@"ohno！网络连接断开了~"];
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    button.frame = CGRectMake(122, 230, 130, 30);
-    button.backgroundColor = UIColorFromHex(0x65BBA9);
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [button setTitle:[NSString stringWithFormat:@"重新连接"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(reconnect:) forControlEvents:UIControlEventTouchUpInside];
 
-    [disconnectView addSubview:label];
-    [disconnectView addSubview:button];
-    [disconnectView setTag:disconnectViewtag];
-    [self.view addSubview:disconnectView];
-}
 #pragma mark - <轻扫手势>
 - (void)setupSwipe
 {
@@ -1459,13 +1455,13 @@ NSString *const PORT = @"8080";
 - (void)swipeRight
 {
 //    [self.navigationController popViewControllerAnimated:YES];
-    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0]animated:YES];
+//    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0]animated:YES];
+    [self.clientSocket disconnect];
 }
 
 #pragma mark - segue
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    [self askForTreatInfomation];
     if ([segue.identifier isEqualToString:@"MainToStandard"])
     {
         StandardTreatViewController *controller = (StandardTreatViewController *)segue.destinationViewController;

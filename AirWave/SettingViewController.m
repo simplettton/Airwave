@@ -11,6 +11,7 @@
 #import "TreatInformation.h"
 #import "AppDelegate.h"
 #import "Pack.h"
+#import <SVProgressHUD.h>
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 typedef NS_ENUM(NSUInteger,ButtonTags)
 {
@@ -169,6 +170,17 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
     [sock readDataWithTimeout:- 1 tag:0];
     
 }
+-(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
+{
+    NSLog(@"断开连接 error:%@",err);
+    AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
+    myDelegate.cconnected = NO;
+    myDelegate.cclientSocket=nil;
+    NSString *wifiName = myDelegate.wifiName;
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"断开连接 %@",wifiName!=nil?wifiName:@"空气波"]];
+    [SVProgressHUD dismissWithDelay:0.9];
+}
 #pragma mark - delegate
 
 - (IBAction)sendData:(id)sender
@@ -185,18 +197,18 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
     
     Byte data[] = {0,0};
     //设置保持时间
-    Byte addr[] = {80,2};
+    Byte addr[] = {2,80};
     data[0]= [self.keepTimeLabel.text integerValue];
     [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addr]dataEnabled:YES data:[self dataWithBytes:data]] withTimeout:-1 tag:1];
     
     //设置间隔时间
     
-    Byte addr1[] = {2,19};
+    Byte addr1[] = {19,2};
     data[0] = [self.intervalTimeLabel.text integerValue];
     [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addr1]dataEnabled:YES data:[self dataWithBytes:data]] withTimeout:-1 tag:1];
  
     //设置充气时间
-    Byte addr2[] = {2,27};
+    Byte addr2[] = {27,2};
     data[0] = [self.chargeSpeedLabel.text integerValue];
     [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addr2]dataEnabled:YES data:[self dataWithBytes:data]] withTimeout:-1 tag:1];
 }

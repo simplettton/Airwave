@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "Pack.h"
 #import <GCDAsyncSocket.h>
+#import <SVProgressHUD.h>
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 @interface ParameterTreatViewController ()<GCDAsyncSocketDelegate>
 {
@@ -88,8 +89,6 @@
 -(void)configureView
 {
 
-//    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
-//    [self.navigationController.navigationBar setShadowImage:[[UIImage alloc]init]];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColorFromHex(0x626d91)}];
     self.navigationController.navigationBar.barTintColor = UIColorFromHex(0xffffff);
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
@@ -334,25 +333,13 @@
 {
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
     myDelegate.cconnected = NO;
-    [self presentDisconnectAlert];
+    myDelegate.cclientSocket=nil;
+    NSString *wifiName = myDelegate.wifiName;
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"断开连接 %@",wifiName!=nil?wifiName:@"空气波"]];
+    [SVProgressHUD dismissWithDelay:0.9];
 }
--(void)presentDisconnectAlert
-{
-    UIView *disconnectView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, 375, 557)];
-    disconnectView.backgroundColor = [UIColor whiteColor];
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(93, 150, 190, 30)];
-    label.text = [NSString stringWithFormat:@"ohno！网络连接断开了~"];
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    button.frame = CGRectMake(122, 230, 130, 30);
-    button.backgroundColor = UIColorFromHex(0x65BBA9);
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [button setTitle:[NSString stringWithFormat:@"重新连接"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(returnToMain:) forControlEvents:UIControlEventTouchUpInside];
-    [disconnectView addSubview:label];
-    [disconnectView addSubview:button];
-    [self.view addSubview:disconnectView];
-}
+
 #pragma mark - UIPickerViewDelegate
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
     return 1;

@@ -7,6 +7,7 @@
 //
 
 #import "StandardTreatViewController.h"
+#import <SVProgressHUD.h>
 #import "AppDelegate.h"
 #import <GCDAsyncSocket.h>
 #import "Pack.h"
@@ -439,25 +440,13 @@
 -(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
     AppDelegate *myDelegate =(AppDelegate *) [[UIApplication sharedApplication] delegate];
+    myDelegate.cclientSocket=nil;
     myDelegate.cconnected = NO;
-    [self presentDisconnectAlert];
-}
--(void)presentDisconnectAlert
-{
-    UIView *disconnectView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, 375, 557)];
-    disconnectView.backgroundColor = [UIColor whiteColor];
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(93, 150, 190, 30)];
-    label.text = [NSString stringWithFormat:@"ohno！网络连接断开了~"];
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    button.frame = CGRectMake(122, 230, 130, 30);
-    button.backgroundColor = UIColorFromHex(0x65BBA9);
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [button setTitle:[NSString stringWithFormat:@"重新连接"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(returnToMain:) forControlEvents:UIControlEventTouchUpInside];
-    [disconnectView addSubview:label];
-    [disconnectView addSubview:button];
-    [self.view addSubview:disconnectView];
+    NSString *wifiName = myDelegate.wifiName;
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"断开连接 %@",wifiName!=nil?wifiName:@"空气波"]];
+    [SVProgressHUD dismissWithDelay:0.9];
+
 }
 
 #pragma mark - private method

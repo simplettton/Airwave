@@ -39,15 +39,26 @@
 }
 -(void)addView
 {
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     //加载头像
     UIImageView * headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(50 * KScreenUnit, 130 * KScreenUnit, 100 * KScreenUnit, 100 * KScreenUnit)];
 //    headerImageView.layer.cornerRadius = 50 * KScreenUnit;
     headerImageView.clipsToBounds  = YES;
-    headerImageView.image = [UIImage imageNamed:@"bear"];
+    
+    if ([userDefault objectForKey:@"imageURL"])
+    {
+        UIImage *image=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[userDefault objectForKey:@"imageURL"]]]];
+        headerImageView.image = image;
+    }
+    else
+    {
+         headerImageView.image = [UIImage imageNamed:@"bear"];
+    }
+
     [self addSubview:headerImageView];
     //加载昵称
     self.nickNameLabel  = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(headerImageView.frame)+ 20 * KScreenUnit , 150 * KScreenUnit, 300 * KScreenUnit,40 * KScreenUnit)];
-    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+
     if ([userDefault objectForKey:@"name"]) {
         self.nickNameLabel.text = [NSString stringWithFormat:@"    %@",[userDefault objectForKey:@"name"]];
     }else

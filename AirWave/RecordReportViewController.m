@@ -86,8 +86,8 @@ static NSString *BLOODDEVTYPE = @"8888";
     self.navigationItem.leftBarButtonItem = barButton;
     
     //上传按钮
-    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30, 20)];
-    [btn setBackgroundImage:[UIImage imageNamed:@"upload_green"] forState:UIControlStateNormal];
+    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 35, 35)];
+    [btn setBackgroundImage:[UIImage imageNamed:@"shangchuan"] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(upload:) forControlEvents:UIControlEventTouchUpInside];
 
     UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc]initWithCustomView:btn];
@@ -99,7 +99,6 @@ static NSString *BLOODDEVTYPE = @"8888";
     
     //设置图片居中显示
     [self.resultImageView setContentScaleFactor:[[UIScreen mainScreen] scale]];
-    self.resultImageView.contentMode =  UIViewContentModeScaleAspectFill;
     self.resultImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     self.resultImageView.clipsToBounds  = YES;
     //图片添加点击放大手势
@@ -140,7 +139,7 @@ static NSString *BLOODDEVTYPE = @"8888";
             self.record.imagePath = imagePath;
             UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.resultImageView.contentMode = UIViewContentModeScaleAspectFit;
+//                self.resultImageView.contentMode = UIViewContentModeScaleAspectFit;
                 self.resultImageView.image = [image rotate:UIImageOrientationRight];
             });
         });

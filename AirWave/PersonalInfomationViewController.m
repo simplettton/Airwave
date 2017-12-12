@@ -61,7 +61,6 @@
 {
     return 2;
 }
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0)
@@ -77,21 +76,42 @@
         return 0;
     }
 }
-
-
 #pragma mark - Table view delegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (( indexPath.section == 0 &&indexPath.row != 0)||(indexPath.section == 1))
+    if (indexPath.section == 0 && indexPath.row == 2)
+    {
+        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+        UITableViewCell *cell = [self.cells objectAtIndex:2];
+        UILabel * label = (UILabel *)[cell viewWithTag:2];
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+            NSLog(@"点击取消");
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [userDefault setObject:@"男" forKey:@"sex"];
+            [userDefault synchronize];
+            label.text = @"男";
+            
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [userDefault setObject:@"女" forKey:@"sex"];
+            [userDefault synchronize];
+            label.text = @"女";
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+    else if (( indexPath.section == 0 && indexPath.row != 0)||(indexPath.section == 1))
     {
          [self performSegueWithIdentifier:@"EditInfomation" sender:indexPath];
     }
 
 }
-#pragma mark - Navigation
+#pragma mark - prepareForSegue
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"EditInfomation"])
@@ -126,6 +146,4 @@
         };
     }
 }
-
-
 @end
