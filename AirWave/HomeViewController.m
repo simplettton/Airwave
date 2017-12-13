@@ -80,8 +80,10 @@ static NSString *BLOODDEVTYPE = @"8888";
     self.bloodDevSelected = YES;
     
     //保存默认病人信息
-    NSArray *keys = [NSArray arrayWithObjects:@"headPhoto",@"name",@"sex",@"age",@"phoneNumber",@"address", nil];
-    NSArray *values = [NSArray arrayWithObjects:@"",@"游客",@"--",@"0",@"--",@"--", nil];
+    
+    NSArray *keys = [NSArray arrayWithObjects:@"name",@"sex",@"age",@"phoneNumber",@"address", nil];
+    NSArray *values = [NSArray arrayWithObjects:
+                       @"游客",@"--",@"0",@"--",@"--", nil];
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     
     for (int i = 0;i<[keys count];i++)
@@ -99,7 +101,14 @@ static NSString *BLOODDEVTYPE = @"8888";
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     LeftDrawerViewController *vc = (LeftDrawerViewController  *)self.mm_drawerController.leftDrawerViewController;
-    vc.headerView.nickNameLabel.text =[NSString stringWithFormat:@"    %@",[userDefault objectForKey:@"name"]];
+    vc.headerView.nickNameLabel.text =[NSString stringWithFormat:@"%@",[userDefault objectForKey:@"name"]];
+    if ([userDefault objectForKey:@"userIcon"])
+    {
+        UIImage *image=[UIImage imageWithData:[userDefault objectForKey:@"userIcon"]];
+        vc.headerView.headerImageView.image =image;
+    }
+
+    
 }
 -(UITapGestureRecognizer *)airwaveGesture
 {

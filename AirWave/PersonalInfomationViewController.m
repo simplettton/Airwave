@@ -27,7 +27,7 @@
     self.tableView.sectionHeaderHeight  = 0;
     self.tableView.sectionFooterHeight = 20;
     self.tableView.contentInset = UIEdgeInsetsMake(20 - 35, 0, 0, 0);
-    keys = [NSArray arrayWithObjects:@"headPhoto",@"name",@"sex",@"age",@"phoneNumber",@"address", nil];
+    keys = [NSArray arrayWithObjects:@"userIcon",@"name",@"sex",@"age",@"phoneNumber",@"address", nil];
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     for (int i = 0;i<[keys count];i++)
     {
@@ -37,7 +37,18 @@
         {
             UILabel *label = (UILabel *)valueView;
 
-            label.text = [userDefault objectForKey:keys[i]];
+            if ([userDefault objectForKey:keys[i]])
+            {
+                label.text = [userDefault objectForKey:keys[i]];
+            }
+        }
+        else if ([valueView isKindOfClass:[UIImageView class]])
+        {
+            UIImageView *headerImageView = (UIImageView *)valueView;
+            if ([userDefault objectForKey:keys[i]])
+            {
+                headerImageView.image = [UIImage imageWithData:[userDefault objectForKey:@"userIcon"]];
+            }
         }
     }
 }

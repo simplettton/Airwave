@@ -129,24 +129,25 @@
             
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 
+            
             NSString *imageURL = resp.iconurl;
-//            UIImage *image=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]]];
-            
-            //保存头像
-            [userDefaults setObject:imageURL forKey:@"imageURL"];
-            //保存昵称
+            UIImage *userIcon=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]]];
+            NSData *imageData = UIImagePNGRepresentation(userIcon);
+
+            //保存第三方信息
+            [userDefaults setObject:imageData forKey:@"userIcon"];
             [userDefaults setObject:resp.name forKey:@"name"];
-            //保存性别
             [userDefaults setObject:resp.unionGender forKey:@"sex"];
-            
             [userDefaults synchronize];
             
-            NSString *string = [NSString stringWithFormat:@"%@,%@",resp.name,resp.unionGender];
+            
             dispatch_async(dispatch_get_main_queue(), ^{
 
 //                [self.iconImageView setImage:image];
-                [SVProgressHUD showSuccessWithStatus:string];
+                [SVProgressHUD showSuccessWithStatus:@"登录成功"];
+                [self closeSelf:nil];
             });
+            
         }
     }];
 }

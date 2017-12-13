@@ -13,4 +13,5 @@
 @property(nonatomic,strong) UIButton * personalSignatureButton;
 @property(nonatomic,strong) UIButton * QRCodeButton;
 @property(nonatomic,strong) UILabel *nickNameLabel;
+@property(nonatomic,strong) UIImageView *headerImageView;
 @end

@@ -4,4 +4,7 @@ target 'AirWave' do
    pod 'BabyBluetooth', '~> 0.7.0'
    pod 'SVProgressHUD'
    pod 'MMDrawerController'
+   pod 'UMengUShare/Social/Sina'
+   pod 'UMengUShare/Social/QQ'
+   pod 'UMengUShare/Social/WeChat'
 end
