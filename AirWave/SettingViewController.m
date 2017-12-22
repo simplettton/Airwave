@@ -124,10 +124,8 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
 }
 -(void)askForTreatInfomation
 {
-    Byte addrBytes[2] = {0,0};
-    Byte dataBytes[2] = {1,0x62};
-    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes]
-                                                               dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:0];
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
+                                                               dataEnabled:YES data:[self dataWithValue:0x6201]] withTimeout:-1 tag:0];
 }
 #pragma mark - SocketDelegate
 -(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
@@ -186,42 +184,27 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
 
 - (IBAction)sendData:(id)sender
 {
-    Byte addr[]={0x06,0x23};
-    Byte data[] = {0xf1,0};
-    Byte dataBytes [2] = {0xae,0};
-    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addr] dataEnabled:YES data:[self dataWithBytes:data]] withTimeout:-1 tag:0];
-    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]    dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:3000];
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0x2306] dataEnabled:YES data:[self dataWithValue:0xf1]] withTimeout:-1 tag:0];
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]    dataEnabled:YES data:[self dataWithValue:0xae]] withTimeout:-1 tag:3000];
 }
 
 - (IBAction)save:(id)sender
 {
-    
-    Byte data[] = {0,0};
     //设置保持时间
-    Byte addr[] = {2,80};
-    data[0]= [self.keepTimeLabel.text integerValue];
-    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addr]dataEnabled:YES data:[self dataWithBytes:data]] withTimeout:-1 tag:1];
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0x5002]dataEnabled:YES data:[self dataWithValue:[self.keepTimeLabel.text integerValue]]] withTimeout:-1 tag:1];
     
     //设置间隔时间
     
-    Byte addr1[] = {19,2};
-    data[0] = [self.intervalTimeLabel.text integerValue];
-    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addr1]dataEnabled:YES data:[self dataWithBytes:data]] withTimeout:-1 tag:1];
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0x0213]dataEnabled:YES data:[self dataWithValue:[self.intervalTimeLabel.text integerValue]]] withTimeout:-1 tag:1];
  
     //设置充气时间
-    Byte addr2[] = {27,2};
-    data[0] = [self.chargeSpeedLabel.text integerValue];
-    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addr2]dataEnabled:YES data:[self dataWithBytes:data]] withTimeout:-1 tag:1];
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0x021b]dataEnabled:YES data:[self dataWithValue:[self.chargeSpeedLabel.text integerValue]]] withTimeout:-1 tag:1];
 }
 
 - (IBAction)cancelChange:(id)sender
 {
-    Byte data[] = {0,0};
-    data[0] = 0xba;
-    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithBytes:data]] withTimeout:-1 tag:0];
-    data[0] = 0xae;
-    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithBytes:data]] withTimeout:-1 tag:0];
-//    [self performSegueWithIdentifier:@"SettingToMain" sender:nil];
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xba]] withTimeout:-1 tag:0];
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xae]] withTimeout:-1 tag:0];
     [self returnToMain:sender];
 }
 
@@ -242,9 +225,7 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {
                                                               
-                                                              Byte addr[] = {0x04,0x23};
-                                                              Byte dataBytes [] = {1,0};
-                                                              NSData *data = [Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addr]dataEnabled:YES data:[self dataWithBytes:dataBytes]];
+                                                              NSData *data = [Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0x2304]dataEnabled:YES data:[self dataWithValue:0x01]];
                                                               [self.clientSocket writeData:data withTimeout:-1 tag:1000];
                     
                                                           }];
@@ -275,19 +256,14 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
     {
         OtherSettingViewController *controller = (OtherSettingViewController *)segue.destinationViewController;
         controller.treatInfomation = self.treatInfomation;
-        Byte dataBytes[2] = {0xb2,0};
-        [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:0];
+        [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0] dataEnabled:YES data:[self dataWithValue:0xb2]] withTimeout:-1 tag:0];
     }
 }
 - (IBAction)returnToMain:(id)sender
 {
     [self askForTreatInfomation];
     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
-    Byte addr[] = {0x06,0x23};
-    Byte data[] = {0,0};
-    data[0] = 0xf1;
-    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addr] dataEnabled:YES data:[self dataWithBytes:data]] withTimeout:-1 tag:0];
-    data[0] = 0xae;
-    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]    dataEnabled:YES data:[self dataWithBytes:data]] withTimeout:-1 tag:0];
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0x2306] dataEnabled:YES data:[self dataWithValue:0xf1]] withTimeout:-1 tag:0];
+    [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]    dataEnabled:YES data:[self dataWithValue:0xae]] withTimeout:-1 tag:0];
 }
 @end

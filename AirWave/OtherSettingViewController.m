@@ -190,12 +190,13 @@ typedef NS_ENUM(NSUInteger,typeTags)
 -(NSData*) dataWithValue:(NSInteger)value
 {
     Byte src[2]={0,0};
-//    src[0] =  (Byte) ((value>>8) & 0xFF);
-//    src[1] =  (Byte) (value & 0xFF); 大端模式
+    //大端模式
+    src[0] =  (Byte) ((value>>8) & 0xFF);
+    src[1] =  (Byte) (value & 0xFF);
     
-    //小端模式
-    src[1] = (Byte)((value>>8) & 0xFF);
-    src[0] = (Byte)(value & 0xFF);
+//    //小端模式
+//    src[1] = (Byte)((value>>8) & 0xFF);
+//    src[0] = (Byte)(value & 0xFF);
     NSData *data = [NSData dataWithBytes:src length:2];
     return data;
 }

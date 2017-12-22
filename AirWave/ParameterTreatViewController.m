@@ -253,15 +253,12 @@
             tag =0;
         }
         //设置时间
-        Byte addrBytes1[2] = {4,80};
-        Byte dataBytes1[2] = {minutes,0};
-        [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes1] dataEnabled:YES data:[self dataWithBytes:dataBytes1]] withTimeout:-1 tag:tag];
+        [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0x5004] dataEnabled:YES data:[self dataWithValue:minutes]] withTimeout:-1 tag:tag];
         
         //设置治疗方案
         NSInteger mode = [self.modePicker selectedRowInComponent:0];
-        Byte addrBytes2[2] = {3,80};
-        Byte dataBytes2[2] = {mode+1,0};
-        [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithBytes:addrBytes2]dataEnabled:YES data:[self dataWithBytes:dataBytes2]] withTimeout:-1 tag:tag];
+
+        [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0x5003]dataEnabled:YES data:[self dataWithValue:mode +1]] withTimeout:-1 tag:tag];
     }
 }
 - (IBAction)cancel:(id)sender
@@ -281,9 +278,8 @@
 }
 -(void)askForTreatInfomation
 {
-    Byte dataBytes[2] = {0x62,1};
     [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                                               dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:1000];
+                                                               dataEnabled:YES data:[self dataWithValue:0x0162]] withTimeout:-1 tag:1000];
 }
 
 #pragma mark - socketDelegate
@@ -420,9 +416,8 @@
         }
         else if ([segue.identifier isEqualToString:@"ParameterToSolution"])
         {
-            Byte bytes [2] = {0x0f,0};
             [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                                                       dataEnabled:YES data:[self dataWithBytes:bytes]] withTimeout:-1 tag:0];
+                                                                       dataEnabled:YES data:[self dataWithValue:0x0f]] withTimeout:-1 tag:0];
             dataBytes[0] = 0x81;
             sendata = [Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                 dataEnabled:YES data:[self dataWithBytes:dataBytes]];

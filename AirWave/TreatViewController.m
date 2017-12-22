@@ -1198,30 +1198,27 @@ NSString *const PORT = @"8080";
 #pragma mark - commit
 - (void)start
 {
-    Byte dataBytes[2] = {0x10,0};
     [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                                               dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:0];
+                                                               dataEnabled:YES data:[self dataWithValue:0x10]] withTimeout:-1 tag:0];
 }
 -(void)pause
 {
-    Byte dataBytes[2] = {0x11,0};
+    
     [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                                               dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:0];
+                                                               dataEnabled:YES data:[self dataWithValue:0x11]] withTimeout:-1 tag:0];
     
 }
 -(void)askForTreatInfomation
 {
-    Byte dataBytes[2] = {0x62,1};
     [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                                               dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:1000];
+                                                               dataEnabled:YES data:[self dataWithValue:0x0162]] withTimeout:-1 tag:1000];
 }
 -(void)lightupBodyButton:(BodyButton *)button
 {
     [button changeGreyColor];
     NSNumber *commitNumber = [button.multiParamDic objectForKey:@"commit"];
-    Byte dataBytes[2] = {[commitNumber unsignedIntegerValue],0};
     [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                                               dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:0];
+                                                               dataEnabled:YES data:[self dataWithValue:[commitNumber unsignedIntegerValue]]] withTimeout:-1 tag:0];
 }
 //添加计时器
 -(void)addTimer
@@ -1524,9 +1521,8 @@ NSString *const PORT = @"8080";
     {
         SettingViewController *controller = (SettingViewController *)segue.destinationViewController;
         controller.treatInfomation = self.treatInformation;
-        Byte dataBytes[2] = {0xaf,0};
         [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
-                                                                   dataEnabled:YES data:[self dataWithBytes:dataBytes]] withTimeout:-1 tag:0];
+                                                                   dataEnabled:YES data:[self dataWithValue:0xaf]] withTimeout:-1 tag:0];
     }
 }
 @end
