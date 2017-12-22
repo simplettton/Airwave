@@ -7,6 +7,7 @@
 //
 
 #import "OtherSettingViewController.h"
+#import "SettingViewController.h"
 #import "UIImage+ImageWithColor.h"
 #import "AppDelegate.h"
 #import "Pack.h"
@@ -360,6 +361,8 @@ typedef NS_ENUM(NSUInteger,typeTags)
     //返回标准设置界面
     if ([segue.identifier isEqualToString:@"OtherSettingToSetting"])
     {
+        SettingViewController *settingVC = (SettingViewController *)segue.destinationViewController;
+        settingVC.treatInfomation = self.treatInfomation;
         [self.clientSocket writeData:[Pack packetWithCmdid:0x90 addressEnabled:YES addr:[self dataWithValue:0]
                                                dataEnabled:YES data:[self dataWithValue:0xaf]]
                          withTimeout:-1   tag:0];

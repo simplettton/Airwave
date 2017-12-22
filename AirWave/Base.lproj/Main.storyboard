@@ -4455,7 +4455,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -4482,6 +4482,79 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f2e-o7-94I" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="6228" y="1627.7361319340332"/>
+        </scene>
+        <!--网络配置-->
+        <scene sceneID="VOx-sW-r31">
+            <objects>
+                <tableViewController storyboardIdentifier="AirWaveNetworkSettingViewController" id="5S8-xs-jx1" customClass="AirWaveNetworkSettingViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="fXI-97-qB1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection headerTitle="IP地址" id="HVR-Lm-OIa">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="KlR-YQ-Yna">
+                                        <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KlR-YQ-Yna" id="ltw-6W-xiE">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Xf-7A-Wln">
+                                                    <rect key="frame" x="8" y="0.0" width="359" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="端口号" id="WLa-OA-YBS">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="GnH-la-GQp">
+                                        <rect key="frame" x="0.0" y="155.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GnH-la-GQp" id="jpp-bE-RnI">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6Eb-RH-lkl">
+                                                    <rect key="frame" x="8" y="0.0" width="359" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="5S8-xs-jx1" id="IsL-Fq-zmj"/>
+                            <outlet property="delegate" destination="5S8-xs-jx1" id="tSy-pj-gJd"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="网络配置" id="wtd-eI-3fx">
+                        <barButtonItem key="rightBarButtonItem" title="保存" id="Ua6-to-hfN">
+                            <connections>
+                                <action selector="save:" destination="5S8-xs-jx1" id="QQb-4W-u5d"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="hostTextField" destination="3Xf-7A-Wln" id="ypw-o6-GLz"/>
+                        <outlet property="portTextField" destination="6Eb-RH-lkl" id="srA-Tr-SZB"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UoF-35-Mj3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7698" y="1783"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tSJ-Cm-UKQ">
@@ -5049,6 +5122,24 @@
             </objects>
             <point key="canvasLocation" x="8569" y="-1529"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="eMs-xN-Fzu">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QC6-Q9-kji" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="K3T-an-qTQ">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="5S8-xs-jx1" kind="relationship" relationship="rootViewController" id="4Wx-02-y5h"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wA0-LI-9il" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6954" y="1782"/>
+        </scene>
     </scenes>
     <resources>
         <image name="A1" width="900" height="200"/>
@@ -5111,9 +5202,9 @@
     <inferredMetricsTieBreakers>
         <segue reference="7E7-TE-zOR"/>
         <segue reference="8ar-qs-djD"/>
-        <segue reference="YZz-rL-WdO"/>
+        <segue reference="xsr-RJ-1Y9"/>
         <segue reference="kru-6y-YVf"/>
-        <segue reference="bco-oh-nlz"/>
+        <segue reference="S8o-Gi-Maw"/>
         <segue reference="bnI-Yd-YTo"/>
         <segue reference="Lnw-ff-L4K"/>
     </inferredMetricsTieBreakers>

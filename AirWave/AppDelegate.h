@@ -11,9 +11,13 @@
 @class MMDrawerController;
 @interface AppDelegate : UIResponder
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic)GCDAsyncSocket *cclientSocket;
-@property (strong, nonatomic) NSString *wifiName;
+
+@property (strong, nonatomic) GCDAsyncSocket *cclientSocket;
 @property (nonatomic, assign) BOOL cconnected;
+@property (strong, nonatomic) NSString *host;
+@property (strong, nonatomic) NSString *port;
+
+@property (strong, nonatomic) NSString *wifiName;
 @property (nonatomic, strong) MMDrawerController * drawerController;
 @end
 

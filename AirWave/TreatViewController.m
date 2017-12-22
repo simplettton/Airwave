@@ -30,6 +30,10 @@
 
 #import "SVProgressHUD.h"
 
+#import <ifaddrs.h>
+#import <net/if.h>
+#import <SystemConfiguration/CaptiveNetwork.h>
+
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 static NSString *TYPE = @"7681";
 NSString *const HOST = @"10.10.100.254";
@@ -39,7 +43,11 @@ NSString *const PORT = @"8080";
 @property (nonatomic, strong) UIImagePickerController *picker;
 @property (nonatomic, strong) NSTimer *connectTimer;
 @property (nonatomic, strong) NSTimer *updateTimer;
+
 @property (nonatomic, assign) BOOL connected;
+@property (strong, nonatomic) NSString *host;
+@property (strong, nonatomic) NSString *port;
+
 @property (nonatomic, strong) NSTimer *changeColorTimer;
 @property (nonatomic, strong) GCDAsyncSocket *clientSocket;
 @property (nonatomic, strong) TreatRecord *treatRecord;
@@ -87,12 +95,12 @@ NSString *const PORT = @"8080";
     self.navigationItem.backBarButtonItem = item;
 
     
-    if (!self.connected )
-    {
-        self.clientSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-        NSError *error = nil;
-        self.connected = [self.clientSocket connectToHost:HOST onPort:[PORT integerValue] viaInterface:nil withTimeout:-1 error:&error];
-    }
+//    if (!self.connected )
+//    {
+//        self.clientSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+//        NSError *error = nil;
+//        self.connected = [self.clientSocket connectToHost:HOST onPort:[PORT integerValue] viaInterface:nil withTimeout:-1 error:&error];
+//    }
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -192,11 +200,29 @@ NSString *const PORT = @"8080";
         self.clientSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
         NSLog(@"开始连接%@",self.clientSocket);
         NSError *error = nil;
-        self.connected = [self.clientSocket connectToHost:HOST onPort:[PORT integerValue] viaInterface:nil withTimeout:-1 error:&error];
+        self.connected = [self.clientSocket connectToHost:myDelegate.host onPort:[myDelegate.port integerValue] viaInterface:nil withTimeout:-1 error:&error];
         if (self.connected)
         {
             NSLog(@"客户端尝试连接");
             [SVProgressHUD showWithStatus:@"正在连接设备"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                BOOL isWIFI = [self isWiFiEnabled];
+                if (!isWIFI) {//如果WiFi没有打开，作出弹窗提示
+                    [SVProgressHUD dismiss];
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"无法连接设备"
+                                                                                   message:@"Wi-Fi已关闭，请打开Wi-Fi以连接设备"
+                                                                            preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction* settingAction = [UIAlertAction actionWithTitle:@"设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"App-prefs:root"]options:@{} completionHandler:nil];
+                    }];
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"好" style:UIAlertActionStyleDefault
+                                                                          handler:^(UIAlertAction * action) {}];
+                    [alert addAction:settingAction];
+                    [alert addAction:defaultAction];
+                    [self presentViewController:alert animated:YES completion:^{
+                    }];
+                }
+            });
         }
         else
         {
@@ -223,7 +249,7 @@ NSString *const PORT = @"8080";
         info = (__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)ifnam);
         wifiName = info[@"SSID"];
     }
-    [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"成功连接 %@",wifiName]];
+    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"成功连接 %@",wifiName]];
     [SVProgressHUD dismissWithDelay:0.9];
     
     
@@ -242,11 +268,11 @@ NSString *const PORT = @"8080";
     myDelegate.wifiName = wifiName;
     self.connected = YES;
 }
-
 -(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
 
     Byte *bytes = (Byte *)[data bytes];
+    NSLog(@"%x",bytes[2]);
     //治疗信息
     if (bytes[2]==0x90)
     {
@@ -296,7 +322,7 @@ NSString *const PORT = @"8080";
 {
     if (tag == 1000)
     {
-        NSLog(@"发送成功");
+//        NSLog(@"发送成功");
     }
     [sock readDataWithTimeout:- 1 tag:0];
 }
@@ -1402,7 +1428,8 @@ NSString *const PORT = @"8080";
 {
     NSError *error= nil;
     self.clientSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-    [self.clientSocket connectToHost:HOST onPort:[PORT integerValue] viaInterface:nil withTimeout:-1 error:&error];
+    AppDelegate *myDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    [self.clientSocket connectToHost:myDelegate.host onPort:[myDelegate.port integerValue] viaInterface:nil withTimeout:-1 error:&error];
 
 }
 -(CABasicAnimation *)warningMessageAnimation:(float)time
@@ -1441,6 +1468,19 @@ NSString *const PORT = @"8080";
     UIGraphicsEndImageContext();
     
     return [reSizeImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+}
+- (BOOL) isWiFiEnabled
+{
+    NSCountedSet * cset = [[NSCountedSet alloc] init];
+    struct ifaddrs *interfaces;
+    if( ! getifaddrs(&interfaces) ) {
+        for( struct ifaddrs *interface = interfaces; interface; interface = interface->ifa_next) {
+            if ( (interface->ifa_flags & IFF_UP) == IFF_UP ) {
+                [cset addObject:[NSString stringWithUTF8String:interface->ifa_name]];
+            }
+        }
+    }
+    return [cset countForObject:@"awdl0"] > 1 ? YES : NO;
 }
 
 #pragma mark - <轻扫手势>

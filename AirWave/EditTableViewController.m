@@ -53,15 +53,9 @@
     [self.navigationController popViewControllerAnimated:YES];
     self.returnBlock(self.selectedRow, self.contentTextField.text);
 }
-#pragma mark - textfield delegate
-//回车时退出键盘
--(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if ([text isEqualToString:@"\n"])
-    {
-        [textView resignFirstResponder];
-        return NO;
-    }
+    [textField resignFirstResponder];
     return YES;
 }
 @end

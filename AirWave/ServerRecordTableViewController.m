@@ -7,7 +7,7 @@
 //
 #import "ServerRecordTableViewController.h"
 #import "ServerReportViewController.h"
-//#import "ServerDetailViewController.h"
+
 #import "DetailViewController.h"
 #import "RecordTableViewCell.h"
 #import "RecordTableViewController.h"

@@ -86,6 +86,7 @@ typedef NS_ENUM(NSUInteger,ButtonTags)
     [self.keepTimeStepper addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
     [self.intervalTimeStepper addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
     [self.chargeSpeedStepper addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+    [self updateView];
     
 }
 -(void)viewDidAppear:(BOOL)animated

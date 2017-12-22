@@ -47,8 +47,7 @@
     
     if ([userDefault objectForKey:@"userIcon"])
     {
-        UIImage *image=[UIImage imageWithData:[userDefault objectForKey:@"userIcon"]];
-        self.headerImageView.image = image;
+        self.headerImageView.image = [UIImage imageWithData:[userDefault objectForKey:@"userIcon"]];
     }
     else
     {

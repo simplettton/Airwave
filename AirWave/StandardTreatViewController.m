@@ -88,6 +88,7 @@
     [self.modePicker selectRow:0 inComponent:0 animated:NO];
     customTimeSelected = YES;
     [self configureTimeSelectButton];
+    [self updateView];
     
 }
 -(void)viewWillAppear:(BOOL)animated

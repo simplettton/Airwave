@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0400D7EA1FE20DCC001A6645 /* ServerReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0400D7E91FE20DCB001A6645 /* ServerReportViewController.m */; };
 		0419A9CD1FA324560020A088 /* AlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0419A9CC1FA324560020A088 /* AlertViewController.m */; };
 		0419A9D31FA329620020A088 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0419A9D21FA329620020A088 /* HomeViewController.m */; };
 		0419A9D61FA329BE0020A088 /* MyPresentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0419A9D51FA329BE0020A088 /* MyPresentViewController.m */; };
@@ -58,6 +59,7 @@
 		04A4203A1F9D929C00A6C2E9 /* HttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A420341F9D929C00A6C2E9 /* HttpRequest.m */; };
 		04A4203B1F9D929C00A6C2E9 /* HttpResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A420361F9D929C00A6C2E9 /* HttpResponse.m */; };
 		04B68F491F4EDAE200FD31E5 /* ParameterTreatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B68F481F4EDAE200FD31E5 /* ParameterTreatViewController.m */; };
+		04C3055C1FE218570026628A /* AirWaveNetworkSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C3055B1FE218570026628A /* AirWaveNetworkSettingViewController.m */; };
 		04CAE36F1F8DFA2500840AD6 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CAE36E1F8DFA2500840AD6 /* DetailViewController.m */; };
 		04D73DF11FA03E81009DC929 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D73DF01FA03E81009DC929 /* libsqlite3.0.tbd */; };
 		04E808F91FB44BFB0015CF19 /* Unpack.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E808F81FB44BFB0015CF19 /* Unpack.m */; };
@@ -84,6 +86,8 @@
 
 /* Begin PBXFileReference section */
 		00F29BDE28750DB8ECD90253 /* Pods-AirWave.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirWave.release.xcconfig"; path = "Pods/Target Support Files/Pods-AirWave/Pods-AirWave.release.xcconfig"; sourceTree = "<group>"; };
+		0400D7E91FE20DCB001A6645 /* ServerReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerReportViewController.m; sourceTree = "<group>"; };
+		0400D7EB1FE20E02001A6645 /* ServerReportViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerReportViewController.h; sourceTree = "<group>"; };
 		0419A9CB1FA324560020A088 /* AlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertViewController.h; sourceTree = "<group>"; };
 		0419A9CC1FA324560020A088 /* AlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertViewController.m; sourceTree = "<group>"; };
 		0419A9D11FA329620020A088 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
@@ -178,8 +182,6 @@
 		0496EFC21F8B856C0098C7BE /* TreatRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreatRecord.m; sourceTree = "<group>"; };
 		049B75461FBD988100662074 /* XWScanImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XWScanImage.h; sourceTree = "<group>"; };
 		049B75471FBD988100662074 /* XWScanImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XWScanImage.m; sourceTree = "<group>"; };
-		049B75491FBDB34F00662074 /* ServerReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerReportViewController.h; path = ../ServerReportViewController.h; sourceTree = "<group>"; };
-		049B754A1FBDB34F00662074 /* ServerReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServerReportViewController.m; path = ../ServerReportViewController.m; sourceTree = "<group>"; };
 		04A4202D1F9D929C00A6C2E9 /* HttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClient.h; sourceTree = "<group>"; };
 		04A4202E1F9D929C00A6C2E9 /* HttpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpClient.m; sourceTree = "<group>"; };
 		04A4202F1F9D929C00A6C2E9 /* HttpError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpError.h; sourceTree = "<group>"; };
@@ -192,6 +194,8 @@
 		04A420361F9D929C00A6C2E9 /* HttpResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpResponse.m; sourceTree = "<group>"; };
 		04B68F471F4EDAE200FD31E5 /* ParameterTreatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParameterTreatViewController.h; sourceTree = "<group>"; };
 		04B68F481F4EDAE200FD31E5 /* ParameterTreatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParameterTreatViewController.m; sourceTree = "<group>"; };
+		04C3055A1FE218570026628A /* AirWaveNetworkSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirWaveNetworkSettingViewController.h; sourceTree = "<group>"; };
+		04C3055B1FE218570026628A /* AirWaveNetworkSettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirWaveNetworkSettingViewController.m; sourceTree = "<group>"; };
 		04CAE36D1F8DFA2500840AD6 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		04CAE36E1F8DFA2500840AD6 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		04D73DF01FA03E81009DC929 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
@@ -288,8 +292,8 @@
 				045E8FF21FBADF66006DFFC8 /* RecordReportViewController.m */,
 				0451A1931F9F2A2100AF521C /* ServerRecordTableViewController.h */,
 				0451A1941F9F2A2100AF521C /* ServerRecordTableViewController.m */,
-				049B75491FBDB34F00662074 /* ServerReportViewController.h */,
-				049B754A1FBDB34F00662074 /* ServerReportViewController.m */,
+				0400D7EB1FE20E02001A6645 /* ServerReportViewController.h */,
+				0400D7E91FE20DCB001A6645 /* ServerReportViewController.m */,
 			);
 			name = RecordController;
 			sourceTree = "<group>";
@@ -346,6 +350,8 @@
 				045750431FB1861E00E3AD73 /* LeftDrawerViewController.m */,
 				045E8FEE1FBA7F6D006DFFC8 /* ServerIPViewController.h */,
 				045E8FEF1FBA7F6D006DFFC8 /* ServerIPViewController.m */,
+				04C3055A1FE218570026628A /* AirWaveNetworkSettingViewController.h */,
+				04C3055B1FE218570026628A /* AirWaveNetworkSettingViewController.m */,
 				04519EB91FB53DF50052A93C /* PersonalInfomationViewController.h */,
 				04519EBA1FB53DF50052A93C /* PersonalInfomationViewController.m */,
 				0451D8021FBE8AAD00D4E8D6 /* EditTableViewController.h */,
@@ -526,8 +532,8 @@
 				TargetAttributes = {
 					046BA7671F480DF2004D7E74 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = UUWZ3JRNLN;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = A457Z9M6ER;
+						ProvisioningStyle = Manual;
 					};
 					046BA7801F480DF2004D7E74 = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -661,6 +667,7 @@
 				048A3B1D1F5411D700929C37 /* OtherSettingViewController.m in Sources */,
 				0461D95D1FBBF58700200331 /* ReportLabel.m in Sources */,
 				04A420371F9D929C00A6C2E9 /* HttpClient.m in Sources */,
+				0400D7EA1FE20DCC001A6645 /* ServerReportViewController.m in Sources */,
 				048A3B141F53C54900929C37 /* UIColor+UIcolor_RGB.m in Sources */,
 				045750441FB1861E00E3AD73 /* LeftDrawerViewController.m in Sources */,
 				044D54BE1F4D1A4C002C1E35 /* GradientTreatViewController.m in Sources */,
@@ -670,6 +677,7 @@
 				046BA7701F480DF2004D7E74 /* AppDelegate.m in Sources */,
 				045E8FF61FBAE420006DFFC8 /* LoginViewController.m in Sources */,
 				0462C8131F5D42CE00AEC2D6 /* TreatInformation.m in Sources */,
+				04C3055C1FE218570026628A /* AirWaveNetworkSettingViewController.m in Sources */,
 				04FAB3D41FBC514D009FF1AE /* ZWGraphicView.m in Sources */,
 				0450307D1F6955DB008CFAB4 /* WarnMessage.m in Sources */,
 				04CAE36F1F8DFA2500840AD6 /* DetailViewController.m in Sources */,
@@ -868,17 +876,18 @@
 			baseConfigurationReference = 9D1B39FA922AAA28BEDFF4EA /* Pods-AirWave.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 515315183@qq.com (L33H2377CF)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = UUWZ3JRNLN;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Binger Zeng (926M54FQF5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Binger Zeng (926M54FQF5)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = A457Z9M6ER;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = AirWave/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Lifotronic.AirWave;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Lifotronic.AirWave;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "28bcf5fb-ccc1-4c12-a7ca-17a07a08f33c";
+				PROVISIONING_PROFILE_SPECIFIER = AirWave;
 			};
 			name = Debug;
 		};
@@ -887,9 +896,10 @@
 			baseConfigurationReference = 00F29BDE28750DB8ECD90253 /* Pods-AirWave.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 515315183@qq.com (L33H2377CF)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = UUWZ3JRNLN;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Binger Zeng (926M54FQF5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Binger Zeng (926M54FQF5)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = A457Z9M6ER;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
@@ -909,10 +919,10 @@
 					"-framework",
 					"\"Security\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Lifotronic.AirWave;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Lifotronic.AirWave;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "28bcf5fb-ccc1-4c12-a7ca-17a07a08f33c";
+				PROVISIONING_PROFILE_SPECIFIER = AirWave;
 			};
 			name = Release;
 		};

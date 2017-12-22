@@ -7,23 +7,23 @@
 //
 
 #import "LeftDrawerViewController.h"
-#import "DetailViewController.h"
-#import "RecordTableViewController.h"
-#import "ServerIPViewController.h"
-#import "LoginViewController.h"
-#import "UIViewController+MMDrawerController.h"
 #import "BaseHeader.h"
+#import "LoginViewController.h"
+#import "DetailViewController.h"
+#import "ServerIPViewController.h"
+#import "RecordTableViewController.h"
 #import "PersonalInfomationViewController.h"
+#import "UIViewController+MMDrawerController.h"
+#import "AirWaveNetworkSettingViewController.h"
 
-static NSString * AIRWAVETYPE = @"7681";
-static NSString * BLOODDEVTYPE = @"8888";
 
+NSString * const AIRWAVETYPE = @"7681";
+NSString * const BLOODDEVTYPE = @"8888";
 
-static NSString * SERVERIP_KEY = @"ServerIp";
-static NSString * SERVER_IP = @"http://218.17.22.131:3088";
+NSString * const SERVERIP_KEY = @"ServerIp";
+NSString * const SERVER_IP = @"http://218.17.22.131:3088";
 @interface LeftDrawerViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
 @property(assign , nonatomic) int homePageIndex;
 @end
 
@@ -89,7 +89,7 @@ static NSString * SERVER_IP = @"http://218.17.22.131:3088";
         textLabel.text=@"我的服务器IP地址";
     }else if (indexPath.row==3){
         imageView.image=[UIImage imageNamed:@"favorite"];
-        textLabel.text=@"我的收藏";
+        textLabel.text=@"空气波网络配置";
     }else if (indexPath.row==4){
         imageView.image=[UIImage imageNamed:@"pic"];
         textLabel.text=@"我的相册";
@@ -128,6 +128,10 @@ static NSString * SERVER_IP = @"http://218.17.22.131:3088";
     {
         ServerIPViewController *serverVC = (ServerIPViewController *)[mainStoryborad instantiateViewControllerWithIdentifier:@"ServerIPViewController"];
         showVC = serverVC;
+    }else if(indexPath.row == 3)
+    {
+        AirWaveNetworkSettingViewController *networkSettingVC = (AirWaveNetworkSettingViewController *)[mainStoryborad instantiateViewControllerWithIdentifier:@"AirWaveNetworkSettingViewController"];
+        showVC = networkSettingVC;
     }else if (indexPath.row == 6)
     {
         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"您确定要退出登录吗？"
