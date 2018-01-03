@@ -88,7 +88,7 @@ NSString * const SERVER_IP = @"http://218.17.22.131:3088";
         imageView.image=[UIImage imageNamed:@"ip"];
         textLabel.text=@"我的服务器IP地址";
     }else if (indexPath.row==3){
-        imageView.image=[UIImage imageNamed:@"favorite"];
+        imageView.image=[UIImage imageNamed:@"internet"];
         textLabel.text=@"空气波网络配置";
     }else if (indexPath.row==4){
         imageView.image=[UIImage imageNamed:@"pic"];

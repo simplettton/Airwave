@@ -11,6 +11,11 @@
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Zapfino.ttf">
+            <string>Zapfino</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--主页-->
         <scene sceneID="3zy-88-2ka">
@@ -3790,13 +3795,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="epO-Gn-2QR">
                                 <rect key="frame" x="0.0" y="64" width="375" height="269"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iS2-Is-Vtm">
+                                    <label opaque="NO" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iS2-Is-Vtm">
                                         <rect key="frame" x="138" y="97.5" width="99" height="75"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="75" id="Td4-0M-Dfh"/>
                                             <constraint firstAttribute="width" constant="99" id="gnn-2D-b4a"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                        <fontDescription key="fontDescription" name="Zapfino" family="Zapfino" pointSize="17"/>
                                         <color key="textColor" red="0.52312237019999996" green="0.6690714955" blue="0.89393049479999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -4247,9 +4252,8 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bear" translatesAutoresizingMaskIntoConstraints="NO" id="Aqg-Hw-stC">
+                                                <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="header" translatesAutoresizingMaskIntoConstraints="NO" id="Aqg-Hw-stC">
                                                     <rect key="frame" x="278" y="16" width="56" height="56"/>
-                                                    <color key="backgroundColor" red="0.52156862749999999" green="0.6705882353" blue="0.89411764709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="56" id="Kr0-b1-CNU"/>
                                                         <constraint firstAttribute="width" constant="56" id="lmg-GT-PvO"/>
@@ -4401,6 +4405,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="个人信息" id="lRW-kx-68S"/>
                     <connections>
+                        <outlet property="headImageView" destination="Aqg-Hw-stC" id="ccH-cd-n10"/>
                         <outletCollection property="cells" destination="wmH-P0-eI6" id="1ph-Ij-74C"/>
                         <outletCollection property="cells" destination="OXC-u3-MiW" id="Bdl-MG-u0G"/>
                         <outletCollection property="cells" destination="qJh-CD-H5T" id="Wur-nL-vU1"/>
@@ -5158,6 +5163,7 @@
         <image name="body626d91" width="2362" height="3365"/>
         <image name="date-3" width="85" height="85"/>
         <image name="geren" width="200" height="200"/>
+        <image name="header" width="40" height="40"/>
         <image name="home" width="85" height="85"/>
         <image name="leftdown1_grey" width="151" height="193"/>
         <image name="leftdown2_grey" width="144" height="147"/>

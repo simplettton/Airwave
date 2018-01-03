@@ -9,11 +9,12 @@
 #import "PersonalInfomationViewController.h"
 #import "EditTableViewController.h"
 #import "BaseHeader.h"
-@interface PersonalInfomationViewController ()
+@interface PersonalInfomationViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
     NSArray *keys;
 }
 @property (strong,nonatomic) IBOutletCollection(UITableViewCell)NSArray *cells;
+@property (weak, nonatomic) IBOutlet UIImageView *headImageView;
 
 @end
 
@@ -29,6 +30,8 @@
     self.tableView.contentInset = UIEdgeInsetsMake(20 - 35, 0, 0, 0);
     keys = [NSArray arrayWithObjects:@"userIcon",@"name",@"sex",@"age",@"phoneNumber",@"address", nil];
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    
+    [self setRoundHeadPortrait:self.headImageView];
     for (int i = 0;i<[keys count];i++)
     {
         UITableViewCell *cell = [self.cells objectAtIndex:i];
@@ -91,8 +94,43 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section == 0 && indexPath.row == 2)
-    {
+    if (indexPath.section == 0 && indexPath.row == 0){
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        
+        
+        //按钮：拍照，类型：UIAlertActionStyleDefault
+        [alert addAction:[UIAlertAction actionWithTitle:@"拍照"
+                                                  style:UIAlertActionStyleDefault
+                                                handler:^(UIAlertAction * _Nonnull action){
+            /**
+             其实和从相册选择一样，只是获取方式不同，前面是通过相册，而现在，我们要通过相机的方式
+             */
+            UIImagePickerController *PickerImage = [[UIImagePickerController alloc]init];
+            //获取方式:通过相机
+            PickerImage.sourceType = UIImagePickerControllerSourceTypeCamera;
+            PickerImage.allowsEditing = YES;
+            PickerImage.delegate = self;
+            [self presentViewController:PickerImage animated:YES completion:nil];
+        }]];
+        
+        //按钮：从相册选择，类型：UIAlertActionStyleDefault
+        [alert addAction:[UIAlertAction actionWithTitle:@"从相册选择"
+                                                  style:UIAlertActionStyleDefault
+                                                handler:^(UIAlertAction * _Nonnull action) {
+            UIImagePickerController *pickerImage = [[UIImagePickerController alloc]init];
+            pickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            pickerImage.allowsEditing = YES;
+            pickerImage.delegate = self;
+            [self presentViewController:pickerImage animated:YES completion:nil];
+        }]];
+
+        
+        //按钮：取消，类型：UIAlertActionStyleCancel
+        [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    }
+    else if (indexPath.section == 0 && indexPath.row == 2){
         NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
         UITableViewCell *cell = [self.cells objectAtIndex:2];
         UILabel * label = (UILabel *)[cell viewWithTag:2];
@@ -115,11 +153,19 @@
         }]];
         [self presentViewController:alertController animated:YES completion:nil];
     }
-    else if (( indexPath.section == 0 && indexPath.row != 0)||(indexPath.section == 1))
-    {
+    else if (( indexPath.section == 0 && indexPath.row != 0)||(indexPath.section == 1)){
          [self performSegueWithIdentifier:@"EditInfomation" sender:indexPath];
     }
-
+}
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    UIImage *newPhoto = [info objectForKey:@"UIImagePickerControllerEditedImage"];
+    self.headImageView.image = newPhoto;
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    //保存新头像
+    NSData *imageData = UIImagePNGRepresentation(newPhoto);
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:imageData forKey:@"userIcon"];
 }
 #pragma mark - prepareForSegue
 
@@ -156,5 +202,14 @@
             }
         };
     }
+}
+#pragma mark - private method
+-(void)setRoundHeadPortrait:(UIImageView *)imageView{
+    //  把头像设置成圆形
+    imageView.layer.cornerRadius=imageView.frame.size.width/2;//裁成圆角
+    imageView.layer.masksToBounds=YES;//隐藏裁剪掉的部分
+    //  给头像加一个圆形边框
+    imageView.layer.borderWidth = 1.5f;//宽度
+    imageView.layer.borderColor = [UIColor whiteColor].CGColor;//颜色
 }
 @end

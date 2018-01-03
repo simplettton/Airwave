@@ -1444,6 +1444,7 @@ NSString *const PORT = @"8080";
 }
 -(NSData*) dataWithValue:(NSInteger)value
 {
+    //大端模式
     Byte src[2]={0,0};
     src[0] =  (Byte) ((value>>8) & 0xFF);
     src[1] =  (Byte) (value & 0xFF);

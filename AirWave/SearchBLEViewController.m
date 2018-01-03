@@ -227,7 +227,8 @@
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
     return 60.0f;
 }
 
@@ -236,14 +237,12 @@
     [baby cancelScan];
     [self.activityIndicatorView stopAnimating];
 }
-
 - (IBAction)startScan:(id)sender
 {
     [self.activityIndicatorView startAnimating];
     baby.scanForPeripherals().begin();
 }
 #pragma mark - swipe
-
 - (void)setupSwipe
 {
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight)];

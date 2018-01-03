@@ -7,9 +7,6 @@
 //
 
 #import "Pack.h"
-
-typedef void(^NewByteBlock)(NSInteger,NSInteger);
-
 @implementation Pack
 
 /// <summary>
@@ -21,8 +18,6 @@ typedef void(^NewByteBlock)(NSInteger,NSInteger);
 /// <param name="data_enabled">存在数据byte[]</param>
 /// <param name="data">数据byte[]高位在前</param>
 /// <returns></returns>
-
-//
 
 +(NSData *)packetWithCmdid:(Byte)cmdid addressEnabled:(BOOL)addrEnabled addr:(NSData *)paddr dataEnabled:(BOOL)dataEnabled data:(NSData *)pdata
 {

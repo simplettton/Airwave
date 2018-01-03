@@ -43,15 +43,16 @@
     //加载头像
     self.headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(50 * KScreenUnit, 130 * KScreenUnit, 100 * KScreenUnit, 100 * KScreenUnit)];
 //    headerImageView.layer.cornerRadius = 50 * KScreenUnit;
-    self.headerImageView.clipsToBounds  = YES;
     
+    self.headerImageView.clipsToBounds  = YES;
+    [self setRoundHeadPortrait:self.headerImageView];
     if ([userDefault objectForKey:@"userIcon"])
     {
         self.headerImageView.image = [UIImage imageWithData:[userDefault objectForKey:@"userIcon"]];
     }
     else
     {
-         self.headerImageView.image = [UIImage imageNamed:@"bear"];
+         self.headerImageView.image = [UIImage imageNamed:@"header"];
     }
 
     [self addSubview:self.headerImageView];
@@ -104,6 +105,14 @@
     [self.personalSignatureButton setBackgroundImage:[UIImage imageWithColor:UIColorFromRGBAndAlpha(0xffffff, 0.3)] forState:UIControlStateHighlighted];
     [self addSubview:self.personalSignatureButton];
 
+}
+-(void)setRoundHeadPortrait:(UIImageView *)imageView{
+    //  把头像设置成圆形
+    imageView.layer.cornerRadius=imageView.frame.size.width/2;//裁成圆角
+    imageView.layer.masksToBounds=YES;//隐藏裁剪掉的部分
+    //  给头像加一个圆形边框
+    imageView.layer.borderWidth = 1.5f;//宽度
+    imageView.layer.borderColor = [UIColor whiteColor].CGColor;//颜色
 }
 
 @end

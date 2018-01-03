@@ -14,28 +14,28 @@ PODS:
   - MMDrawerController/Subclass (0.6.0):
     - MMDrawerController/Core
   - SVProgressHUD (2.2.2)
-  - UMengUShare/Core (6.4.7):
+  - UMengUShare/Core (6.4.8):
     - UMengUShare/Network
-  - UMengUShare/Network (6.4.7)
-  - UMengUShare/Social/QQ (6.4.7):
+  - UMengUShare/Network (6.4.8)
+  - UMengUShare/Social/QQ (6.4.8):
     - UMengUShare/Core
     - UMengUShare/Social/ReducedQQ
-  - UMengUShare/Social/ReducedQQ (6.4.7):
+  - UMengUShare/Social/ReducedQQ (6.4.8):
     - UMengUShare/Core
-  - UMengUShare/Social/ReducedSina (6.4.7):
+  - UMengUShare/Social/ReducedSina (6.4.8):
     - UMengUShare/Core
-  - UMengUShare/Social/ReducedWeChat (6.4.7):
+  - UMengUShare/Social/ReducedWeChat (6.4.8):
     - UMengUShare/Core
-  - UMengUShare/Social/Sina (6.4.7):
+  - UMengUShare/Social/Sina (6.4.8):
     - UMengUShare/Core
     - UMengUShare/Social/ReducedSina
-  - UMengUShare/Social/WeChat (6.4.7):
+  - UMengUShare/Social/WeChat (6.4.8):
     - UMengUShare/Core
     - UMengUShare/Social/ReducedWeChat
 
 DEPENDENCIES:
   - BabyBluetooth (~> 0.7.0)
-  - CocoaAsyncSocket (~> 7.6.1)
+  - CocoaAsyncSocket
   - MMDrawerController
   - SVProgressHUD
   - UMengUShare/Social/QQ
@@ -47,8 +47,8 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 3541e024f48c54b251638ef72d51dd42808de932
   MMDrawerController: e3a54a5570388463ad3b36975251575b50c4e1a0
   SVProgressHUD: 59b2d3dabacbd051576d21d32293ca7228dc18b0
-  UMengUShare: 5055d0e01c844379e173bdca0840fc9fa9297d88
+  UMengUShare: 7a0ab762ccd445ccfcf11bde8e7f81b29b9f5e1c
 
-PODFILE CHECKSUM: 59519826a7c0ed9b0f922bab03d1aa0667a4e021
+PODFILE CHECKSUM: 7f5c753bbcb0e8489a0f8f15ebbc3c164fa038ba
 
 COCOAPODS: 1.3.1

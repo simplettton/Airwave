@@ -94,6 +94,7 @@ static NSString *BLOODDEVTYPE = @"8888";
             [userDefault synchronize];
         }
     }
+
 }
 //左上按钮
 - (IBAction)leftBarButtonClicked:(id)sender
@@ -137,8 +138,6 @@ static NSString *BLOODDEVTYPE = @"8888";
     
     [self performSegueWithIdentifier:@"ShowAirWave" sender:nil];
 }
-
-
 - (IBAction)addNewDevice:(id)sender
 {
     self.shadowView .alpha = 0.5;

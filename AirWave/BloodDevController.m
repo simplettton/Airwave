@@ -10,7 +10,7 @@
 #import "TreatRecord.h"
 #import "Pack.h"
 #import "Unpack.h"
-static NSString *TYPE = @"8888";
+static const NSString *TYPE = @"8888";
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 #define SERVICE_UUID        @"1b7e8251-2877-41c3-b46e-cf057c562023"
 #define TX_CHARACTERISTIC_UUID @"5e9bf2a8-f93f-4481-a67e-3b2f4a07891a"
