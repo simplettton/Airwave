@@ -112,7 +112,7 @@
     imageView.layer.masksToBounds=YES;//隐藏裁剪掉的部分
     //  给头像加一个圆形边框
     imageView.layer.borderWidth = 1.5f;//宽度
-    imageView.layer.borderColor = [UIColor whiteColor].CGColor;//颜色
+    imageView.layer.borderColor = UIColorFromHex(0X6FE3BE).CGColor;//颜色
 }
 
 @end

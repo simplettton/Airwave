@@ -94,13 +94,6 @@ NSString *const PORT = @"8080";
     
     self.navigationItem.backBarButtonItem = item;
 
-    
-//    if (!self.connected )
-//    {
-//        self.clientSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-//        NSError *error = nil;
-//        self.connected = [self.clientSocket connectToHost:HOST onPort:[PORT integerValue] viaInterface:nil withTimeout:-1 error:&error];
-//    }
 }
 -(void)viewDidAppear:(BOOL)animated
 {

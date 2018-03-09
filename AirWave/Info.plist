@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIAppFonts</key>
-	<array/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>zh_CN</string>
 	<key>CFBundleExecutable</key>
@@ -28,13 +26,12 @@
 				<string>wb3302431209</string>
 			</array>
 		</dict>
+		<dict/>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>wx4b2322692fe85433</string>
-			</array>
+			<key>CFBundleURLName</key>
+			<string>w</string>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
@@ -100,6 +97,8 @@
 	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>需要您的同意，才能访问相册</string>
+	<key>UIAppFonts</key>
+	<array/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

@@ -156,7 +156,7 @@ typedef NS_ENUM(NSUInteger,State)
 
                 if (![characteristics isNotifying])
                 {
-                     [weakSelf setNotifiy:characteristics];
+                     [weakSelf setNotify:characteristics];
                 }
                 //询问设备识别码
 //                NSData *matchCommand = [Pack packetWithCmdid:0xFA addressEnabled:NO addr:nil dataEnabled:NO data:nil];
@@ -194,7 +194,7 @@ typedef NS_ENUM(NSUInteger,State)
                                type:CBCharacteristicWriteWithResponse];
 }
 #pragma mark - receiveData
--(void)setNotifiy:(CBCharacteristic *)characteristic
+-(void)setNotify:(CBCharacteristic *)characteristic
 {
     __weak typeof(self)weakSelf = self;
     [weakSelf.currPeripheral setNotifyValue:YES forCharacteristic:characteristic];
@@ -217,7 +217,7 @@ typedef NS_ENUM(NSUInteger,State)
     }
     Byte cmdID = bytes[0];
 
-    // 设备识别
+//    设备识别
 //    if (cmdID == 0xFA)
 //    {
 //        if ((bytes[1]==0x1f) && (bytes[2]==0xdf))

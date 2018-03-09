@@ -2071,7 +2071,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5E2-Gs-8Xf">
-                                <rect key="frame" x="0.0" y="72" width="375" height="323"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="323"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person" translatesAutoresizingMaskIntoConstraints="NO" id="avw-Bc-szo">
                                         <rect key="frame" x="20" y="13" width="26" height="26"/>
@@ -2353,7 +2353,7 @@
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" placeholderIntrinsicWidth="343" placeholderIntrinsicHeight="498" translatesAutoresizingMaskIntoConstraints="NO" id="gt0-VD-SyO">
-                                <rect key="frame" x="20" y="403" width="335" height="256"/>
+                                <rect key="frame" x="20" y="359" width="335" height="300"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="999" constant="263" id="sZY-5Y-4X4"/>
                                 </constraints>
@@ -2410,7 +2410,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WBC-8p-fcg" userLabel="recordPhotoView">
-                                <rect key="frame" x="10" y="310" width="357" height="176"/>
+                                <rect key="frame" x="10" y="266" width="357" height="176"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W1j-Vk-WIP" userLabel="resultImageView">
                                         <rect key="frame" x="20" y="30" width="317" height="146"/>
@@ -2446,13 +2446,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="治疗报告" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vx9-b5-l2L">
-                                <rect key="frame" x="152" y="72" width="70" height="21"/>
+                                <rect key="frame" x="152" y="28" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="治疗用时" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gFu-ic-vrr" customClass="ReportLabel">
-                                <rect key="frame" x="10" y="243" width="70" height="30"/>
+                                <rect key="frame" x="10" y="199" width="70" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="17T-b6-wdU"/>
                                     <constraint firstAttribute="height" constant="30" id="z0l-Sa-0uY"/>
@@ -2462,7 +2462,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="00时15分20秒" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SS3-N1-aaM" customClass="ReportLabel">
-                                <rect key="frame" x="79" y="243" width="116" height="30"/>
+                                <rect key="frame" x="79" y="199" width="116" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="116" id="6f9-DC-MO7"/>
                                     <constraint firstAttribute="height" constant="30" id="JHZ-Jp-mZR"/>
@@ -2472,7 +2472,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="2017年11月6日 16:27" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dxp-5D-MMY" customClass="ReportLabel">
-                                <rect key="frame" x="79" y="272" width="288" height="30"/>
+                                <rect key="frame" x="79" y="228" width="288" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="288" id="agw-VJ-lV7"/>
                                     <constraint firstAttribute="height" constant="30" id="bEO-YA-fkg"/>
@@ -2482,7 +2482,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="治疗模式" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kzi-Jc-cEK" customClass="ReportLabel">
-                                <rect key="frame" x="194" y="243" width="70" height="30"/>
+                                <rect key="frame" x="194" y="199" width="70" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="2MZ-RQ-wLA"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="RN6-ub-oFk"/>
@@ -2492,7 +2492,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0db-aF-9xh" customClass="ReportLabel">
-                                <rect key="frame" x="263" y="243" width="104" height="30"/>
+                                <rect key="frame" x="263" y="199" width="104" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Mtq-RA-6yF"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="104" id="u5u-Pm-C1r"/>
@@ -2502,7 +2502,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="治疗时间" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XTl-qV-cJn" customClass="ReportLabel">
-                                <rect key="frame" x="10" y="272" width="70" height="30"/>
+                                <rect key="frame" x="10" y="228" width="70" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="0TV-xm-FGh"/>
                                     <constraint firstAttribute="height" constant="30" id="vYQ-uf-udr"/>
@@ -2512,7 +2512,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="血瘘治疗仪治疗数据" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="otm-zh-u7J" customClass="ReportLabel">
-                                <rect key="frame" x="10" y="214" width="357" height="30"/>
+                                <rect key="frame" x="10" y="170" width="357" height="30"/>
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="cum-Ja-OcA"/>
@@ -2522,7 +2522,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="医生建议" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wEI-VS-2bY" customClass="ReportLabel">
-                                <rect key="frame" x="10" y="494" width="357" height="30"/>
+                                <rect key="frame" x="10" y="450" width="357" height="30"/>
                                 <color key="backgroundColor" red="0.8379167914390564" green="0.83855634927749634" blue="0.83801579475402832" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="P3G-Nz-X8T"/>
@@ -2533,7 +2533,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="4Mp-MS-tPS">
-                                <rect key="frame" x="10" y="523" width="357" height="62"/>
+                                <rect key="frame" x="10" y="479" width="357" height="62"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="62" id="BOq-GI-tDa"/>
@@ -2546,14 +2546,14 @@
                                 </connections>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1XC-IS-Xta">
-                                <rect key="frame" x="20" y="523" width="123" height="30"/>
+                                <rect key="frame" x="20" y="479" width="123" height="30"/>
                                 <state key="normal" title="点击此处输入建议"/>
                                 <connections>
                                     <action selector="enterSuggest:" destination="AC3-OJ-VLF" eventType="touchUpInside" id="NAc-YK-xhs"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bear" translatesAutoresizingMaskIntoConstraints="NO" id="14c-rI-pgR">
-                                <rect key="frame" x="10" y="101" width="102" height="105"/>
+                                <rect key="frame" x="10" y="57" width="102" height="105"/>
                                 <color key="backgroundColor" red="0.43529411759999997" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="102" id="bI4-VI-Etu"/>
@@ -2561,7 +2561,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="姓名" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vUJ-z4-FLL" customClass="ReportLabel">
-                                <rect key="frame" x="111" y="101" width="40" height="30"/>
+                                <rect key="frame" x="111" y="57" width="40" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="NG3-jx-JQi"/>
                                 </constraints>
@@ -2570,7 +2570,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="性别" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="miX-NB-Xwg" customClass="ReportLabel">
-                                <rect key="frame" x="212" y="101" width="40" height="30"/>
+                                <rect key="frame" x="212" y="57" width="40" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="bWe-u1-8Fd"/>
                                 </constraints>
@@ -2579,7 +2579,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="年龄" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Eh-AZ-7kB" customClass="ReportLabel">
-                                <rect key="frame" x="290" y="101" width="40" height="30"/>
+                                <rect key="frame" x="290" y="57" width="40" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="LLI-BV-Jsu"/>
                                 </constraints>
@@ -2588,7 +2588,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="联系方式" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dfW-C8-zSf" customClass="ReportLabel">
-                                <rect key="frame" x="111" y="130" width="70" height="30"/>
+                                <rect key="frame" x="111" y="86" width="70" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="ZAh-ls-tDC"/>
                                     <constraint firstAttribute="height" constant="30" id="w1J-VD-yFC"/>
@@ -2598,7 +2598,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="联系地址" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HsP-YG-y6u" customClass="ReportLabel">
-                                <rect key="frame" x="111" y="159" width="70" height="47"/>
+                                <rect key="frame" x="111" y="115" width="70" height="47"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="47" id="G7t-0V-8c8"/>
                                 </constraints>
@@ -2607,7 +2607,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="jasper" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2eg-Bf-owT" customClass="ReportLabel">
-                                <rect key="frame" x="150" y="101" width="63" height="30"/>
+                                <rect key="frame" x="150" y="57" width="63" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="1XP-Qd-e1K"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="63" id="zbJ-aX-S5I"/>
@@ -2617,7 +2617,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18819467352" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M2I-k2-JQO" customClass="ReportLabel">
-                                <rect key="frame" x="180" y="130" width="187" height="30"/>
+                                <rect key="frame" x="180" y="86" width="187" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Jx3-ng-GaL"/>
                                 </constraints>
@@ -2626,7 +2626,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="男" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EeP-ca-KcB" customClass="ReportLabel">
-                                <rect key="frame" x="251" y="101" width="40" height="30"/>
+                                <rect key="frame" x="251" y="57" width="40" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="xQU-6A-dK2"/>
                                 </constraints>
@@ -2635,7 +2635,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="awi-oR-orV" customClass="ReportLabel">
-                                <rect key="frame" x="329" y="101" width="38" height="30"/>
+                                <rect key="frame" x="329" y="57" width="38" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="eYt-QH-dAs"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="38" id="x8Z-nM-3aB"/>
@@ -2645,7 +2645,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="广东省深圳市南山区龙珠大道龙辉花园32栋2单元603" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="3cT-QL-1RQ">
-                                <rect key="frame" x="180" y="159" width="187" height="47"/>
+                                <rect key="frame" x="180" y="115" width="187" height="47"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="187" id="782-H5-XoM"/>
@@ -2656,7 +2656,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="报告日期: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bvl-7X-kj9">
-                                <rect key="frame" x="211" y="605" width="62" height="21"/>
+                                <rect key="frame" x="211" y="561" width="62" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="5Fj-og-5aZ"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="62" id="yTV-9K-Aez"/>
@@ -2666,7 +2666,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="医生签名:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tNj-QV-2MS">
-                                <rect key="frame" x="10" y="600" width="70" height="30"/>
+                                <rect key="frame" x="10" y="556" width="70" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="OXw-jd-pg0"/>
                                     <constraint firstAttribute="height" constant="30" id="gPq-QW-VtJ"/>
@@ -2676,7 +2676,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017/11/14" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ubG-jl-lFf">
-                                <rect key="frame" x="272" y="605" width="95" height="21"/>
+                                <rect key="frame" x="272" y="561" width="95" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="VEw-xC-53v"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="95" id="qOQ-l2-2ju"/>
@@ -2686,7 +2686,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mfs-8l-cu5">
-                                <rect key="frame" x="94" y="600" width="62" height="30"/>
+                                <rect key="frame" x="94" y="556" width="62" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="48T-EZ-VVS"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="62" id="Kg6-Kb-0ca"/>
@@ -2697,7 +2697,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="P55-eW-Luu" userLabel="signImageView">
-                                <rect key="frame" x="82" y="593" width="86" height="60"/>
+                                <rect key="frame" x="82" y="549" width="86" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="Y9T-nk-Db1"/>
                                     <constraint firstAttribute="width" constant="86" id="ZdJ-mD-tWo"/>
@@ -3602,19 +3602,19 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="666" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="标准治疗" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a0P-7f-Pv9">
-                                                    <rect key="frame" x="155.5" y="29" width="70" height="21"/>
+                                                    <rect key="frame" x="163.5" y="29" width="70" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.52156862749999999" green="0.6705882353" blue="0.89411764709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="666" contentMode="left" verticalHuggingPriority="251" text="驴队长" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2UT-me-otW">
-                                                    <rect key="frame" x="85.5" y="28" width="52" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="666" contentMode="left" verticalHuggingPriority="251" text="ktf队长 " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2UT-me-otW">
+                                                    <rect key="frame" x="85.5" y="28" width="60" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.52156862749999999" green="0.6705882353" blue="0.89411764709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="55" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 2017/10/19 14：20" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XED-aE-F3a">
-                                                    <rect key="frame" x="87" y="58" width="166" height="19"/>
+                                                    <rect key="frame" x="85.5" y="58" width="166" height="19"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="166" id="baS-m3-2fN"/>
                                                     </constraints>
@@ -3625,8 +3625,8 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="a0P-7f-Pv9" secondAttribute="trailing" constant="39" id="1Fr-KB-pHC"/>
-                                                <constraint firstAttribute="trailing" secondItem="XED-aE-F3a" secondAttribute="trailing" constant="122" id="3gY-mu-Y93"/>
                                                 <constraint firstItem="2UT-me-otW" firstAttribute="top" secondItem="GmR-Ff-6mB" secondAttribute="topMargin" constant="17" id="5tR-nS-BvN"/>
+                                                <constraint firstItem="XED-aE-F3a" firstAttribute="leading" secondItem="2UT-me-otW" secondAttribute="leading" id="94v-Tc-anV"/>
                                                 <constraint firstItem="R06-jA-K6e" firstAttribute="leading" secondItem="GmR-Ff-6mB" secondAttribute="leadingMargin" constant="11" id="Iqk-lN-Tf9"/>
                                                 <constraint firstItem="XED-aE-F3a" firstAttribute="top" secondItem="a0P-7f-Pv9" secondAttribute="bottom" constant="8" symbolic="YES" id="Jyb-10-0Mg"/>
                                                 <constraint firstItem="R06-jA-K6e" firstAttribute="top" secondItem="GmR-Ff-6mB" secondAttribute="topMargin" constant="19" id="bvk-1L-QCY"/>
@@ -3778,7 +3778,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xAI-HE-4Je" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3032" y="40"/>
+            <point key="canvasLocation" x="2983" y="15"/>
         </scene>
         <!--Blood Dev Controller-->
         <scene sceneID="dC9-v3-Kal">
@@ -4770,7 +4770,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bear" translatesAutoresizingMaskIntoConstraints="NO" id="pWn-ld-t21">
-                                <rect key="frame" x="9" y="100.5" width="102" height="105"/>
+                                <rect key="frame" x="9" y="56.5" width="102" height="105"/>
                                 <color key="backgroundColor" red="0.43529411759999997" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="102" id="BRb-j3-xLd"/>
@@ -4778,13 +4778,13 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="报告日期: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="euE-ez-Vog">
-                                <rect key="frame" x="220" y="604.5" width="70" height="30"/>
+                                <rect key="frame" x="220" y="560.5" width="70" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="姓名" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LNf-mg-2s8" customClass="ReportLabel">
-                                <rect key="frame" x="110" y="100.5" width="40" height="30"/>
+                                <rect key="frame" x="110" y="56.5" width="40" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Rba-Il-hTv"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="zXQ-Tl-Ntz"/>
@@ -4794,19 +4794,19 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="性别" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n1h-2D-0XG" customClass="ReportLabel">
-                                <rect key="frame" x="211" y="100.5" width="40" height="30"/>
+                                <rect key="frame" x="211" y="56.5" width="40" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="年龄" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zgE-JJ-VXz" customClass="ReportLabel">
-                                <rect key="frame" x="289" y="100.5" width="40" height="30"/>
+                                <rect key="frame" x="289" y="56.5" width="40" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="联系方式" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f7D-4M-WNg" customClass="ReportLabel">
-                                <rect key="frame" x="110" y="129.5" width="70" height="30"/>
+                                <rect key="frame" x="110" y="85.5" width="70" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="KXd-pn-E9p"/>
                                     <constraint firstAttribute="height" constant="30" id="jDd-Kg-rA9"/>
@@ -4816,7 +4816,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="联系地址" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iYQ-Nu-l9i" customClass="ReportLabel">
-                                <rect key="frame" x="110" y="158.5" width="70" height="47"/>
+                                <rect key="frame" x="110" y="114.5" width="70" height="47"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="47" id="0KZ-CT-MAt"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="siP-pa-Vby"/>
@@ -4826,19 +4826,19 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="jasper" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dl4-6i-WSH" customClass="ReportLabel">
-                                <rect key="frame" x="149" y="100.5" width="63" height="30"/>
+                                <rect key="frame" x="149" y="56.5" width="63" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="18819467352" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ETc-oC-H0s" customClass="ReportLabel">
-                                <rect key="frame" x="179" y="129.5" width="187" height="30"/>
+                                <rect key="frame" x="179" y="85.5" width="187" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="男" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Yy-Mb-4Ip" customClass="ReportLabel">
-                                <rect key="frame" x="250" y="100.5" width="40" height="30"/>
+                                <rect key="frame" x="250" y="56.5" width="40" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="HpA-Wu-pTv"/>
                                     <constraint firstAttribute="height" constant="30" id="W44-xo-sE1"/>
@@ -4848,7 +4848,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q2V-xj-J1R" customClass="ReportLabel">
-                                <rect key="frame" x="328" y="100.5" width="38" height="30"/>
+                                <rect key="frame" x="328" y="56.5" width="38" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="38" id="o7O-ZX-gaN"/>
                                 </constraints>
@@ -4857,7 +4857,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="医生签名:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kd5-3a-Tb6">
-                                <rect key="frame" x="9" y="604.5" width="70" height="30"/>
+                                <rect key="frame" x="9" y="560.5" width="70" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="bbQ-Gc-V7H"/>
                                     <constraint firstAttribute="height" constant="30" id="eb8-sR-nnv"/>
@@ -4867,26 +4867,26 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="广东省深圳市南山区龙珠大道龙辉花园32栋2单元603" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Ccx-Bp-ytJ">
-                                <rect key="frame" x="179" y="158.5" width="187" height="47"/>
+                                <rect key="frame" x="179" y="114.5" width="187" height="47"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="2017/11/14" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mpA-XB-80c">
-                                <rect key="frame" x="289" y="604.5" width="77" height="30"/>
+                                <rect key="frame" x="289" y="560.5" width="77" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="治疗报告" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3VB-7h-K0W">
-                                <rect key="frame" x="152" y="72" width="70" height="20.5"/>
+                                <rect key="frame" x="152" y="28" width="70" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="300" verticalHuggingPriority="251" text="治疗用时" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f7z-vO-wtj" customClass="ReportLabel">
-                                <rect key="frame" x="9" y="243.5" width="70" height="31"/>
+                                <rect key="frame" x="9" y="199.5" width="70" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="7S6-37-dRv"/>
                                     <constraint firstAttribute="height" constant="31" id="Jee-vd-P1o"/>
@@ -4896,19 +4896,19 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="00时15分20秒" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="20T-ct-kBb" customClass="ReportLabel">
-                                <rect key="frame" x="78" y="243.5" width="115" height="31"/>
+                                <rect key="frame" x="78" y="199.5" width="115" height="31"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017年11月6日 16:27" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="buP-wD-mby" customClass="ReportLabel">
-                                <rect key="frame" x="78" y="273.5" width="288" height="30"/>
+                                <rect key="frame" x="78" y="229.5" width="288" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="300" verticalHuggingPriority="251" text="治疗模式" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U4C-Td-q6e" customClass="ReportLabel">
-                                <rect key="frame" x="192" y="243.5" width="70" height="31"/>
+                                <rect key="frame" x="192" y="199.5" width="70" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="2mh-HY-JbY"/>
                                 </constraints>
@@ -4917,7 +4917,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UCq-OA-6Qs" customClass="ReportLabel">
-                                <rect key="frame" x="261" y="243.5" width="105" height="31"/>
+                                <rect key="frame" x="261" y="199.5" width="105" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="105" id="aND-O6-fqc"/>
                                 </constraints>
@@ -4926,7 +4926,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="300" verticalHuggingPriority="251" text="治疗时间" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xcE-Cl-tNW" customClass="ReportLabel">
-                                <rect key="frame" x="9" y="273.5" width="70" height="30"/>
+                                <rect key="frame" x="9" y="229.5" width="70" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="DFR-Rj-Dda"/>
                                 </constraints>
@@ -4935,7 +4935,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="300" text="血瘘治疗仪治疗数据" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3UG-NP-Eab" customClass="ReportLabel">
-                                <rect key="frame" x="9" y="213.5" width="357" height="31"/>
+                                <rect key="frame" x="9" y="169.5" width="357" height="31"/>
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="tTP-xO-Imh"/>
@@ -4945,7 +4945,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="300" text="医生建议" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yf4-iB-xwY" customClass="ReportLabel">
-                                <rect key="frame" x="9" y="502.5" width="357" height="30"/>
+                                <rect key="frame" x="9" y="458.5" width="357" height="30"/>
                                 <color key="backgroundColor" red="0.83791679139999997" green="0.8385563493" blue="0.83801579479999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="mxH-xx-OPZ"/>
@@ -4955,7 +4955,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="np6-mb-FIX">
-                                <rect key="frame" x="9" y="531.5" width="357" height="62"/>
+                                <rect key="frame" x="9" y="487.5" width="357" height="62"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="62" id="n5A-an-D5b"/>
@@ -4968,14 +4968,14 @@
                                 </connections>
                             </textView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dx2-H4-pHW" userLabel="signImageView">
-                                <rect key="frame" x="87" y="601.5" width="75" height="55"/>
+                                <rect key="frame" x="87" y="557.5" width="75" height="55"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="gjx-oI-hI6"/>
                                     <constraint firstAttribute="width" constant="75" id="wfu-na-Jho"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" verticalHuggingPriority="200" translatesAutoresizingMaskIntoConstraints="NO" id="0Wv-fl-r0r" userLabel="recordPhotoView">
-                                <rect key="frame" x="9" y="311.5" width="357" height="183"/>
+                                <rect key="frame" x="9" y="267.5" width="357" height="183"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="I11-0d-IPY" userLabel="resultImageView">
                                         <rect key="frame" x="60" y="30" width="237" height="153"/>
@@ -5208,9 +5208,9 @@
     <inferredMetricsTieBreakers>
         <segue reference="7E7-TE-zOR"/>
         <segue reference="8ar-qs-djD"/>
-        <segue reference="xsr-RJ-1Y9"/>
-        <segue reference="kru-6y-YVf"/>
-        <segue reference="S8o-Gi-Maw"/>
+        <segue reference="YZz-rL-WdO"/>
+        <segue reference="Q7E-B9-jFA"/>
+        <segue reference="bco-oh-nlz"/>
         <segue reference="bnI-Yd-YTo"/>
         <segue reference="Lnw-ff-L4K"/>
     </inferredMetricsTieBreakers>

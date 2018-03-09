@@ -166,6 +166,10 @@
             NSLog(@"Wechat accessToken: %@", resp.accessToken);
             NSLog(@"Wechat refreshToken: %@", resp.refreshToken);
             NSLog(@"Wechat expiration: %@", resp.expiration);
+            NSDictionary *originaldic = resp.originalResponse;
+            NSString *country = originaldic[@"country"];
+            NSString *province = originaldic[@"province"];
+            NSString *city = originaldic[@"city"];
             
             // 用户信息
             NSLog(@"Wechat name: %@", resp.name);
@@ -173,7 +177,7 @@
             NSLog(@"Wechat gender: %@", resp.unionGender);
             
             // 第三方平台SDK源数据
-            NSString *string = [NSString stringWithFormat:@"%@,%@",resp.name,resp.unionGender];
+            NSString *string = [NSString stringWithFormat:@"%@,%@,%@,%@,%@",resp.name,resp.unionGender,country,province,city];
             [SVProgressHUD showSuccessWithStatus:string];
         }
     }];

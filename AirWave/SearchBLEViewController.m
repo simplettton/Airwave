@@ -74,7 +74,6 @@
 //蓝牙网关初始化和委托方法设置
 -(void)babyDelegate
 {
-    
     __weak typeof(self) weakSelf = self;
     [baby setBlockOnCentralManagerDidUpdateState:^(CBCentralManager *central) {
         if (central.state == CBManagerStatePoweredOn) {
@@ -169,7 +168,7 @@
     }
 }
 
-#pragma mark -table委托 table delegate
+#pragma mark - tableView delegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
      return peripheralDataArray.count;

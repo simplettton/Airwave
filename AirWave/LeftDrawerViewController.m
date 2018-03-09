@@ -37,7 +37,6 @@ NSString * const SERVER_IP = @"http://218.17.22.131:3088";
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.scrollEnabled = NO;
-//    [self addTableHeaderViewAndTableFooterView];
     
     
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];

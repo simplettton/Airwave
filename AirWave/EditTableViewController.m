@@ -53,9 +53,14 @@
     [self.navigationController popViewControllerAnimated:YES];
     self.returnBlock(self.selectedRow, self.contentTextField.text);
 }
+
+#pragma mark - textField delegate
+
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
     return YES;
 }
+
+
 @end

@@ -82,13 +82,12 @@ static NSString *BLOODDEVTYPE = @"8888";
                              //记录总量
                              sum = [[jsonDict objectForKey:@"Sum"]intValue];
                              numberOfPages = (sum+10-1)/10;
+                             NSLog(@"numberOfPage = %d",numberOfPages);
                              if (numberOfPages == 1) {
                                  dispatch_async(dispatch_get_main_queue(), ^{
                                          self.downButton.enabled = NO;
                                  });
                              }
-
-
 
                              dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                  //获取数据
@@ -201,9 +200,7 @@ static NSString *BLOODDEVTYPE = @"8888";
         }else if([self.type isEqualToString:BLOODDEVTYPE]){
             cell.treatWayLabel.text = [NSString stringWithFormat:@"治疗强度：%d",[[datas[indexPath.row]objectForKey:@"Mode"]intValue]];
         }
-//        NSString *str3 = [datas[indexPath.row]objectForKey:@"Name"];
-//        NSString *str5 = [str3 stringByRemovingPercentEncoding];
-//        cell.timeLabel.text = [NSString stringWithFormat:@"name : %@",str5];
+
         NSString *dateString = [datas[indexPath.row] objectForKey:@"Date"];
          cell.timeLabel.text = [NSString stringWithFormat:@"%@",[self timeWithTimeIntervalString:dateString]];
         cell.nameLabel.text = [datas[indexPath.row] objectForKey:@"Name"];

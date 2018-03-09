@@ -269,14 +269,16 @@
 			name = AirWaveDev;
 			sourceTree = "<group>";
 		};
-		0457504B1FB18EBA00E3AD73 /* LeftTableView */ = {
+		0457504B1FB18EBA00E3AD73 /* LeftViewController */ = {
 			isa = PBXGroup;
 			children = (
+				045750421FB1861E00E3AD73 /* LeftDrawerViewController.h */,
+				045750431FB1861E00E3AD73 /* LeftDrawerViewController.m */,
 				045750481FB18EB100E3AD73 /* LeftHeaderView.h */,
 				045750491FB18EB100E3AD73 /* LeftHeaderView.m */,
 				0457504D1FB18FCA00E3AD73 /* BaseHeader.h */,
 			);
-			name = LeftTableView;
+			name = LeftViewController;
 			sourceTree = "<group>";
 		};
 		0457504E1FB191E000E3AD73 /* RecordController */ = {
@@ -344,31 +346,15 @@
 			children = (
 				046BA76E1F480DF2004D7E74 /* AppDelegate.h */,
 				046BA76F1F480DF2004D7E74 /* AppDelegate.m */,
-				0419A9D11FA329620020A088 /* HomeViewController.h */,
-				0419A9D21FA329620020A088 /* HomeViewController.m */,
-				045750421FB1861E00E3AD73 /* LeftDrawerViewController.h */,
-				045750431FB1861E00E3AD73 /* LeftDrawerViewController.m */,
-				045E8FEE1FBA7F6D006DFFC8 /* ServerIPViewController.h */,
-				045E8FEF1FBA7F6D006DFFC8 /* ServerIPViewController.m */,
-				04C3055A1FE218570026628A /* AirWaveNetworkSettingViewController.h */,
-				04C3055B1FE218570026628A /* AirWaveNetworkSettingViewController.m */,
-				04519EB91FB53DF50052A93C /* PersonalInfomationViewController.h */,
-				04519EBA1FB53DF50052A93C /* PersonalInfomationViewController.m */,
-				0451D8021FBE8AAD00D4E8D6 /* EditTableViewController.h */,
-				0451D8031FBE8AAD00D4E8D6 /* EditTableViewController.m */,
-				045E8FF41FBAE420006DFFC8 /* LoginViewController.h */,
-				045E8FF51FBAE420006DFFC8 /* LoginViewController.m */,
-				0419A9D41FA329BE0020A088 /* MyPresentViewController.h */,
-				0419A9D51FA329BE0020A088 /* MyPresentViewController.m */,
-				0419A9CB1FA324560020A088 /* AlertViewController.h */,
-				0419A9CC1FA324560020A088 /* AlertViewController.m */,
-				0457504B1FB18EBA00E3AD73 /* LeftTableView */,
+				04E1B1D7200C5168007FC2DB /* HomeViewController */,
+				0457504B1FB18EBA00E3AD73 /* LeftViewController */,
+				04E1B1D8200C5187007FC2DB /* DrawerContentViewControllers */,
 				045750401FB151E100E3AD73 /* BloodDev */,
 				045750411FB151FB00E3AD73 /* AirWaveDev */,
 				0457504E1FB191E000E3AD73 /* RecordController */,
 				0462C8101F5D414700AEC2D6 /* dataAnalyze */,
 				04A4203C1F9D92A900A6C2E9 /* Http */,
-				046BA76B1F480DF2004D7E74 /* Supporting Files */,
+				046BA76B1F480DF2004D7E74 /* Extension */,
 				045BBC6D1F8F45AD000D767B /* Assets.xcassets */,
 				0457C63C1F5563EE0050C604 /* Main.storyboard */,
 				046BA7791F480DF2004D7E74 /* LaunchScreen.storyboard */,
@@ -377,7 +363,7 @@
 			path = AirWave;
 			sourceTree = "<group>";
 		};
-		046BA76B1F480DF2004D7E74 /* Supporting Files */ = {
+		046BA76B1F480DF2004D7E74 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				0451A1901F9EDEF400AF521C /* MyLabel.h */,
@@ -406,7 +392,7 @@
 				0424CF691F6794F1008D138E /* ProgressView.m */,
 				046BA76C1F480DF2004D7E74 /* main.m */,
 			);
-			name = "Supporting Files";
+			name = Extension;
 			sourceTree = "<group>";
 		};
 		046BA7841F480DF2004D7E74 /* AirWaveTests */ = {
@@ -442,6 +428,36 @@
 				04A420361F9D929C00A6C2E9 /* HttpResponse.m */,
 			);
 			name = Http;
+			sourceTree = "<group>";
+		};
+		04E1B1D7200C5168007FC2DB /* HomeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0419A9D11FA329620020A088 /* HomeViewController.h */,
+				0419A9D21FA329620020A088 /* HomeViewController.m */,
+				0419A9D41FA329BE0020A088 /* MyPresentViewController.h */,
+				0419A9D51FA329BE0020A088 /* MyPresentViewController.m */,
+				0419A9CB1FA324560020A088 /* AlertViewController.h */,
+				0419A9CC1FA324560020A088 /* AlertViewController.m */,
+			);
+			name = HomeViewController;
+			sourceTree = "<group>";
+		};
+		04E1B1D8200C5187007FC2DB /* DrawerContentViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				045E8FEE1FBA7F6D006DFFC8 /* ServerIPViewController.h */,
+				045E8FEF1FBA7F6D006DFFC8 /* ServerIPViewController.m */,
+				04C3055A1FE218570026628A /* AirWaveNetworkSettingViewController.h */,
+				04C3055B1FE218570026628A /* AirWaveNetworkSettingViewController.m */,
+				04519EB91FB53DF50052A93C /* PersonalInfomationViewController.h */,
+				04519EBA1FB53DF50052A93C /* PersonalInfomationViewController.m */,
+				0451D8021FBE8AAD00D4E8D6 /* EditTableViewController.h */,
+				0451D8031FBE8AAD00D4E8D6 /* EditTableViewController.m */,
+				045E8FF41FBAE420006DFFC8 /* LoginViewController.h */,
+				045E8FF51FBAE420006DFFC8 /* LoginViewController.m */,
+			);
+			name = DrawerContentViewControllers;
 			sourceTree = "<group>";
 		};
 		9039BBD80F0971FC8E41620D /* Pods */ = {

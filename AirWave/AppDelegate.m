@@ -7,17 +7,24 @@
 //
 #import <UMSocialCore/UMSocialCore.h>
 #import "AppDelegate.h"
+
+//MMDrawerController框架中
 #import "MMDrawerController.h"
 #import "MMdrawerVisualState.h"
+
 #import "LeftDrawerViewController.h"
 #import "Pack.h"
 
 #define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0]
 NSString *const USHARE_APPKEY = @"5a2a0fdeb27b0a4989000164";
+
+
 @interface AppDelegate ()<GCDAsyncSocketDelegate>
 @end
 
 @implementation AppDelegate
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self configAirWaveNetworkSetting];
@@ -68,11 +75,11 @@ NSString *const USHARE_APPKEY = @"5a2a0fdeb27b0a4989000164";
                                           appKey:@"3302431209"
                                        appSecret:@"3eb44f6ec3446dd815100753e70decfb"
                                      redirectURL:@"http://sns.whalecloud.com/sina2/callback"];
-    //设置微信的appKey和appSecret
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession
-                                          appKey:@"wx4b2322692fe85433"
-                                       appSecret:@"427ac81412594ef7b7c6921d7d1dc070"
-                                     redirectURL:@"http://mobile.umeng.com/social"];
+//    //设置微信的appKey和appSecret
+//    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession
+//                                          appKey:@"wx0d00393a5eb1f3a9"
+//                                       appSecret:@"dab1983865bec320e78e92dfd36e80fd"
+//                                     redirectURL:@"http://mobile.umeng.com/social"];
 }
 // 支持所有iOS系统
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
