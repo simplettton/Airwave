@@ -31,7 +31,6 @@
     Byte treatProcessTimeBytes[]={bytes[27],bytes[28],bytes[29],bytes[30]};
     self.treatProcessTime = [self lBytesToInt:treatProcessTimeBytes withLength:4];
     
-//    NSLog(@"treatProcessTime = %d",self.treatProcessTime);
     self.curFocuse = bytes[31];
     return self;
 }
